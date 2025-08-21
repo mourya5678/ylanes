@@ -1,0 +1,39 @@
+import moment from "moment";
+export const curSym = '$';
+
+export const pipGetAccessToken = (key) => {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : {};
+};
+
+export const pipSetAccessToken = (key, token) => {
+    if (!token) return;
+    else localStorage.setItem(key, JSON.stringify(token));
+};
+
+export const pipSuccessMessage = (messageApi, messages) => {
+    return messageApi.success(messages);
+};
+
+export const pipErrorMessage = (messageApi, messages) => {
+    return messageApi.error(messages);
+};
+
+export const pipDeleteTokenAuth = () => {
+    localStorage.removeItem("ylanes_token");
+    localStorage.removeItem("ylanes_data");
+};
+
+export const pipLogout = (messageApi) => {
+    localStorage.removeItem("ylanes_token");
+    localStorage.removeItem("ylanes_data");
+    messageApi.success('Logout successfully!')
+};
+
+export const pipViewDate = (date) => {
+    return moment.utc(date).format("DD-MM-YYYY");
+};
+
+export const pipViewDate2 = (date) => {
+    return moment.utc(date).format("MMM DD, YYYY - h:mm A");
+};
