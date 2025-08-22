@@ -1,19 +1,20 @@
+import LoginScreen from "../pages/auth/LoginScreen";
 
 const Home = lazy(() => import("../pages/Home"));
 const Poll = lazy(() => import("../pages/Poll"));
 
 const CreateRoom = lazy(() => import("../pages/CreateRoom"));
-const Profile = lazy(() => import("../pages/Profile"));
+const Profile = lazy(() => import("../pages/auth/Profile"));
 
 const Setting = lazy(() => import("../pages/Setting"));
 
 
 export const pageRoutes = {
+    poll: '/poll',
     dashboard: '/',
     login: '/login',
-    poll: '/poll',
-    profile: '/profile',
     setting: '/setting',
+    profile: '/profile',
     createRoom: "/create-room"
 };
 
@@ -46,6 +47,12 @@ export const AllRoutes = [
         name: "Create Room",
         path: pageRoutes?.createRoom,
         element: <CreateRoom />,
+        isPrivate: true,
+    },
+    {
+        name: "Login",
+        path: pageRoutes?.login,
+        element: <LoginScreen />,
         isPrivate: true,
     },
 ];

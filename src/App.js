@@ -4,7 +4,15 @@ function App() {
 
   return (
     <div>
-      Hello YLanes!
+      <a
+        href={
+          "mailtoto=mayank.ctinfotech@gmail.com"
+        }
+      // target="_blank"
+      // rel="noopener noreferrer"
+      >
+        Open Gmail (web)
+      </a>
     </div>
   );
 }
