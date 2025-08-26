@@ -1,21 +1,44 @@
-import LoginScreen from "../pages/auth/LoginScreen";
+import { lazy } from "react";
+import VerifyOtp from "../pages/auth/VerifyOtp";
 
-const Home = lazy(() => import("../pages/Home"));
+const Refer = lazy(() => import("../pages/settings/Refer"));
+const TermsOfUser = lazy(() => import("../pages/settings/TermsOfUser"));
+
+const Feedback = lazy(() => import("../pages/settings/Feedback"));
+const DeactivateAccount = lazy(() => import("../pages/settings/DeactivateAccount"));
+
+const Home = lazy(() => import("../pages/home/Home"));
 const Poll = lazy(() => import("../pages/Poll"));
 
-const CreateRoom = lazy(() => import("../pages/CreateRoom"));
+const CreateRoom = lazy(() => import("../pages/Room/CreateRoom"));
 const Profile = lazy(() => import("../pages/auth/Profile"));
 
-const Setting = lazy(() => import("../pages/Setting"));
+const Setting = lazy(() => import("../pages/settings"));
+const UserWallet = lazy(() => import("../pages/wallet"));
+
+const LoginScreen = lazy(() => import("../pages/auth/LoginScreen"));
+const Notification = lazy(() => import("../pages/notification"));
+
+const Faq = lazy(() => import("../pages/settings/Faq"));
+const MyRoom = lazy(() => import("../pages/Room"));
 
 
 export const pageRoutes = {
-    poll: '/poll',
     dashboard: '/',
+    poll: '/poll',
     login: '/login',
     setting: '/setting',
     profile: '/profile',
-    createRoom: "/create-room"
+    createRoom: "/create-room",
+    userWallet: '/wallet',
+    notification: '/notification',
+    faq: '/faq',
+    refer: '/refer',
+    termAndCondition: '/terms-and-condition',
+    feedback: '/feedback',
+    deactiveAccount: '/accrount-deactivated',
+    myRoom: '/my-room',
+    otpVerify: '/otp-verification'
 };
 
 export const AllRoutes = [
@@ -23,7 +46,7 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
-        isPrivate: true,
+        isPrivate: true
     },
     {
         name: "Poll",
@@ -55,4 +78,58 @@ export const AllRoutes = [
         element: <LoginScreen />,
         isPrivate: true,
     },
+    {
+        name: "User Wallet",
+        path: pageRoutes?.userWallet,
+        element: <UserWallet />,
+        isPrivate: true,
+    },
+    {
+        name: "Notification",
+        path: pageRoutes?.notification,
+        element: <Notification />,
+        isPrivate: true
+    },
+    {
+        name: "FAQ",
+        path: pageRoutes?.faq,
+        element: <Faq />,
+        isPrivate: true
+    },
+    {
+        name: "Refer",
+        path: pageRoutes?.refer,
+        element: <Refer />,
+        isPrivate: true
+    },
+    {
+        name: "Term And Condition",
+        path: pageRoutes?.termAndCondition,
+        element: <TermsOfUser />,
+        isPrivate: true
+    },
+    {
+        name: "Provide Feedback",
+        path: pageRoutes.feedback,
+        element: <Feedback />,
+        isPrivate: true
+    },
+    {
+        name: "Account Deactivate",
+        path: pageRoutes.deactiveAccount,
+        element: <DeactivateAccount />,
+        isPrivate: true
+    },
+    {
+        name: "My Room",
+        path: pageRoutes.myRoom,
+        element: <MyRoom />,
+        isPrivate: true
+    },
+    {
+        name: "OTP Verification",
+        path: pageRoutes.otpVerify,
+        element: <VerifyOtp />,
+        isPrivate: true
+    }
 ];
