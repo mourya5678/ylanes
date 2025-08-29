@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { smsConfirmation } from "../actions/authActions";
 
 const initialStates = {
     isLoading: false,
@@ -15,7 +16,18 @@ export const authSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-
+        // smsConfirmation
+        builder.addCase(smsConfirmation.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(smsConfirmation.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            // state.policyData = data ?? "";
+            state.isLoading = false;
+        });
+        builder.addCase(smsConfirmation.rejected, (state, action) => {
+            state.isLoading = false;
+        });
     }
 });
 

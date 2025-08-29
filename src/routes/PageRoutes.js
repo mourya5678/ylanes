@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import Chat from "../pages/chat";
+import OnBoardingScreen from "../pages/onboarding";
 
 const Refer = lazy(() => import("../pages/settings/Refer"));
 const TermsOfUser = lazy(() => import("../pages/settings/TermsOfUser"));
@@ -48,7 +49,8 @@ export const pageRoutes = {
     subsctiption: '/subscription',
     topUpWallet: "/topup-wallet",
     transaction: '/transaction-history',
-    chat: '/connections'
+    chat: '/connections',
+    onBoarding: '/onboarding'
 };
 
 export const AllRoutes = [
@@ -166,4 +168,10 @@ export const AllRoutes = [
         element: <Chat />,
         isPrivate: true,
     },
+    {
+        name: "OnBoardingScreen",
+        path: pageRoutes.onBoarding,
+        element: <OnBoardingScreen />,
+        isPrivate: true,
+    }
 ];

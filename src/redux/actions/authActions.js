@@ -1,16 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { LoginSignupAPI } from "../../routes/BackendRoutes";
+import { SMSConfirmationAPI } from "../../routes/BackendRoutes";
 
-export const sellerLogin = createAsyncThunk("seller-login", async (props) => {
-    const { payload, callback, messageApi } = props;
+export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
+    const { payload, callback, messageApi, myHeaders } = props;
     try {
         const response = await API_REQUEST({
-            url: LoginSignupAPI,
+            url: SMSConfirmationAPI,
             method: "POST",
             data: payload,
             messageApi,
+            headers: myHeaders
         });
+        console.log({ response });
         callback(response);
         return response;
     } catch (error) {

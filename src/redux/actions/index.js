@@ -5,7 +5,7 @@ import { pageRoutes } from '../../routes/PageRoutes';
 
 export const API_REQUEST = async (props) => {
     const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = true, isSuccessToast = true, messageApi } = props;
-    const token = pipGetAccessToken("seller_token");
+    const token = pipGetAccessToken("ylanes_Token");
     const requestOptions = {
         url: BASE + url,
         method,
