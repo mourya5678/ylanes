@@ -1,7 +1,11 @@
 import React from 'react';
 import Header from '../../components/Header';
+import { useNavigate } from 'react-router';
+import { pageRoutes } from '../../routes/PageRoutes';
 
 const UserWallet = () => {
+    const navigate = useNavigate();
+
     return (
         <div>
             <Header />
@@ -13,7 +17,7 @@ const UserWallet = () => {
                                 <h4 className="ct_fs_24 ct_fw_600 mb-0 ct_text_061F61">
                                     Wallet
                                 </h4>
-                                <a className="ct_yellow_btn">Top Up Your Wallet</a>
+                                <a onClick={() => navigate(pageRoutes.topUpWallet)} className="ct_yellow_btn">Top Up Your Wallet</a>
                             </div>
                             <div className="ct_wallet_light_yellow_bg">
                                 <p className="mb-1 ct_text_op_6">Wallet Balance</p>
@@ -23,9 +27,9 @@ const UserWallet = () => {
                                 </div>
                             </div>
                             <div className="ct_wallet_list">
-                                <ul>    
+                                <ul>
                                     <li>
-                                        <a className="d-flex align-items-center gap-2 justify-content-between text-dark" >
+                                        <a onClick={() => navigate(pageRoutes.subsctiption)} className="d-flex ct_cursor align-items-center gap-2 justify-content-between text-dark" >
                                             <div className="d-flex align-items-center gap-2">
                                                 <i className="fa-regular fa-gem"></i>
                                                 <p className="mb-0 ct_fw_600">Subscription Plan</p>
@@ -34,7 +38,7 @@ const UserWallet = () => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a className="d-flex align-items-center gap-2 justify-content-between text-dark">
+                                        <a onClick={() => navigate(pageRoutes.transaction)} className="d-flex align-items-center ct_cursor gap-2 justify-content-between text-dark">
                                             <div className="d-flex align-items-center gap-2">
                                                 <i className="fa-solid fa-clock-rotate-left"></i>
                                                 <p className="mb-0 ct_fw_600">Transaction History</p>

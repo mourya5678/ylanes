@@ -1,11 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import { useNavigate } from 'react-router';
-import { pageRoutes } from '../../routes/PageRoutes';
+import { useLocation, useNavigate } from 'react-router';
+import { signInWithCredential, PhoneAuthProvider } from "firebase/auth";
+import { auth, onMessageListener, requestForToken } from "../../auth/Firebase";
 
-const VerifyOtp = () => {
+const VerifyOtp = ({ messageApi }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { verificationId, mobileNumber } = location.state || {};
+
     const [otp, setOtp] = useState('');
+
+    useEffect(() => {
+        // Register service worker
+        if ("serviceWorker" in navigator) {
+            navigator?.serviceWorker
+                ?.register(`${process.env.PUBLIC_URL}/firebase-messaging-sw.js`)
+                .then((registration) => {
+                    console.log(
+                        "Service Worker registered with scope:",
+                        registration?.scope
+                    );
+                })
+                .catch((error) => {
+                    console.error("Service Worker registration failed:", error);
+                });
+        }
+        requestForToken();
+    }, []);
+
+    useEffect(() => {
+        onMessageListener()
+            .then((payload) => {
+                console.log("Foreground notification received:", payload);
+            })
+            .catch((err) => console.error("Error: ", err));
+    }, []);
+
+    const handleOtpSubmit = async () => {
+        if (otp?.length < 6) {
+            messageApi.error("Invalid Otp")
+            return;
+        };
+        try {
+            // Option 1: Use stored confirmationResult (best)
+            if (window.confirmationResult) {
+                const result = await window.confirmationResult.confirm(otp);
+                console.log("User signed in:", result.user);
+                return;
+            };
+            // Option 2: Fallback if confirmationResult not stored
+            if (verificationId) {
+                const credential = PhoneAuthProvider.credential(verificationId, otp);
+                const result = await signInWithCredential(auth, credential);
+                console.log("User signed in:", result.user);
+            };
+        } catch (err) {
+            console.log(err)
+        };
+    };
+
+    // localStorage.getItem("trophy-talk-seller-fcm") || "" 
+
+    const handleSmsConfirmation = async (res) => {
+        const user = auth().currentUser;
+        if (user) {
+            const idToken = await user.getIdToken();
+            console.log("Firebase ID Token:", idToken);
+            localStorage.setItem("ylanes_firebaseToken", idToken);
+        };
+        const userToken = await res.user.getIdToken();
+        console.log("User token:", userToken);
+    };
 
     return (
         <div className="ct_login_center_main">
@@ -32,7 +98,7 @@ const VerifyOtp = () => {
                                 </div>
                                 <p className="ct_link_under_line text-center mb-0 mt-3 ct_text_op_6">Code expires in 01:52</p>
                                 <div className="text-center mt-5">
-                                    <button type="button" onClick={() => navigate(pageRoutes.dashboard)} className="ct_yellow_btn mx-auto">Submit</button>
+                                    <button type="button" onClick={handleOtpSubmit} className="ct_yellow_btn mx-auto">Submit</button>
                                 </div>
                             </form>
                         </div>

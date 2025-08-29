@@ -33,7 +33,7 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex  align-items-center gap-2 ct_w_100_767">
-                                    <button className="ct_outline_border ct_w_100_767"><img src="assets/img/wallet_icon.png" alt=""
+                                    <button className="ct_outline_border ct_w_100_767" onClick={() => navigate(pageRoutes.userWallet)}><img src="assets/img/wallet_icon.png" alt=""
                                         width="20px" />1495</button>
                                     <a className="ct_yellow_btn ct_w_100_767 text-center" onClick={() => navigate(pageRoutes.createRoom)}>Create Room</a>
                                 </div>
@@ -211,7 +211,8 @@ const Home = () => {
                                     </div>
                                     <div className="dropdown ct_post_setting_drop">
                                         <i className="fa-solid fa-ellipsis-vertical" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false"></i>
+                                            aria-expanded="false">
+                                        </i>
                                         <ul className="dropdown-menu">
                                             <li><a className="dropdown-item" data-bs-target="#ct_delete_modal"
                                                 data-bs-toggle="modal">Delete</a></li>

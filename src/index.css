@@ -1,0 +1,21 @@
+input#phone_number {
+    border: 0;
+    outline: none;
+}
+
+.ct_otp_input input[type="text"] {
+    width: 40px !important;
+    height: 40px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin: 4px;
+    outline: none;
+}
+
+.ct_otp_input input:focus {
+    border-color: var(--yellow);
+}
+
+.ct_otp_input span {
+    display: none;
+}

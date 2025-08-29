@@ -2,10 +2,15 @@ import React from 'react';
 import Header from '../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleChange } from '../../redux/reducers/authReducers';
+import { pageRoutes } from '../../routes/PageRoutes';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
     const { isToggle } = useSelector((state) => state.authReducer);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     return (
         <div>
@@ -50,7 +55,7 @@ const Profile = () => {
                                                 </a>
                                             </li>
                                             <li className="text-center text-white">
-                                                <a className="text-white">
+                                                <a className="text-white" onClick={() => navigate(pageRoutes.userWallet)}>
                                                     <i className="fa-regular fa-credit-card"></i>
                                                     <p className="mb-1 ct_fs_14 ct_text_op_6">WALLET</p>
                                                     <h6 className="smb-0">0</h6>
@@ -60,7 +65,6 @@ const Profile = () => {
                                     </div>
                                 </form>
                             </div>
-
                             <div>
                                 <ul
                                     className="nav nav-pills mb-3 ct_custom_tabs"

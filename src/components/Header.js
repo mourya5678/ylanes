@@ -25,7 +25,7 @@ const Header = () => {
                                     <li onClick={() => navigate(pageRoutes.dashboard)}>
                                         <a>Home</a>
                                     </li>
-                                    <li>
+                                    <li onClick={() => navigate(pageRoutes.poll)}>
                                         <a>Polls</a>
                                     </li>
                                     <li>
@@ -37,7 +37,7 @@ const Header = () => {
                                 <a className="ct_header_icon" onClick={() => navigate(pageRoutes.notification)}>
                                     <img src="assets/img/notifications_icon.png" alt="" />
                                 </a>
-                                <a className="ct_header_icon">
+                                <a className="ct_header_icon" onClick={() => navigate(pageRoutes.chat)}>
                                     <img src="assets/img/message_icon.png" alt="" />
                                 </a>
                                 <div className="ct_right_dropdown dropdown">
@@ -63,10 +63,7 @@ const Header = () => {
                                             </a>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item"
-                                            // data-bs-toggle="modal"
-                                            //     data-bs-target="#ct_logout_modal_post"
-                                            >
+                                            <a className="dropdown-item" onClick={() => navigate(pageRoutes.login)}>
                                                 <img src="../assets/img/dashbaord-images/logout.svg" alt="" />
                                                 Log Out
                                             </a>

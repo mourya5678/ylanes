@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import VerifyOtp from "../pages/auth/VerifyOtp";
+import Chat from "../pages/chat";
 
 const Refer = lazy(() => import("../pages/settings/Refer"));
 const TermsOfUser = lazy(() => import("../pages/settings/TermsOfUser"));
@@ -8,7 +8,7 @@ const Feedback = lazy(() => import("../pages/settings/Feedback"));
 const DeactivateAccount = lazy(() => import("../pages/settings/DeactivateAccount"));
 
 const Home = lazy(() => import("../pages/home/Home"));
-const Poll = lazy(() => import("../pages/Poll"));
+const Poll = lazy(() => import("../pages/polls"));
 
 const CreateRoom = lazy(() => import("../pages/Room/CreateRoom"));
 const Profile = lazy(() => import("../pages/auth/Profile"));
@@ -21,6 +21,12 @@ const Notification = lazy(() => import("../pages/notification"));
 
 const Faq = lazy(() => import("../pages/settings/Faq"));
 const MyRoom = lazy(() => import("../pages/Room"));
+
+const TransactionHistory = lazy(() => import("../pages/transactionHistory/TransactionHistory"));
+const VerifyOtp = lazy(() => import("../pages/auth/VerifyOtp"));
+
+const Subscription = lazy(() => import("../pages/subscription"));
+const TopUpUserWallet = lazy(() => import("../pages/wallet/TopUpUserWallet"));
 
 
 export const pageRoutes = {
@@ -38,7 +44,11 @@ export const pageRoutes = {
     feedback: '/feedback',
     deactiveAccount: '/accrount-deactivated',
     myRoom: '/my-room',
-    otpVerify: '/otp-verification'
+    otpVerify: '/otp-verification',
+    subsctiption: '/subscription',
+    topUpWallet: "/topup-wallet",
+    transaction: '/transaction-history',
+    chat: '/connections'
 };
 
 export const AllRoutes = [
@@ -130,6 +140,30 @@ export const AllRoutes = [
         name: "OTP Verification",
         path: pageRoutes.otpVerify,
         element: <VerifyOtp />,
-        isPrivate: true
-    }
+        isPrivate: true,
+    },
+    {
+        name: "Subscription",
+        path: pageRoutes.subsctiption,
+        element: <Subscription />,
+        isPrivate: true,
+    },
+    {
+        name: "TopUp User Wallet",
+        path: pageRoutes.topUpWallet,
+        element: <TopUpUserWallet />,
+        isPrivate: true,
+    },
+    {
+        name: "Transaction History",
+        path: pageRoutes.transaction,
+        element: <TransactionHistory />,
+        isPrivate: true,
+    },
+    {
+        name: "Chat",
+        path: pageRoutes.chat,
+        element: <Chat />,
+        isPrivate: true,
+    },
 ];
