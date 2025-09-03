@@ -1,0 +1,16 @@
+.ct_send_msg_btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 10px !important;
+    height: 47px;
+    padding: 0px 16px;
+}
+
+.ct_comment_area_main input {
+    padding-right: 84px;
+}
+
+.ct_post_img img {
+    object-fit: cover;
+}

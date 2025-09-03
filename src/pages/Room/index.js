@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-const MyRoom = () => {
+const MyRoom = ({ messageApi }) => {
 
     return (
         <div>
-            <Header />
-            
+            <Header messageApi={messageApi} />
+
         </div>
     )
 };

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { SMSConfirmationAPI } from "../../routes/BackendRoutes";
+import { commentPostAPI, CreatePostAPI, getAllPostAPI, getPostTopicsAPI, likePostAPI, SMSConfirmationAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -12,10 +12,116 @@ export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props
             messageApi,
             headers: myHeaders
         });
-        console.log({ response });
         callback(response);
         return response;
     } catch (error) {
         callback(null, error);
     };
+});
+
+export const createUserPost = createAsyncThunk("create-post", async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: CreatePostAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error)
+        callback(null, error);
+    };
+});
+
+export const getPostTopics = createAsyncThunk('get-post-topic', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPostTopicsAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getAllPost = createAsyncThunk('get-all-post', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllPostAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const likeUserPost = createAsyncThunk('like-post', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: likePostAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
+    };
+});
+
+export const commentUserPost = createAsyncThunk('comment-post', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: commentPostAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
+    };
+});
+
+export const getAllPostComment = createAsyncThunk('get-post-comment', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllPostAPI + `/${payload}/comments`,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getMyProfileData = createAsyncThunk('get-profile-data', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = API_REQUEST({
+            url: userProfileAPI + payload,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 });

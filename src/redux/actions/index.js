@@ -5,12 +5,12 @@ import { pageRoutes } from '../../routes/PageRoutes';
 
 export const API_REQUEST = async (props) => {
     const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = true, isSuccessToast = true, messageApi } = props;
-    const token = pipGetAccessToken("ylanes_Token");
+    const token = pipGetAccessToken("yLanes_user_Token");
     const requestOptions = {
         url: BASE + url,
         method,
         headers: {
-            Authorization: `Bearer ${token}`,
+            token: `${token}`,
             ...headers,
         },
         params: method === "GET" ? params : undefined,

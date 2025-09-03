@@ -19,7 +19,6 @@ messaging.onBackgroundMessage((payload) => {
         body: payload.notification.body || "Default body message.", // Fallback body
         icon: payload.notification.icon || 'YOUR_NOTIFICATION_ICON_URL', // Optional icon
     };
-    console.log({ background: notificationOptions })
     // Show the notification
     self.registration.showNotification(notificationTitle, notificationOptions);
 });

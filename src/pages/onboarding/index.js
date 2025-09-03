@@ -2,12 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import Header from '../../components/Header';
 
-const OnBoardingScreen = () => {
+const OnBoardingScreen = ({ messageApi }) => {
     const navigate = useNavigate();
 
     return (
         <div>
-            <Header />
+            <Header messageApi={messageApi} />
             <section className="ct_py_70">
                 <div className="container">
                     <div className="row">

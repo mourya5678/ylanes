@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Chat from "../pages/chat";
 import OnBoardingScreen from "../pages/onboarding";
+import UpdateProfile from "../pages/auth/UpdateProfile";
 
 const Refer = lazy(() => import("../pages/settings/Refer"));
 const TermsOfUser = lazy(() => import("../pages/settings/TermsOfUser"));
@@ -36,6 +37,7 @@ export const pageRoutes = {
     login: '/login',
     setting: '/setting',
     profile: '/profile',
+    updateProfile: '/update-profile',
     createRoom: "/create-room",
     userWallet: '/wallet',
     notification: '/notification',
@@ -172,6 +174,12 @@ export const AllRoutes = [
         name: "OnBoardingScreen",
         path: pageRoutes.onBoarding,
         element: <OnBoardingScreen />,
+        isPrivate: true,
+    },
+    {
+        name: "Update Profile",
+        path: pageRoutes.updateProfile,
+        element: <UpdateProfile />,
         isPrivate: true,
     }
 ];

@@ -9,7 +9,8 @@
         "ignore": [
           "-moz-appearance",
           "appearance",
-          "position: sticky"
+          "position: sticky",
+          "scroll-behavior"
         ]
       }
     ],

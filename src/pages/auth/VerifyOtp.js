@@ -76,7 +76,6 @@ const VerifyOtp = ({ messageApi }) => {
             // Option 1: Use stored confirmationResult (best)
             if (window.confirmationResult) {
                 const result = await window.confirmationResult.confirm(otp);
-                console.log("User signed in1:", result.user);
                 handleSmsConfirmation(result);
                 return;
             };
@@ -84,7 +83,6 @@ const VerifyOtp = ({ messageApi }) => {
             if (verificationId) {
                 const credential = PhoneAuthProvider.credential(verificationId, otp);
                 const result = await signInWithCredential(auth, credential);
-                console.log("User signed in2:", result.user);
                 handleSmsConfirmation(result);
             };
         } catch (err) {
@@ -99,12 +97,10 @@ const VerifyOtp = ({ messageApi }) => {
         const user = auth.currentUser;
         if (user) {
             const idToken = await user.getIdToken();
-            console.log("Firebase ID Token:", idToken);
             pipSetAccessToken("ylanes_firebaseToken", idToken)
         };
         const userToken = await res?.user?.getIdToken();
         pipSetAccessToken("ylanes_Token", userToken)
-        console.log("User token:", userToken);
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const now = new Date();
         const formatted = new Intl.DateTimeFormat("en-US", {
@@ -113,7 +109,6 @@ const VerifyOtp = ({ messageApi }) => {
             timeStyle: "long",
         }).format(now);
         const fcmToken = localStorage.getItem("ylanes-fcm");
-        console.log({ res: res?.user });
         var myHeaders = new Headers();
         myHeaders.append("token", userToken);
         myHeaders.append("Content-Type", "application/json");
@@ -148,12 +143,6 @@ const VerifyOtp = ({ messageApi }) => {
             .catch((err) => {
                 console.log({ err });
             });
-        // const callback = (response) => {
-        //     console.log({ data })
-        //     if (response.success) {
-        //     };
-        // };
-        // dispatch(smsConfirmation({ payload: data, callback, messageApi, myHeaders }))
     };
 
     return (

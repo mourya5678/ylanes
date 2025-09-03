@@ -38,7 +38,6 @@ export const requestForToken = async () => {
         });
 
         if (currentToken) {
-            console.log({ currentToken: currentToken })
             localStorage.setItem("ylanes-fcm", currentToken);
             return currentToken
         } else {
@@ -52,7 +51,6 @@ export const requestForToken = async () => {
 
 // Listen for foreground messages
 export const onMessageListener = () => new Promise((resolve) => {
-    console.log({ messaging: messaging })
     onMessage(messaging, (payload) => {
         resolve(payload);
     });

@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { pipGetAccessToken } from '../../auth/Pip';
 
-const Polls = () => {
+const Polls = ({ messageApi }) => {
     const navigate = useNavigate();
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        const data = pipGetAccessToken("user_data");
+        setUserData(data);
+    }, []);
+
 
     return (
         <div>
@@ -34,7 +42,7 @@ const Polls = () => {
                                 </div>
                                 <div class="d-flex  align-items-center gap-2 ct_w_100_767">
                                     <a onClick={() => navigate(pageRoutes.userWallet)} class="ct_outline_border ct_w_100_767 text-dark"><img
-                                        src="assets/img/wallet_icon.png" alt="" width="20px" />1495</a>
+                                        src="assets/img/wallet_icon.png" alt="" width="20px" />{userData?.attributes?.ycoins ?? 0}</a>
                                     <a onClick={() => navigate(pageRoutes.createRoom)} class="ct_yellow_btn ct_w_100_767 text-center">Create Room</a>
                                 </div>
                             </div>

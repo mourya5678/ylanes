@@ -3,12 +3,12 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 
-const Settings = () => {
+const Settings = ({ messageApi }) => {
     const navigate = useNavigate();
 
     return (
         <div>
-            <Header />
+            <Header messageApi={messageApi} />
             <section className="ct_py_70">
                 <div className="container">
                     <div className="row">

@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../routes/PageRoutes';
+import { pipGetAccessToken } from '../auth/Pip';
+import { getMyProfileData } from '../redux/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { IMAGE_URL } from '../routes/BackendRoutes';
 
-const Header = () => {
+const Header = ({ messageApi }) => {
+    const { profileData } = useSelector((state) => state.authReducer);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [isShow, setIsShow] = useState(false);
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        const data = pipGetAccessToken("user_data");
+        setUserData(data);
+    }, [profileData]);
 
     return (
         <header className="ct_header">
@@ -43,9 +57,9 @@ const Header = () => {
                                 <div className="ct_right_dropdown dropdown">
                                     <button onClick={() => setIsShow(!isShow)}>
                                         <div className="d-flex align-items-center gap-2">
-                                            <img src="assets/img/user.png" alt="" className="ct_img_30" />
+                                            <img src={IMAGE_URL + userData?.attributes?.profile_image} alt="" className="ct_img_30" />
                                             <div className="text-start">
-                                                <small className="ct_text_939393 ct_fw_600 ct_white_nowrap">Jorge</small>
+                                                <small className="ct_text_939393 ct_fw_600 ct_white_nowrap">{userData?.attributes?.full_name ?? ""}</small>
                                             </div>
                                         </div>
                                         <i className="fa-solid fa-angle-down ms-auto"></i>

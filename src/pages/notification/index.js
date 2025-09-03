@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-const Notification = () => {
+const Notification = ({ messageApi }) => {
     return (
         <div>
-            <Header />
+            <Header messageApi={messageApi} />
             <section className="ct_py_70">
                 <div className="container">
                     <div className="row">

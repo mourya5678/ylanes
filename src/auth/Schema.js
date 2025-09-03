@@ -10,3 +10,12 @@ export const LoginSchema = Yup.object().shape({
     isAgree: Yup.boolean()
         .oneOf([true], "You must accept the Terms and Conditions")
 });
+
+export const CreatePostSchema = Yup.object().shape({
+    title: Yup.string().trim().required("Please enter title"),
+    topic: Yup.string().trim().required("Please select topic")
+});
+
+export const UpdateProfileSchema = Yup.object().shape({
+
+});

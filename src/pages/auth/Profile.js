@@ -1,64 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleChange } from '../../redux/reducers/authReducers';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useNavigate } from 'react-router';
+import { pipGetAccessToken } from '../../auth/Pip';
+import { IMAGE_URL } from '../../routes/BackendRoutes';
+import { getMyProfileData } from '../../redux/actions/authActions';
+import Loader from '../../components/Loader';
+import emojiFlags from "emoji-flags";
+import ReactCountryFlag from 'react-country-flag';
 
-const Profile = () => {
-    const { isToggle } = useSelector((state) => state.authReducer);
+
+const Profile = ({ messageApi }) => {
+    const { isToggle, profileData, isLoading } = useSelector((state) => state.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [userData, setUserData] = useState({});
 
+    useEffect(() => {
+        const data = pipGetAccessToken("user_data");
+        dispatch(getMyProfileData({ payload: data?.id, messageApi }))
+    }, []);
+
+    useEffect(() => {
+        const data = pipGetAccessToken("user_data");
+        setUserData(data);
+    }, [profileData]);
+
+
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
-            <Header />
+            <Header messageApi={messageApi} />
             <section className="ct_py_70">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <div
-                                className="d-flex align-items-center justify-content-between gap-3 mb-4"
-                            >
+                            <div className="d-flex align-items-center justify-content-between gap-3 mb-4">
                                 <h4 className="ct_fs_24 ct_fw_600 mb-0 ct_text_061F61">Profile</h4>
                             </div>
-
                             <div className="ct_profile_bg">
-                                <form action="">
-                                    <a className="ct_edit_profile_icon">
+                                <form>
+                                    <a className="ct_edit_profile_icon" onClick={() => navigate(pageRoutes.updateProfile)}>
                                         <i className="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <div className="ct_profile_img">
-                                        <img src="assets/img/user.png" alt="" />
-                                        <label for="ct_profile_update">
-                                            <input type="file" className="d-none" id="ct_profile_update" />
-                                        </label>
+                                        <img src={IMAGE_URL + userData?.attributes?.profile_image} alt="" />
                                     </div>
                                     <div className="text-center mt-3 text-white">
-                                        <h5 className="mb-0 ct_fs_18 ct_fw_600 mb-1">Jorge</h5>
-                                        <p>Male 18 - 24 Years</p>
+                                        <h5 className="mb-0 ct_fs_18 ct_fw_600 mb-1">{userData?.attributes?.full_name ?? ""}</h5>
+                                        <p>{userData?.attributes?.gender} {userData?.attributes?.age_range[0] ?? 0} - {userData?.attributes?.age_range[1] ?? 0} Years</p>
                                     </div>
                                     <div className="ct_profile_info_list mt-5">
                                         <ul>
                                             <li className="text-center text-white">
                                                 <i className="fa-regular fa-heart"></i>
                                                 <p className="mb-1 ct_fs_14 ct_text_op_6">HEARTS</p>
-                                                <h6 className="smb-0">0</h6>
+                                                <h6 className="smb-0">{userData?.attributes?.hearts ?? 0}</h6>
                                             </li>
                                             <li className="text-center text-white">
                                                 <a className="text-white">
                                                     <i className="fa-regular fa-user"></i>
                                                     <p className="mb-1 ct_fs_14 ct_text_op_6">TOUCH POINTS</p>
-                                                    <h6 className="smb-0">0</h6>
+                                                    <h6 className="smb-0">{userData?.attributes?.touch_points ?? 1}</h6>
                                                 </a>
                                             </li>
                                             <li className="text-center text-white">
                                                 <a className="text-white" onClick={() => navigate(pageRoutes.userWallet)}>
                                                     <i className="fa-regular fa-credit-card"></i>
                                                     <p className="mb-1 ct_fs_14 ct_text_op_6">WALLET</p>
-                                                    <h6 className="smb-0">0</h6>
+                                                    <h6 className="smb-0">{userData?.attributes?.ycoins ?? 0}</h6>
                                                 </a>
                                             </li>
                                         </ul>
@@ -123,8 +139,16 @@ const Profile = () => {
                                         <div className="ct_white_bg">
                                             <h4 className="ct_fw_600 ct_fs_24 mb-3">Country</h4>
                                             <div className="d-flex align-items-center gap-2">
-                                                <img src="assets/img/flag.png" alt="" width="20px" />
-                                                <p className="mb-0 ct_text_op_6">India</p>
+                                                <ReactCountryFlag
+                                                    countryCode={userData?.attributes?.country_details?.code}
+                                                    svg
+                                                    style={{
+                                                        width: '5em',
+                                                        height: '5em',
+                                                    }}
+                                                    title={userData?.attributes?.country_details?.code}
+                                                />
+                                                <p className="mb-0 ct_text_op_6">{userData?.attributes?.country_details?.name ?? ""}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -137,15 +161,15 @@ const Profile = () => {
                                             <ul className="ct_persional_info_grid">
                                                 <li>
                                                     <p className="mb-0 ct_fw_600">Phone Number</p>
-                                                    <p className="mb-0">+9125896325</p>
+                                                    <p className="mb-0">+{userData?.attributes?.full_phone_number ?? ""}</p>
                                                 </li>
                                                 <li>
                                                     <p className="mb-0 ct_fw_600">Email</p>
-                                                    <p className="mb-0">john@gmail.com</p>
+                                                    <p className="mb-0">{userData?.attributes?.email ?? ""}</p>
                                                 </li>
                                                 <li>
-                                                    <p className="mb-0 ct_fw_600">Year Of Month</p>
-                                                    <p className="mb-0">1969</p>
+                                                    <p className="mb-0 ct_fw_600">Year Of Birth</p>
+                                                    <p className="mb-0">{userData?.attributes?.birth_year ?? 0}</p>
                                                 </li>
                                             </ul>
                                         </div>

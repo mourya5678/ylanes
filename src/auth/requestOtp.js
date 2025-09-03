@@ -35,8 +35,6 @@ export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi 
             window.recaptchaVerifier
         );
 
-        console.log("OTP sent successfully:", confirmationResult);
-
         // ✅ Store non-serializable object globally
         window.confirmationResult = confirmationResult;
 

@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router';
 import Header from '../../components/Header';
 import { pageRoutes } from '../../routes/PageRoutes';
 
-const TransactionHistory = () => {
+const TransactionHistory = ({ messageApi }) => {
     const navigate = useNavigate();
 
     return (
         <div>
-            <Header />
+            <Header messageApi={messageApi} />
             <section className="ct_py_70">
                 <div className="container">
                     <div className="row">
