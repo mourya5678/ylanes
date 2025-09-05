@@ -26,3 +26,8 @@ export const getPrivacyPolicyDataAPI = "/bx_block_admin/policies?name=LOGIN";
 
 export const getNotificationAPI = "bx_block_notifications/notifications";
 export const sendFeedbackAPI = "bx_block_feedback/feedbacks";
+
+export const getRoomTypeAPI = "bx_block_different_rooms/rooms/get_room_types";
+export const createPollAPI = "bx_block_targetedfeed/polls";
+
+export const getPollDataAPI = "bx_block_targetedfeed/polls";

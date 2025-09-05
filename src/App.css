@@ -64,3 +64,84 @@
 .pagination li.active a {
     color: #fff !important;
 }
+
+.ct_grid_7_days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    align-items: center;
+}
+
+.ct_day {
+    display: grid;
+    justify-content: center;
+}
+
+.ct_day p {
+    font-size: 14px;
+}
+
+.ct_day span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6e6e6;
+    width: 45px;
+    height: 45px;
+
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.ct_day.active {
+    background-color: var(--yellow);
+}
+
+.ct_increase_decrease_btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ct_increase_decrease_btns input {
+    height: 30px;
+    border: 1px solid #e6e6e6;
+    outline: none;
+    padding-inline: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 100px;
+    border-radius: 4px;
+    padding-right: 38px;
+}
+
+.ct_increase_decrease_btns button {
+    background-color: #e6e6e6;
+    border: 0px;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    transition: 0.4s ease all;
+}
+
+.ct_fs_12 {
+    font-size: 12px;
+}
+
+.ct_increase_decrease_btns select.ct_show_eye {
+    border: 0px;
+    right: 1px;
+    font-size: 14px;
+    outline: none;
+}
+
+.ct_cursor_pointer {
+    cursor: pointer;
+}
+
+@media screen and (max-width:575px) {
+    .ct_day span {
+        width: 38px;
+        height: 38px;
+    }
+}

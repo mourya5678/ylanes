@@ -26,3 +26,11 @@ export const UpdateProfileSchema = Yup.object().shape({
         ),
     full_name: Yup.string().trim().required("Please enter profile name")
 });
+
+export const CreatePollSchema = Yup.object().shape({
+    question: Yup.string().trim().required("Please enter question"),
+    option1: Yup.string().trim().required("Please enter option1"),
+    option2: Yup.string().trim().required("Please enter option2"),
+    topic: Yup.string().trim().required("Please select topic"),
+    duration: '',
+});

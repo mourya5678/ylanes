@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
+import { getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 
 const initialStates = {
@@ -14,6 +14,7 @@ const initialStates = {
     notificationData: [],
     TermsAndConditions: {},
     PrivacyPolicy: {},
+    RoomType: [],
 };
 
 export const authSlice = createSlice({
@@ -183,6 +184,8 @@ export const authSlice = createSlice({
         builder.addCase(provideFeedBackData.rejected, (state, action) => {
             state.isLoading = false;
         });
+
+
     }
 });
 
