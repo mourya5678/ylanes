@@ -65,7 +65,7 @@ const Settings = ({ messageApi }) => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a className="d-flex align-items-center gap-2 justify-content-between text-dark">
+                                        <a onClick={() => navigate(pageRoutes.privacyPolicy)} className="d-flex align-items-center gap-2 justify-content-between text-dark">
                                             <div className="d-flex align-items-center gap-2">
                                                 <img src="assets/img/insurance.png" alt="" width="20px" />
                                                 <p className="mb-0 ct_fw_600">Privacy Policy</p>

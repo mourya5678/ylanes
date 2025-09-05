@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { pipGetAccessToken } from '../../auth/Pip';
 
 const UserWallet = ({ messageApi }) => {
     const navigate = useNavigate();
+
+    const [userData, setUserData] = useState({});
+
+
+    useEffect(() => {
+        const data = pipGetAccessToken("user_data");
+        setUserData(data);
+    }, []);
 
     return (
         <div>
@@ -21,7 +30,7 @@ const UserWallet = ({ messageApi }) => {
                             </div>
                             <div className="ct_wallet_light_yellow_bg">
                                 <p className="mb-1 ct_text_op_6">Wallet Balance</p>
-                                <h2 className="ct_fs_18 ct_fw_600">0 YCoins</h2>
+                                <h2 className="ct_fs_18 ct_fw_600">{userData?.attributes?.ycoins ?? 0} YCoins</h2>
                                 <div className="ct_wallet_icon_top">
                                     <img src="assets/img/wallet_icon.png" alt="" />
                                 </div>

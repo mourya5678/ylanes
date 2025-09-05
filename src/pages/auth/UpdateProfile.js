@@ -6,6 +6,9 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { UpdateProfileSchema } from '../../auth/Schema';
+import ErrorMessage from '../../layout/ErrorMessage';
+import { updateUserProfileData } from '../../redux/actions/authActions';
+import { pageRoutes } from '../../routes/PageRoutes';
 
 const UpdateProfile = ({ messageApi }) => {
     const navigate = useNavigate();
@@ -39,6 +42,7 @@ const UpdateProfile = ({ messageApi }) => {
         console.log("values");
         const callback = (response) => {
             console.log(response);
+            navigate(pageRoutes.profile)
         };
         const formData = new FormData();
         formData.append("type", "update_profile");
@@ -56,6 +60,7 @@ const UpdateProfile = ({ messageApi }) => {
         formData.append('full_phone_number', values?.phone);
         formData.append('bio', '');
         formData.append('personal_exp', '');
+        dispatch(updateUserProfileData({ payload: formData, data: userData?.id, callback, messageApi }))
     };
 
     return (
@@ -76,64 +81,102 @@ const UpdateProfile = ({ messageApi }) => {
                                         <Formik
                                             initialValues={initialeState}
                                             validationSchema={UpdateProfileSchema}
+                                            enableReinitialize
                                             onSubmit={(values, actions) =>
                                                 handleUpdateProfileData(values, actions)
                                             }
                                         >
-
+                                            {({
+                                                values,
+                                                touched,
+                                                errors,
+                                                handleChange,
+                                                handleBlur,
+                                                handleSubmit,
+                                                setFieldValue,
+                                                setFieldError,
+                                                isSubmitting,
+                                            }) => (
+                                                <form className="ct_white_bg">
+                                                    <div className="ct_profile_img">
+                                                        <img src={updateUserImage ? URL.createObjectURL(updateUserImage) : IMAGE_URL + userData?.attributes?.profile_image} alt="" />
+                                                        <label>
+                                                            <input
+                                                                type="file"
+                                                                className="d-none"
+                                                                onChange={(e) => handleUpdateImage(e)}
+                                                                id="ct_profile_update"
+                                                                accept='image/*'
+                                                            />
+                                                            <div className="ct_upload_icon">
+                                                                <i className="fa-solid fa-pen"></i>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <div className="row mt-5">
+                                                        <div className="col-md-6">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Profile Name</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="full_name"
+                                                                    className="form-control ct_input"
+                                                                    placeholder="Enter Profile Name"
+                                                                    value={values.full_name}
+                                                                    onBlur={handleBlur}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <ErrorMessage
+                                                                    errors={errors}
+                                                                    touched={touched}
+                                                                    fieldName="full_name"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Phone Number</label>
+                                                                <input type="number" className="form-control ct_input" placeholder="Enter Phone Number" value={userData?.attributes?.full_phone_number} readOnly disabled />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Email</label>
+                                                                <input
+                                                                    id="email"
+                                                                    type="email"
+                                                                    className="form-control ct_input"
+                                                                    placeholder="Enter Email"
+                                                                    value={values.email}
+                                                                    onBlur={handleBlur}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <ErrorMessage
+                                                                    errors={errors}
+                                                                    touched={touched}
+                                                                    fieldName="email"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Year Of Birth</label>
+                                                                <input type="number" className="form-control ct_input" placeholder="Enter Birth Year" value={values?.birthOfYear} readOnly disabled />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-12">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Gender</label>
+                                                                <input type="text" className="form-control ct_input" placeholder="Enter Gender" value={values.genderType} readOnly disabled />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-4 text-center">
+                                                        <button onClick={handleSubmit} className="ct_yellow_btn mx-auto">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            )}
                                         </Formik>
-                                        <form className="ct_white_bg">
-                                            <div className="ct_profile_img">
-                                                <img src={updateUserImage ? URL.createObjectURL(updateUserImage) : IMAGE_URL + userData?.attributes?.profile_image} alt="" />
-                                                <label>
-                                                    <input
-                                                        type="file"
-                                                        className="d-none"
-                                                        onChange={(e) => handleUpdateImage(e)}
-                                                        id="ct_profile_update"
-                                                        accept='image/*'
-                                                    />
-                                                    <div className="ct_upload_icon">
-                                                        <i className="fa-solid fa-pen"></i>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div className="row mt-5">
-                                                <div className="col-md-6">
-                                                    <div className="form-group mb-4">
-                                                        <label className="ct_fw_500 mb-2">Profile Name</label>
-                                                        <input type="text" className="form-control ct_input" placeholder="Enter Profile Name" value={userData?.attributes?.full_name} />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="form-group mb-4">
-                                                        <label className="ct_fw_500 mb-2">Phone Number</label>
-                                                        <input type="number" className="form-control ct_input" placeholder="Enter Phone Number" value={userData?.attributes?.full_phone_number} readOnly disabled />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="form-group mb-4">
-                                                        <label className="ct_fw_500 mb-2">Email</label>
-                                                        <input type="email" className="form-control ct_input" placeholder="Enter Email" value={userData?.attributes?.email} />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="form-group mb-4">
-                                                        <label className="ct_fw_500 mb-2">Year Of Birth</label>
-                                                        <input type="number" className="form-control ct_input" placeholder="Enter Birth Year" value={userData?.attributes?.birth_year} readOnly disabled />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12">
-                                                    <div className="form-group mb-4">
-                                                        <label className="ct_fw_500 mb-2">Gender</label>
-                                                        <input type="text" className="form-control ct_input" placeholder="Enter Gender" value={userData?.attributes?.gender} readOnly disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-4 text-center">
-                                                <button className="ct_yellow_btn mx-auto">Save Changes</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>

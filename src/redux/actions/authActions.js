@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { commentPostAPI, CreatePostAPI, getAllPostAPI, getPostTopicsAPI, likePostAPI, SMSConfirmationAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { commentPostAPI, CreatePostAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -123,5 +123,116 @@ export const getMyProfileData = createAsyncThunk('get-profile-data', async (prop
         return response;
     } catch (error) {
         console.log(error);
+    }
+});
+
+export const updateUserProfileData = createAsyncThunk('update-user-profile', async (props) => {
+    const { callback, payload, messageApi, data } = props;
+    try {
+        const response = await API_REQUEST({
+            url: updateUserProfileAPI + data,
+            method: "PATCH",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error)
+    };
+});
+
+// getWalletTransactionHistoryAPI
+
+export const getWalletTransaction = createAsyncThunk('wallet-transaction', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getWalletTransactionHistoryAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getFaqData = createAsyncThunk('get-faq', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = API_REQUEST({
+            url: getFaqListAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getNotificationData = createAsyncThunk('get-notification', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = API_REQUEST({
+            url: getNotificationAPI,
+            method: "GET",
+            data: "",
+            headers: {
+                deviceType: 'WEB',
+            },
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+// getTermsConditionsDataAPI
+export const getTermsConditionData = createAsyncThunk('get-term-condition', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = API_REQUEST({
+            url: getTermsConditionsDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getPrivacyPolicyData = createAsyncThunk('get-privacy-policy', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = API_REQUEST({
+            url: getPrivacyPolicyDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const provideFeedBackData = createAsyncThunk('send-feedback', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: sendFeedbackAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
     }
 });

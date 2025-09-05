@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPost, getAllPostComment, getMyProfileData, getPostTopics, likeUserPost, smsConfirmation } from "../actions/authActions";
+import { getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 
 const initialStates = {
@@ -9,6 +9,11 @@ const initialStates = {
     allPosts: [],
     allComments: [],
     profileData: {},
+    trasactionData: [],
+    faqList: [],
+    notificationData: [],
+    TermsAndConditions: {},
+    PrivacyPolicy: {},
 };
 
 export const authSlice = createSlice({
@@ -89,6 +94,93 @@ export const authSlice = createSlice({
             state.profileData = data ?? {};
         });
         builder.addCase(getMyProfileData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // updateUserProfileData
+        builder.addCase(updateUserProfileData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(updateUserProfileData.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(updateUserProfileData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getWalletTransaction
+        builder.addCase(getWalletTransaction.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getWalletTransaction.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.trasactionData = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getWalletTransaction.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getFaqData
+        builder.addCase(getFaqData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getFaqData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.faqList = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getFaqData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getNotificationData
+        builder.addCase(getNotificationData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getNotificationData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.notificationData = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getNotificationData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getTermsConditionData
+        builder.addCase(getTermsConditionData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getTermsConditionData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.TermsAndConditions = data ?? {}
+            state.isLoading = false;
+        });
+        builder.addCase(getTermsConditionData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getPrivacyPolicyData
+        builder.addCase(getPrivacyPolicyData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getPrivacyPolicyData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.PrivacyPolicy = data ?? {}
+            state.isLoading = false;
+        });
+        builder.addCase(getPrivacyPolicyData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // provideFeedBackData
+        builder.addCase(provideFeedBackData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(provideFeedBackData.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(provideFeedBackData.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

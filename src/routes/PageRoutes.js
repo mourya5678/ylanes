@@ -1,7 +1,10 @@
 import { lazy } from "react";
-import Chat from "../pages/chat";
-import OnBoardingScreen from "../pages/onboarding";
-import UpdateProfile from "../pages/auth/UpdateProfile";
+
+const Chat = lazy(() => import("../pages/chat"));
+const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
+
+const UpdateProfile = lazy(() => import("../pages/auth/UpdateProfile"));
+const PrivacyPolicy = lazy(() => import("../pages/settings/PrivacyPolicy"));
 
 const Refer = lazy(() => import("../pages/settings/Refer"));
 const TermsOfUser = lazy(() => import("../pages/settings/TermsOfUser"));
@@ -52,7 +55,8 @@ export const pageRoutes = {
     topUpWallet: "/topup-wallet",
     transaction: '/transaction-history',
     chat: '/connections',
-    onBoarding: '/onboarding'
+    onBoarding: '/onboarding',
+    privacyPolicy: '/privacy-policy',
 };
 
 export const AllRoutes = [
@@ -181,5 +185,11 @@ export const AllRoutes = [
         path: pageRoutes.updateProfile,
         element: <UpdateProfile />,
         isPrivate: true,
-    }
+    },
+    {
+        name: "Privacy Policy",
+        path: pageRoutes.privacyPolicy,
+        element: <PrivacyPolicy />,
+        isPrivate: true,
+    },
 ];

@@ -17,5 +17,12 @@ export const CreatePostSchema = Yup.object().shape({
 });
 
 export const UpdateProfileSchema = Yup.object().shape({
-
+    email: Yup.string()
+        .email("Please enter valid email")
+        .required("Please enter email")
+        .matches(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/,
+            "Please enter valid email"
+        ),
+    full_name: Yup.string().trim().required("Please enter profile name")
 });

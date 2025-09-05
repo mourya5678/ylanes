@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNotificationData } from '../../redux/actions/authActions';
+import Loader from '../../components/Loader';
 
 const Notification = ({ messageApi }) => {
+    const { notificationData, isLoading } = useSelector((state) => state.authReducer);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getNotificationData({ messageApi }));
+    }, []);
+
+    console.log({ notificationData });
+
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
             <Header messageApi={messageApi} />
