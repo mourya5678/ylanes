@@ -28,6 +28,7 @@ const CreateRoom = ({ messageApi }) => {
     const [currentWeekDays, setCurrentWeekDays] = useState([]);
 
     const [isAddResources, setIsAddResources] = useState(false);
+    const [resources, setResources] = useState([]);
 
     const initialState = {
         topic: "",
@@ -197,16 +198,18 @@ const CreateRoom = ({ messageApi }) => {
                                                 </div>
                                             )}
                                         </div>
-                                        {isAddResources && (
-                                            <div className="position-relative mb-4">
-                                                <input
-                                                    type="text"
-                                                    className="form-control ct_input pe-5"
-                                                    placeholder="Enter your resource link"
-                                                />
-                                                <i className="fa-solid fa-trash-can ct_show_eye text-danger ct_cursor_pointer"></i>
-                                            </div>
-                                        )}
+                                        {isAddResources &&
+                                            resources?.map((item) => (
+                                                < div className='position-relative mb-4'>
+                                                    <input
+                                                        type='text'
+                                                        className='form-control ct_input pe-5'
+                                                        placeholder='Enter your resource link'
+                                                    />
+                                                    <i className='fa-solid fa-trash-can ct_show_eye text-danger ct_cursor_pointer'></i>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                     <div className="col-md-12">
                                         <div className="d-flex align-items-center gap-3 mt-2 mb-4">
