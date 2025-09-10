@@ -205,6 +205,15 @@ body{
     border-color: var(--yellow);
 }
 
+ .ct_custom_radio .form-check-input:checked {
+        background-color: var(--yellow);
+        border-color: var(--yellow);
+    }
+
+    .ct_custom_radio .form-check-input:focus {
+        box-shadow: unset;
+    }
+
 @media screen and (max-width:767px) {
     .ct_poll_options ul {
         grid-template-columns: repeat(1, 1fr);
