@@ -34,7 +34,7 @@ export const API_REQUEST = async (props) => {
                     window.location.href = pageRoutes?.login;
                     return;
                 };
-                messageApi.error(error?.response?.data?.message);
+                messageApi.error(error?.response?.data?.errors?.message);
             } else if (error.request) {
                 messageApi.error("No response received from server");
             } else {

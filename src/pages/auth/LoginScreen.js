@@ -8,9 +8,13 @@ import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import "react-phone-number-input/style.css";
 import { requestOtp } from "../../auth/requestOtp";
+import { useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
 
 
 const LoginScreen = ({ messageApi }) => {
+    const { isLoading } = useSelector((state) => state.authReducer);
+
     const navigate = useNavigate();
 
     const initialeState = {
@@ -28,7 +32,9 @@ const LoginScreen = ({ messageApi }) => {
         })
     };
 
-
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div className="ct_login_center_main">
             <div className="container">

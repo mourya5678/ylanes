@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
+import { getPollTypeData } from "../actions/createRoom";
 
 const initialStates = {
     isLoading: false,
@@ -15,6 +16,7 @@ const initialStates = {
     TermsAndConditions: {},
     PrivacyPolicy: {},
     RoomType: [],
+    AllPollsData: []
 };
 
 export const authSlice = createSlice({
@@ -185,7 +187,18 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
 
-
+        // getPollTypeData
+        builder.addCase(getPollTypeData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getPollTypeData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.AllPollsData = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getPollTypeData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
     }
 });
 

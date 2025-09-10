@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { getRoomTypeData } from '../../redux/actions/createRoom';
 import DateAndTimeModal from '../../components/Modals/DateAndTimeModal';
+import { Formik } from 'formik';
+import { CreateRoomSchema } from '../../auth/Schema';
+import moment from 'moment';
 
 const CreateRoom = ({ messageApi }) => {
     const { isLoading, postTopic } = useSelector((state) => state.authReducer);
@@ -19,19 +22,79 @@ const CreateRoom = ({ messageApi }) => {
     const [userData, setUserData] = useState({});
     const [isModalShow, setIsModalShow] = useState(false);
 
+    const [selectedDate, setSelectedDate] = useState();
+    const [currentMonthYear, setCurrentMonthYear] = useState();
+
+    const [currentWeekDays, setCurrentWeekDays] = useState([]);
+
     const [isAddResources, setIsAddResources] = useState(false);
 
+    const initialState = {
+        topic: "",
+        room_type: "",
+        date_time: "",
+        your_take: "",
+        screen_name: "",
+        global_room: false,
+        add_resources: false,
+        join_anonymously: false
+    };
 
     useEffect(() => {
         const data = pipGetAccessToken("user_data");
         setUserData(data);
         dispatch(getPostTopics({ messageApi }));
         dispatch(getRoomTypeData({ messageApi }));
+        getDateAndTimeData();
     }, []);
 
-    if (isLoading || isCreateLoading) {
-        return <Loader />
+    const getDateAndTimeData = () => {
+        const date = new Date()
+        const month = date.toLocaleString("default", { month: "long" });
+        const year = date.getFullYear();
+        setCurrentMonthYear(`${month} , ${year}`);
+        var currentDate = moment();
+        var weekStart = currentDate;
+        var days = [];
+        for (var i = 0; i <= 6; i++) {
+            let dateobj = moment(weekStart).add(i, 'days').format("MMMM-DD-ddd").split('-');
+            let obj = {
+                month: dateobj[0],
+                date: dateobj[1],
+                day: dateobj[2],
+                fullDateObj: moment(weekStart).add(i, 'days').format("YYYY-MM-DD")
+            };
+            days.push(obj);
+        };
+        let todayDay = moment().format("DD");
+        setSelectedDate(todayDay);
+        setCurrentWeekDays(days);
     };
+
+    const handleSubmitCreateRoom = (values, { setSubmitting }) => {
+        setSubmitting(false);
+        const callback = (response) => {
+            console.log(response);
+        };
+        const data = {
+            "room[start_time]": "",
+            "room[end_time]": "",
+            "room[your_take]": "",
+            "room[is_global]": "",
+            "room[account_id]": "",
+            "room[category_id]": "",
+            "room[sub_category_id]": "",
+            "room[topic_id]": "",
+            "room[room_type_id]": "",
+            "room[is_anonymously]": "",
+            "room[anonymously_name]": "",
+            "TZone": ""
+        }
+    }
+
+    // if (isLoading || isCreateLoading) {
+    //     return <Loader />
+    // };
     return (
         <div>
             <Header messageApi={messageApi} />
@@ -46,6 +109,16 @@ const CreateRoom = ({ messageApi }) => {
                                     {userData?.attributes?.ycoins ?? 0}
                                 </button>
                             </div>
+                            <Formik
+                                initialValues={initialState}
+                                validationSchema={CreateRoomSchema}
+                                onSubmit={(values, actions) =>
+                                    handleSubmitCreateRoom(values, actions)
+                                }
+                                enableReinitialize
+                            >
+
+                            </Formik>
                             <form className="mt-4">
                                 <div className="row">
                                     <div className="col-md-6">
@@ -135,7 +208,13 @@ const CreateRoom = ({ messageApi }) => {
                 </div >
             </section >
             {isModalShow &&
-                <DateAndTimeModal onClick={() => setIsModalShow(false)} />
+                <DateAndTimeModal
+                    onClick={() => setIsModalShow(false)}
+                    currentMonthYear={currentMonthYear}
+                    currentWeekDays={currentWeekDays}
+                    selectedDate={selectedDate}
+                    dateChange={(value) => setSelectedDate(value)}
+                />
             }
         </div >
     )

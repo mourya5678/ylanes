@@ -93,7 +93,7 @@
     font-weight: 600;
 }
 
-.ct_day.active {
+.ct_day.active span {
     background-color: var(--yellow);
 }
 
@@ -137,6 +137,74 @@
 
 .ct_cursor_pointer {
     cursor: pointer;
+}
+
+.ct_del_q {
+    font-size: 22px;
+    color: #11111166;
+}
+
+.ct_pe_40 {
+    padding-right: 40px;
+}
+
+.ct_single_uploaded_img {
+    /* border: 2px dashed #d1d5db; */
+    position: relative;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.ct_single_uploaded_img img {
+    width: 100%;
+    object-fit: contain;
+    height: 200px;
+}
+
+.ct_single_uploaded_img i {
+    position: absolute;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000;
+    border-radius: 100px;
+    color: #fff;
+    font-size: 14px;
+    top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ct_poll_options ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.ct_poll_options ul p {
+    background-color: #e6e6e6;
+    padding: 10px;
+    border-radius: 10px;
+    height: 100%;
+    border: 1px solid #e6e6e6;
+}
+
+.ct_poll_options ul p.active {
+    background-color: #ffcb004d;
+}
+
+.ct_poll_options ul p:focus {
+    border-color: var(--yellow);
+}
+
+@media screen and (max-width:767px) {
+    .ct_poll_options ul {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
 }
 
 @media screen and (max-width:575px) {

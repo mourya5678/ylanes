@@ -115,7 +115,7 @@ export const getAllPostComment = createAsyncThunk('get-post-comment', async (pro
 export const getMyProfileData = createAsyncThunk('get-profile-data', async (props) => {
     const { payload, messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: userProfileAPI + payload,
             method: "GET",
             messageApi
@@ -162,7 +162,7 @@ export const getWalletTransaction = createAsyncThunk('wallet-transaction', async
 export const getFaqData = createAsyncThunk('get-faq', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getFaqListAPI,
             method: "GET",
             messageApi
@@ -176,7 +176,7 @@ export const getFaqData = createAsyncThunk('get-faq', async (props) => {
 export const getNotificationData = createAsyncThunk('get-notification', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getNotificationAPI,
             method: "GET",
             data: "",
@@ -195,7 +195,7 @@ export const getNotificationData = createAsyncThunk('get-notification', async (p
 export const getTermsConditionData = createAsyncThunk('get-term-condition', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getTermsConditionsDataAPI,
             method: "GET",
             messageApi
@@ -209,7 +209,7 @@ export const getTermsConditionData = createAsyncThunk('get-term-condition', asyn
 export const getPrivacyPolicyData = createAsyncThunk('get-privacy-policy', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getPrivacyPolicyDataAPI,
             method: "GET",
             messageApi

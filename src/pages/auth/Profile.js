@@ -143,8 +143,8 @@ const Profile = ({ messageApi }) => {
                                                     countryCode={userData?.attributes?.country_details?.code}
                                                     svg
                                                     style={{
-                                                        width: '5em',
-                                                        height: '5em',
+                                                        width: '24px',
+                                                        height: '24px',
                                                     }}
                                                     title={userData?.attributes?.country_details?.code}
                                                 />

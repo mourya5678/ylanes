@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 
-const DateAndTimeModal = ({ onClick }) => {
+const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selectedDate, dateChange }) => {
     const [roomTime, setRoomTime] = useState(() => {
         const now = new Date();
         let hours = now.getHours();
         let minutes = now.getMinutes();
+        // Round minutes up to the nearest 15
+        const remainder = minutes % 15;
+        if (remainder !== 0) {
+            minutes += 15 - remainder;
+        }
+        // Handle overflow (e.g., 12:60 → 1:00)
+        if (minutes === 60) {
+            minutes = 0;
+            hours += 1;
+        }
+        // Convert 24h → 12h format
         hours = hours % 12 || 12;
         const formattedMinutes = minutes.toString().padStart(2, "0");
         return `${hours}:${formattedMinutes}`;
@@ -32,43 +43,21 @@ const DateAndTimeModal = ({ onClick }) => {
                         <div className="ct_delete_modal_modal">
                             <figure>
                                 <figcaption className="mt-0">
-                                    <p className="ct_fs_16 ct_fw_600 ">September, 2025</p>
+                                    <p className="ct_fs_16 ct_fw_600 ">{currentMonthYear ?? ''}</p>
                                     <div className='ct_grid_7_days'>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Fri</p>
-                                            <span>01</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Sat</p>
-                                            <span>02</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Sun</p>
-                                            <span>03</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Mon</p>
-                                            <span>04</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Tue</p>
-                                            <span>05</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Wed</p>
-                                            <span>06</span>
-                                        </div>
-                                        <div className='ct_day'>
-                                            <p className='mb-0 text-center'>Thu</p>
-                                            <span>07</span>
-                                        </div>
+                                        {currentWeekDays?.map((item) => (
+                                            <div className={`ct_day ${item?.date == selectedDate && "active"}`} >
+                                                <p className='mb-0 text-center'>{item?.day ?? ""}</p>
+                                                <span className='ct_cursor' onClick={() => dateChange(item?.date)}>{item?.date ?? ""}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                     <div className='form-group mt-4'>
                                         <label className='mb-2 ct_fw_600'>Time</label>
                                         <div className='ct_increase_decrease_btns'>
                                             <button><i class="fa-solid fa-minus"></i></button>
                                             <div className='position-relative ct_pe_40'>
-                                                <input type='text' placeholder='' value={roomTime} disabled />
+                                                <input type='text' placeholder='' value={roomTime} readOnly />
                                                 <select className='ct_show_eye' value={selectAmPm} onChange={(e) => setSelectAmPm(e.target.value)}>
                                                     <option value="AM">AM</option>
                                                     <option value="PM">PM</option>

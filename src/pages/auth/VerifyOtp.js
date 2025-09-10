@@ -4,13 +4,16 @@ import { useLocation, useNavigate } from 'react-router';
 import { signInWithCredential, PhoneAuthProvider } from "firebase/auth";
 import { auth, onMessageListener, requestForToken } from "../../auth/Firebase";
 import { smsConfirmation } from '../../redux/actions/authActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL, SMSConfirmationAPI } from '../../routes/BackendRoutes';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { pipSetAccessToken } from '../../auth/Pip';
+import Loader from '../../components/Loader';
 
 const VerifyOtp = ({ messageApi }) => {
+    const { isLoading } = useSelector((state) => state.authReducer);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -145,6 +148,10 @@ const VerifyOtp = ({ messageApi }) => {
             });
     };
 
+
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div className="ct_login_center_main">
             <div className="container">

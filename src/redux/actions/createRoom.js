@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { getPollDataAPI, getRoomTypeAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, getPollDataAPI, getRoomTypeAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getRoomTypeAPI,
             method: "GET",
             messageApi
@@ -19,8 +19,8 @@ export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) =
 export const createPollData = createAsyncThunk('create-roll', async (props) => {
     const { payload, callback, messageApi } = props;
     try {
-        const response = API_REQUEST({
-            url: "",
+        const response = await API_REQUEST({
+            url: createPollAPI,
             method: "POST",
             data: payload,
             messageApi
@@ -36,7 +36,7 @@ export const createPollData = createAsyncThunk('create-roll', async (props) => {
 export const getPollTypeData = createAsyncThunk('get-poll-data', async (props) => {
     const { messageApi } = props;
     try {
-        const response = API_REQUEST({
+        const response = await API_REQUEST({
             url: getPollDataAPI,
             method: "GET",
             messageApi

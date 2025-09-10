@@ -113,6 +113,10 @@ const Home = ({ messageApi }) => {
         dispatch(getAllPostComment({ payload: id, messageApi }));
     };
 
+    const handleDeleteImage = (index) => {
+        setPostImages((prev) => prev.filter((item, i) => i !== index));
+    };
+
     if (isLoading) {
         return <Loader />;
     };
@@ -178,13 +182,35 @@ const Home = ({ messageApi }) => {
                                                         className="form-control ct_border_radius_10  ct_input border-0"
                                                         placeholder="what is happning?"
                                                     />
-                                                    {/* <button className="ct_yellow_btn ct_text_op_6 ct_white_nowrap">Post</button> */}
                                                 </div>
                                                 <ErrorMessage
                                                     errors={errors}
                                                     touched={touched}
                                                     fieldName="title"
                                                 />
+                                                {postImages?.length != 0 &&
+                                                    <div className="item">
+                                                        <Swiper
+                                                            modules={[Navigation]}
+                                                            spaceBetween={30}
+                                                            slidesPerView={3}
+                                                            navigation
+                                                            loop
+                                                            autoplay={{ delay: 2000 }}
+                                                        >
+                                                            {postImages?.map((item, i) => (
+                                                                <SwiperSlide>
+                                                                    <div className="item">
+                                                                        <div className="ct_post_img ct_single_uploaded_img">
+                                                                            <img src={URL.createObjectURL(item)} alt="" />
+                                                                            <i class="fa-solid fa-xmark" onClick={() => handleDeleteImage(i)}></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </SwiperSlide>
+                                                            ))}
+                                                        </Swiper>
+                                                    </div>
+                                                }
                                                 <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3">
                                                     <div className="d-flex align-items-center gap-3">
                                                         <div>

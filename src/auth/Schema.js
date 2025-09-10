@@ -32,5 +32,24 @@ export const CreatePollSchema = Yup.object().shape({
     option1: Yup.string().trim().required("Please enter option1"),
     option2: Yup.string().trim().required("Please enter option2"),
     topic: Yup.string().trim().required("Please select topic"),
-    duration: '',
+    durationHours: Yup.string()
+        .required("Please select hours")
+        .test("hours-check", "Hours cannot be 00 if minutes is 00", function (value) {
+            const { durationMinuts } = this.parent;
+            return !(value === "00" && durationMinuts === "00");
+        }),
+    durationMinuts: Yup.string()
+        .required("Please select minutes")
+        .test("minutes-check", "Minutes cannot be 00 if hours is 00", function (value) {
+            const { durationHours } = this.parent;
+            return !(value === "00" && durationHours === "00");
+        }),
+});
+
+export const CreateRoomSchema = Yup.object().shape({
+    topic: Yup.string().trim().required("Please select a topic"),
+    room_type: Yup.string().trim().required("Please select a room type"),
+    date_time: Yup.string().trim().required("Please select date and time"),
+    your_take: Yup.string().trim().min(50, "Your take must be at least 50 characters").max(300, "Your take must not exceed 300 characters").required("Please enter your take"),
+    // add_resources:
 });
