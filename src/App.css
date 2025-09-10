@@ -14,8 +14,13 @@
 .ct_post_img img {
     object-fit: cover;
 }
+body{
+    background-color: #fbfbfb;
+}
 
-
+.ct_cursor_pointer{
+    cursor: pointer;
+}
 
 .ct_pagination_select_21 {
     border: 1px solid #d8d8d8;

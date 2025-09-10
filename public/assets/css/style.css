@@ -539,11 +539,15 @@ textarea {
 }
 
 .ct_outline_bg {
-  border: 1px solid #EAEBEF;
-  border-radius: 10px;
+  border: 1px solid #fff;
+  border-radius: 20px;
   padding: 30px 30px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.09);
+  background-color: #fff;
 }
-
+.ct_box_shadow_none{
+  box-shadow: none !important;
+}
 .ct_px_30 {
   padding-inline: 30px;
 
@@ -1251,6 +1255,8 @@ button:focus {
   display: flex;
   align-items: center;
   gap: 5px;
+  background-color: #fff;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.09);
 }
 
 .ct_full_view_img img {
