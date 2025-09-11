@@ -1,7 +1,10 @@
 import React from 'react';
 import Header from '../../components/Header';
+import AgoraRTM from 'agora-rtm-sdk';
 
 const Chat = ({ messageApi }) => {
+
+
 
     return (
         <div>
@@ -45,7 +48,7 @@ const Chat = ({ messageApi }) => {
                                                     <div className="modal-body mt-4 ct_custom_scrollbar" style={{ height: "calc(100vh - 383px) !important" }}>
                                                         <div className="chat-lists">
                                                             <div className="chat-list">
-                                                                <a href="javascript:void(0)" className="d-flex active2">
+                                                                <a className="d-flex active2">
                                                                     <div className="ct_chat_list_grid">
                                                                         <div className="position-relative">
                                                                             <img className="img-fluid ct_img_40"
@@ -70,7 +73,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -90,7 +93,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -110,7 +113,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -130,7 +133,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -150,7 +153,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -170,7 +173,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="d-flex">
+                                                                <a className="d-flex">
                                                                     <div className="position-relative">
                                                                         <img className="img-fluid ct_img_40"
                                                                             src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -215,7 +218,7 @@ const Chat = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                     <div>
-                                                                        <a href="javascript:void(0)" className="ct_yellow_btn px-3 py-2 h-auto" data-bs-toggle="modal" data-bs-target="#ct_view_user">+ Add New Chat</a>
+                                                                        <a className="ct_yellow_btn px-3 py-2 h-auto" data-bs-toggle="modal" data-bs-target="#ct_view_user">+ Add New Chat</a>
                                                                     </div>
                                                                 </div>
                                                                 <div className="modal-body">
@@ -391,8 +394,9 @@ const Chat = ({ messageApi }) => {
                                                                     <h4 className="ct_fs_20 ct_fw_600">Messages</h4>
                                                                     <p>Click on a contact to view messages.</p>
                                                                     <div className="">
-                                                                        <a href="#"
-                                                                            className="ct_purple_btn d-flex align-items-center gap-2"><svg
+                                                                        <a
+                                                                            className="ct_purple_btn d-flex align-items-center gap-2">
+                                                                            <svg
                                                                                 width="20" height="20" viewBox="0 0 20 20"
                                                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -423,7 +427,7 @@ const Chat = ({ messageApi }) => {
                                     <div className="tab-pane fade" id="pills-persional_info" role="tabpanel"
                                         aria-labelledby="pills-persional_info-tab">
                                         <div className="chat-list">
-                                            <a href="javascript:void(0)" className="d-flex active2 align-items-center">
+                                            <a className="d-flex active2 align-items-center">
                                                 <div className="position-relative">
                                                     <img className="img-fluid ct_img_40"
                                                         src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
@@ -442,7 +446,7 @@ const Chat = ({ messageApi }) => {
                                                     <button className="ct_yellow_btn ct_white_nowrap">+ Invite</button>
                                                 </div>
                                             </a>
-                                            <a href="javascript:void(0)" className="d-flex align-items-center">
+                                            <a className="d-flex align-items-center">
                                                 <div className="position-relative">
                                                     <img className="img-fluid ct_img_40"
                                                         src="assets/img/user.png" data-bs-target="#full_view_img" data-bs-toggle="modal" alt="user img" />
