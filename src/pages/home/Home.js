@@ -123,97 +123,127 @@ const Home = ({ messageApi }) => {
       <div>
         <Header messageApi={messageApi} />
         <section className="ct_py_70">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-4 ">
-                <div className="ct_outline_bg position-sticky top-0">
-                  <div className="d-flex align-items-center gap-2 justify-content-between">
-                    <h4 className="ct_fs_20 ct_fw_600 mb-0">Poll</h4>
-                    <a className="ct_yellow_btn  ct_white_nowrap">
-                      Create Poll
-                    </a>
-                  </div>
-                  <div
-                    className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
-                    style={{ borderColor: "#e6e6e6" }}
-                  >
-                    <h6 className="ct_fs_16">
-                      Hegrid me to do the needful at earliest to avoid using of
-                    </h6>
-                    <ul>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option A
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option B
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option C
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option D
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
+              <div className="col-lg-3  mb-4 mb-lg-0">
+                <div className=" position-sticky top-0">
+                  <div className="ct_outline_bg">
+                    <div className="d-flex align-items-center gap-2 justify-content-between">
+                      <h4 className="ct_fs_20 ct_fw_600 mb-0">Poll</h4>
+                      <a className="ct_yellow_btn  ct_white_nowrap">
+                        Create Poll
+                      </a>
+                    </div>
+                    <div
+                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                      style={{ borderColor: "#e6e6e6" }}
+                    >
+                      <h6 className="ct_fs_16">
+                        Hegrid me to do the needful at earliest to avoid using
+                        of
+                      </h6>
+                      <ul>
+                        <li>
+                          <div class="form-check ct_custom_radio">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                            <label
+                              class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                              for="flexRadioDefault1"
+                            >
+                              Option A
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check ct_custom_radio">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                            <label
+                              class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                              for="flexRadioDefault1"
+                            >
+                              Option B
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check ct_custom_radio">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                            <label
+                              class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                              for="flexRadioDefault1"
+                            >
+                              Option C
+                            </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check ct_custom_radio">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                            <label
+                              class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                              for="flexRadioDefault1"
+                            >
+                              Option D
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="text-end mt-2">
+                      <a className="ct_yellow_text ct_fw_500">See More</a>
+                    </div>
                   </div>
 
-                  <div className="text-end mt-2">
-                    <a className="ct_yellow_text ct_fw_500">See More</a>
+                  <div class="ct_white_bg mt-4">
+                    <h4 className="ct_fs_20 ct_fw_600 mb-4">My Rooms</h4>
+
+                    <div
+                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                      style={{ borderColor: "#e6e6e6" }}
+                    >
+                      <div>
+                        <h4 class="ct_fs_20 ct_0fw_600">
+                          Finance &amp; Economics
+                        </h4>
+                        <small class="text-end d-block">Standard</small>
+                      </div>
+                      <div class="ct_border_top_1 pt-3 mt-3">
+                        <p class="mb-0">
+                          {" "}
+                          <i class="fa-regular fa-clock me-2"></i>Fri,8 Aug
+                          06:30 PM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="text-end mt-2">
+                      <a className="ct_yellow_text ct_fw_500">See More</a>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-8">
+              <div className="col-lg-6  mb-4 mb-lg-0">
                 <div className="row ct_outline_bg">
                   <div className="col-md-12">
                     <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
@@ -720,6 +750,148 @@ const Home = ({ messageApi }) => {
                                 </div>
                             </div> */}
                   </div>
+                </div>
+              </div>
+              <div className="col-lg-3 mb-4 mb-lg-0">
+                <div className="ct_outline_bg position-sticky top-0">
+                  <h4 className="ct_fs_20 ct_fw_600 mb-0">Topic</h4>
+                  <ul className="mt-3">
+                    <li>
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          All
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Business & Start-ups
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Finance & Economics
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Geo-Politics
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Family & Relationships
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Health & Wellness
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Sports
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Chill Zone (Movies & Jokes)
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Travel & Adventure
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

@@ -539,11 +539,11 @@ textarea {
 }
 
 .ct_outline_bg {
-  border: 1px solid #fff;
-  border-radius: 20px;
-  padding: 30px 30px;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.09);
-  background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 30px;
+    padding: 30px 30px;
+    /* box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.09); */
+    background-color: #fff;
 }
 .ct_box_shadow_none{
   box-shadow: none !important;
@@ -1255,8 +1255,9 @@ button:focus {
   display: flex;
   align-items: center;
   gap: 5px;
+  border-radius: 15px !important;
   background-color: #fff;
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.09);
+  /* box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.09); */
 }
 
 .ct_full_view_img img {
