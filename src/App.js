@@ -1,13 +1,25 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { AllRoutes } from './routes/PageRoutes';
 import PrivateRoutes from './layout/PrivateRoutes';
 import { message } from 'antd';
+import AgoraRTM from 'agora-rtm-sdk';
 import Loader from './layout/Loader';
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
+  const APP_ID = "611227230#1418219";
+  // const client = AgoraRTM.createInstance(APP_ID)
+
+  useEffect(() => {
+    const connect = async () => {
+      // await client.login({
+
+      // })
+    };
+    connect();
+  }, []);
 
   return (
     <div>

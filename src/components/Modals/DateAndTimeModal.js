@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selectedDate, dateChange }) => {
+const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selectedDate, dateChange, messageApi, setFieldValues }) => {
+
     const [roomTime, setRoomTime] = useState(() => {
         const now = new Date();
         let hours = now.getHours();
@@ -25,6 +26,56 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         const now = new Date();
         return now.getHours() >= 12 ? "PM" : "AM";
     });
+
+    const handleTimeUpdate = (val) => {
+        if (val == "plus") {
+            let data = roomTime?.split(":");
+            let hours = parseInt(data[0]);
+            let minutes = parseInt(data[1]);
+            if (minutes == 45) {
+                hours += 1;
+                minutes = 0;
+            } else {
+                minutes += 15;
+            }
+            if (hours > 12) {
+                hours = 1;
+            }
+            const updatedTime = `${hours}:${minutes.toString().padStart(2, "0")}`;
+            setRoomTime(updatedTime);
+        } else if (val == "minus") {
+            let data = roomTime?.split(":");
+            let hours = parseInt(data[0]);
+            let minutes = parseInt(data[1]);
+            if (minutes == 0) {
+                minutes = 45;
+                hours -= 1;
+            } else {
+                minutes -= 15;
+            }
+            if (hours < 1) {
+                hours = 12;
+            }
+            const updatedTime = `${hours}:${minutes.toString().padStart(2, "0")}`;
+            setRoomTime(updatedTime);
+        }
+    };
+
+    const handleSubmitTimeData = () => {
+        const now = new Date();
+        const month = now.getMonth() + 1;
+        const year = now.getFullYear();
+        let [hours, minutes] = roomTime.split(":").map(Number);
+        if (selectAmPm === "PM" && hours < 12) hours += 12;
+        if (selectAmPm === "AM" && hours === 12) hours = 0;
+        const finalDateTime = new Date(year, month - 1, Number(selectedDate), hours, minutes, 0);
+        if (finalDateTime <= now) {
+            messageApi.error("Selected date and time must be in the future.");
+        } else {
+            setFieldValues(finalDateTime);
+            onClick();
+        };
+    };
 
 
     return (
@@ -55,7 +106,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                     <div className='form-group mt-4'>
                                         <label className='mb-2 ct_fw_600'>Time</label>
                                         <div className='ct_increase_decrease_btns'>
-                                            <button><i class="fa-solid fa-minus"></i></button>
+                                            <button onClick={() => handleTimeUpdate("minus")}><i class="fa-solid fa-minus"></i></button>
                                             <div className='position-relative ct_pe_40'>
                                                 <input type='text' placeholder='' value={roomTime} readOnly />
                                                 <select className='ct_show_eye' value={selectAmPm} onChange={(e) => setSelectAmPm(e.target.value)}>
@@ -63,7 +114,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                                     <option value="PM">PM</option>
                                                 </select>
                                             </div>
-                                            <button><i class="fa-solid fa-plus"></i></button>
+                                            <button onClick={() => handleTimeUpdate("plus")}><i class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </figcaption>
@@ -72,26 +123,17 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                 <button
                                     type="button"
                                     className="ct_outline_btn ct_border_radius_10 w-100 ct_fw_600"
-                                    data-bs-dismiss="modal"
+                                    onClick={onClick}
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="button"
+                                    onClick={handleSubmitTimeData}
                                     className="ct_yellow_btn ct_border_radius_10 w-100 ct_fw_600"
-                                    data-bs-dismiss="modal"
                                 >
-                                    Cancel
+                                    Submit
                                 </button>
-                                {/* <button
-                                    type="button"
-                                    className={`${btnName == "Approve" ? "ct_green_btn" : "ct_red_btn"
-                                        } w-100 ct_fw_600`}
-                                    onClick={handleDelete}
-                                    data-bs-dismiss="modal"
-                                >
-                                    {btnName}
-                                </button> */}
                             </div>
                         </div>
                     </div>
