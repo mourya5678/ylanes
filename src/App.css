@@ -214,6 +214,13 @@ body{
         box-shadow: unset;
     }
 
+    .ct_chat_main_bg_1{
+        background-color: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0px 0px 25px rgba(0,0,0,0.09)
+    }
+
 @media screen and (max-width:767px) {
     .ct_poll_options ul {
         grid-template-columns: repeat(1, 1fr);

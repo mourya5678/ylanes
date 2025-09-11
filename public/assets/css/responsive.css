@@ -239,5 +239,11 @@
     grid-template-columns: 160px auto;
 
   }
-
+.ct_res_w_50_name{
+  width: 50px;
+  display: inline-block;
+}
+.ct_outline_bg ,.ct_white_bg  {
+  padding: 20px 10px;
+}
 }
