@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { pipDeleteTokenAuth, pipGetAccessToken } from "../../auth/Pip";
-import { BASE_URL } from "../../routes/BackendRoutes";
+import { BASE_URL, BASE_URL1 } from "../../routes/BackendRoutes";
 import { pageRoutes } from '../../routes/PageRoutes';
 
 export const API_REQUEST = async (props) => {
-    const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = true, isSuccessToast = true, messageApi } = props;
+    const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = true, isSuccessToast = true, messageApi, isPaythonApi = false } = props;
     const token = pipGetAccessToken("yLanes_user_Token");
     const requestOptions = {
-        url: BASE + url,
+        url: !isPaythonApi ? BASE + url : BASE_URL1 + url,
         method,
         headers: {
             token: `${token}`,
@@ -16,13 +16,12 @@ export const API_REQUEST = async (props) => {
         params: method === "GET" ? params : undefined,
         data: method !== "GET" ? data : undefined,
     };
-
     try {
         const response = await axios(requestOptions);
-        if (method !== "GET" && response?.data?.success == true) {
-            isSuccessToast == true && messageApi.success(response?.data?.message);
+        if (method !== "GET") {
+            isSuccessToast == true && messageApi.success(response?.message);
         } else if (response?.data?.success == false && method !== "GET") {
-            isSuccessToast == true && messageApi.error(response?.data?.message);
+            isSuccessToast == true && messageApi.error(response?.message);
         };
         return response?.data;
     } catch (error) {

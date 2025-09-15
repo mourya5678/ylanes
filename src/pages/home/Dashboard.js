@@ -1,0 +1,496 @@
+import React from 'react';
+
+const Dashboard = () => {
+    return (
+        <div>
+            <header className="ct_header ct_header_px_50">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="ct_navbr_main">
+                                <div className="ct_logo">
+                                    <a>
+                                        <img src="assets/img/logo.png" alt="" />
+                                    </a>
+                                </div>
+                                <div className="ct_navbar">
+                                    <ul>
+                                        <div className="ct_close_menu">
+                                            <i className="fa-solid fa-xmark"></i>
+                                        </div>
+                                        <li>
+                                            <a>Home</a>
+                                        </li>
+                                        <li>
+                                            <a>About</a>
+                                        </li>
+                                        <li>
+                                            <a>Blog</a>
+                                        </li>
+                                        <li>
+                                            <a>FAQs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                    <a className="ct_yellow_btn">Enter YLanes</a>
+                                    <div className="ct_menu_bar">
+                                        <i className="fa-solid fa-bars-staggered"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section className="ct_section_banner">
+                <div className="container-fluid">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 mb-4">
+                            <div className="ct_banner_title ct_header_px_50">
+                                <h2 className="ct_fs_44 mb-4 ct_fw_700">YLanes - An EXCLUSIVE
+                                    CLUB for Wise, Witty & Curious MEN</h2>
+                                <p className="ct_fs_18 ct_text_op_6 mb-4">Where intelligent conversations meet unfiltered camaraderie. Engage
+                                    with polls, posts, and video chats on Business, Wellness, Sports, and more.
+                                </p>
+                                <h6 className=" ct_fs_16">Join this exclusive club and let your ideas flow freely.</h6>
+                                <div className="mt-4">
+                                    <a className="ct_yellow_btn ct_border_radius_10">Start Your Free Trial</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 mb-4">
+                            <div className="ct_banner_right_img">
+                                <img src="assets/img/banner_right_img.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="ct_why_bg py-5 text-white">
+                <div className="container-fluid text-center">
+                    <h2 className="mb-5 fw-bold">Why YLanes?</h2>
+                    <div className="row  g-4">
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_why_choose_card p-4 h-100 rounded">
+                                <h5 className="ct_fs_20 mb-4">Exclusivity</h5>
+                                <p>
+                                    Exclusivity - A private club where only members shape the conversations
+                                    through posts, polls, and small-group video calls
+                                </p>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_why_choose_card p-4 h-100 rounded">
+                                <h5 className="ct_fs_20 mb-4">Intellectual Stimulation</h5>
+                                <p>
+                                    Engage in thought-provoking conversations with a community of wise,
+                                    witty, and curious minds.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_why_choose_card p-4 h-100 rounded">
+                                <h5 className="ct_fs_20 mb-4">Freedom to Express</h5>
+                                <p>
+                                    Express yourself freely—no need for names or social media links,
+                                    just authentic ideas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="py-5">
+                <div className="container-fluid">
+                    <h2 className="text-center fw-bold mb-5">What's the Buzz?</h2>
+                    <div className="row g-4">
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#c6a3f7" }}>
+                                <h5 className="fw-bold">Business & Start-ups</h5>
+                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
+                                <img src="assets/img/icon_1.png" alt="Business" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffad61" }}>
+                                <h5 className="fw-bold">Finance & Economics</h5>
+                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
+                                    future of work?</p>
+                                <img src="assets/img/icon_2.png" alt="Finance" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#e66ab4" }}>
+                                <h5 className="fw-bold">Geo-Politics</h5>
+                                <p>Are massive IPL salaries uplifting cricket or disrupting the global balance of the sport?</p>
+                                <img src="assets/img/icon_3.png" alt="Geo Politics" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-6 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffeb77" }}>
+                                <h5 className="fw-bold">Family & Relationships</h5>
+                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
+                                <img src="assets/img/icon_4.png" alt="Family" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#8dd0f7" }}>
+                                <h5 className="fw-bold">Health & Wellness</h5>
+                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
+                                <img src="assets/img/icon_5.png" alt="Health" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#a8d97f" }}>
+                                <h5 className="fw-bold">Sports</h5>
+                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
+                                    future of work?</p>
+                                <img src="assets/img/icon_6.png" alt="Sports" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-8 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffb16d" }}>
+                                <h5 className="fw-bold">Travel & Adventure</h5>
+                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
+                                <img src="assets/img/icon_7.png" alt="Travel" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#d48de2" }}>
+                                <h5 className="fw-bold">Chill Zone (Movies & Jokes)</h5>
+                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
+                                    future of work?</p>
+                                <img src="assets/img/icon_8.png" alt="Chill Zone" className="img-fluid mt-3" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="py-5">
+                <div className="container-fluid">
+                    <h2 className="text-center fw-bold mb-5">What YLanes Members Say</h2>
+                    <div className="owl-carousel owl-theme ct_review_slider">
+                        <div className="item">
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_3.png" alt="User 1" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        YLanes is where my brain goes to hang out. From debating Elon’s next move to discussing whether cricket
+                                        should even have sequels, it’s the perfect mental gym. Love it!
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Gustavo Culhane</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        The discussions here are insightful and fun. It’s refreshing to have authentic conversations without the
+                                        noise of social media. Highly recommended!
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        className="ct-carousel-nav mt-4 d-flex justify-content-between align-items-center gap-2 w-75 ct_border_top_1 mx-auto pt-4">
+                        <p className="mb-0 mb-0">We have <span className="ct_fw_600">100+</span> Happy Customers</p>
+                        <div className="d-flex justify-content-end align-items-center gap-2">
+                            <div id="carouselCounter" className="ct-carousel-counter">1/3</div>
+                            <button id="carouselPrev" className="ct-nav-btn ct-nav-prev" aria-label="Previous review">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true">
+                                    <path d="M15 18L9 12L15 6" stroke="#222" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button id="carouselNext" className="ct-nav-btn ct-nav-next" aria-label="Next review">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                    aria-hidden="true">
+                                    <path d="M9 18L15 12L9 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="ct_how_works_bg py-5 text-white">
+                <div className="container-fluid">
+                    <h2 className="text-center mb-5 fw-bold">How It Works</h2>
+                    <div className="row g-4 justify-content-center">
+                        <div className="col-md-4">
+                            <div className="ct_how_works_card p-4 text-center h-100 position-relative rounded-4">
+                                <div
+                                    className="position-absolute top-0  translate-middle bg-white text-dark fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                                    style={{ width: "40px", height: "40px" }}>
+                                    1
+                                </div>
+                                <div className="mb-3 ct_how_work_icon">
+                                    <img src="assets/img/how_work_icon_1.png" alt="Login" className="img-fluid" />
+                                </div>
+                                <h5 className="fw-semibold">Login with Mobile Number & OTP</h5>
+                                <p className="small mb-0">
+                                    No social media needed. Just your mobile number, an OTP, and you’re in. Your privacy is our priority.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="ct_how_works_card p-4 text-center h-100 position-relative rounded-4">
+                                <div
+                                    className="position-absolute top-0  translate-middle bg-white text-dark fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                                    style={{
+                                        width: "40px", height: "40px"
+                                    }}>
+                                    2
+                                </div>
+                                <div className="mb-3 ct_how_work_icon">
+                                    <img src="assets/img/how_work_icon_2.png" alt="Profile" className="img-fluid" />
+                                </div>
+                                <h5 className="fw-semibold">Create your Profile</h5>
+                                <p className="small mb-0">
+                                    Pick a name, share a few details (anonymity optional), it’s quick and easy. Craft a profile that
+                                    represents you.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="ct_how_works_card p-4 text-center h-100 position-relative rounded-4">
+                                <div
+                                    className="position-absolute top-0  translate-middle bg-white text-dark fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                                    style={{ width: "40px", height: "40px" }}>
+                                    3
+                                </div>
+                                <div className="mb-3 ct_how_work_icon">
+                                    <img src="assets/img/how_work_icon_3.png" alt="Membership" className="img-fluid" />
+                                </div>
+                                <h5 className="fw-semibold">Select a Membership Model</h5>
+                                <p className="small mb-0">
+                                    Choose what works best for you. Explore with a free trial before committing to the membership that suits
+                                    your vibe.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section >
+            <section className=" my-5 ct_pricing_main">
+                <div className="container-fluid">
+                    <h2 className="text-center fw-bold mb-5">Membership Pricing</h2>
+                    <div className="row g-4">
+                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
+                            <div className="et_pricing_card position-relative ">
+                                <div className="ct_border_bg_1">
+                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Free</h5>
+                                    <div className="ct_border_bg_1">
+                                        <ul>
+                                            <li><span>Sign-up</span> <span>· 100 YCoins</span></li>
+                                            <li><span>Referral fill</span> <span>· 100 YCoins</span></li>
+                                            <li><span>Profile fill </span><span>· 100 YCoins</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="owl-carousel owl-theme ct_price_slider mt-4">
+                                    <div className="item">
+                                        <div className="et_pricing_content">
+                                            <h6 className="text-start mb-4 ct_fs_20">Feed participation pricing</h6>
+                                            <ul>
+                                                <li><span>Like post/comment</span> <span className="ct_fw_500">· 0 YCoins</span></li>
+                                                <li><span>Post/Comment</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Send connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Connection request refund</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Accept connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="et_pricing_content">
+                                            <h6 className="text-start mb-4 ct_fs_20 ">Feed participation pricing</h6>
+                                            <ul>
+                                                <li><span>Like post/comment</span> <span className="ct_fw_500">· 0 YCoins</span></li>
+                                                <li><span>Post/Comment</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Send connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Connection request refund</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                                <li><span>Accept connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="ct-carousel-nav mt-3 mx-auto">
+                                    <div className="d-flex justify-content-between align-items-center gap-2">
+                                        <div id="carouselCounter2" className="ct-carousel-counter">1/3</div>
+                                        <div>
+                                            <button id="carouselPrev2" className="ct-nav-btn ct-nav-prev" aria-label="Previous review">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    aria-hidden="true">
+                                                    <path d="M15 18L9 12L15 6" stroke="#222" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <button id="carouselNext2" className="ct-nav-btn ct-nav-next" aria-label="Next review">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    aria-hidden="true">
+                                                    <path d="M9 18L15 12L9 6" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
+                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
+                                <div className='mb-3'>
+                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Silver</h5>
+                                    <div className="price w-100 py-3">₹1,000</div>
+                                    <div className="ct_border_bg_1">
+                                        <ul className="text-start">
+                                            <li>5000 YCoins</li>
+                                            <li>Unlimited validity</li>
+                                            <li>Feed participation & video rooms</li>
+                                            <li>Exclusive Blue Badge</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button className="ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
+                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 position-relative d-grid">
+                                <div className="recommended-tag">Recommended</div>
+                                <div className='mb-3'>
+                                    <h5 className="text-center mb-4 mt-3 ct_fs_24">Silver Plus</h5>
+                                    <div className="price w-100 py-3">₹1,500</div>
+                                    <div className="ct_border_bg_1">
+                                        <ul className="text-start">
+                                            <li>10000 YCoins</li>
+                                            <li>Unlimited validity</li>
+                                            <li>Everything in Silver</li>
+                                            <li>Superhost Status</li>
+                                            <li>Create video rooms free (except Moderated Rooms)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button className="ct_black_btn mt-auto">Get Started</button>
+                            </div>
+                        </div>
+                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
+                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
+                                <div className='mb-3'>
+                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Gold</h5>
+                                    <div className="price w-100 py-3">₹2,000</div>
+                                    <div className="ct_border_bg_1">
+                                        <ul className="text-start">
+                                            <li>25000 YCoins</li>
+                                            <li>Everything in Silver Plus</li>
+                                            <li>Exclusive Yellow badge</li>
+                                            <li>Moderator status to create rooms and earn YCoins</li>
+                                            <li>Invitation to write blogs on our website</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button className=" ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="my-5">
+                <div className="container ">
+                    <div className="ct_newsletter_bg">
+                        <h2 className="ct_fs_28 mb-4">Where Wise, Witty & Curious Men Belong</h2>
+                        <p>
+                            Join this private club where ideas flow freely, connections are authentic,
+                            and conversations challenge the ordinary.
+                        </p>
+                        <p>
+                            Explore topics that matter—business, wellness, sports, and more<br />
+                            —with men as interesting as you.
+                        </p>
+                        <button className="newsletter-btn">Join Now And Start Your Free Trial</button>
+                    </div>
+                </div>
+            </section>
+            <footer className="ct_footer_bg">
+                <div className="container">
+                    <div className="footer-logo mb-3">
+                        <img src="assets/img/logo_white.png" alt="" />
+                    </div>
+                    <p>Redefining networking with a focus on authentic conversations, deep insights, and lasting bonds.</p>
+                    <div className="footer-nav mb-4">
+                        <a>About</a>
+                        <a>Blog</a>
+                        <a>FAQs</a>
+                        <a>Privacy Policy</a>
+                    </div>
+                    <div className="footer-icons mb-4">
+                        <a aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+                        <a aria-label="LinkedIn"><i className="fa-brands fa-linkedin"></i></a>
+                    </div>
+                    <div className="footer-bottom">
+                        © 2024 yLanes. All rights reserved
+                    </div>
+                </div>
+            </footer>
+        </div >
+    )
+};
+
+export default Dashboard;

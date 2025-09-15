@@ -31,3 +31,15 @@ export const getRoomTypeAPI = "bx_block_different_rooms/rooms/get_room_types";
 export const createPollAPI = "bx_block_targetedfeed/polls";
 
 export const getPollDataAPI = "bx_block_targetedfeed/polls";
+export const createRoomAPI = "bx_block_different_rooms/rooms";
+
+export const getAllConnectionsAPI = "bx_block_request_management/requests/friends";
+export const getDiscoverAllConnectionAPI = "bx_block_profile/profiles/see_all_connection_suggestions";
+
+export const sendInvitationToUserAPI = "bx_block_request_management/requests";
+export const getAllChatUserAPI = "user-chats";
+
+export const getPreviousMessagesAPI = "get-messages/";
+export const getAgoraTokenAPI = "token/user-direct?expire=3600";
+
+export const sendMessageToUserAPI = "send-message";

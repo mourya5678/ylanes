@@ -6,17 +6,14 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         const now = new Date();
         let hours = now.getHours();
         let minutes = now.getMinutes();
-        // Round minutes up to the nearest 15
         const remainder = minutes % 15;
         if (remainder !== 0) {
             minutes += 15 - remainder;
         }
-        // Handle overflow (e.g., 12:60 → 1:00)
         if (minutes === 60) {
             minutes = 0;
             hours += 1;
         }
-        // Convert 24h → 12h format
         hours = hours % 12 || 12;
         const formattedMinutes = minutes.toString().padStart(2, "0");
         return `${hours}:${formattedMinutes}`;
@@ -67,8 +64,8 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         const year = now.getFullYear();
         let [hours, minutes] = roomTime.split(":").map(Number);
         if (selectAmPm === "PM" && hours < 12) hours += 12;
-        if (selectAmPm === "AM" && hours === 12) hours = 0;
-        const finalDateTime = new Date(year, month - 1, Number(selectedDate), hours, minutes, 0);
+        if (selectAmPm === "AM" && hours == 12) hours = 0;
+        const finalDateTime = new Date(Date.UTC(year, month - 1, Number(selectedDate), hours, minutes, 0));
         if (finalDateTime <= now) {
             messageApi.error("Selected date and time must be in the future.");
         } else {
@@ -76,7 +73,6 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
             onClick();
         };
     };
-
 
     return (
         <div className="modal show d-block ct_congratulation_modal_fade" tabIndex="-1">

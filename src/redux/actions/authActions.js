@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { commentPostAPI, CreatePostAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { commentPostAPI, CreatePostAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;

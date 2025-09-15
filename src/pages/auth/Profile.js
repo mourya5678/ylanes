@@ -10,10 +10,13 @@ import { getMyProfileData } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
 import emojiFlags from "emoji-flags";
 import ReactCountryFlag from 'react-country-flag';
+import { getMyConnectionsData } from '../../redux/actions/createRoom';
 
 
 const Profile = ({ messageApi }) => {
     const { isToggle, profileData, isLoading } = useSelector((state) => state.authReducer);
+    const { isCreateLoading, allConnections } = useSelector((state) => state.createRoomReducer);
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,7 +25,8 @@ const Profile = ({ messageApi }) => {
 
     useEffect(() => {
         const data = pipGetAccessToken("user_data");
-        dispatch(getMyProfileData({ payload: data?.id, messageApi }))
+        dispatch(getMyProfileData({ payload: data?.id, messageApi }));
+        dispatch(getMyConnectionsData({ messageApi }));
     }, []);
 
     useEffect(() => {
@@ -30,8 +34,10 @@ const Profile = ({ messageApi }) => {
         setUserData(data);
     }, [profileData]);
 
+    console.log({ allConnections });
 
-    if (isLoading) {
+
+    if (isLoading || isCreateLoading) {
         return <Loader />;
     };
     return (
@@ -151,6 +157,36 @@ const Profile = ({ messageApi }) => {
                                                 <p className="mb-0 ct_text_op_6">{userData?.attributes?.country_details?.name ?? ""}</p>
                                             </div>
                                         </div>
+                                        <div className="ct_white_bg mt-2">
+                                            <h4 className="ct_fw_600 ct_fs_24 mb-3">Bio</h4>
+                                            <div className="d-flex align-items-center gap-2">
+                                                <ReactCountryFlag
+                                                    countryCode={userData?.attributes?.country_details?.code}
+                                                    svg
+                                                    style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                    }}
+                                                    title={userData?.attributes?.country_details?.code}
+                                                />
+                                                <p className="mb-0 ct_text_op_6">{userData?.attributes?.country_details?.name ?? ""}</p>
+                                            </div>
+                                        </div>
+                                        <div className="ct_white_bg mt-2">
+                                            <h4 className="ct_fw_600 ct_fs_24 mb-3">About You</h4>
+                                            <div className="d-flex align-items-center gap-2">
+                                                <ReactCountryFlag
+                                                    countryCode={userData?.attributes?.country_details?.code}
+                                                    svg
+                                                    style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                    }}
+                                                    title={userData?.attributes?.country_details?.code}
+                                                />
+                                                <p className="mb-0 ct_text_op_6">{userData?.attributes?.country_details?.name ?? ""}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div
                                         className={`tab-pane fade ${isToggle == 2 && "active show"}`}
@@ -200,7 +236,36 @@ const Profile = ({ messageApi }) => {
                                     >
                                         <div className="ct_white_bg">
                                             <div className="chat-list">
-                                                <a
+                                                {allConnections?.length != 0 &&
+                                                    allConnections?.map((item, i) => (
+                                                        <a
+                                                            className="d-flex align-items-center"
+                                                        >
+                                                            <div className="position-relative">
+                                                                <img
+                                                                    className="img-fluid ct_img_40"
+                                                                    src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
+                                                                    alt="user img"
+                                                                />
+                                                            </div>
+                                                            <div className="flex-grow-1 ms-3">
+                                                                <div
+                                                                    className="d-flex align-items-center gap-2 justify-content-between"
+                                                                >
+                                                                    <h3 className="ct_fs_16 ct_fw_600 mb-0">{item?.attributes?.full_name ?? ""}</h3>
+                                                                </div>
+                                                                <div
+                                                                    className="d-flex align-items-center gap-2 justify-content-between"
+                                                                ></div>
+                                                            </div>
+                                                            <div className="">
+                                                                <button className="ct_yellow_btn ct_white_nowrap">
+                                                                    Connected
+                                                                </button>
+                                                            </div>
+                                                        </a>
+                                                    ))}
+                                                {/* <a
                                                     className="d-flex align-items-center"
                                                 >
                                                     <div className="position-relative">
@@ -227,35 +292,7 @@ const Profile = ({ messageApi }) => {
                                                             Connected
                                                         </button>
                                                     </div>
-                                                </a>
-                                                <a
-                                                    className="d-flex align-items-center"
-                                                >
-                                                    <div className="position-relative">
-                                                        <img
-                                                            className="img-fluid ct_img_40"
-                                                            src="assets/img/user.png"
-                                                            data-bs-target="#full_view_img"
-                                                            data-bs-toggle="modal"
-                                                            alt="user img"
-                                                        />
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <div
-                                                            className="d-flex align-items-center gap-2 justify-content-between"
-                                                        >
-                                                            <h3 className="ct_fs_16 ct_fw_600 mb-0">Jane Doe</h3>
-                                                        </div>
-                                                        <div
-                                                            className="d-flex align-items-center gap-2 justify-content-between"
-                                                        ></div>
-                                                    </div>
-                                                    <div className="">
-                                                        <button className="ct_yellow_btn ct_white_nowrap">
-                                                            Connected
-                                                        </button>
-                                                    </div>
-                                                </a>
+                                                </a> */}
                                             </div>
                                             <div className="text-center">
                                                 <button className="ct_yellow_btn mt-4">Descover More</button>

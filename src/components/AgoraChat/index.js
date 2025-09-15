@@ -4,7 +4,6 @@ const APP_ID = '611227230#1418219';
 let messageCallback = null;
 let conn = null;
 
-
 export const initChat = () => {
     conn = new WebIM.connection({
         appKey: APP_ID,
@@ -13,7 +12,6 @@ export const initChat = () => {
         https: true,
         isDebug: true,
     });
-
     conn.addEventHandler("connection", {
         onConnected: () => {
             console.log("Connected to Agora Chat");
@@ -28,7 +26,6 @@ export const initChat = () => {
             };
         },
     });
-
     return conn;
 };
 
@@ -37,7 +34,7 @@ export const loginChat = async (userId, passwordOrToken) => {
     try {
         await conn.open({
             user: userId,
-            pwd: passwordOrToken,
+            accessToken: passwordOrToken,
         });
         console.log("Login successful:", userId);
     } catch (err) {
@@ -54,8 +51,9 @@ export const sendMessage = async (to, msg, chatType = "singleChat") => {
         chatType,
     });
     try {
-        await conn.send(message);
-        console.log("Message sent:", msg);
+        const data = await conn.send(message);
+        // console.log("Message sent:", msg, data);
+        return data;
     } catch (err) {
         console.error("Message send failed:", err);
     };

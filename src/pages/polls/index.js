@@ -23,11 +23,9 @@ const Polls = ({ messageApi }) => {
     const [isShowForm, setIsShowForm] = useState(false);
 
     const [options, setOptions] = useState([]);
-    const [pollImages, setPollImages] = useState();
-
     const [checkBox, setCheckBox] = useState(false);
-    const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
 
+    const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
     const [minutes, setMinutes] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]);
 
 
@@ -54,7 +52,6 @@ const Polls = ({ messageApi }) => {
                 messageApi.success("Poll Created SucessFully");
             } else {
                 messageApi.error(response?.data?.errors?.message);
-                console.log({ response: response })
             }
             setOptions([]);
             setCheckBox(false);
@@ -112,21 +109,14 @@ const Polls = ({ messageApi }) => {
         dispatch(createPollData({ payload: data, messageApi, callback }))
     };
 
-    const handleChangeImages = (e) => {
-        setPollImages(e?.target?.files[0])
-    };
-
     const handleRemoveOption = (id) => {
         setOptions((prev) => prev.filter((item) => item.id !== id));
     };
 
-    const handleDeleteImage = () => {
-        setPollImages();
-    };
 
-    if (isLoading) {
-        return <Loader />;
-    };
+    // if (isLoading) {
+    //     return <Loader />;
+    // };
     return (
         <div>
             <Header />
@@ -280,19 +270,21 @@ const Polls = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 ))}
-                                                            <div className="col-md-12 mb-3">
-                                                                <div className='text-end'>
-                                                                    <a className='ct_yellow_text ct_fw_600' onClick={() =>
-                                                                        setOptions((prev) => [
-                                                                            ...prev,
-                                                                            {
-                                                                                id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 3,
-                                                                                value: ""
-                                                                            }
-                                                                        ])
-                                                                    }>+ Add Another Option</a>
+                                                            {options?.length != 13 &&
+                                                                <div className="col-md-12 mb-3">
+                                                                    <div className='text-end'>
+                                                                        <a className='ct_yellow_text ct_fw_600' onClick={() =>
+                                                                            setOptions((prev) => [
+                                                                                ...prev,
+                                                                                {
+                                                                                    id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 3,
+                                                                                    value: ""
+                                                                                }
+                                                                            ])
+                                                                        }>+ Add Another Option</a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            }
                                                             <div>
                                                                 <label className="mb-2 ct_fw_600">Duration</label>
                                                                 <div className="row">

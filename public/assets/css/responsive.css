@@ -99,7 +99,7 @@
     position: absolute;
     left: 1000px;
     right: 0;
-    padding: 20px;
+    padding: 0px 20px;
     border-radius: 10px;
     background-color: #fff;
     transition: all 0.5s ease;
@@ -157,6 +157,13 @@
     height: 30px;
   }
 
+  /* .msg-body {
+    height: calc(100vh - 73vh) !important;
+  } */
+
+  .send-box {
+    padding-bottom: 15px;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -239,11 +246,14 @@
     grid-template-columns: 160px auto;
 
   }
-.ct_res_w_50_name{
-  width: 50px;
-  display: inline-block;
-}
-.ct_outline_bg ,.ct_white_bg  {
-  padding: 20px 10px;
-}
+
+  .ct_res_w_50_name {
+    width: 50px;
+    display: inline-block;
+  }
+
+  .ct_outline_bg,
+  .ct_white_bg {
+    padding: 20px 10px;
+  }
 }

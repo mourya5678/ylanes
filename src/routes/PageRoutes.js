@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import Dashboard from "../pages/home/Dashboard";
 
 const Chat = lazy(() => import("../pages/chat"));
 const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
@@ -35,7 +36,8 @@ const TopUpUserWallet = lazy(() => import("../pages/wallet/TopUpUserWallet"));
 
 
 export const pageRoutes = {
-    dashboard: '/',
+    dashboard: '/home',
+    landingPage: "/",
     poll: '/poll',
     login: '/login',
     setting: '/setting',
@@ -64,6 +66,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Landing Page",
+        path: pageRoutes.landingPage,
+        element: <Dashboard />,
         isPrivate: true
     },
     {

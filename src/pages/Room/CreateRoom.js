@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
-import { pipGetAccessToken } from '../../auth/Pip';
+import { pipGetAccessToken, pipViewDate, pipViewDate2 } from '../../auth/Pip';
 import { getPostTopics } from '../../redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
-import { createPollData, getRoomTypeData } from '../../redux/actions/createRoom';
+import { createRoomData, getRoomTypeData } from '../../redux/actions/createRoom';
 import DateAndTimeModal from '../../components/Modals/DateAndTimeModal';
 import moment from 'moment';
 import * as Yup from 'yup';
@@ -301,28 +301,59 @@ const CreateRoom = ({ messageApi }) => {
             return;
         };
         const callback = (response) => {
-            console.log(response);
+            if (response?.meta?.message) {
+                messageApi.success(response?.meta?.message);
+            };
+            setFieldValues({
+                anonymouslyName: "",
+                selectedTopic: "",
+                yourTake: "",
+                roomType: "",
+                globalRoom: false,
+                selectTime: ""
+            });
+            setFieldError({
+                your_take_error: "",
+                select_topic_error: "",
+                date_and_time_error: "",
+                select_room_type_error: "",
+                join_anonymously_error: "",
+            });
         };
         const startTime = new Date(fieldValues.selectTime);
         const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         console.log({ userData })
-        const data = {
-            "room[start_time]": startTime,
-            "room[end_time]": endTime,
-            "room[your_take]": fieldValues.yourTake,
-            "room[is_global]": fieldValues.globalRoom,
-            "room[account_id]": userData?.id,
-            "room[category_id]": "",
-            "room[sub_category_id]": "",
-            "room[topic_id]": fieldValues.selectedTopic,
-            "room[room_type_id]": fieldValues.roomType,
-            "room[is_anonymously]": joinAnonymously,
-            "room[anonymously_name]": fieldValues.anonymouslyName,
-            "TZone": timeZone
-        };
-        console.log({ data });
-        dispatch(createPollData({ payload: data, callback, messageApi }))
+        const formData = new FormData();
+        formData.append("room[start_time]", startTime)
+        formData.append("room[end_time]", endTime)
+        formData.append("room[your_take]", fieldValues.yourTake)
+        formData.append("room[is_global]", fieldValues.globalRoom)
+        formData.append("room[account_id]", userData?.id)
+        formData.append("room[category_id]", '')
+        formData.append("room[sub_category_id]", '')
+        formData.append("room[topic_id]", fieldValues.selectedTopic)
+        formData.append("room[room_type_id]", fieldValues.roomType)
+        formData.append("room[is_anonymously]", joinAnonymously)
+        formData.append("room[anonymously_name]", fieldValues.anonymouslyName)
+        formData.append("TZone", timeZone)
+
+        // const data = {
+        //     "room[start_time]": startTime,
+        //     "room[end_time]": endTime,
+        //     "room[your_take]": fieldValues.yourTake,
+        //     "room[is_global]": fieldValues.globalRoom,
+        //     "room[account_id]": userData?.id,
+        //     "room[category_id]": "",
+        //     "room[sub_category_id]": "",
+        //     "room[topic_id]": fieldValues.selectedTopic,
+        //     "room[room_type_id]": fieldValues.roomType,
+        //     "room[is_anonymously]": joinAnonymously,
+        //     "room[anonymously_name]": fieldValues.anonymouslyName,
+        //     "TZone": timeZone
+        // };
+        // console.log({ data });
+        dispatch(createRoomData({ payload: formData, callback, messageApi }))
     };
 
 
@@ -390,6 +421,7 @@ const CreateRoom = ({ messageApi }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Select Date and Time"
+                                                value={fieldValues?.selectTime ? pipViewDate2(fieldValues?.selectTime) : ''}
                                                 onClick={() => setIsModalShow(true)}
                                                 className="form-control ct_input"
                                             />
