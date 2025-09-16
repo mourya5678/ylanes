@@ -437,7 +437,8 @@ textarea {
   line-height: 16px;
 }
 
-.ct_navbar li a:hover {
+.ct_navbar li a:hover,
+.ct_navbar li a.active {
   background-color: #000;
   color: #fff;
 }

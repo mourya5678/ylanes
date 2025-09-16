@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getAllSubscriptionPlan } from '../../redux/actions/subscriptions';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
+import { useNavigate } from 'react-router';
+import { pageRoutes } from '../../routes/PageRoutes';
 
-const Dashboard = () => {
+const Dashboard = ({ messageApi }) => {
+    const { isSubscriptionLoader, allSubscription } = useSelector((state) => state.subscriptionReducer);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(getAllSubscriptionPlan({ messageApi }));
+    }, []);
+
+    if (isSubscriptionLoader) {
+        return <Loader />;
+    };
     return (
         <div>
             <header className="ct_header ct_header_px_50">
@@ -18,7 +35,7 @@ const Dashboard = () => {
                                         <div className="ct_close_menu">
                                             <i className="fa-solid fa-xmark"></i>
                                         </div>
-                                        <li>
+                                        <li onClick={() => navigate(pageRoutes.dashboard)}>
                                             <a>Home</a>
                                         </li>
                                         <li>
@@ -395,60 +412,28 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
-                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
-                                <div className='mb-3'>
-                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Silver</h5>
-                                    <div className="price w-100 py-3">₹1,000</div>
-                                    <div className="ct_border_bg_1">
-                                        <ul className="text-start">
-                                            <li>5000 YCoins</li>
-                                            <li>Unlimited validity</li>
-                                            <li>Feed participation & video rooms</li>
-                                            <li>Exclusive Blue Badge</li>
-                                        </ul>
+                        {allSubscription?.length != 0 &&
+                            allSubscription?.map((item) => (
+                                <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
+                                    <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
+                                        <div className='mb-3'>
+                                            {console.log(item)}
+                                            <h5 className="text-center mb-4 ct_fs_24 mt-3 ">{item?.name ?? ""}</h5>
+                                            <div className="price w-100 py-3">RS {item?.amount ?? 0}</div>
+                                            <div className="ct_border_bg_1">
+                                                <ul className="text-start">
+                                                    {item?.description?.split(",")?.map((item) => (
+                                                        <li>
+                                                            {item ?? ''}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button className="ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
                                     </div>
                                 </div>
-                                <button className="ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
-                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 position-relative d-grid">
-                                <div className="recommended-tag">Recommended</div>
-                                <div className='mb-3'>
-                                    <h5 className="text-center mb-4 mt-3 ct_fs_24">Silver Plus</h5>
-                                    <div className="price w-100 py-3">₹1,500</div>
-                                    <div className="ct_border_bg_1">
-                                        <ul className="text-start">
-                                            <li>10000 YCoins</li>
-                                            <li>Unlimited validity</li>
-                                            <li>Everything in Silver</li>
-                                            <li>Superhost Status</li>
-                                            <li>Create video rooms free (except Moderated Rooms)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <button className="ct_black_btn mt-auto">Get Started</button>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
-                            <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
-                                <div className='mb-3'>
-                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Gold</h5>
-                                    <div className="price w-100 py-3">₹2,000</div>
-                                    <div className="ct_border_bg_1">
-                                        <ul className="text-start">
-                                            <li>25000 YCoins</li>
-                                            <li>Everything in Silver Plus</li>
-                                            <li>Exclusive Yellow badge</li>
-                                            <li>Moderator status to create rooms and earn YCoins</li>
-                                            <li>Invitation to write blogs on our website</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <button className=" ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
-                            </div>
-                        </div>
+                            ))}
                     </div>
                 </div>
             </section>

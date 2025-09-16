@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getDiscoverAllConnectionAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -198,6 +198,22 @@ export const getAllUserPreviousMessages = createAsyncThunk('get-user-previous-me
             data: payload,
             isPaythonApi: true,
             isSuccessToast: false,
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+// My Rooms
+
+export const getUpcommingRoomData = createAsyncThunk('get-upcomming-room-list', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllUpcommingRoomDataAPI,
+            method: "GET",
             messageApi
         });
         return response;

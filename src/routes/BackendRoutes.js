@@ -43,3 +43,15 @@ export const getPreviousMessagesAPI = "get-messages/";
 export const getAgoraTokenAPI = "token/user-direct?expire=3600";
 
 export const sendMessageToUserAPI = "send-message";
+
+// Subscription API 
+export const getAllSubscriptionPlanAPI = "bx_block_payments/subscription_plans";
+export const purchaseSubscriptionPlanAPI = "bx_block_payments/razorpays/order_for_unlimited_subscription?amount=";
+
+export const createSubscriptionPlanAPI = "bx_block_payments/razorpays/create_subscriptions";
+
+export const razorPayTestKey = "rzp_test_R82hVMaq49lFib";
+
+// Rooms 
+export const getAllUpcommingRoomDataAPI = "bx_block_different_rooms/rooms/my_upcoming_rooms";
+export const getAllPastRoomDataAPI = "bx_block_different_rooms/rooms/my_past_rooms";

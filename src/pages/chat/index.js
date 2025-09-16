@@ -230,7 +230,7 @@ const Chat = ({ messageApi }) => {
                                                                                 <div className="ct_chat_list_grid">
                                                                                     <div className="position-relative">
                                                                                         <img className="img-fluid ct_img_40"
-                                                                                            src={item?.profile_image ? IMAGE_URL + item?.profile_image : "assets/img/dummy_user_img.png"} alt="user img" />
+                                                                                            src={item?.profile_image ? item?.profile_image : "assets/img/dummy_user_img.png"} alt="user img" />
                                                                                     </div>
                                                                                     <div className="flex-grow-1 ms-3">
                                                                                         <div
@@ -300,7 +300,7 @@ const Chat = ({ messageApi }) => {
                                                                     <div className="d-flex align-items-center gap-2 ">
                                                                         <i className="fa-solid fa-chevron-left chat-icon" onClick={() => setSelectUserKey()}></i>
                                                                         <div className="ct_grid_50_auto">
-                                                                            <img src={selectUserData?.profile_image ? IMAGE_URL + selectUserData?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
+                                                                            <img src={selectUserData?.profile_image ? selectUserData?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
                                                                             <div>
                                                                                 <h4 className="ct_fs_18 ct_fw_600  mb-0">
                                                                                     {selectUserData?.full_name ?? ""}
@@ -431,7 +431,7 @@ const Chat = ({ messageApi }) => {
                                                         <div className="position-relative">
                                                             <img
                                                                 className="img-fluid ct_img_40"
-                                                                src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
+                                                                src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
                                                                 alt="user img"
                                                             />
                                                         </div>

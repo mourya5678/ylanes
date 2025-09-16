@@ -1,11 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
+import { createSubscriptionPlan, getAllSubscriptionPlan, purchaseSubscriptionPlan } from '../../redux/actions/subscriptions';
+import { BASE_URL, razorPayTestKey } from '../../routes/BackendRoutes';
 
 const Subscription = ({ messageApi }) => {
-    const navigate = useNavigate();
+    const { isSubscriptionLoader, allSubscription } = useSelector((state) => state.subscriptionReducer);
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [selectedPlan, setSelectedPlan] = useState();
+
+    useEffect(() => {
+        dispatch(getAllSubscriptionPlan({ messageApi }));
+    }, []);
+
+    const handlePurchasePlan = (val) => {
+        const callback = (response) => {
+            handleOpenRazorPayModal(response)
+        };
+        dispatch(purchaseSubscriptionPlan({ payload: val?.amount, messageApi, callback }))
+    };
+
+    const handleOpenRazorPayModal = (val) => {
+        var options = {
+            description: "Refill wallet",
+            name: "YLanes",
+            key: razorPayTestKey,
+            currency: "INR",
+            order_id: val?.transaction?.order_id,
+            prefill: {},
+            theme: { color: "#528FF0" },
+            handler: function (response) {
+                // console.log("Razorpay Response:", response);
+                const data = {
+                    plan_id: 'unlimited',
+                    payload: { ...response }
+                };
+                const callback = (response) => {
+                    if (response?.subscription) {
+                        messageApi.success(response.message);
+                        navigate(pageRoutes.userWallet);
+                    } else {
+                        messageApi.error(messageApi.message);
+                        navigate(pageRoutes.userWallet);
+                    };
+                };
+                dispatch(createSubscriptionPlan({ payload: data, callback, messageApi }))
+            },
+            method: {
+                netbanking: true,
+                card: true,
+                wallet: true,
+                upi: true,
+                paylater: false,
+                emi: false,
+            },
+            config: {
+                display: {
+                    hide: [{ method: "paylater" }, { method: "emi" }],
+                },
+            },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+    };
+
+    if (isSubscriptionLoader) {
+        return <Loader />;
+    };
     return (
         <div>
             <Header messageApi={messageApi} />
@@ -23,101 +90,43 @@ const Subscription = ({ messageApi }) => {
                             </div>
                             <div className="mt-5">
                                 <div className="row">
-                                    <div className="col-lg-4 mb-5">
-                                        <div className="ct_pricing_card">
-                                            <span className="ct_pricing_badge">Most Popular</span>
-                                            <div>
-                                                <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">Silver Member</p>
-                                                <div className="ct_pricing_title">
-                                                    <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">Rs 1000</h2>
-                                                    <p className="mb-0 text-center">One time payment</p>
+                                    {allSubscription?.length != 0 &&
+                                        allSubscription?.map((item, i) => (
+                                            < div className="col-lg-4 mb-5">
+                                                <div className={`ct_pricing_card ${selectedPlan?.id == item?.id && "active"}`} onClick={() => setSelectedPlan(item)}>
+                                                    <span className="ct_pricing_badge">Most Popular</span>
+                                                    <div>
+                                                        <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">{item?.name ?? ""}</p>
+                                                        <div className="ct_pricing_title">
+                                                            <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">{item?.currency} {item?.amount ?? 0}</h2>
+                                                            <p className="mb-0 text-center">One time payment</p>
+                                                        </div>
+                                                        <ul className="ct_mt_30 mb-4">
+                                                            {item?.description &&
+                                                                item?.description?.split(',')?.map((item) => (
+                                                                    <li>
+                                                                        <i className="fa-solid fa-check"></i>{item}
+                                                                    </li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <div className="mt-auto text-center pt-4">
+                                                        <button className="ct_yellow_btn w-100" onClick={() => {
+                                                            handlePurchasePlan(item)
+                                                            setSelectedPlan(item)
+                                                        }}>Continue</button>
+                                                    </div>
                                                 </div>
-                                                <ul className="ct_mt_30 mb-4">
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>5000 YCoins
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Blue Tick
-                                                    </li>
-                                                </ul>
                                             </div>
-                                            <div className="mt-auto text-center pt-4">
-                                                <button className="ct_yellow_btn w-100">Continue</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 mb-5">
-                                        <div className="ct_pricing_card active">
-                                            <span className="ct_pricing_badge">Most Popular</span>
-                                            <div>
-                                                <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">Gold Member</p>
-                                                <div className="ct_pricing_title">
-                                                    <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">Rs 2000</h2>
-                                                    <p className="mb-0 text-center">One time payment</p>
-                                                </div>
-                                                <ul className="ct_mt_30 mb-4">
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>25000 YCoins
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Yellow Tick
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Moderator Status
-
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Create any Video room free of cost including Moderated rooms. Earn Ycoins on
-                                                        participation for your Moderated
-                                                        rooms
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Invitation to write blogs.
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="mt-auto text-center pt-4">
-                                                <button className="ct_yellow_btn w-100">Continue</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 mb-5">
-                                        <div className="ct_pricing_card ">
-                                            <span className="ct_pricing_badge">Most Popular</span>
-                                            <div>
-                                                <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">Silver Member</p>
-                                                <div className="ct_pricing_title">
-                                                    <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">Rs 1000</h2>
-                                                    <p className="mb-0 text-center">One time payment</p>
-                                                </div>
-                                                <ul className="ct_mt_30 mb-4">
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>5000 YCoins
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Blue Tick
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Superhost Status
-                                                    </li>
-                                                    <li>
-                                                        <i className="fa-solid fa-check"></i>Create Video rooms free of cost
-                                                        (Except for Moderated rooms).
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="mt-auto text-center pt-4">
-                                                <button className="ct_yellow_btn w-100">Continue</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     )
 };
 

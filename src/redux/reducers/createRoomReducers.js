@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getRoomTypeData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -150,6 +150,19 @@ export const roomSlice = createSlice({
             state.previousMessages = local_messages ?? [];
         });
         builder.addCase(getAllUserPreviousMessages.rejected, (state, action) => {
+        });
+
+        // getUpcommingRoomData
+        builder.addCase(getUpcommingRoomData.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(getUpcommingRoomData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            console.log({ data })
+            state.isCreateLoading = false;
+        });
+        builder.addCase(getUpcommingRoomData.rejected, (state, action) => {
+            state.isCreateLoading = false;
         });
     }
 });
