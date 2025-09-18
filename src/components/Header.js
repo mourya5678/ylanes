@@ -21,7 +21,7 @@ const Header = ({ messageApi }) => {
   }, [profileData]);
 
   return (
-    <header className="ct_header px-5">
+    <header className="ct_header px-md-5">
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">

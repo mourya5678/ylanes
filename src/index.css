@@ -629,3 +629,14 @@ hr.ct_light_hr {
 .ct_searchable_list li{
     position: relative;
 }
+.ct_small_yellow_btn{
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.ct_persional_info_grid li {
+  display: grid;
+  grid-template-columns: 200px auto;
+  gap: 15px;
+  margin-bottom: 10px;
+}

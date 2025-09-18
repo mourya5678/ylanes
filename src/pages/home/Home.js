@@ -139,13 +139,15 @@ const Home = ({ messageApi }) => {
               <div className="ct_side_bar_scrool_left ct_custom_scroll">
                 <div className="ct_outline_bg d-flex align-items-center gap-2 justify-content-between p-3">
                   <p className="mb-0">Invite Friends,Earn YCoins</p>
-                  <button className="ct_yellow_btn">Invite Friends</button>
+                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap">
+                    Invite Friends
+                  </button>
                 </div>
-                <div className="ct_outline_bg mt-4">
+                <div className="ct_outline_bg mt-4 p-3">
                   <div className="d-flex align-items-center gap-2 justify-content-between">
                     <h4 className="ct_fs_20 ct_fw_600 mb-0">Poll</h4>
                     <a
-                      className="ct_yellow_btn  ct_white_nowrap"
+                      className="ct_yellow_btn  ct_white_nowrap ct_small_yellow_btn"
                       onClick={() => setIsCreatePoll(true)}
                     >
                       Create Poll
@@ -200,7 +202,7 @@ const Home = ({ messageApi }) => {
                     </div>
                   )}
                 </div>
-                <div class="ct_outline_bg mt-4">
+                <div class="ct_outline_bg mt-4 p-3">
                   <h4 className="ct_fs_20 ct_fw_600 mb-4">My Rooms</h4>
                   {myRoomList?.length != 0 ? (
                     myRoomList?.slice(0, 1)?.map((item) => (
@@ -449,10 +451,10 @@ const Home = ({ messageApi }) => {
                       <p className="mb-0">Conection Comments</p>
                     </div>
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-12 mt-4">
                     {allPosts?.length != 0 &&
                       allPosts?.map((item) => (
-                        <div className="ct_uploaded_post_main mb-3">
+                        <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">
                               <img

@@ -75,27 +75,30 @@ const Subscription = ({ messageApi }) => {
         return <Loader />;
     };
     return (
-        <div>
-            <Header messageApi={messageApi} />
-            <section className="ct_py_70">
-                <div className="container">
+      <div>
+        <Header messageApi={messageApi} />
+        <section className="ct_py_70">
+          <div className="container">
+            <div className="row">
+              {console.log({ userPlan })}
+              <div className="col-md-12">
+                <div className="d-flex align-items-center   gap-3 mb-5">
+                  <a
+                    onClick={() => navigate(pageRoutes.userWallet)}
+                    className="ct_back_btn ct_cursor text-dark"
+                  >
+                    <i className="fa-solid fa-chevron-left"></i>
+                  </a>
+                  <h4 className="ct_fs_24 ct_fw_600 mb-0 ct_text_061F61">
+                    Subscription Plan
+                  </h4>
+                </div>
+                {userPlan?.length != 0 ? (
+                  userPlan?.slice(0, 1)?.map((item) => (
                     <div className="row">
-                        {console.log({ userPlan })}
-                        <div className="col-md-12">
-                            <div className="d-flex align-items-center   gap-3 mb-5">
-                                <a onClick={() => navigate(pageRoutes.userWallet)} className="ct_back_btn ct_cursor text-dark">
-                                    <i className="fa-solid fa-chevron-left"></i>
-                                </a>
-                                <h4 className="ct_fs_24 ct_fw_600 mb-0 ct_text_061F61">
-                                    Subscription Plan
-                                </h4>
-                            </div>
-                            {userPlan?.length != 0 ?
-                                userPlan?.slice(0, 1)?.map((item) => (
-                                    <div className='row'>
-                                        <div className='col-md-6 mx-auto'>
-                                            <div className='ct_pricing_card h-auto ct_pricing_card_light_green position-relative'>
-                                                <div class="ribbon-content">
+                      <div className="col-md-6 ">
+                        <div className="ct_pricing_card p-4 h-auto ct_pricing_card_light_green position-relative">
+                          {/* <div class="ribbon-content">
                                                     <span class="ribbon">{item?.status ?? ''} </span>
                                                 </div>
                                                 <div>
@@ -110,58 +113,88 @@ const Subscription = ({ messageApi }) => {
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                </div>
-                                                {/* <div className='text-center mt-4'>
-                                                    <button className='ct_yellow_btn mx-auto'>Upgrade Your Plan</button>
                                                 </div> */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                                :
-                                <div className="mt-5">
-                                    <div className="row">
-                                        {allSubscription?.length != 0 &&
-                                            allSubscription?.map((item, i) => (
-                                                < div className="col-lg-4 mb-5">
-                                                    <div className={`ct_pricing_card ${selectedPlan?.id == item?.id && "active"}`} onClick={() => setSelectedPlan(item)}>
-                                                        <span className="ct_pricing_badge">Most Popular</span>
-                                                        <div>
-                                                            <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">{item?.name ?? ""}</p>
-                                                            <div className="ct_pricing_title">
-                                                                <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">
-                                                                    {/* {item?.currency} */}
-                                                                    Rs {item?.amount ?? 0}</h2>
-                                                                <p className="mb-0 text-center">One time payment</p>
-                                                            </div>
-                                                            <ul className="ct_mt_30 mb-4">
-                                                                {item?.description &&
-                                                                    item?.description?.split(',')?.map((item) => (
-                                                                        <li>
-                                                                            <i className="fa-solid fa-check"></i>{item}
-                                                                        </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                        <div className="mt-auto text-center pt-4">
-                                                            <button className="ct_yellow_btn w-100" onClick={() => {
-                                                                handlePurchasePlan(item)
-                                                                setSelectedPlan(item)
-                                                            }}>Continue</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            }
+                          <ul class="ct_persional_info_grid">
+                            <li>
+                              <p class="mb-0 ct_fw_600">Phone Number</p>
+                              <p class="mb-0">+919981916868</p>
+                            </li>
+                            <li>
+                              <p class="mb-0 ct_fw_600">Email</p>
+                              <p class="mb-0">jack@yopmail.com</p>
+                            </li>
+                            <li>
+                              <p class="mb-0 ct_fw_600">Year Of Birth</p>
+                              <p class="mb-0">2006</p>
+                            </li>
+                          </ul>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </section >
-        </div >
-    )
+                  ))
+                ) : (
+                  <div className="mt-5">
+                    <div className="row">
+                      {allSubscription?.length != 0 &&
+                        allSubscription?.map((item, i) => (
+                          <div className="col-lg-4 mb-5">
+                            <div
+                              className={`ct_pricing_card ${
+                                selectedPlan?.id == item?.id && "active"
+                              }`}
+                              onClick={() => setSelectedPlan(item)}
+                            >
+                              <span className="ct_pricing_badge">
+                                Most Popular
+                              </span>
+                              <div>
+                                <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">
+                                  {item?.name ?? ""}
+                                </p>
+                                <div className="ct_pricing_title">
+                                  <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">
+                                    {/* {item?.currency} */}
+                                    Rs {item?.amount ?? 0}
+                                  </h2>
+                                  <p className="mb-0 text-center">
+                                    One time payment
+                                  </p>
+                                </div>
+                                <ul className="ct_mt_30 mb-4">
+                                  {item?.description &&
+                                    item?.description
+                                      ?.split(",")
+                                      ?.map((item) => (
+                                        <li>
+                                          <i className="fa-solid fa-check"></i>
+                                          {item}
+                                        </li>
+                                      ))}
+                                </ul>
+                              </div>
+                              <div className="mt-auto text-center pt-4">
+                                <button
+                                  className="ct_yellow_btn w-100"
+                                  onClick={() => {
+                                    handlePurchasePlan(item);
+                                    setSelectedPlan(item);
+                                  }}
+                                >
+                                  Continue
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
 };
 
 export default Subscription;
