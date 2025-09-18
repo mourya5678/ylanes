@@ -28,7 +28,6 @@ const Polls = ({ messageApi }) => {
     const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
     const [minutes, setMinutes] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]);
 
-
     const initialValues = {
         question: "",
         option1: "",
@@ -112,7 +111,6 @@ const Polls = ({ messageApi }) => {
     const handleRemoveOption = (id) => {
         setOptions((prev) => prev.filter((item) => item.id !== id));
     };
-
 
     // if (isLoading) {
     //     return <Loader />;
@@ -422,7 +420,6 @@ const Polls = ({ messageApi }) => {
                         {AllPollsData?.length != 0 &&
                             AllPollsData?.map((item) => (
                                 <div className='col-md-12'>
-                                    {console.log({ item })}
                                     <div className="ct_uploaded_post_main mb-3">
                                         <div className="d-flex align-items-center justify-content-between gap-2">
                                             <div className="ct_upload_user_name">

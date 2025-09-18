@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -8,6 +8,10 @@ const initialStates = {
     discoverAllConnections: [],
     chatList: [],
     previousMessages: [],
+    upcommingRoomList: [],
+    pastRoomList: [],
+    recommendedList: [],
+    myRoomList: [],
 };
 
 export const roomSlice = createSlice({
@@ -158,10 +162,49 @@ export const roomSlice = createSlice({
         });
         builder.addCase(getUpcommingRoomData.fulfilled, (state, action) => {
             const { data } = action?.payload || {};
-            console.log({ data })
+            state.upcommingRoomList = data ?? [];
             state.isCreateLoading = false;
         });
         builder.addCase(getUpcommingRoomData.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // getPastRoomData
+        builder.addCase(getPastRoomData.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(getPastRoomData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.pastRoomList = data ?? [];
+            state.isCreateLoading = false;
+        });
+        builder.addCase(getPastRoomData.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // getRecommendedRoomData
+        builder.addCase(getRecommendedRoomData.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(getRecommendedRoomData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.recommendedList = data ?? [];
+            state.isCreateLoading = false;
+        });
+        builder.addCase(getRecommendedRoomData.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // getMyRoomData
+        builder.addCase(getMyRoomData.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(getMyRoomData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.myRoomList = data ?? [];
+            state.isCreateLoading = false;
+        });
+        builder.addCase(getMyRoomData.rejected, (state, action) => {
             state.isCreateLoading = false;
         });
     }

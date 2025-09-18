@@ -1,6 +1,5 @@
-export const BASE_URL = "http://56.228.76.11:4000/"; // Live
-// export const BASE_URL = "http://192.168.29.131:4000/"; //Local
-export const BASE_URL1 = "http://56.228.76.11:9000/"; // Live
+export const BASE_URL = "https://ylanes.com:4000/"; // Live
+export const BASE_URL1 = "https://ylanes.com:9000/"; // Live
 
 // Image Url
 export const IMAGE_URL = "http://";
@@ -49,9 +48,15 @@ export const getAllSubscriptionPlanAPI = "bx_block_payments/subscription_plans";
 export const purchaseSubscriptionPlanAPI = "bx_block_payments/razorpays/order_for_unlimited_subscription?amount=";
 
 export const createSubscriptionPlanAPI = "bx_block_payments/razorpays/create_subscriptions";
+export const getAllDashboardSubscriptionPlanAPI = "bx_block_payments/public_subscriptions";
+
+export const getUserSubscriptionPlanAPI = "bx_block_payments/subscription_details";
 
 export const razorPayTestKey = "rzp_test_R82hVMaq49lFib";
 
 // Rooms 
-export const getAllUpcommingRoomDataAPI = "bx_block_different_rooms/rooms/my_upcoming_rooms";
+export const getAllUpcommingRoomDataAPI = "bx_block_different_rooms/rooms/get_upcoming_rooms";
 export const getAllPastRoomDataAPI = "bx_block_different_rooms/rooms/my_past_rooms";
+
+export const getAllMyRoomsDataAPI = "bx_block_different_rooms/rooms/my_upcoming_rooms";
+export const getAllRecommendedRoomsDataAPI = "bx_block_different_rooms/rooms/get_recommended_rooms";

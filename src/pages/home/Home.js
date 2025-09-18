@@ -8,20 +8,21 @@ import { Formik } from 'formik';
 import { CreatePostSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
 import Loader from '../../components/Loader';
-
-// import OwlCarousel from "react-owl-carousel2";
-// import "react-owl-carousel2/lib/styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { IMAGE_URL } from '../../routes/BackendRoutes';
 import CommentTime from '../../components/CommentTime';
-import { pipGetAccessToken } from '../../auth/Pip';
+import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
+import { getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
+import CreatePollModal from '../../components/Modals/CreatePollModal';
 
 const Home = ({ messageApi }) => {
-  const { isLoading, postTopic, allPosts, allComments, profileData } =
+  const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
     useSelector((state) => state.authReducer);
+
+  const { isCreateLoading, myRoomList } = useSelector((state) => state.createRoomReducer);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,14 +33,23 @@ const Home = ({ messageApi }) => {
   const [userData, setUserData] = useState({});
   const [addComment, setAddComment] = useState("");
 
+  const [sortData, setSortData] = useState('');
+  const [isCreatePoll, setIsCreatePoll] = useState(false);
+
   const initialState = {
     topic: "",
     title: "",
   };
 
+  const displayUser = allPosts?.map((item) => (
+    console.log(item)
+  ));
+
   useEffect(() => {
     dispatch(getPostTopics({ messageApi }));
     dispatch(getAllPost({ messageApi }));
+    dispatch(getMyRoomData({ messageApi }));
+    dispatch(getPollTypeData({ messageApi }));
     const data = pipGetAccessToken("user_data");
     dispatch(getMyProfileData({ payload: data?.id, messageApi }));
   }, []);
@@ -116,140 +126,114 @@ const Home = ({ messageApi }) => {
     setPostImages((prev) => prev.filter((item, i) => i !== index));
   };
 
-  // if (isLoading) {
-  //     return <Loader />;
+  // if (isLoading || isCreateLoading) {
+  //   return <Loader />;
   // };
   return (
     <div>
       <Header messageApi={messageApi} />
-      <section className="ct_py_70">
+      <section className="py-4 pb-4">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-xl-3  mb-4 mb-xl-0">
-              <div className=" position-sticky top-0">
+            <div className="col-xl-3 mt-0 mb-4 mb-xl-0">
+              <div className="ct_side_bar_scrool_left ct_custom_scroll">
                 <div className="ct_outline_bg">
                   <div className="d-flex align-items-center gap-2 justify-content-between">
                     <h4 className="ct_fs_20 ct_fw_600 mb-0">Poll</h4>
-                    <a className="ct_yellow_btn  ct_white_nowrap">
+                    <a className="ct_yellow_btn  ct_white_nowrap" onClick={() => setIsCreatePoll(true)}>
                       Create Poll
                     </a>
                   </div>
-                  <div
-                    className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
-                    style={{ borderColor: "#e6e6e6" }}
-                  >
-                    <h6 className="ct_fs_16">
-                      Hegrid me to do the needful at earliest to avoid using
-                      of
-                    </h6>
-                    <ul>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option A
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option B
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option C
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="form-check ct_custom_radio">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                          />
-                          <label
-                            class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                            for="flexRadioDefault1"
-                          >
-                            Option D
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-
-                  <div className="text-end mt-2">
-                    <a className="ct_yellow_text ct_fw_500">See More</a>
-                  </div>
+                  {AllPollsData?.length != 0 ? AllPollsData?.slice(0, 1)?.map((item) => (
+                    <div
+                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                      style={{ borderColor: "#e6e6e6" }}
+                    >
+                      <h6 className="ct_fs_16">
+                        {item?.attributes?.body ?? ""}
+                      </h6>
+                      <ul>
+                        {item?.attributes?.options_attributes?.map((item) => (
+                          <li>
+                            <div class="form-check ct_custom_radio">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="flexRadioDefault"
+                                id="flexRadioDefault1"
+                              />
+                              <label
+                                class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                                for="flexRadioDefault1"
+                              >
+                                {item?.body ?? ""}
+                              </label>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                    :
+                    <div className='pb-2 pt-4'>
+                      <p className='mb-0 ct_fw_600 text-center'>No polls available at the moment</p>
+                    </div>
+                  }
+                  {AllPollsData?.length != 0 &&
+                    <div className="text-end mt-2">
+                      <a className="ct_yellow_text ct_fw_500 ct_cursor" onClick={() => navigate(pageRoutes.poll)}>See More</a>
+                    </div>
+                  }
                 </div>
-
-
-                <div class="ct_white_bg mt-4">
+                <div class="ct_outline_bg mt-4">
                   <h4 className="ct_fs_20 ct_fw_600 mb-4">My Rooms</h4>
-
-
-                  <div
-                    className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
-                    style={{ borderColor: "#e6e6e6" }}
-                  >
+                  {myRoomList?.length != 0 ? myRoomList?.slice(0, 1)?.map((item) => (
+                    <div
+                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                      style={{ borderColor: "#e6e6e6" }}
+                    >
+                      <div>
+                        <h4 class="ct_fs_18 ct_0fw_600">
+                          Finance &amp; Economics
+                        </h4>
+                        <small class="text-end d-block">Standard</small>
+                      </div>
+                      <div>
+                        <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                        <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                      </div>
+                      <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+                      <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                        <div className='d-flex align-items-center gap-3 flex-wrap'>
+                          <p className="mb-0">
+                            <i className="fa-regular fa-clock me-2"></i>
+                            {pipViewDate2(item?.attributes?.start_time)}
+                          </p>
+                          <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
+                          <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                        </div>
+                        <div>
+                          <i class="fa-solid fa-share-nodes"></i>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                    :
                     <div>
-                      <h4 class="ct_fs_18 ct_0fw_600">
-                        Finance &amp; Economics
-                      </h4>
-                      <small class="text-end d-block">Standard</small>
+                      <p className='mb-0 ct_fw_600 text-center'>You haven’t created a room yet.</p>
                     </div>
-                    <div class="ct_border_top_1 pt-3 mt-3">
-                      <p class="mb-0">
-                        {" "}
-                        <i class="fa-regular fa-clock me-2"></i>Fri,8 Aug
-                        06:30 PM
-                      </p>
+                  }
+                  {myRoomList?.length != 0 &&
+                    <div className="text-end mt-2">
+                      <a className="ct_yellow_text ct_cursor ct_fw_500" onClick={() => navigate(pageRoutes.myRoom)}>See More</a>
                     </div>
-                  </div>
-
-
-                  <div className="text-end mt-2">
-                    <a className="ct_yellow_text ct_fw_500">See More</a>
-                  </div>
+                  }
                 </div>
               </div>
             </div>
             <div className="col-xl-6  mb-4 mb-xl-0">
-              <div className="ct_outline_bg">
-                <div className="row ">
+              <div className="ct_outline_bg ct_side_bar_scrool_left ct_custom_scroll">
+                <div className="row">
                   <div className="col-md-12">
                     <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
                       <div className="position-relative ct_w_100_767">
@@ -365,11 +349,11 @@ const Home = ({ messageApi }) => {
                                   </Swiper>
                                 </div>
                               )}
-                              <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3">
-                                <div className="d-flex align-items-center gap-3">
-                                  <div>
+                              <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3 ct_flex_col_575">
+                                <div className="d-flex align-items-center gap-3 ct_w_100_575">
+                                  <div className='ct_w_100_575'>
                                     <select
-                                      className="form-control ct_input ct_border_radius_100 h-auto p-2 px-3 ct_w_fit_content"
+                                      className="form-control ct_input ct_border_radius_100 h-auto p-2 px-3 ct_w_fit_content ct_w_100_575"
                                       id="topic"
                                       value={values.topic}
                                       onBlur={handleBlur}
@@ -404,7 +388,7 @@ const Home = ({ messageApi }) => {
                                 </div>
                                 <button
                                   onClick={handleSubmit}
-                                  className="ct_yellow_btn ct_white_nowrap"
+                                  className="ct_yellow_btn ct_white_nowrap ct_w_100_575"
                                 >
                                   Post
                                 </button>
@@ -418,22 +402,6 @@ const Home = ({ messageApi }) => {
                           </form>
                         )}
                       </Formik>
-                    </div>
-                    <div className="d-flex align-items-center gap-3 justify-content-between mt-4 mb-3">
-                      <select className="form-control ct_input px-2 ct_w_fit_content px-0 ct_fw_600">
-                        <option value="">All</option>
-                        {postTopic?.length != 0 &&
-                          postTopic?.map((item) => (
-                            <option value={item?.attributes?.name}>
-                              {item?.attributes?.name ?? ""}
-                            </option>
-                          ))}
-                      </select>
-                      <select className="form-control ct_input px-2 ct_w_fit_content px-0 ct_fw_600">
-                        <option value="">Latest</option>
-                        <option value="">Oldest</option>
-                        <option value="">Newest</option>
-                      </select>
                     </div>
                     <div className="d-flex align-items-center gap-3 mt-2">
                       <label className="toggle-switch">
@@ -570,347 +538,299 @@ const Home = ({ messageApi }) => {
                                 # {item?.attributes?.topics ?? ""}
                               </li>
                             </ul>
-                            <div className="ct_comment_area_main mt-4  ">
-                              <div className="position-relative">
-                                <input
-                                  type="text"
-                                  value={addComment}
-                                  onChange={(e) =>
-                                    setAddComment(e.target.value)
-                                  }
-                                  className="form-control ct_input ct_custom_input w-100"
-                                  placeholder="Write comment..."
-                                />
-                                <button
-                                  className="ct_send_msg_btn ct_yellow_btn"
-                                  onClick={() =>
-                                    handleCommentUserPost(
-                                      item?.attributes?.id,
-                                      item?.attributes?.liked
-                                    )
-                                  }
-                                >
-                                  Send
-                                </button>
-                              </div>
-                              <div className="ct_comment_area_scroll">
-                                <div className="d-flex justify-content-between gap-2 mt-3">
-                                  <div>
+                            {selectedPostId == item?.attributes?.id &&
+                              <div className="ct_comment_area_main mt-4  ">
+                                <div className="position-relative">
+                                  <input
+                                    type="text"
+                                    value={addComment}
+                                    onChange={(e) =>
+                                      setAddComment(e.target.value)
+                                    }
+                                    className="form-control ct_input ct_custom_input w-100"
+                                    placeholder="Write comment..."
+                                  />
+                                  <button
+                                    className="ct_send_msg_btn ct_yellow_btn"
+                                    onClick={() =>
+                                      handleCommentUserPost(
+                                        item?.attributes?.id,
+                                        item?.attributes?.liked
+                                      )
+                                    }
+                                  >
+                                    Send
+                                  </button>
+                                </div>
+                                <div className="ct_comment_area_scroll">
+                                  <div className="d-flex justify-content-between gap-2 mt-3">
                                     <div>
-                                      {selectedPostId ==
-                                        item?.attributes?.id &&
-                                        allComments?.length != 0 &&
-                                        allComments?.map((item) => (
-                                          <div className="d-flex  gap-3 mb-3">
-                                            <img
-                                              src={
-                                                IMAGE_URL +
-                                                item?.attributes?.user
-                                                  ?.profile_image
-                                              }
-                                              alt=""
-                                              className="ct_img_40 ct_bor ct_white_border_1"
-                                            />
-                                            <div style={{ flex: "1" }}>
-                                              <div className="d-flex align-items-center gap-2 flex-wrap">
-                                                <h5 className="ct_fs_15  ct_fw_600 mb-0">
-                                                  {item?.attributes?.user
-                                                    ?.name ?? ""}
-                                                </h5>
-                                                <div className="d-flex align-items-center gap-3">
-                                                  <p className="mb-0  ct_fs_12  ct_text_op_5">
-                                                    <CommentTime
-                                                      timestamp={
-                                                        item?.attributes
-                                                          ?.created_at
-                                                      }
-                                                    />
-                                                  </p>
+                                      <div>
+                                        {selectedPostId ==
+                                          item?.attributes?.id &&
+                                          allComments?.length != 0 &&
+                                          allComments?.map((item) => (
+                                            <div className="d-flex  gap-3 mb-3">
+                                              <img
+                                                src={
+                                                  IMAGE_URL +
+                                                  item?.attributes?.user
+                                                    ?.profile_image
+                                                }
+                                                alt=""
+                                                className="ct_img_40 ct_bor ct_white_border_1"
+                                              />
+                                              <div style={{ flex: "1" }}>
+                                                <div className="d-flex align-items-center gap-2 flex-wrap">
+                                                  <h5 className="ct_fs_15  ct_fw_600 mb-0">
+                                                    {item?.attributes?.user
+                                                      ?.name ?? ""}
+                                                  </h5>
+                                                  <div className="d-flex align-items-center gap-3">
+                                                    <p className="mb-0  ct_fs_12  ct_text_op_5">
+                                                      <CommentTime
+                                                        timestamp={
+                                                          item?.attributes
+                                                            ?.created_at
+                                                        }
+                                                      />
+                                                    </p>
+                                                  </div>
                                                 </div>
+                                                <p className="ct_fs_13 mb-0 mt-1  ct_ff_roboto ct_line_height_22 ct_commented_text ">
+                                                  <span>
+                                                    {item?.attributes?.body ??
+                                                      ""}
+                                                  </span>
+                                                </p>
                                               </div>
-                                              <p className="ct_fs_13 mb-0 mt-1  ct_ff_roboto ct_line_height_22 ct_commented_text ">
-                                                <span>
-                                                  {item?.attributes?.body ??
-                                                    ""}
-                                                </span>
-                                              </p>
                                             </div>
-                                          </div>
-                                        ))}
+                                          ))}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div>
-                                    <p
-                                      className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text"
-                                      data-bs-target="#ct_report_modal"
-                                      data-bs-toggle="modal"
-                                    >
-                                      Report
-                                    </p>
+                                    <div>
+                                      <p
+                                        className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text"
+                                        data-bs-target="#ct_report_modal"
+                                        data-bs-toggle="modal"
+                                      >
+                                        Report
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            }
                           </div>
                         </div>
                       ))}
-                    {/* <div className="ct_uploaded_post_main mb-3">
-                                <div className="d-flex align-items-center justify-content-between gap-2">
-                                    <div className="ct_upload_user_name">
-                                        <img src="assets/img/user.png" alt="" className="ct_img_40 ct_flex_shrink_0" />
-                                        <p className="mb-0 ct_fw_600">John Doe</p>
-                                        <span className="ct_text_op_6 ct_fs_14">24 days ago</span>
-                                    </div>
-                                    <div className="dropdown ct_post_setting_drop">
-                                        <i className="fa-solid fa-ellipsis-vertical" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        </i>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" data-bs-target="#ct_delete_modal"
-                                                data-bs-toggle="modal">Delete</a></li>
-                                            <li><a className="dropdown-item" data-bs-target="#ct_block_modal"
-                                                data-bs-toggle="modal">Block</a></li>
-                                            <li><a className="dropdown-item" data-bs-target="#ct_report_modal"
-                                                data-bs-toggle="modal">Report</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p className="ct_para_scroll ct_custom_scroll mt-3">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, veniam non, ab nemo numquam
-                                    obcaecati dolor quisquam nihil deserunt adipisci sit blanditiis reprehenderit deleniti ut saepe reiciendis
-                                    praesentium dolorem voluptate.
-                                </p>
-                                <div className="ct_like_comment_div">
-                                    <ul>
-                                        <li>
-                                            <div className="ct_like_btn d-flex align-items-center gap-2">
-                                                <i className="fa-regular fa-thumbs-up"></i>
-                                                <p className="mb-0 ct_fw_500  ">0</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="ct_comment_bnt  d-flex align-items-center gap-2">
-                                                <i className="fa-regular fa-message"></i>
-                                                <p className="mb-0 ct_fw_500 ">0</p>
-                                            </div>
-                                        </li>
-                                        <li className="ct_book_mark_icon  ">
-                                            <i className="fa-regular fa-share-from-square"></i>
-                                        </li>
-                                        <li className="ms-auto ct_text_op_6 ct_fs_14">
-                                            #Geo Politics
-                                        </li>
-                                    </ul>
-                                    <div className="ct_comment_area_main mt-4  ">
-                                        <input type="text" className="form-control ct_input ct_custom_input w-100" placeholder="Write comment..." />
-                                        <div className="ct_comment_area_scroll">
-                                            <div className="d-flex justify-content-between gap-2 mt-3">
-                                                <div>
-                                                    <div>
-                                                        <div className="d-flex  gap-3 ">
-                                                            <img src="assets/img/user.png" alt="" className="ct_img_40 ct_bor ct_white_border_1" />
-                                                            <div style={{ flex: "1" }}>
-                                                                <div className="d-flex align-items-center gap-2 flex-wrap">
-                                                                    <h5 className="ct_fs_15  ct_fw_600 mb-0">Bradford Bogisich</h5>
-                                                                    <div className="d-flex align-items-center gap-3">
-
-
-                                                                        <p className="mb-0  ct_fs_12  ct_text_op_5">2 days ago</p>
-                                                                    </div>
-                                                                </div>
-                                                                <p className="ct_fs_13 mb-0  ct_ff_roboto ct_line_height_22 ct_commented_text mt-3"><span>Design
-                                                                    Shot is an invitation to ponder cn design as a living entity. capture of embodying and
-                                                                    influencing the flow of thoughts and sensations in</span>
-                                                                </p>
-                                                                <div className="mt-2 ">
-                                                                    <a className="text-dark ct_fw_600 ct_fs_14">Reply</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="mt-3 d-none ">
-                                                            <input type="text" className="form-control ct_input h-auto py-2" placeholder="Reply" />
-                                                            <div className="d-flex  gap-3 ps-4 pt-3">
-                                                                <img src="assets/img/user.png" alt="" className="ct_img_40 ct_bor ct_white_border_1" />
-                                                                <div style={{ flex: "1" }}>
-                                                                    <div className="d-flex align-items-center gap-2 flex-wrap">
-                                                                        <h5 className="ct_fs_15  ct_fw_600 mb-0">Bradford Bogisich</h5>
-                                                                        <div className="d-flex align-items-center gap-3">
-
-
-                                                                            <p className="mb-0  ct_fs_12  ct_text_op_5">2 days ago</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p className="ct_fs_13 mb-0  ct_ff_roboto ct_line_height_22 ct_commented_text mt-3">
-                                                                        <span>Design Shot is an invitation to ponder cn design as a living entity. capture of
-                                                                            embodying and
-                                                                            influencing the flow of thoughts and sensations in</span>
-                                                                    </p>
-                                                                    <div className="mt-2 ">
-                                                                        <a className="text-dark ct_fw_600 ct_fs_14">Reply</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text" data-bs-target="#ct_report_modal"
-                                                        data-bs-toggle="modal">Report</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-xl-3 mb-4 mb-xl-0">
-              <div className="ct_outline_bg position-sticky top-0">
-                <h4 className="ct_fs_20 ct_fw_600 mb-0">Topic</h4>
-                <ul className="mt-3">
-                  <li>
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+              <div className=" ct_side_bar_scrool_left ct_custom_scroll">
+                <div className='ct_outline_bg mb-4'>
+                  <h4 className="ct_fs_20 ct_fw_600 mb-0">Sort By</h4>
+                  <ul className="mt-3">
+                    <li>
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Latest
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        All
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li className='mt-2'>
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Oldest
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Business & Start-ups
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li className='mt-2'>
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Newest
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Finance & Economics
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                  </ul>
+                </div>
+                <div className='ct_outline_bg'>
+                  <h4 className="ct_fs_20 ct_fw_600 mb-0">Topic</h4>
+                  <ul className="mt-3">
+                    <li>
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          All
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Geo-Politics
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Business & Start-ups
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Family & Relationships
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Finance & Economics
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Health & Wellness
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Geo-Politics
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Sports
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Family & Relationships
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Chill Zone (Movies & Jokes)
-                      </p>
-                    </div>
-                  </li>
-                  <li class="mt-2">
-                    <div className="d-flex align-items-center gap-1">
-                      <div class="form-check ct_custom_check2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Health & Wellness
+                        </p>
                       </div>
-                      <p className="mb-0" style={{ marginTop: "-5px" }}>
-                        Travel & Adventure
-                      </p>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Sports
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Chill Zone (Movies & Jokes)
+                        </p>
+                      </div>
+                    </li>
+                    <li class="mt-2">
+                      <div className="d-flex align-items-center gap-1">
+                        <div class="form-check ct_custom_check2">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                        </div>
+                        <p className="mb-0" style={{ marginTop: "-5px" }}>
+                          Travel & Adventure
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      {isCreatePoll &&
+        <CreatePollModal
+          messageApi={messageApi}
+          onClose={() => setIsCreatePoll(false)}
+        />
+      }
     </div>
   );
 };

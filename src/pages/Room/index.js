@@ -1,18 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { pageRoutes } from '../../routes/PageRoutes';
-import { getUpcommingRoomData } from '../../redux/actions/createRoom';
+import { getMyRoomData, getPastRoomData, getRecommendedRoomData, getUpcommingRoomData } from '../../redux/actions/createRoom';
+import Loader from '../../components/Loader';
+import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 
 const MyRoom = ({ messageApi }) => {
+    const { isCreateLoading, pastRoomList, upcommingRoomList, recommendedList, myRoomList } = useSelector((state) => state.createRoomReducer);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [activeTab, setActiveTab] = useState('1');
+    const userData = pipGetAccessToken("user_data");
+
     useEffect(() => {
+        dispatch(getMyRoomData({ messageApi }));
+        dispatch(getPastRoomData({ messageApi }));
         dispatch(getUpcommingRoomData({ messageApi }));
+        dispatch(getRecommendedRoomData({ messageApi }));
     }, []);
 
+    // if (isCreateLoading) {
+    //     return <Loader />
+    // };
     return (
         <div>
             <Header messageApi={messageApi} />
@@ -43,7 +56,7 @@ const MyRoom = ({ messageApi }) => {
                                     </div>
                                 </div>
                                 <div className="d-flex  align-items-center gap-2 ct_w_100_767">
-                                    <a onClick={() => navigate(pageRoutes.userWallet)} className="ct_outline_border ct_w_100_767 text-dark"><img src="assets/img/wallet_icon.png" alt="" width="20px" />1495</a>
+                                    <a onClick={() => navigate(pageRoutes.userWallet)} className="ct_outline_border ct_w_100_767 text-dark"><img src="assets/img/wallet_icon.png" alt="" width="20px" />{userData?.attributes?.ycoins ?? 0}</a>
                                 </div>
                             </div>
                             <div>
@@ -54,59 +67,36 @@ const MyRoom = ({ messageApi }) => {
                                 >
                                     <li className="nav-item" role="presentation">
                                         <button
-                                            className="nav-link active"
-                                            id="pills-public-info-tab"
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#pills-public-info"
                                             type="button"
-                                            role="tab"
-                                            aria-controls="pills-public-info"
-                                            aria-selected="true"
+                                            className={`nav-link ${activeTab == 1 && 'active'}`}
+                                            onClick={() => setActiveTab('1')}
                                         >
-                                            Public Info
+                                            My Video Call Rooms
                                         </button>
                                     </li>
                                     <li className="nav-item" role="presentation">
                                         <button
-                                            className="nav-link"
-                                            id="pills-persional_info-tab"
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#pills-persional_info"
                                             type="button"
-                                            role="tab"
-                                            aria-controls="pills-persional_info"
-                                            aria-selected="false"
-                                            tabindex="-1"
+                                            className={`nav-link ${activeTab == 2 && 'active'}`}
+                                            onClick={() => setActiveTab('2')}
                                         >
-                                            Personal Info
+                                            Recommended
                                         </button>
                                     </li>
                                     <li className="nav-item" role="presentation">
                                         <button
-                                            className="nav-link"
-                                            id="pills-resources-tab"
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#pills-resources"
                                             type="button"
-                                            role="tab"
-                                            aria-controls="pills-resources"
-                                            aria-selected="false"
-                                            tabindex="-1"
+                                            className={`nav-link ${activeTab == 3 && 'active'}`}
+                                            onClick={() => setActiveTab('3')}
                                         >
                                             Upcomming Video Call Rooms
                                         </button>
                                     </li>
                                     <li className="nav-item" role="presentation">
                                         <button
-                                            className="nav-link"
-                                            id="pills-past_rooms-tab"
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#pills-past_rooms"
                                             type="button"
-                                            role="tab"
-                                            aria-controls="pills-past_rooms"
-                                            aria-selected="false"
-                                            tabindex="-1"
+                                            className={`nav-link ${activeTab == 4 && 'active'}`}
+                                            onClick={() => setActiveTab('4')}
                                         >
                                             Past Rooms
                                         </button>
@@ -114,259 +104,202 @@ const MyRoom = ({ messageApi }) => {
                                 </ul>
                                 <div className="tab-content" id="pills-tabContent">
                                     <div
-                                        className="tab-pane fade active show"
-                                        id="pills-public-info"
-                                        role="tabpanel"
-                                        aria-labelledby="pills-public-info-tab"
+                                        className={`tab-pane fade ${activeTab == 1 && 'active show'}`}
                                     >
                                         <ul>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
+                                            {myRoomList?.length != 0 ?
+                                                myRoomList?.map((item) => (
+                                                    <li className="mb-3">
+                                                        <div className="ct_white_bg">
+                                                            <div>
+                                                                <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
+                                                                    <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
+                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                </div>
+                                                                <div>
+                                                                    <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                </div>
+                                                                <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+                                                            </div>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                                <div className='d-flex align-items-center gap-3 flex-wrap'>
+                                                                    <p className="mb-0">
+                                                                        <i className="fa-regular fa-clock me-2"></i>
+                                                                        {pipViewDate2(item?.attributes?.start_time)}
+                                                                    </p>
+                                                                    <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
+                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                                :
+                                                <div className='et_empty_content_main mt-5'>
+                                                    <div className='et_empty_logo'>
+                                                        <img src='assets/img/fav_icon.png' />
                                                     </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
+                                                    <h6 className='ct_fs_16 ct_fw_600 mb-1 text-center'>No Rooms Available</h6>
+                                                    <p className='mb-0 text-center ct_fs_14 ct_text_op_6'>Create a room and start having a conversation</p>
+                                                    <div className='text-center mt-3'>
+                                                        <button className='ct_yellow_btn' onClick={() => navigate(pageRoutes?.createRoom)}>Create Room</button>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            }
                                         </ul>
                                     </div>
                                     <div
-                                        className="tab-pane fade"
-                                        id="pills-persional_info"
-                                        role="tabpanel"
-                                        aria-labelledby="pills-persional_info-tab"
+                                        className={`tab-pane fade ${activeTab == 2 && 'active show'}`}
                                     >
                                         <ul>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
+                                            {recommendedList?.length != 0 ?
+                                                recommendedList?.map((item) => (
+                                                    <li className="mb-3">
+                                                        <div className="ct_white_bg">
+                                                            <div>
+                                                                <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
+                                                                    <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
+                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                </div>
+                                                                <div>
+                                                                    <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                </div>
+                                                                <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+
+                                                            </div>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                                <div className='d-flex align-items-center gap-3 flex-wrap'>
+                                                                    <p className="mb-0">
+                                                                        <i className="fa-regular fa-clock me-2"></i>
+                                                                        {pipViewDate2(item?.attributes?.start_time)}
+                                                                    </p>
+                                                                    <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
+                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                                :
+                                                <div className='et_empty_content_main mt-5'>
+                                                    <div className='et_empty_logo'>
+                                                        <img src='assets/img/fav_icon.png' />
                                                     </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
+                                                    <h6 className='ct_fs_16 ct_fw_600 mb-1 text-center'>No Rooms Available</h6>
+                                                    <p className='mb-0 text-center ct_fs_14 ct_text_op_6'>Create a room and start having a conversation</p>
+                                                    <div className='text-center mt-3'>
+                                                        <button className='ct_yellow_btn' onClick={() => navigate(pageRoutes?.createRoom)}>Create Room</button>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            }
                                         </ul>
                                     </div>
                                     <div
-                                        className="tab-pane fade"
-                                        id="pills-resources"
-                                        role="tabpanel"
-                                        aria-labelledby="pills-resources-tab"
+                                        className={`tab-pane fade ${activeTab == 3 && 'active show'}`}
                                     >
                                         <ul>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
+                                            {upcommingRoomList?.length != 0 ?
+                                                upcommingRoomList?.map((item) => (
+                                                    <li className="mb-3">
+                                                        <div className="ct_white_bg">
+                                                            <div>
+                                                                <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
+                                                                    <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
+                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                </div>
+                                                                <div>
+                                                                    <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                </div>
+                                                                <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+
+                                                            </div>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                                <div className='d-flex align-items-center gap-3 flex-wrap'>
+                                                                    <p className="mb-0">
+                                                                        <i className="fa-regular fa-clock me-2"></i>
+                                                                        {pipViewDate2(item?.attributes?.start_time)}
+                                                                    </p>
+                                                                    <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
+                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                                :
+                                                <div className='et_empty_content_main mt-5'>
+                                                    <div className='et_empty_logo'>
+                                                        <img src='assets/img/fav_icon.png' />
                                                     </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
+                                                    <h6 className='ct_fs_16 ct_fw_600 mb-1 text-center'>No Rooms Available</h6>
+                                                    <p className='mb-0 text-center ct_fs_14 ct_text_op_6'>Create a room and start having a conversation</p>
+                                                    <div className='text-center mt-3'>
+                                                        <button className='ct_yellow_btn' onClick={() => navigate(pageRoutes?.createRoom)}>Create Room</button>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            }
                                         </ul>
                                     </div>
                                     <div
-                                        className="tab-pane fade"
-                                        id="pills-past_rooms"
-                                        role="tabpanel"
-                                        aria-labelledby="pills-past_rooms-tab"
+                                        className={`tab-pane fade ${activeTab == 4 && 'active show'}`}
                                     >
                                         <ul>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
+                                            {pastRoomList?.length != 0 ?
+                                                pastRoomList?.map((item) => (
+                                                    <li className="mb-3">
+                                                        <div className="ct_white_bg">
+                                                            <div>
+                                                                <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
+                                                                    <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
+                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                </div>
+                                                                <div>
+                                                                    <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                </div>
+                                                                <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+
+                                                            </div>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                                <div className='d-flex align-items-center gap-3 flex-wrap'>
+                                                                    <p className="mb-0">
+                                                                        <i className="fa-regular fa-clock me-2"></i>
+                                                                        {pipViewDate2(item?.attributes?.start_time)}
+                                                                    </p>
+                                                                    <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
+                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                                :
+                                                <div className='et_empty_content_main mt-5'>
+                                                    <div className='et_empty_logo'>
+                                                        <img src='assets/img/fav_icon.png' />
                                                     </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="mb-3">
-                                                <div className="ct_white_bg">
-                                                    <div>
-                                                        <h4 className="ct_fs_20 ct_0fw_600">Finance & Economics</h4>
-                                                        <small className="text-end d-block">Standard</small>
-                                                    </div>
-                                                    <div className="ct_border_top_1 pt-3 mt-3">
-                                                        <p className="mb-0"> <i className="fa-regular fa-clock me-2"></i>Fri,8 Aug 06:30 PM</p>
+                                                    <h6 className='ct_fs_16 ct_fw_600 mb-1 text-center'>No Rooms Available</h6>
+                                                    <p className='mb-0 text-center ct_fs_14 ct_text_op_6'>Create a room and start having a conversation</p>
+                                                    <div className='text-center mt-3'>
+                                                        <button className='ct_yellow_btn' onClick={() => navigate(pageRoutes?.createRoom)}>Create Room</button>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>

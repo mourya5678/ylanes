@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -207,12 +207,53 @@ export const getAllUserPreviousMessages = createAsyncThunk('get-user-previous-me
 });
 
 // My Rooms
-
 export const getUpcommingRoomData = createAsyncThunk('get-upcomming-room-list', async (props) => {
     const { messageApi } = props;
     try {
         const response = await API_REQUEST({
             url: getAllUpcommingRoomDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getPastRoomData = createAsyncThunk('get-past-room-list', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllPastRoomDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getRecommendedRoomData = createAsyncThunk('get-recommended-room-list', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllRecommendedRoomsDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getMyRoomData = createAsyncThunk('get-my-room-list', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllMyRoomsDataAPI,
             method: "GET",
             messageApi
         });

@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
-import { getAllSubscriptionPlan } from '../../redux/actions/subscriptions';
+import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan } from '../../redux/actions/subscriptions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css/pagination";
+import "swiper/css";
+
 
 const Dashboard = ({ messageApi }) => {
-    const { isSubscriptionLoader, allSubscription } = useSelector((state) => state.subscriptionReducer);
+    const { isSubscriptionLoader, allDashboardSubscription } = useSelector((state) => state.subscriptionReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getAllSubscriptionPlan({ messageApi }));
+        dispatch(getDashboardAllSubscriptionPlan({ messageApi }));
     }, []);
 
     if (isSubscriptionLoader) {
@@ -44,7 +49,7 @@ const Dashboard = ({ messageApi }) => {
                                         <li>
                                             <a>Blog</a>
                                         </li>
-                                        <li>
+                                        <li onClick={() => navigate(pageRoutes.faq)}>
                                             <a>FAQs</a>
                                         </li>
                                     </ul>
@@ -187,8 +192,20 @@ const Dashboard = ({ messageApi }) => {
             <section className="py-5">
                 <div className="container-fluid">
                     <h2 className="text-center fw-bold mb-5">What YLanes Members Say</h2>
-                    <div className="owl-carousel owl-theme ct_review_slider">
-                        <div className="item">
+                    <Swiper
+                        modules={[Pagination, Autoplay]}
+                        spaceBetween={20}
+                        slidesPerView={1}
+                        autoplay={{ delay: 3000 }}
+                        loop={true}
+                        pagination={{ clickable: true }}
+                        breakpoints={{
+                            768: { slidesPerView: 2 },
+                            1024: { slidesPerView: 3 },
+                        }}
+                        className="ct_review_slider"
+                    >
+                        <SwiperSlide>
                             <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                 <div className="me-4 flex-shrink-0">
                                     <img src="assets/img/asset_3.png" alt="User 1" className="img-fluid rounded-3" />
@@ -196,15 +213,14 @@ const Dashboard = ({ messageApi }) => {
                                 <div>
                                     <span className="fs-2 text-warning">“</span>
                                     <p className="mb-3">
-                                        YLanes is where my brain goes to hang out. From debating Elon’s next move to discussing whether cricket
-                                        should even have sequels, it’s the perfect mental gym. Love it!
+                                        YLanes is where my brain goes to hang out...
                                     </p>
                                     <hr className="ct_light_hr" />
                                     <h6 className="fw-bold mb-0">Gustavo Culhane</h6>
                                 </div>
                             </div>
-                        </div>
-                        <div className="item">
+                        </SwiperSlide>
+                        <SwiperSlide>
                             <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                 <div className="me-4 flex-shrink-0">
                                     <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
@@ -212,80 +228,44 @@ const Dashboard = ({ messageApi }) => {
                                 <div>
                                     <span className="fs-2 text-warning">“</span>
                                     <p className="mb-3">
-                                        The discussions here are insightful and fun. It’s refreshing to have authentic conversations without the
-                                        noise of social media. Highly recommended!
+                                        The discussions here are insightful and fun...
                                     </p>
                                     <hr className="ct_light_hr" />
                                     <h6 className="fw-bold mb-0">Corey Michael</h6>
                                 </div>
                             </div>
-                        </div>
-                        <div className="item">
+                        </SwiperSlide>
+                        <SwiperSlide>
                             <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                 <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
+                                    <img src="assets/img/asset_3.png" alt="User 1" className="img-fluid rounded-3" />
                                 </div>
                                 <div>
                                     <span className="fs-2 text-warning">“</span>
                                     <p className="mb-3">
-                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
+                                        YLanes is where my brain goes to hang out...
                                     </p>
                                     <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
+                                    <h6 className="fw-bold mb-0">Gustavo Culhane</h6>
                                 </div>
                             </div>
-                        </div>
-                        <div className="item">
+                        </SwiperSlide>
+                        <SwiperSlide>
                             <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                 <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
+                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
                                 </div>
                                 <div>
                                     <span className="fs-2 text-warning">“</span>
                                     <p className="mb-3">
-                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
+                                        The discussions here are insightful and fun...
                                     </p>
                                     <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
+                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
                                 </div>
                             </div>
-                        </div>
-                        <div className="item">
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_3.png" alt="User 3" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        A truly unique platform to exchange ideas freely. It’s like a mental playground where curiosity thrives!
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Sophia Williams</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="ct-carousel-nav mt-4 d-flex justify-content-between align-items-center gap-2 w-75 ct_border_top_1 mx-auto pt-4">
-                        <p className="mb-0 mb-0">We have <span className="ct_fw_600">100+</span> Happy Customers</p>
-                        <div className="d-flex justify-content-end align-items-center gap-2">
-                            <div id="carouselCounter" className="ct-carousel-counter">1/3</div>
-                            <button id="carouselPrev" className="ct-nav-btn ct-nav-prev" aria-label="Previous review">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                    aria-hidden="true">
-                                    <path d="M15 18L9 12L15 6" stroke="#222" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                            </button>
-                            <button id="carouselNext" className="ct-nav-btn ct-nav-next" aria-label="Next review">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                    aria-hidden="true">
-                                    <path d="M9 18L15 12L9 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                        </SwiperSlide>
+                    </Swiper>
                 </div>
             </section>
             <section className="ct_how_works_bg py-5 text-white">
@@ -353,71 +333,44 @@ const Dashboard = ({ messageApi }) => {
                     <div className="row g-4">
                         <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
                             <div className="et_pricing_card position-relative ">
-                                <div className="ct_border_bg_1">
-                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Free</h5>
-                                    <div className="ct_border_bg_1">
-                                        <ul>
-                                            <li><span>Sign-up</span> <span>· 100 YCoins</span></li>
-                                            <li><span>Referral fill</span> <span>· 100 YCoins</span></li>
-                                            <li><span>Profile fill </span><span>· 100 YCoins</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="owl-carousel owl-theme ct_price_slider mt-4">
-                                    <div className="item">
-                                        <div className="et_pricing_content">
-                                            <h6 className="text-start mb-4 ct_fs_20">Feed participation pricing</h6>
-                                            <ul>
-                                                <li><span>Like post/comment</span> <span className="ct_fw_500">· 0 YCoins</span></li>
-                                                <li><span>Post/Comment</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Send connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Connection request refund</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Accept connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="et_pricing_content">
-                                            <h6 className="text-start mb-4 ct_fs_20 ">Feed participation pricing</h6>
-                                            <ul>
-                                                <li><span>Like post/comment</span> <span className="ct_fw_500">· 0 YCoins</span></li>
-                                                <li><span>Post/Comment</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Send connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Connection request refund</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                                <li><span>Accept connection request</span> <span className="ct_fw_500">· 10 YCoins</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="ct-carousel-nav mt-3 mx-auto">
-                                    <div className="d-flex justify-content-between align-items-center gap-2">
-                                        <div id="carouselCounter2" className="ct-carousel-counter">1/3</div>
-                                        <div>
-                                            <button id="carouselPrev2" className="ct-nav-btn ct-nav-prev" aria-label="Previous review">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                    aria-hidden="true">
-                                                    <path d="M15 18L9 12L15 6" stroke="#222" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                            </button>
-                                            <button id="carouselNext2" className="ct-nav-btn ct-nav-next" aria-label="Next review">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                    aria-hidden="true">
-                                                    <path d="M9 18L15 12L9 6" stroke="#fff" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Swiper
+                                    modules={[Pagination, Autoplay]}
+                                    spaceBetween={20}
+                                    slidesPerView={1}
+                                    autoplay={{ delay: 3000 }}
+                                    loop={true}
+                                    pagination={{ clickable: true }}
+                                    breakpoints={{
+                                        768: { slidesPerView: 1 },
+                                        1024: { slidesPerView: 1 },
+                                    }}
+                                    className="ct_review_slider"
+                                >
+                                    {allDashboardSubscription?.length != 0 &&
+                                        allDashboardSubscription?.map((item) => (
+                                            <SwiperSlide>
+                                                <div className="ct_border_bg_1">
+                                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">{item?.name ?? ""}</h5>
+                                                    <div className="ct_border_bg_1">
+                                                        <ul className="text-start">
+                                                            {item?.description?.split(",")?.map((item) => (
+                                                                <li>
+                                                                    {item ?? ''}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </SwiperSlide>
+                                        ))}
+                                </Swiper>
                             </div>
                         </div>
-                        {allSubscription?.length != 0 &&
-                            allSubscription?.map((item) => (
+                        {allDashboardSubscription?.length != 0 &&
+                            allDashboardSubscription?.map((item) => (
                                 <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
                                     <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
                                         <div className='mb-3'>
-                                            {console.log(item)}
                                             <h5 className="text-center mb-4 ct_fs_24 mt-3 ">{item?.name ?? ""}</h5>
                                             <div className="price w-100 py-3">RS {item?.amount ?? 0}</div>
                                             <div className="ct_border_bg_1">

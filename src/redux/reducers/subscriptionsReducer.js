@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllSubscriptionPlan, purchaseSubscriptionPlan } from "../actions/subscriptions";
+import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan } from "../actions/subscriptions";
 
 const initialStates = {
     isSubscriptionLoader: false,
-    allSubscription: []
+    allSubscription: [],
+    allDashboardSubscription: [],
+    userPlan: []
 };
 
 export const subscriptionSlice = createSlice({
@@ -24,6 +26,19 @@ export const subscriptionSlice = createSlice({
             state.isSubscriptionLoader = false;
         });
 
+        // getDashboardAllSubscriptionPlan
+        builder.addCase(getDashboardAllSubscriptionPlan.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getDashboardAllSubscriptionPlan.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.allDashboardSubscription = data?.plans ?? []
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getDashboardAllSubscriptionPlan.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
         // purchaseSubscriptionPlan
         builder.addCase(purchaseSubscriptionPlan.pending, (state, action) => {
             state.isSubscriptionLoader = true;
@@ -32,6 +47,18 @@ export const subscriptionSlice = createSlice({
             state.isSubscriptionLoader = false;
         });
         builder.addCase(purchaseSubscriptionPlan.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // getUserSubscriptionPlan
+        builder.addCase(getUserSubscriptionPlan.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getUserSubscriptionPlan.fulfilled, (state, action) => {
+            state.userPlan = action?.payload ?? [];
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getUserSubscriptionPlan.rejected, (state, action) => {
             state.isSubscriptionLoader = false;
         });
     }

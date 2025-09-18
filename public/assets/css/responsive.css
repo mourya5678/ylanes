@@ -164,6 +164,10 @@
   .send-box {
     padding-bottom: 15px;
   }
+
+  .ct_custom_tabs.nav-pills .nav-link {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -255,5 +259,15 @@
   .ct_outline_bg,
   .ct_white_bg {
     padding: 20px 10px;
+  }
+
+  .ct_custom_tabs.nav-pills {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ct_custom_tabs.nav-pills li,
+  .ct_custom_tabs.nav-pills button {
+    width: 100%;
   }
 }
