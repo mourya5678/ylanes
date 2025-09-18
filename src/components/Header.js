@@ -36,16 +36,6 @@ const Header = ({ messageApi }) => {
                   <div className="ct_close_menu">
                     <i className="fa-solid fa-xmark"></i>
                   </div>
-                  {/* window.location?.pathname */}
-                  {/* <li onClick={() => navigate(pageRoutes.dashboard)}>
-                    <a className={window.location?.pathname == pageRoutes.dashboard && 'active'}>Home</a>
-                  </li>
-                  <li onClick={() => navigate(pageRoutes.poll)}>
-                    <a className={window.location?.pathname == pageRoutes.poll && 'active'}>Polls</a>
-                  </li>
-                  <li onClick={() => navigate(pageRoutes.myRoom)}>
-                    <a className={window.location?.pathname == pageRoutes.myRoom && 'active'}>My Rooms</a>
-                  </li> */}
                   <li className="ct_flex_1">
                     <div className="ct_flex_1 d-flex align-items-center gap-2 ">
                       <div className=" position-relative ct_flex_1 ct_search_input ct_flex_1 ct_header_search_w_700 ">
@@ -55,7 +45,6 @@ const Header = ({ messageApi }) => {
                             placeholder="Search..."
                             className="form-control ct_input pe-5"
                           />
-
                           <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
                         <div className="ct_searchable_list d-none ">
@@ -75,8 +64,7 @@ const Header = ({ messageApi }) => {
                           </ul>
                         </div>
                       </div>
-
-                      <button className="ct_yellow_btn ct_border_radius_10">
+                      <button className="ct_yellow_btn ct_border_radius_10" onClick={() => navigate(pageRoutes.createRoom)}>
                         Create Room
                       </button>
                     </div>
@@ -109,7 +97,6 @@ const Header = ({ messageApi }) => {
                 >
                   <img src="assets/img/notifications_icon.png" alt="" />
                 </a>
-
                 <div className="ct_right_dropdown dropdown">
                   <button onClick={() => setIsShow(!isShow)}>
                     <div className="d-flex align-items-center gap-2">
@@ -127,6 +114,15 @@ const Header = ({ messageApi }) => {
                     <i className="fa-solid fa-angle-down ms-auto"></i>
                   </button>
                   <ul className={`dropdown-menu ${isShow && "show"}`}>
+                    <li onClick={() => navigate(pageRoutes.myRoom)}>
+                      <a className="dropdown-item">
+                        <img
+                          src="../assets/img/dashbaord-images/profile_icon.svg"
+                          alt=""
+                        />
+                        My Room
+                      </a>
+                    </li>
                     <li onClick={() => navigate(pageRoutes.profile)}>
                       <a className="dropdown-item">
                         <img

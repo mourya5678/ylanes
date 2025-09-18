@@ -36,14 +36,42 @@ const Home = ({ messageApi }) => {
   const [sortData, setSortData] = useState('');
   const [isCreatePoll, setIsCreatePoll] = useState(false);
 
+  const [filterBytopic, setFilterByTopic] = useState([]);
+
+  var localData = []
+
   const initialState = {
     topic: "",
     title: "",
   };
 
-  const displayUser = allPosts?.map((item) => (
-    console.log(item)
-  ));
+  const getDisplayUsers = (allPosts, filterByTopic) => {
+    if (!filterByTopic || filterByTopic.length === 0) {
+      // no filter applied → show all posts
+      return allPosts;
+    }
+
+    return allPosts?.filter((item) => {
+      const topics = item?.attributes?.topics;
+
+      // If topics is a string → convert to array
+      if (typeof topics === "string") {
+        return filterByTopic.includes(topics);
+      }
+
+      // If topics is an array → normal check
+      if (Array.isArray(topics)) {
+        return topics.some((topic) => filterByTopic.includes(topic));
+      }
+
+      // If topics is something else (null/undefined/object) → skip
+      return false;
+    });
+  };
+
+  // usage
+  const displayUser = getDisplayUsers(allPosts, filterBytopic);
+  console.log({ displayUser })
 
   useEffect(() => {
     dispatch(getPostTopics({ messageApi }));
@@ -452,8 +480,8 @@ const Home = ({ messageApi }) => {
                     </div>
                   </div>
                   <div className="col-md-12 mt-4">
-                    {allPosts?.length != 0 &&
-                      allPosts?.map((item) => (
+                    {displayUser?.length != 0 &&
+                      displayUser?.map((item) => (
                         <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">
@@ -666,6 +694,8 @@ const Home = ({ messageApi }) => {
                 </div>
               </div>
             </div>
+
+            {/* // sort */}
             <div className="col-xl-3 mb-4 mb-xl-0">
               <div className=" ct_side_bar_scrool_left ct_custom_scroll">
                 <div className="ct_outline_bg mb-4">
@@ -727,8 +757,14 @@ const Home = ({ messageApi }) => {
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
+                            checked={filterBytopic?.length == postTopic?.length}
+                            onClick={() => {
+                              filterBytopic?.length == postTopic?.length ? setFilterByTopic([]) :
+                                localData = postTopic?.map((item) => {
+                                  return item?.attributes?.name
+                                })
+                              setFilterByTopic(localData)
+                            }}
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>
@@ -736,140 +772,43 @@ const Home = ({ messageApi }) => {
                         </p>
                       </div>
                     </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
+                    {postTopic?.map((item) => (
+                      <li>
+                        <div className="d-flex align-items-center gap-1 mt-2">
+                          <div class="form-check ct_custom_check2">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              checked={filterBytopic?.includes(item?.attributes?.name) ? true : false}
+                              onClick={() =>
+                                setFilterByTopic((prev) =>
+                                  prev.includes(item?.attributes?.name)
+                                    ? prev.filter((name) => name != item?.attributes?.name)
+                                    : [...prev, item?.attributes?.name]
+                                )
+                              }
+                            />
+                          </div>
+                          <p className="mb-0" style={{ marginTop: "-5px" }}>
+                            {item?.attributes?.name ?? ""}
+                          </p>
                         </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Business & Start-ups
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Finance & Economics
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Geo-Politics
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Family & Relationships
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Health & Wellness
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Sports
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Chill Zone (Movies & Jokes)
-                        </p>
-                      </div>
-                    </li>
-                    <li class="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Travel & Adventure
-                        </p>
-                      </div>
-                    </li>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section >
       {isCreatePoll && (
         <CreatePollModal
           messageApi={messageApi}
           onClose={() => setIsCreatePoll(false)}
         />
       )}
-    </div>
+    </div >
   );
 };
 
