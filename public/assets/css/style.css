@@ -1683,6 +1683,10 @@ button:focus {
   margin-bottom: 15px;
 }
 
+.ct_top_wallet_bg.active {
+  background-color: #ffd73b
+}
+
 
 .ct_custom_table {
   border: 1px solid #d2d5db;

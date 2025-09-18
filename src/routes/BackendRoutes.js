@@ -1,6 +1,6 @@
 export const BASE_URL = "https://ylanes.com:4000/"; // Live
 export const BASE_URL1 = "https://ylanes.com:9000/"; // Live
-
+// export const BASE_URL = "http://56.228.76.11:4000/"
 // Image Url
 export const IMAGE_URL = "http://";
 
@@ -51,6 +51,13 @@ export const createSubscriptionPlanAPI = "bx_block_payments/razorpays/create_sub
 export const getAllDashboardSubscriptionPlanAPI = "bx_block_payments/public_subscriptions";
 
 export const getUserSubscriptionPlanAPI = "bx_block_payments/subscription_details";
+export const getTopupPlanAPI = "bx_block_ycoins/top_up_wallets/top_up_plans";
+
+export const topupWalletAPI = "bx_block_payments/razorpays/create_top_up_plan_order?plan_id=";
+export const getTaxDataAPI = "bx_block_admin/dynamic_text?constant_key=GST_SLAB";
+
+export const rupeeToYCoinConvertion = "bx_block_admin/dynamic_text?constant_key=RUPEE_TO_YCOIN";
+export const verifyPaymentTransactionAPI = "bx_block_payments/razorpays/update_v3";
 
 export const razorPayTestKey = "rzp_test_R82hVMaq49lFib";
 

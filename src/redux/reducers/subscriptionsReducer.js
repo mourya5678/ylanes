@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan } from "../actions/subscriptions";
+import { convertRupeeToYCoinData, getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getTaxDeatils, getTopUpPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan, topUpUserWalletYCoins, verifyPaymentTransactionData } from "../actions/subscriptions";
 
 const initialStates = {
     isSubscriptionLoader: false,
     allSubscription: [],
     allDashboardSubscription: [],
-    userPlan: []
+    userPlan: [],
+    topUpPlan: [],
+    tax: 0,
+    convertRupeeToYCoins: 1,
 };
 
 export const subscriptionSlice = createSlice({
@@ -61,6 +64,71 @@ export const subscriptionSlice = createSlice({
         builder.addCase(getUserSubscriptionPlan.rejected, (state, action) => {
             state.isSubscriptionLoader = false;
         });
+
+        // getTopUpPlan
+        builder.addCase(getTopUpPlan.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getTopUpPlan.fulfilled, (state, action) => {
+            state.topUpPlan = action?.payload ?? [];
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getTopUpPlan.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // topUpUserWalletYCoins
+        builder.addCase(topUpUserWalletYCoins.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(topUpUserWalletYCoins.fulfilled, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(topUpUserWalletYCoins.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // getTaxDeatils
+        builder.addCase(getTaxDeatils.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getTaxDeatils.fulfilled, (state, action) => {
+            const { data } = action?.payload;
+            state.tax = data?.constant_value ?? 0;
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getTaxDeatils.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // convertRupeeToYCoinData
+        builder.addCase(convertRupeeToYCoinData.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(convertRupeeToYCoinData.fulfilled, (state, action) => {
+            const { data } = action?.payload;
+            console.log({ data });
+            var value = Number(
+                String(data?.constant_value).replace(/[^0-9.]/g, "")
+            );
+            state.convertRupeeToYCoins = value ?? 0;
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(convertRupeeToYCoinData.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // verifyPaymentTransactionData
+        builder.addCase(verifyPaymentTransactionData.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(verifyPaymentTransactionData.fulfilled, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(verifyPaymentTransactionData.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
     }
 });
 

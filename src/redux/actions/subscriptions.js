@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createSubscriptionPlanAPI, getAllDashboardSubscriptionPlanAPI, getAllSubscriptionPlanAPI, getUserSubscriptionPlanAPI, purchaseSubscriptionPlanAPI } from "../../routes/BackendRoutes";
+import { createSubscriptionPlanAPI, getAllDashboardSubscriptionPlanAPI, getAllSubscriptionPlanAPI, getTaxDataAPI, getTopupPlanAPI, getUserSubscriptionPlanAPI, purchaseSubscriptionPlanAPI, rupeeToYCoinConvertion, topupWalletAPI, verifyPaymentTransactionAPI } from "../../routes/BackendRoutes";
 
 export const getAllSubscriptionPlan = createAsyncThunk('get-subscription-plan', async (props) => {
     const { messageApi } = props;
@@ -27,6 +27,83 @@ export const getUserSubscriptionPlan = createAsyncThunk('get-user-subscription-p
     } catch (error) {
     };
 });
+
+export const getTopUpPlan = createAsyncThunk('get-top-up-plan', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getTopupPlanAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// getTaxDataAPI
+export const getTaxDeatils = createAsyncThunk('get-tax', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getTaxDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// rupeeToYCoinConvertion
+export const convertRupeeToYCoinData = createAsyncThunk('convert-rupee-to-ycoin', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: rupeeToYCoinConvertion,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// topupWalletAPI
+export const topUpUserWalletYCoins = createAsyncThunk('top-up-ycoins', async (props) => {
+    const { messageApi, callback, params, payload } = props;
+    try {
+        const response = await API_REQUEST({
+            url: topupWalletAPI + params,
+            method: "POST",
+            isSuccessToast: false,
+            messageApi,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+    };
+});
+
+// verifyPaymentTransactionAPI
+export const verifyPaymentTransactionData = createAsyncThunk('verify-payment', async (props) => {
+    const { messageApi, callback, payload } = props;
+    try {
+        const response = await API_REQUEST({
+            url: verifyPaymentTransactionAPI,
+            method: "PUT",
+            data: payload,
+            isSuccessToast: false,
+            messageApi,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+    };
+});
+
 
 export const getDashboardAllSubscriptionPlan = createAsyncThunk('get-dashboard-subscription-plan', async (props) => {
     const { messageApi } = props;

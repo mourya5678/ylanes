@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { createSubscriptionPlan, getAllSubscriptionPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan } from '../../redux/actions/subscriptions';
 import { BASE_URL, razorPayTestKey } from '../../routes/BackendRoutes';
+import { getMyProfileData } from '../../redux/actions/authActions';
 
 const Subscription = ({ messageApi }) => {
     const { isSubscriptionLoader, allSubscription, userPlan } = useSelector((state) => state.subscriptionReducer);
