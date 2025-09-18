@@ -96,32 +96,24 @@ const Subscription = ({ messageApi }) => {
                                         <div className='col-md-6 mx-auto'>
                                             <div className='ct_pricing_card h-auto ct_pricing_card_light_green position-relative'>
                                                 <div class="ribbon-content">
-                                                    <span class="ribbon">purchased </span>
+                                                    <span class="ribbon">{item?.status ?? ''} </span>
                                                 </div>
                                                 <div>
                                                     <div className="ct_pricing_title">
                                                         <div className='ct_price_head_bg'>
                                                             <h2 className="ct_fs_35 text-center mb-0 ct_fw_600 d-flex align-items-center gap-2 justify-content-center">
-                                                                Rs {item?.amount ?? 0} <span className='ct_fs_16'>/ Month</span></h2>
-                                                            <p className="mb-0 text-center">One time payment</p>
+                                                                Rs {item?.amount ?? 0} <span className='ct_fs_16'>/ {item?.period ?? ''}</span></h2>
                                                         </div>
                                                         <ul class="ct_mt_30 mb-4 px-3">
                                                             <li>
-                                                                <i class="fa-solid fa-check"></i>
-                                                                Yellow Tick
+                                                                {item?.name ?? ""}
                                                             </li>
-                                                            <li>
-                                                                <i class="fa-solid fa-check"></i>Moderator Status
-                                                            </li><li><i class="fa-solid fa-check"></i>Create any Video room free of cost including Moderated rooms. Earn Ycoins on participation for your Moderated rooms</li><li><i class="fa-solid fa-check"></i>Invitation to write blogs.</li></ul>
-                                                    </div>
-                                                    <div className='mb-0 px-3 d-flex align-items-center justify-content-between gap-2'>
-                                                        <p className='mb-0'>Start Date : <span className='ct_fw_600'>08-05-2025</span></p>
-                                                        <p className='mb-0'>End Date : <span className='ct_fw_600'>08-05-2025</span></p>
+                                                        </ul>
                                                     </div>
                                                 </div>
-                                                <div className='text-center mt-4'>
+                                                {/* <div className='text-center mt-4'>
                                                     <button className='ct_yellow_btn mx-auto'>Upgrade Your Plan</button>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
