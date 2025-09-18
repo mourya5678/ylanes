@@ -45,7 +45,10 @@ input#phone_number {
     position: relative;
     animation: loaderAnimation 1.5s linear infinite;
 }
-
+.ct_header_search_w_700{
+    max-width: 700px;
+    margin-left: auto;
+}
 .loader::before,
 .loader::after {
     content: '';
@@ -610,4 +613,19 @@ hr.ct_light_hr {
 
         flex-direction: column;
     }
+}
+
+
+.ct_dash_header_navbar > ul{
+    gap: 15px !important;
+}
+.ct_dash_header_navbar_main{
+    gap: 25px;
+}
+.ct_searchable_list{
+    position: absolute;
+    width: 100%;
+}
+.ct_searchable_list li{
+    position: relative;
 }
