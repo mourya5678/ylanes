@@ -194,6 +194,8 @@
     font-size: 20px;
   }
 
+ 
+
 
 }
 
@@ -269,5 +271,12 @@
   .ct_custom_tabs.nav-pills li,
   .ct_custom_tabs.nav-pills button {
     width: 100%;
+  }
+   .ct_dash_header_navbar_main ,.ct_right_dropdown button{
+    gap: 10px !important;
+  }
+  .ct_logo{
+    flex-shrink: 0;
+    width: 50px;
   }
 }

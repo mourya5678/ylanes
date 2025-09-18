@@ -116,13 +116,13 @@ const Polls = ({ messageApi }) => {
     //     return <Loader />;
     // };
     return (
-        <div>
-            <Header />
-            <section className="ct_py_70">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
+      <div>
+        <Header />
+        <section className="ct_py_70 pb-4">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                {/* <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
                                 <div className="position-relative ct_w_100_767">
                                     <div className="ct_search_input ct_w_100_767">
                                         <input type="search" className="form-control ct_input ct_border_radius_100" placeholder="Search" />
@@ -146,223 +146,274 @@ const Polls = ({ messageApi }) => {
                                         src="assets/img/wallet_icon.png" alt="" width="20px" />{userData?.attributes?.ycoins ?? 0}</a>
                                     <a onClick={() => navigate(pageRoutes.createRoom)} className="ct_yellow_btn ct_w_100_767 text-center">Create Room</a>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="ct_upload_post_box">
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={CreatePollSchema}
-                                    onSubmit={(values, actions) =>
-                                        handleCreatePoll(values, actions)
-                                    }
-                                >
-                                    {({
-                                        values,
-                                        touched,
-                                        errors,
-                                        handleChange,
-                                        handleBlur,
-                                        handleSubmit,
-                                        setFieldValue,
-                                        setFieldError,
-                                        isSubmitting,
-                                    }) => (
-                                        <form>
-                                            <div className="ct_outline_border d-block ct_border_radius_15">
-                                                {!isShowForm &&
-                                                    <div className='row'>
-                                                        <div className="col-md-12 mb-3">
-                                                            <div className="d-flex align-items-center gap-3 justify-content-between">
-                                                                <>
-                                                                    <input onClick={() => setIsShowForm(true)} className="form-control ct_border_radius_10  ct_input border-0" placeholder="create a poll" readOnly />
-                                                                    <button onClick={() => setIsShowForm(true)} type="button" className="ct_yellow_btn ct_text_op_6 ct_white_nowrap">Create Poll</button>
-                                                                </>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                {isShowForm &&
-                                                    <div className=''>
-                                                        <div className="row">
-                                                            <div className="form-group mb-3">
-                                                                <div className='d-flex align-items-center gap-2 justify-content-between mb-2'>
-                                                                    <label className="ct_fw_600">Type Your Question</label>
-                                                                    <div className='ct_cursor_pointer ct_fs_20 ct_text_op_6 ms-auto' onClick={() => setIsShowForm(false)}>
-                                                                        <i className="fa-solid fa-circle-xmark"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <input
-                                                                    type="text"
-                                                                    id="question"
-                                                                    value={values.question}
-                                                                    onChange={handleChange}
-                                                                    onBlur={handleBlur}
-                                                                    className="form-control ct_input"
-                                                                    placeholder="Enter Your Question"
-                                                                />
-                                                                <ErrorMessage
-                                                                    errors={errors}
-                                                                    touched={touched}
-                                                                    fieldName="question"
-                                                                />
-                                                            </div>
-                                                            <div className="col-md-6 mb-3">
-                                                                <div className="form-group">
-                                                                    <label className="mb-2 ct_fw_600">Choose 1</label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control ct_input"
-                                                                        placeholder="Enter option"
-                                                                        id="option1"
-                                                                        value={values?.option1}
-                                                                        onBlur={handleBlur}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                    <ErrorMessage
-                                                                        errors={errors}
-                                                                        touched={touched}
-                                                                        fieldName="option1"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6 mb-3">
-                                                                <div className="form-group">
-                                                                    <label className="mb-2 ct_fw_600">Choose 2</label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control ct_input"
-                                                                        placeholder="Enter option"
-                                                                        id="option2"
-                                                                        value={values?.option2}
-                                                                        onBlur={handleBlur}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                    <ErrorMessage
-                                                                        errors={errors}
-                                                                        touched={touched}
-                                                                        fieldName="option2"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            {options?.length != 0 &&
-                                                                options?.map((item, i) => (
-                                                                    <div className="col-md-6 mb-3">
-                                                                        <div className="form-group">
-                                                                            <label className="mb-2 ct_fw_600">Choose {i + 3}</label>
-                                                                            <div className='position-relative'>
-                                                                                <input
-                                                                                    type="text"
-                                                                                    className="form-control ct_input ct_pe_40"
-                                                                                    placeholder="Enter option"
-                                                                                    value={item?.value}
-                                                                                    onChange={(e) =>
-                                                                                        setOptions((prev) =>
-                                                                                            prev.map((opt) =>
-                                                                                                opt.id === item.id ? { ...opt, value: e.target.value } : opt
-                                                                                            )
-                                                                                        )
-                                                                                    }
-                                                                                />
-                                                                                <i className="fa-solid fa-square-xmark ct_show_eye ct_del_q" onClick={() => handleRemoveOption(item?.id)}></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                ))}
-                                                            {options?.length != 13 &&
-                                                                <div className="col-md-12 mb-3">
-                                                                    <div className='text-end'>
-                                                                        <a className='ct_yellow_text ct_fw_600' onClick={() =>
-                                                                            setOptions((prev) => [
-                                                                                ...prev,
-                                                                                {
-                                                                                    id: prev.length > 0 ? prev[prev.length - 1].id + 1 : 3,
-                                                                                    value: ""
-                                                                                }
-                                                                            ])
-                                                                        }>+ Add Another Option</a>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            <div>
-                                                                <label className="mb-2 ct_fw_600">Duration</label>
-                                                                <div className="row">
-                                                                    <div className="col-md-6 mb-3">
-                                                                        <div className="form-group">
-                                                                            <select
-                                                                                className="form-control ct_input"
-                                                                                value={values.durationHours}
-                                                                                id="durationHours"
-                                                                                onBlur={handleBlur}
-                                                                                onChange={handleChange}
-                                                                            >
-                                                                                {hours?.map((item) => (
-                                                                                    <option value={item}>{item} Hours</option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </div>
-                                                                        <ErrorMessage
-                                                                            errors={errors}
-                                                                            touched={touched}
-                                                                            fieldName="durationHours"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="col-md-6 mb-3">
-                                                                        <div className="form-group">
-                                                                            <select
-                                                                                className="form-control ct_input"
-                                                                                id="durationMinuts"
-                                                                                value={values?.durationMinuts}
-                                                                                onBlur={handleBlur}
-                                                                                onChange={handleChange}
-                                                                            >
-                                                                                {minutes?.map((item) => (
-                                                                                    <option value={item}>{item} Minutes</option>
-                                                                                ))}
-                                                                            </select>
-                                                                        </div>
-                                                                        <ErrorMessage
-                                                                            errors={errors}
-                                                                            touched={touched}
-                                                                            fieldName="durationMinuts"
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex  align-items-center mt-2">
-                                                                <div className="form-check ct_custom_check2">
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        checked={checkBox}
-                                                                        onClick={() => setCheckBox(!checkBox)}
-                                                                    />
-                                                                </div>
-                                                                <label><span className="ct_text_op_6" es>Allow multiple reponses</span></label>
-                                                            </div>
-                                                        </div>
-                                                        {/* {pollImages &&
+                <div className="ct_upload_post_box">
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={CreatePollSchema}
+                    onSubmit={(values, actions) =>
+                      handleCreatePoll(values, actions)
+                    }
+                  >
+                    {({
+                      values,
+                      touched,
+                      errors,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      setFieldValue,
+                      setFieldError,
+                      isSubmitting,
+                    }) => (
+                      <form>
+                        <div className="ct_outline_border d-block ct_border_radius_15">
+                          {!isShowForm && (
+                            <div className="row">
+                              <div className="col-md-12 mb-0">
+                                <div className="d-flex align-items-center gap-3 justify-content-between">
+                                  <>
+                                    <input
+                                      onClick={() => setIsShowForm(true)}
+                                      className="form-control ct_border_radius_10  ct_input border-0"
+                                      placeholder="create a poll"
+                                      readOnly
+                                    />
+                                    <button
+                                      onClick={() => setIsShowForm(true)}
+                                      type="button"
+                                      className="ct_yellow_btn ct_text_op_6 ct_white_nowrap"
+                                    >
+                                      Create Poll
+                                    </button>
+                                  </>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          {isShowForm && (
+                            <div className="">
+                              <div className="row">
+                                <div className="form-group mb-3">
+                                  <div className="d-flex align-items-center gap-2 justify-content-between mb-2">
+                                    <label className="ct_fw_600">
+                                      Type Your Question
+                                    </label>
+                                    <div
+                                      className="ct_cursor_pointer ct_fs_20 ct_text_op_6 ms-auto"
+                                      onClick={() => setIsShowForm(false)}
+                                    >
+                                      <i className="fa-solid fa-circle-xmark"></i>
+                                    </div>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    id="question"
+                                    value={values.question}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className="form-control ct_input"
+                                    placeholder="Enter Your Question"
+                                  />
+                                  <ErrorMessage
+                                    errors={errors}
+                                    touched={touched}
+                                    fieldName="question"
+                                  />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                  <div className="form-group">
+                                    <label className="mb-2 ct_fw_600">
+                                      Choose 1
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control ct_input"
+                                      placeholder="Enter option"
+                                      id="option1"
+                                      value={values?.option1}
+                                      onBlur={handleBlur}
+                                      onChange={handleChange}
+                                    />
+                                    <ErrorMessage
+                                      errors={errors}
+                                      touched={touched}
+                                      fieldName="option1"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                  <div className="form-group">
+                                    <label className="mb-2 ct_fw_600">
+                                      Choose 2
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control ct_input"
+                                      placeholder="Enter option"
+                                      id="option2"
+                                      value={values?.option2}
+                                      onBlur={handleBlur}
+                                      onChange={handleChange}
+                                    />
+                                    <ErrorMessage
+                                      errors={errors}
+                                      touched={touched}
+                                      fieldName="option2"
+                                    />
+                                  </div>
+                                </div>
+                                {options?.length != 0 &&
+                                  options?.map((item, i) => (
+                                    <div className="col-md-6 mb-3">
+                                      <div className="form-group">
+                                        <label className="mb-2 ct_fw_600">
+                                          Choose {i + 3}
+                                        </label>
+                                        <div className="position-relative">
+                                          <input
+                                            type="text"
+                                            className="form-control ct_input ct_pe_40"
+                                            placeholder="Enter option"
+                                            value={item?.value}
+                                            onChange={(e) =>
+                                              setOptions((prev) =>
+                                                prev.map((opt) =>
+                                                  opt.id === item.id
+                                                    ? {
+                                                        ...opt,
+                                                        value: e.target.value,
+                                                      }
+                                                    : opt
+                                                )
+                                              )
+                                            }
+                                          />
+                                          <i
+                                            className="fa-solid fa-square-xmark ct_show_eye ct_del_q"
+                                            onClick={() =>
+                                              handleRemoveOption(item?.id)
+                                            }
+                                          ></i>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                {options?.length != 13 && (
+                                  <div className="col-md-12 mb-3">
+                                    <div className="text-end">
+                                      <a
+                                        className="ct_yellow_text ct_fw_600"
+                                        onClick={() =>
+                                          setOptions((prev) => [
+                                            ...prev,
+                                            {
+                                              id:
+                                                prev.length > 0
+                                                  ? prev[prev.length - 1].id + 1
+                                                  : 3,
+                                              value: "",
+                                            },
+                                          ])
+                                        }
+                                      >
+                                        + Add Another Option
+                                      </a>
+                                    </div>
+                                  </div>
+                                )}
+                                <div>
+                                  <label className="mb-2 ct_fw_600">
+                                    Duration
+                                  </label>
+                                  <div className="row">
+                                    <div className="col-md-6 mb-3">
+                                      <div className="form-group">
+                                        <select
+                                          className="form-control ct_input"
+                                          value={values.durationHours}
+                                          id="durationHours"
+                                          onBlur={handleBlur}
+                                          onChange={handleChange}
+                                        >
+                                          {hours?.map((item) => (
+                                            <option value={item}>
+                                              {item} Hours
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                      <ErrorMessage
+                                        errors={errors}
+                                        touched={touched}
+                                        fieldName="durationHours"
+                                      />
+                                    </div>
+                                    <div className="col-md-6 mb-3">
+                                      <div className="form-group">
+                                        <select
+                                          className="form-control ct_input"
+                                          id="durationMinuts"
+                                          value={values?.durationMinuts}
+                                          onBlur={handleBlur}
+                                          onChange={handleChange}
+                                        >
+                                          {minutes?.map((item) => (
+                                            <option value={item}>
+                                              {item} Minutes
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                      <ErrorMessage
+                                        errors={errors}
+                                        touched={touched}
+                                        fieldName="durationMinuts"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="d-flex  align-items-center mt-2">
+                                  <div className="form-check ct_custom_check2">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      checked={checkBox}
+                                      onClick={() => setCheckBox(!checkBox)}
+                                    />
+                                  </div>
+                                  <label>
+                                    <span className="ct_text_op_6" es>
+                                      Allow multiple reponses
+                                    </span>
+                                  </label>
+                                </div>
+                              </div>
+                              {/* {pollImages &&
                                                             <div className="ct_single_uploaded_img mt-3">
                                                                 <img src={URL.createObjectURL(pollImages)} alt="" />
                                                                 <i className="fa-solid fa-xmark" onClick={handleDeleteImage}></i>
                                                             </div>
                                                         } */}
-                                                        <div className="d-flex align-items-center gap-3 justify-content-between ct_flex_col_575 ct_border_top_1 pt-3 mt-3 ">
-                                                            <div className="d-flex align-items-center gap-3 ct_w_100_575">
-                                                                <select
-                                                                    className="form-control ct_input ct_w_100_575 ct_border_radius_100 h-auto p-2 px-3 ct_w_fit_content"
-                                                                    id="topic"
-                                                                    value={values.topic}
-                                                                    onBlur={handleBlur}
-                                                                    onChange={handleChange}
-                                                                >
-                                                                    <option value="">Select Topic</option>
-                                                                    {postTopic?.length != 0 &&
-                                                                        postTopic?.map((item) => (
-                                                                            <option value={item?.attributes?.id}>{item?.attributes?.name ?? ""}</option>
-                                                                        ))
-                                                                    }
-                                                                </select>
-                                                                {/* <div>
+                              <div className="d-flex align-items-center gap-3 justify-content-between ct_flex_col_575 ct_border_top_1 pt-3 mt-3 ">
+                                <div className="d-flex align-items-center gap-3 ct_w_100_575">
+                                  <select
+                                    className="form-control ct_input ct_w_100_575 ct_border_radius_100 h-auto p-2 px-3 ct_w_fit_content"
+                                    id="topic"
+                                    value={values.topic}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                  >
+                                    <option value="">Select Topic</option>
+                                    {postTopic?.length != 0 &&
+                                      postTopic?.map((item) => (
+                                        <option value={item?.attributes?.id}>
+                                          {item?.attributes?.name ?? ""}
+                                        </option>
+                                      ))}
+                                  </select>
+                                  {/* <div>
                                                                     <label>
                                                                         <input
                                                                             accept="image/*"
@@ -374,124 +425,172 @@ const Polls = ({ messageApi }) => {
                                                                         <i className="fa-solid fa-paperclip text-dark"></i>
                                                                     </label>
                                                                 </div> */}
-                                                            </div>
-                                                            <button type="button" onClick={handleSubmit} className="ct_yellow_btn ct_white_nowrap ct_w_100_575">Create Poll</button>
-                                                        </div>
-                                                        <ErrorMessage
-                                                            errors={errors}
-                                                            touched={touched}
-                                                            fieldName="topic"
-                                                        />
-                                                    </div>
-                                                }
-                                            </div>
-                                        </form>
-                                    )}
-                                </Formik>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={handleSubmit}
+                                  className="ct_yellow_btn ct_white_nowrap ct_w_100_575"
+                                >
+                                  Create Poll
+                                </button>
+                              </div>
+                              <ErrorMessage
+                                errors={errors}
+                                touched={touched}
+                                fieldName="topic"
+                              />
                             </div>
-                            <div className="d-flex align-items-center gap-3 justify-content-between mt-4">
-                                <select className="form-control ct_input border-0 ct_w_fit_content px-0 ct_fw_600">
-                                    <option value="">Topic</option>
-                                    <option value="">Topic</option>
-                                    <option value="">Topic</option>
-                                </select>
-                                <select className="form-control ct_input border-0 ct_w_fit_content px-0 ct_fw_600">
-                                    <option value="">Latest</option>
-                                    <option value="">Oldest</option>
-                                    <option value="">Newest</option>
-                                </select>
-                            </div>
-                            <div className="d-flex align-items-center gap-3 mt-2">
-                                <label className="toggle-switch">
-                                    <input type="checkbox" />
-                                    <div className="toggle-switch-background">
-                                        <div className="toggle-switch-handle"></div>
-                                    </div>
-                                </label>
-                                <p className="mb-0">Conection Comments</p>
-                            </div>
+                          )}
                         </div>
-                    </div>
+                      </form>
+                    )}
+                  </Formik>
                 </div>
-            </section >
-            <section>
-                <div className='container'>
-                    <div className='row'>
-                        {AllPollsData?.length != 0 &&
-                            AllPollsData?.map((item) => (
-                                <div className='col-md-12'>
-                                    <div className="ct_uploaded_post_main mb-3">
-                                        <div className="d-flex align-items-center justify-content-between gap-2">
-                                            <div className="ct_upload_user_name">
-                                                <img src={IMAGE_URL + item?.attributes?.user?.profile_image} alt="" className="ct_img_40 ct_flex_shrink_0" />
-                                                <p className="mb-0 ct_fw_600">{item?.attributes?.user?.name ?? ""}</p>
-                                                <span className="ct_text_op_6 ct_fs_14">{item?.attributes?.created_at}</span>
-                                            </div>
-                                            <div className="dropdown ct_post_setting_drop">
-                                                <i className="fa-solid fa-ellipsis-vertical" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                                <ul className="dropdown-menu">
-                                                    <li><a className="dropdown-item">Delete</a></li>
-                                                    <li><a className="dropdown-item">Block</a></li>
-                                                    <li><a className="dropdown-item">Report</a></li>
-                                                </ul>
-                                            </div>
+                <div className="d-flex align-items-center gap-3 justify-content-between mt-4">
+                  <select className="form-control ct_input border-0 ct_w_fit_content bg-transparent ct_fw_600">
+                    <option value="">Topic</option>
+                    <option value="">Topic</option>
+                    <option value="">Topic</option>
+                  </select>
+                  <select className="form-control ct_input border-0 ct_w_fit_content bg-transparent ct_fw_600">
+                    <option value="">Latest</option>
+                    <option value="">Oldest</option>
+                    <option value="">Newest</option>
+                  </select>
+                </div>
+                <div className="d-flex align-items-center gap-3 mt-2">
+                  <label className="toggle-switch">
+                    <input type="checkbox" />
+                    <div className="toggle-switch-background">
+                      <div className="toggle-switch-handle"></div>
+                    </div>
+                  </label>
+                  <p className="mb-0">Conection Comments</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="container">
+            <div className="row">
+              {AllPollsData?.length != 0 &&
+                AllPollsData?.map((item) => (
+                  <div className="col-md-12">
+                    <div className="ct_uploaded_post_main mb-3">
+                      <div className="d-flex align-items-center justify-content-between gap-2">
+                        <div className="ct_upload_user_name">
+                          <img
+                            src={
+                              IMAGE_URL + item?.attributes?.user?.profile_image
+                            }
+                            alt=""
+                            className="ct_img_40 ct_flex_shrink_0"
+                          />
+                          <p className="mb-0 ct_fw_600">
+                            {item?.attributes?.user?.name ?? ""}
+                          </p>
+                          <span className="ct_text_op_6 ct_fs_14">
+                            {item?.attributes?.created_at}
+                          </span>
+                        </div>
+                        <div className="dropdown ct_post_setting_drop">
+                          <i
+                            className="fa-solid fa-ellipsis-vertical"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          ></i>
+                          <ul className="dropdown-menu">
+                            <li>
+                              <a className="dropdown-item">Delete</a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item">Block</a>
+                            </li>
+                            <li>
+                              <a className="dropdown-item">Report</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p className="ct_para_scroll ct_custom_scroll mt-3">
+                        {item?.attributes?.body ?? ""}
+                      </p>
+                      <div className="ct_poll_options">
+                        <ul>
+                          {item?.attributes?.options_attributes?.map((item) => (
+                            <li>
+                              <p className="mb-0">{item?.body ?? ""}</p>
+                              {/* active */}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="ct_like_comment_div">
+                        <ul>
+                          <li>
+                            <div className="ct_like_btn d-flex align-items-center gap-2">
+                              <i className="fa-regular fa-thumbs-up"></i>
+                              <p className="mb-0 ct_fw_500  ">
+                                {item?.attributes?.like_count ?? 0}
+                              </p>
+                            </div>
+                          </li>
+                          <li>
+                            <div className="ct_comment_bnt  d-flex align-items-center gap-2">
+                              <i className="fa-regular fa-message"></i>
+                              <p className="mb-0 ct_fw_500 ">
+                                {item?.attributes?.comment_count ?? 0}
+                              </p>
+                            </div>
+                          </li>
+                          <li className="ct_book_mark_icon  ">
+                            <i className="fa-regular fa-share-from-square"></i>
+                          </li>
+                          <li className="ms-auto ct_text_op_6 ct_fs_14">
+                            # {item?.attributes?.topic ?? ""}
+                          </li>
+                        </ul>
+                        <div className="ct_comment_area_main mt-4  ">
+                          <input
+                            type="text"
+                            className="form-control ct_input ct_custom_input w-100"
+                            placeholder="Write comment..."
+                          />
+                          <div className="ct_comment_area_scroll">
+                            <div className="d-flex justify-content-between gap-2 mt-3">
+                              <div>
+                                <div>
+                                  <div className="d-flex  gap-3 ">
+                                    <img
+                                      src="assets/img/user.png"
+                                      alt=""
+                                      className="ct_img_40 ct_bor ct_white_border_1"
+                                    />
+                                    <div style={{ flex: "1" }}>
+                                      <div className="d-flex align-items-center gap-2 flex-wrap">
+                                        <h5 className="ct_fs_15  ct_fw_600 mb-0">
+                                          Bradford Bogisich
+                                        </h5>
+                                        <div className="d-flex align-items-center gap-3">
+                                          <p className="mb-0  ct_fs_12  ct_text_op_5">
+                                            2 days ago
+                                          </p>
                                         </div>
-                                        <p className="ct_para_scroll ct_custom_scroll mt-3">
-                                            {item?.attributes?.body ?? ""}
-                                        </p>
-                                        <div className='ct_poll_options'>
-                                            <ul>
-                                                {item?.attributes?.options_attributes?.map((item) => (
-                                                    <li>
-                                                        <p className='mb-0'>{item?.body ?? ""}</p>
-                                                        {/* active */}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                        <div className="ct_like_comment_div">
-                                            <ul>
-                                                <li>
-                                                    <div className="ct_like_btn d-flex align-items-center gap-2">
-                                                        <i className="fa-regular fa-thumbs-up"></i>
-                                                        <p className="mb-0 ct_fw_500  ">{item?.attributes?.like_count ?? 0}</p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="ct_comment_bnt  d-flex align-items-center gap-2">
-                                                        <i className="fa-regular fa-message"></i>
-                                                        <p className="mb-0 ct_fw_500 ">{item?.attributes?.comment_count ?? 0}</p>
-                                                    </div>
-                                                </li>
-                                                <li className="ct_book_mark_icon  ">
-                                                    <i className="fa-regular fa-share-from-square"></i>
-                                                </li>
-                                                <li className="ms-auto ct_text_op_6 ct_fs_14">
-                                                    # {item?.attributes?.topic ?? ""}
-                                                </li>
-                                            </ul>
-                                            <div className="ct_comment_area_main mt-4  ">
-                                                <input type="text" className="form-control ct_input ct_custom_input w-100" placeholder="Write comment..." />
-                                                <div className="ct_comment_area_scroll">
-                                                    <div className="d-flex justify-content-between gap-2 mt-3">
-                                                        <div>
-                                                            <div>
-                                                                <div className="d-flex  gap-3 ">
-                                                                    <img src="assets/img/user.png" alt="" className="ct_img_40 ct_bor ct_white_border_1" />
-                                                                    <div style={{ flex: "1" }}>
-                                                                        <div className="d-flex align-items-center gap-2 flex-wrap">
-                                                                            <h5 className="ct_fs_15  ct_fw_600 mb-0">Bradford Bogisich</h5>
-                                                                            <div className="d-flex align-items-center gap-3">
-                                                                                <p className="mb-0  ct_fs_12  ct_text_op_5">2 days ago</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <p className="ct_fs_13 mb-0  ct_ff_roboto ct_line_height_22 ct_commented_text mt-3"><span>Design Shot is an invitation to ponder cn design as a living entity. capture of embodying and
-                                                                            influencing the flow of thoughts and sensations in</span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!-- reply Comment S --> */}
-                                                                {/* <div className="mt-3 d-none ">
+                                      </div>
+                                      <p className="ct_fs_13 mb-0  ct_ff_roboto ct_line_height_22 ct_commented_text mt-3">
+                                        <span>
+                                          Design Shot is an invitation to ponder
+                                          cn design as a living entity. capture
+                                          of embodying and influencing the flow
+                                          of thoughts and sensations in
+                                        </span>
+                                      </p>
+                                    </div>
+                                  </div>
+                                  {/* <!-- reply Comment S --> */}
+                                  {/* <div className="mt-3 d-none ">
                                                                     <input type="text" className="form-control ct_input h-auto py-2" placeholder="Reply" />
                                                                     <div className="d-flex  gap-3 ps-4 pt-3">
                                                                         <img src="assets/img/user.png" alt="" className="ct_img_40 ct_bor ct_white_border_1" />
@@ -511,23 +610,29 @@ const Polls = ({ messageApi }) => {
                                                                         </div>
                                                                     </div>
                                                                 </div> */}
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <p className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text" data-bs-target="#ct_report_modal" data-bs-toggle="modal">Report</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            ))}
+                              </div>
+                              <div>
+                                <p
+                                  className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text"
+                                  data-bs-target="#ct_report_modal"
+                                  data-bs-toggle="modal"
+                                >
+                                  Report
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </section>
-        </div>
-    )
+                  </div>
+                ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
 };
 
 export default Polls;

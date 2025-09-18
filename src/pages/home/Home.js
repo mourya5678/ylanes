@@ -137,105 +137,149 @@ const Home = ({ messageApi }) => {
           <div className="row">
             <div className="col-xl-3 mt-0 mb-4 mb-xl-0">
               <div className="ct_side_bar_scrool_left ct_custom_scroll">
-                <div className="ct_outline_bg">
+                <div className="ct_outline_bg d-flex align-items-center gap-2 justify-content-between p-3">
+                  <p className="mb-0">Invite Friends,Earn YCoins</p>
+                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap">
+                    Invite Friends
+                  </button>
+                </div>
+                <div className="ct_outline_bg mt-4 p-3">
                   <div className="d-flex align-items-center gap-2 justify-content-between">
                     <h4 className="ct_fs_20 ct_fw_600 mb-0">Poll</h4>
-                    <a className="ct_yellow_btn  ct_white_nowrap" onClick={() => setIsCreatePoll(true)}>
+                    <a
+                      className="ct_yellow_btn  ct_white_nowrap ct_small_yellow_btn"
+                      onClick={() => setIsCreatePoll(true)}
+                    >
                       Create Poll
                     </a>
                   </div>
-                  {AllPollsData?.length != 0 ? AllPollsData?.slice(0, 1)?.map((item) => (
-                    <div
-                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
-                      style={{ borderColor: "#e6e6e6" }}
-                    >
-                      <h6 className="ct_fs_16">
-                        {item?.attributes?.body ?? ""}
-                      </h6>
-                      <ul>
-                        {item?.attributes?.options_attributes?.map((item) => (
-                          <li>
-                            <div class="form-check ct_custom_radio">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id="flexRadioDefault1"
-                              />
-                              <label
-                                class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                                for="flexRadioDefault1"
-                              >
-                                {item?.body ?? ""}
-                              </label>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
+                  {AllPollsData?.length != 0 ? (
+                    AllPollsData?.slice(0, 1)?.map((item) => (
+                      <div
+                        className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                        style={{ borderColor: "#e6e6e6" }}
+                      >
+                        <h6 className="ct_fs_16">
+                          {item?.attributes?.body ?? ""}
+                        </h6>
+                        <ul>
+                          {item?.attributes?.options_attributes?.map((item) => (
+                            <li>
+                              <div class="form-check ct_custom_radio">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="flexRadioDefault"
+                                  id="flexRadioDefault1"
+                                />
+                                <label
+                                  class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                                  for="flexRadioDefault1"
+                                >
+                                  {item?.body ?? ""}
+                                </label>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="pb-2 pt-4">
+                      <p className="mb-0 ct_fw_600 text-center">
+                        No polls available at the moment
+                      </p>
                     </div>
-                  ))
-                    :
-                    <div className='pb-2 pt-4'>
-                      <p className='mb-0 ct_fw_600 text-center'>No polls available at the moment</p>
-                    </div>
-                  }
-                  {AllPollsData?.length != 0 &&
+                  )}
+                  {AllPollsData?.length != 0 && (
                     <div className="text-end mt-2">
-                      <a className="ct_yellow_text ct_fw_500 ct_cursor" onClick={() => navigate(pageRoutes.poll)}>See More</a>
+                      <a
+                        className="ct_yellow_text ct_fw_500 ct_cursor"
+                        onClick={() => navigate(pageRoutes.poll)}
+                      >
+                        See More
+                      </a>
                     </div>
-                  }
+                  )}
                 </div>
-                <div class="ct_outline_bg mt-4">
+                <div class="ct_outline_bg mt-4 p-3">
                   <h4 className="ct_fs_20 ct_fw_600 mb-4">My Rooms</h4>
-                  {myRoomList?.length != 0 ? myRoomList?.slice(0, 1)?.map((item) => (
-                    <div
-                      className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
-                      style={{ borderColor: "#e6e6e6" }}
-                    >
-                      <div>
-                        <h4 class="ct_fs_18 ct_0fw_600">
-                          Finance &amp; Economics
-                        </h4>
-                        <small class="text-end d-block">Standard</small>
-                      </div>
-                      <div>
-                        <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
-                        <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
-                      </div>
-                      <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
-                      <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
-                        <div className='d-flex align-items-center gap-3 flex-wrap'>
-                          <p className="mb-0">
-                            <i className="fa-regular fa-clock me-2"></i>
-                            {pipViewDate2(item?.attributes?.start_time)}
-                          </p>
-                          <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
-                          <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                  {myRoomList?.length != 0 ? (
+                    myRoomList?.slice(0, 1)?.map((item) => (
+                      <div
+                        className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
+                        style={{ borderColor: "#e6e6e6" }}
+                      >
+                        <div>
+                          <h4 class="ct_fs_18 ct_0fw_600">
+                            Finance &amp; Economics
+                          </h4>
+                          <small class="text-end d-block">Standard</small>
                         </div>
                         <div>
-                          <i class="fa-solid fa-share-nodes"></i>
+                          <small className="ct_fs_14 ct_fw_500">
+                            {item?.attributes?.host?.data?.attributes
+                              ?.full_name ?? ""}
+                          </small>
+                          <p className="mb-0 ct_fs_14">
+                            {item?.attributes?.your_take ?? ""}
+                          </p>
+                        </div>
+                        <small className="ct_text_op_6 d-block text-end mt-3">
+                          {item?.attributes?.remaining_seats ?? 0} seat
+                          available
+                        </small>
+                        <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                          <div className="d-flex align-items-center gap-3 flex-wrap">
+                            <p className="mb-0">
+                              <i className="fa-regular fa-clock me-2"></i>
+                              {pipViewDate2(item?.attributes?.start_time)}
+                            </p>
+                            <p className="mb-0">
+                              <img
+                                alt=""
+                                width="20px"
+                                className="me-1"
+                                src="assets/img/wallet_icon.png"
+                              />
+                              {item?.attributes?.room_price ?? 0}
+                            </p>
+                            <p className="mb-0">
+                              <i class="fa-solid fa-star me-1"></i>
+                              {item?.attributes?.room_type_name ?? ""}
+                            </p>
+                          </div>
+                          <div>
+                            <i class="fa-solid fa-share-nodes"></i>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
-                    :
+                    ))
+                  ) : (
                     <div>
-                      <p className='mb-0 ct_fw_600 text-center'>You haven’t created a room yet.</p>
+                      <p className="mb-0 ct_fw_600 text-center">
+                        You haven’t created a room yet.
+                      </p>
                     </div>
-                  }
-                  {myRoomList?.length != 0 &&
+                  )}
+                  {myRoomList?.length != 0 && (
                     <div className="text-end mt-2">
-                      <a className="ct_yellow_text ct_cursor ct_fw_500" onClick={() => navigate(pageRoutes.myRoom)}>See More</a>
+                      <a
+                        className="ct_yellow_text ct_cursor ct_fw_500"
+                        onClick={() => navigate(pageRoutes.myRoom)}
+                      >
+                        See More
+                      </a>
                     </div>
-                  }
+                  )}
                 </div>
               </div>
             </div>
             <div className="col-xl-6  mb-4 mb-xl-0">
-              <div className="ct_outline_bg ct_side_bar_scrool_left ct_custom_scroll">
+              <div className=" ct_side_bar_scrool_left ">
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
+                    {/* <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
                       <div className="position-relative ct_w_100_767">
                         <div className="ct_search_input ct_w_100_767">
                           <input
@@ -262,26 +306,8 @@ const Home = ({ messageApi }) => {
                           </ul>
                         </div>
                       </div>
-                      <div className="d-flex  align-items-center gap-2 ct_w_100_767">
-                        <button
-                          className="ct_outline_border ct_w_100_767 ct_white_nowrap"
-                          onClick={() => navigate(pageRoutes.userWallet)}
-                        >
-                          <img
-                            src="assets/img/wallet_icon.png"
-                            alt=""
-                            width="20px"
-                          />
-                          {userData?.attributes?.ycoins ?? 0}
-                        </button>
-                        <a
-                          className="ct_yellow_btn ct_w_100_767 text-center ct_white_nowrap"
-                          onClick={() => navigate(pageRoutes.createRoom)}
-                        >
-                          Create Room
-                        </a>
-                      </div>
-                    </div>
+                     
+                    </div> */}
                     <div className="ct_upload_post_box">
                       <Formik
                         initialValues={initialState}
@@ -302,22 +328,38 @@ const Home = ({ messageApi }) => {
                           isSubmitting,
                         }) => (
                           <form>
-                            <div className="ct_outline_border d-block ct_border_radius_15 pb-4">
+                            <div className="ct_outline_border d-block ct_border_radius_15">
                               <div className="d-flex align-items-center gap-3 justify-content-between">
-                                <input
-                                  id="title"
-                                  value={values?.title}
-                                  onBlur={handleBlur}
-                                  onChange={handleChange}
-                                  className="form-control ct_border_radius_10  ct_input border-0"
-                                  placeholder="what is happning?"
-                                />
+                                <div className="ct_flex_1">
+                                  <div className="d-flex align-items-start gap-3">
+                                    <img
+                                      src="assets/img/dummy_user_img.png"
+                                      className="ct_img_40"
+                                    />
+                                    <div className="w-100">
+                                      <input
+                                        id="title"
+                                        value={values?.title}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        className="form-control ct_border_radius_10  ct_input border-0 ct_h_40"
+                                        placeholder="what is happning?"
+                                      />
+                                      <ErrorMessage
+                                        errors={errors}
+                                        touched={touched}
+                                        fieldName="title"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={handleSubmit}
+                                  className="ct_yellow_btn ct_white_nowrap ct_w_100_575"
+                                >
+                                  Post
+                                </button>
                               </div>
-                              <ErrorMessage
-                                errors={errors}
-                                touched={touched}
-                                fieldName="title"
-                              />
                               {postImages?.length != 0 && (
                                 <div className="item">
                                   <Swiper
@@ -349,9 +391,9 @@ const Home = ({ messageApi }) => {
                                   </Swiper>
                                 </div>
                               )}
-                              <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3 ct_flex_col_575">
+                              {/* <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3 ct_flex_col_575">
                                 <div className="d-flex align-items-center gap-3 ct_w_100_575">
-                                  <div className='ct_w_100_575'>
+                                  <div className="ct_w_100_575">
                                     <select
                                       className="form-control ct_input ct_border_radius_100 h-auto p-2 px-3 ct_w_fit_content ct_w_100_575"
                                       id="topic"
@@ -362,9 +404,7 @@ const Home = ({ messageApi }) => {
                                       <option value="">Select Topic</option>
                                       {postTopic?.length != 0 &&
                                         postTopic?.map((item) => (
-                                          <option
-                                            value={item?.attributes?.id}
-                                          >
+                                          <option value={item?.attributes?.id}>
                                             {item?.attributes?.name ?? ""}
                                           </option>
                                         ))}
@@ -378,9 +418,7 @@ const Home = ({ messageApi }) => {
                                         accept="image/*"
                                         className="d-none"
                                         id="ct_upload_file"
-                                        onChange={(e) =>
-                                          handleImageChanges(e)
-                                        }
+                                        onChange={(e) => handleImageChanges(e)}
                                       />
                                       <i className="fa-solid fa-paperclip text-dark ct_cursor_pointer"></i>
                                     </label>
@@ -397,7 +435,7 @@ const Home = ({ messageApi }) => {
                                 errors={errors}
                                 touched={touched}
                                 fieldName="topic"
-                              />
+                              /> */}
                             </div>
                           </form>
                         )}
@@ -413,10 +451,10 @@ const Home = ({ messageApi }) => {
                       <p className="mb-0">Conection Comments</p>
                     </div>
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-12 mt-4">
                     {allPosts?.length != 0 &&
                       allPosts?.map((item) => (
-                        <div className="ct_uploaded_post_main mb-3">
+                        <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">
                               <img
@@ -538,7 +576,7 @@ const Home = ({ messageApi }) => {
                                 # {item?.attributes?.topics ?? ""}
                               </li>
                             </ul>
-                            {selectedPostId == item?.attributes?.id &&
+                            {selectedPostId == item?.attributes?.id && (
                               <div className="ct_comment_area_main mt-4  ">
                                 <div className="position-relative">
                                   <input
@@ -620,7 +658,7 @@ const Home = ({ messageApi }) => {
                                   </div>
                                 </div>
                               </div>
-                            }
+                            )}
                           </div>
                         </div>
                       ))}
@@ -630,7 +668,7 @@ const Home = ({ messageApi }) => {
             </div>
             <div className="col-xl-3 mb-4 mb-xl-0">
               <div className=" ct_side_bar_scrool_left ct_custom_scroll">
-                <div className='ct_outline_bg mb-4'>
+                <div className="ct_outline_bg mb-4">
                   <h4 className="ct_fs_20 ct_fw_600 mb-0">Sort By</h4>
                   <ul className="mt-3">
                     <li>
@@ -648,7 +686,7 @@ const Home = ({ messageApi }) => {
                         </p>
                       </div>
                     </li>
-                    <li className='mt-2'>
+                    <li className="mt-2">
                       <div className="d-flex align-items-center gap-1">
                         <div class="form-check ct_custom_check2">
                           <input
@@ -663,7 +701,7 @@ const Home = ({ messageApi }) => {
                         </p>
                       </div>
                     </li>
-                    <li className='mt-2'>
+                    <li className="mt-2">
                       <div className="d-flex align-items-center gap-1">
                         <div class="form-check ct_custom_check2">
                           <input
@@ -680,7 +718,7 @@ const Home = ({ messageApi }) => {
                     </li>
                   </ul>
                 </div>
-                <div className='ct_outline_bg'>
+                <div className="ct_outline_bg">
                   <h4 className="ct_fs_20 ct_fw_600 mb-0">Topic</h4>
                   <ul className="mt-3">
                     <li>
@@ -825,12 +863,12 @@ const Home = ({ messageApi }) => {
           </div>
         </div>
       </section>
-      {isCreatePoll &&
+      {isCreatePoll && (
         <CreatePollModal
           messageApi={messageApi}
           onClose={() => setIsCreatePoll(false)}
         />
-      }
+      )}
     </div>
   );
 };
