@@ -23,6 +23,7 @@ const VerifyOtp = ({ messageApi }) => {
     const [timeLeft, setTimeLeft] = useState(120);
     const [canResend, setCanResend] = useState(false);
 
+    const [isLoader, setIsLoader] = useState(false);
     const [otp, setOtp] = useState('');
 
     useEffect(() => {
@@ -71,6 +72,7 @@ const VerifyOtp = ({ messageApi }) => {
     }, []);
 
     const handleOtpSubmit = async () => {
+        setIsLoader(true);
         if (otp?.length < 6) {
             messageApi.error("Invalid Otp")
             return;
@@ -79,6 +81,7 @@ const VerifyOtp = ({ messageApi }) => {
             // Option 1: Use stored confirmationResult (best)
             if (window.confirmationResult) {
                 const result = await window.confirmationResult.confirm(otp);
+                setIsLoader(false);
                 handleSmsConfirmation(result);
                 return;
             };
@@ -86,17 +89,18 @@ const VerifyOtp = ({ messageApi }) => {
             if (verificationId) {
                 const credential = PhoneAuthProvider.credential(verificationId, otp);
                 const result = await signInWithCredential(auth, credential);
+                setIsLoader(false);
                 handleSmsConfirmation(result);
             };
         } catch (err) {
             console.log({ err });
+            setIsLoader(false);
             messageApi?.error(err?.message);
         };
     };
 
-    // localStorage.getItem("trophy-talk-seller-fcm") || "" 
-
     const handleSmsConfirmation = async (res) => {
+        setIsLoader(true);
         const user = auth.currentUser;
         if (user) {
             const idToken = await user.getIdToken();
@@ -130,6 +134,7 @@ const VerifyOtp = ({ messageApi }) => {
         })
             .then((res) => {
                 console.log({ res })
+                setIsLoader(false);
                 if (res?.status == 201 || res?.status == 200) {
                     messageApi.success(res?.data?.meta?.message)
                 } else {
@@ -144,12 +149,12 @@ const VerifyOtp = ({ messageApi }) => {
                 };
             })
             .catch((err) => {
+                setIsLoader(false);
                 console.log({ err });
             });
     };
 
-
-    if (isLoading) {
+    if (isLoading || isLoader) {
         return <Loader />;
     };
     return (

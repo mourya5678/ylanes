@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { Formik } from 'formik';
@@ -16,6 +16,7 @@ const LoginScreen = ({ messageApi }) => {
     const { isLoading } = useSelector((state) => state.authReducer);
 
     const navigate = useNavigate();
+    const [isLoader, setIsLoader] = useState(false);
 
     const initialeState = {
         phone_number: '',
@@ -24,15 +25,17 @@ const LoginScreen = ({ messageApi }) => {
 
     const handleSubmitDetails = (values, { setSubmitting }) => {
         setSubmitting(false);
+        setIsLoader(true)
         requestOtp({
             mobileNumber: values?.phone_number,
             isAgreed: values?.isAgreed,
             navigate,
+            loaderValueChange: () => setIsLoader(false),
             messageApi
         })
     };
 
-    if (isLoading) {
+    if (isLoading || isLoader) {
         return <Loader />;
     };
     return (

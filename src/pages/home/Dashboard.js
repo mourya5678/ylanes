@@ -55,7 +55,7 @@ const Dashboard = ({ messageApi }) => {
                                     </ul>
                                 </div>
                                 <div className="d-flex align-items-center gap-2">
-                                    <a className="ct_yellow_btn">Enter YLanes</a>
+                                    <a className="ct_yellow_btn" onClick={() => navigate(pageRoutes.login)}>Enter YLanes</a>
                                     <div className="ct_menu_bar">
                                         <i className="fa-solid fa-bars-staggered"></i>
                                     </div>

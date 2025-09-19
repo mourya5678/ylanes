@@ -1,19 +1,17 @@
 import { pageRoutes } from "../routes/PageRoutes";
 import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "./Firebase";
 
-export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi }) => {
+export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi, loaderValueChange }) => {
     try {
         // Ensure a country code is included (default: +91)
         const fullPhoneNumber = mobileNumber.startsWith("+")
             ? mobileNumber
             : "+91" + mobileNumber;
-
         // Ensure recaptcha container exists
         const recaptchaContainer = document.getElementById("recaptcha-container");
         if (!recaptchaContainer) {
             throw new Error("Missing <div id='recaptcha-container'></div> in your component.");
-        }
-
+        };
         // Initialize reCAPTCHA only once
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(
@@ -26,19 +24,17 @@ export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi 
                     },
                 }
             );
-        }
-
+        };
         // Request OTP
         const confirmationResult = await signInWithPhoneNumber(
             auth,
             fullPhoneNumber,
             window.recaptchaVerifier
         );
-
         // ✅ Store non-serializable object globally
         window.confirmationResult = confirmationResult;
-
         // ✅ Navigate with only serializable data
+        loaderValueChange();
         navigate(pageRoutes.otpVerify, {
             state: {
                 verificationId: confirmationResult.verificationId,
@@ -47,9 +43,8 @@ export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi 
         });
     } catch (error) {
         console.error("Error in signInWithPhoneNumber:", error);
-
+        loaderValueChange();
         const errorMessage = String(error).toLowerCase();
-
         if (errorMessage.includes("invalid-phone-number")) {
             messageApi.error("Invalid Phone Number");
         } else if (errorMessage.includes("too-many-requests")) {
@@ -60,6 +55,6 @@ export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi 
             messageApi.error("SMS quota exceeded. Please contact admin");
         } else {
             messageApi.error("Something went wrong, please try again");
-        }
-    }
+        };
+    };
 };
