@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../routes/PageRoutes';
-import { pipGetAccessToken } from '../auth/Pip';
+import { pipGetAccessToken, pipLogout } from '../auth/Pip';
 import { getMyProfileData } from '../redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGE_URL } from '../routes/BackendRoutes';
@@ -138,7 +138,10 @@ const Header = ({ messageApi }) => {
                     <li>
                       <a
                         className="dropdown-item"
-                        onClick={() => navigate(pageRoutes.login)}
+                        onClick={() => {
+                          navigate(pageRoutes.login)
+                          pipLogout(messageApi)
+                        }}
                       >
                         <img
                           src="../assets/img/dashbaord-images/logout.svg"

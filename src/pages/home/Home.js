@@ -37,6 +37,8 @@ const Home = ({ messageApi }) => {
   const [isCreatePoll, setIsCreatePoll] = useState(false);
 
   const [filterBytopic, setFilterByTopic] = useState([]);
+  const [isShowForm, setIsShowForm] = useState(false);
+
 
   var localData = []
 
@@ -71,7 +73,6 @@ const Home = ({ messageApi }) => {
 
   // usage
   const displayUser = getDisplayUsers(allPosts, filterBytopic);
-  console.log({ displayUser })
 
   useEffect(() => {
     dispatch(getPostTopics({ messageApi }));
@@ -87,10 +88,17 @@ const Home = ({ messageApi }) => {
     setUserData(data);
   }, [profileData]);
 
-  const handleSubmitDetails = (values, { setSubmitting }) => {
+  const handleSubmitDetails = (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
+    resetForm();
     const callback = (response) => {
+      setPostImages([]);
       dispatch(getAllPost({ messageApi }));
+      if (response?.data) {
+        messageApi.success("Post created successfully");
+      } else {
+        messageApi.error("Unable to create post please try after some time!");
+      }
     };
     const formData = new FormData();
     formData.append("body", values?.title?.trim());
@@ -154,9 +162,9 @@ const Home = ({ messageApi }) => {
     setPostImages((prev) => prev.filter((item, i) => i !== index));
   };
 
-  // if (isLoading || isCreateLoading) {
-  //   return <Loader />;
-  // };
+  if (isLoading || isCreateLoading) {
+    return <Loader />;
+  };
   return (
     <div>
       <Header messageApi={messageApi} />
@@ -307,35 +315,7 @@ const Home = ({ messageApi }) => {
               <div className=" ct_side_bar_scrool_left ">
                 <div className="row">
                   <div className="col-md-12">
-                    {/* <div className="d-flex justify-content-between align-items-center mb-4 ct_flex_col_767 gap-3">
-                      <div className="position-relative ct_w_100_767">
-                        <div className="ct_search_input ct_w_100_767">
-                          <input
-                            type="search"
-                            className="form-control ct_input ct_border_radius_100"
-                            placeholder="Search"
-                          />
-                          <i className="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <div className="ct_searchable_list d-none">
-                          <ul className="ct_custom_scroll">
-                            <li>
-                              <p className="mb-0 ct_fw_600">Topics</p>
-                              <p className="mb-0 ct_fw_600">
-                                <i className="fa-solid fa-angle-right"></i>
-                              </p>
-                            </li>
-                            <li>
-                              <p className="mb-0 ct_fw_600">Profiles</p>
-                              <p className="mb-0 ct_fw_600">
-                                <i className="fa-solid fa-angle-right"></i>
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                     
-                    </div> */}
+
                     <div className="ct_upload_post_box">
                       <Formik
                         initialValues={initialState}
@@ -354,6 +334,7 @@ const Home = ({ messageApi }) => {
                           setFieldValue,
                           setFieldError,
                           isSubmitting,
+                          resetForm
                         }) => (
                           <form>
                             <div className="ct_outline_border d-block ct_border_radius_15">
@@ -361,18 +342,28 @@ const Home = ({ messageApi }) => {
                                 <div className="ct_flex_1">
                                   <div className="d-flex align-items-start gap-3">
                                     <img
-                                      src="assets/img/dummy_user_img.png"
+                                      src={IMAGE_URL + userData?.attributes?.profile_image}
                                       className="ct_img_40"
                                     />
                                     <div className="w-100">
-                                      <input
-                                        id="title"
-                                        value={values?.title}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        className="form-control ct_border_radius_10  ct_input border-0 ct_h_40"
-                                        placeholder="what is happning?"
-                                      />
+                                      <div className='position-relative'>
+                                        <input type='text'
+                                          id="title"
+                                          onClick={() => setIsShowForm(true)}
+                                          value={values?.title}
+                                          onBlur={handleBlur}
+                                          onChange={handleChange}
+                                          className="form-control ct_border_radius_10 pe-5  ct_input border-0 ct_h_40"
+                                          placeholder="what is happning?"
+                                        />
+                                        {isShowForm &&
+                                          <i className="fa-solid fa-xmark ct_show_eye" onClick={() => {
+                                            resetForm()
+                                            setPostImages([]);
+                                            setIsShowForm(!isShowForm);
+                                          }}></i>
+                                        }
+                                      </div>
                                       <ErrorMessage
                                         errors={errors}
                                         touched={touched}
@@ -381,12 +372,17 @@ const Home = ({ messageApi }) => {
                                     </div>
                                   </div>
                                 </div>
-                                <button
-                                  onClick={handleSubmit}
-                                  className="ct_yellow_btn ct_white_nowrap ct_w_100_575"
-                                >
-                                  Post
-                                </button>
+                                {!isShowForm &&
+                                  <button
+                                    onClick={() => {
+                                      handleSubmit()
+                                      setIsShowForm(true)
+                                    }}
+                                    className="ct_yellow_btn ct_white_nowrap ct_w_100_575"
+                                  >
+                                    Post
+                                  </button>
+                                }
                               </div>
                               {postImages?.length != 0 && (
                                 <div className="item">
@@ -419,7 +415,7 @@ const Home = ({ messageApi }) => {
                                   </Swiper>
                                 </div>
                               )}
-                              {/* <div className="d-flex align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3 ct_flex_col_575">
+                              <div className={`${isShowForm ? 'd-flex' : 'd-none'} align-items-center gap-3 justify-content-between ct_border_top_1 pt-3 mt-3 ct_flex_col_575`}>
                                 <div className="d-flex align-items-center gap-3 ct_w_100_575">
                                   <div className="ct_w_100_575">
                                     <select
@@ -463,13 +459,13 @@ const Home = ({ messageApi }) => {
                                 errors={errors}
                                 touched={touched}
                                 fieldName="topic"
-                              /> */}
+                              />
                             </div>
                           </form>
                         )}
                       </Formik>
                     </div>
-                    <div className="d-flex align-items-center gap-3 mt-2">
+                    {/* <div className="d-flex align-items-center gap-3 mt-2">
                       <label className="toggle-switch">
                         <input type="checkbox" />
                         <div className="toggle-switch-background">
@@ -477,7 +473,7 @@ const Home = ({ messageApi }) => {
                         </div>
                       </label>
                       <p className="mb-0">Conection Comments</p>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="col-md-12 mt-4">
                     {displayUser?.length != 0 &&

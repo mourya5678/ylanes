@@ -2,7 +2,7 @@ export const BASE_URL = "https://ylanes.com:4000/"; // Live
 export const BASE_URL1 = "https://ylanes.com:9000/"; // Live
 // export const BASE_URL = "http://56.228.76.11:4000/"
 // Image Url
-export const IMAGE_URL = "http://";
+export const IMAGE_URL = "https://";
 
 // Auth
 export const SMSConfirmationAPI = "account_block/accounts/sms_confirmations";

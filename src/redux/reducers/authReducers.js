@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
+import { createUserPost, getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData } from "../actions/createRoom";
 
@@ -36,6 +36,17 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(smsConfirmation.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // createUserPost
+        builder.addCase(createUserPost.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(createUserPost.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(createUserPost.rejected, (state, action) => {
             state.isLoading = false;
         });
 

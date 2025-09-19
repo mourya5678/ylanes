@@ -35,7 +35,7 @@ const LoginScreen = ({ messageApi }) => {
         })
     };
 
-    if (isLoading || isLoader) {
+    if (isLoading) {
         return <Loader />;
     };
     return (
@@ -126,7 +126,7 @@ const LoginScreen = ({ messageApi }) => {
                                             fieldName="isAgree"
                                         />
                                         <div className="text-center mt-5">
-                                            <button onClick={handleSubmit} type="submit" className="ct_yellow_btn mx-auto">Get Otp</button>
+                                            <button disabled={isLoader} onClick={handleSubmit} type="submit" className="ct_yellow_btn mx-auto">Get Otp</button>
                                         </div>
                                     </form>
                                 )}

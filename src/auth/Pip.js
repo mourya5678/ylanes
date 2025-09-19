@@ -3,7 +3,7 @@ export const curSym = '$';
 
 export const pipGetAccessToken = (key) => {
     const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : {};
+    return data ? JSON.parse(data) : "";
 };
 
 export const pipSetAccessToken = (key, token) => {
@@ -25,9 +25,10 @@ export const pipDeleteTokenAuth = () => {
 };
 
 export const pipLogout = (messageApi) => {
-    localStorage.removeItem("ylanes_token");
-    localStorage.removeItem("ylanes_data");
-    messageApi.success('Logout successfully!')
+    // localStorage.removeItem("ylanes_Token");
+    // localStorage.removeItem("ylanes_firebaseToken");
+    // localStorage.removeItem("user_data");
+    messageApi.success('Logout successfully!');
 };
 
 export const pipViewDate = (date) => {

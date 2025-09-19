@@ -26,6 +26,7 @@ export const createUserPost = createAsyncThunk("create-post", async (props) => {
             url: CreatePostAPI,
             method: "POST",
             data: payload,
+            isSuccessToast: false,
             messageApi
         });
         callback(response);
