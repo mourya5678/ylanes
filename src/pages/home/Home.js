@@ -17,6 +17,7 @@ import CommentTime from '../../components/CommentTime';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import { getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
 import CreatePollModal from '../../components/Modals/CreatePollModal';
+import SharePostModal from '../../components/Modals/SharePostModal';
 
 const Home = ({ messageApi }) => {
   const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
@@ -37,6 +38,9 @@ const Home = ({ messageApi }) => {
 
   const [filterBytopic, setFilterByTopic] = useState([]);
   const [isShowForm, setIsShowForm] = useState(false);
+
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareCode, setShareCode] = useState({});
 
 
   var localData = []
@@ -579,8 +583,11 @@ const Home = ({ messageApi }) => {
                                   </p>
                                 </div>
                               </li>
-                              <li className="ct_book_mark_icon  ">
-                                <i className="fa-regular fa-share-from-square"></i>
+                              <li className="ct_book_mark_icon">
+                                <i className="fa-regular fa-share-from-square ct_cursor" onClick={() => {
+                                  setShareCode(item)
+                                  setShowShareModal(true)
+                                }}></i>
                               </li>
                               <li className="ms-auto ct_text_op_6 ct_fs_14">
                                 # {item?.attributes?.topics ?? ""}
@@ -790,7 +797,14 @@ const Home = ({ messageApi }) => {
           onClose={() => setIsCreatePoll(false)}
         />
       )}
-    </div >
+      {showShareModal && shareCode?.id &&
+        <SharePostModal
+          messageApi={messageApi}
+          shareCode={shareCode}
+          onClose={() => setShowShareModal(false)}
+        />
+      }
+    </div>
   );
 };
 

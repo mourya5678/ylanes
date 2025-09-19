@@ -34,6 +34,7 @@ const VerifyOtp = lazy(() => import("../pages/auth/VerifyOtp"));
 const Subscription = lazy(() => import("../pages/subscription"));
 const TopUpUserWallet = lazy(() => import("../pages/wallet/TopUpUserWallet"));
 
+const PostDetailsPage = lazy(() => import("../pages/home/PostDetailsPage"));
 
 export const pageRoutes = {
     dashboard: '/home',
@@ -59,6 +60,7 @@ export const pageRoutes = {
     chat: '/connections',
     onBoarding: '/onboarding',
     privacyPolicy: '/privacy-policy',
+    postDetails: '/user-post'
 };
 
 export const AllRoutes = [
@@ -200,4 +202,10 @@ export const AllRoutes = [
         element: <PrivacyPolicy />,
         isPrivate: true,
     },
+    {
+        name: "Post Details",
+        path: pageRoutes.postDetails,
+        element: <PostDetailsPage />,
+        isPrivate: true
+    }
 ];
