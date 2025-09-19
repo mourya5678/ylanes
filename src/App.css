@@ -189,9 +189,8 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
-
 .ct_poll_options ul p {
-    background-color: #e6e6e6;
+    background-color: #e6e6e65e;
     padding: 10px;
     border-radius: 10px;
     height: 100%;
@@ -290,7 +289,16 @@ body {
 .swiper-pagination-bullet-active {
     background-color: var(--yellow) !important;
 }
-
+.ct_price_plan_info_grid li{
+    display: grid;
+    grid-template-columns: 300px auto;
+    gap: 10px;
+}
+.ct_price_plan_info_grid li + li {
+    margin-top: 10px;
+    border-top: 1px solid #ecbc0052;
+    padding-top: 10px;
+}
 @media screen and (min-width:1200px) {
     .ct_side_bar_scrool_left {
         height: auto;
@@ -314,11 +322,12 @@ body {
 }
 
 .ct_pricing_card_light_green {
-    background-color: #fff;
-    border-color: #e6e6e6;
+    background-color: #d3a80021;
+    /* border-color: #e6e6e6; */
     padding-top: 0px;
     padding-inline: 0px;
-    box-shadow: unset;
+    /* box-shadow: unset; */
+
 }
 
 .ct_price_head_bg {
@@ -342,7 +351,7 @@ body {
 }
 
 .ct_pricing_card_light_green:hover {
-    border-color: #98dc8a !important;
+    border-color: var(--yellow) !important;
 }
 
 .ct_pricing_card_light_green .ct_pricing_card li {
@@ -394,4 +403,10 @@ body {
 
 .ribbon::after {
     right: 18px;
+}
+
+.ct_full_poll_page_bg{
+        padding: 30px 15px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.09);
+    border-radius: 20px
 }

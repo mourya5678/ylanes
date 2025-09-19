@@ -115,18 +115,28 @@ const Subscription = ({ messageApi }) => {
                                                         </ul>
                                                     </div>
                                                 </div> */}
-                          <ul class="ct_persional_info_grid">
+                          <ul class="ct_price_plan_info_grid">
                             <li>
-                              <p class="mb-0 ct_fw_600">Phone Number</p>
-                              <p class="mb-0">+919981916868</p>
+                              <p class="mb-0 ct_fw_600">Gold member</p>
+                              <p class="mb-0 ct_green_btn">Active</p>
                             </li>
                             <li>
-                              <p class="mb-0 ct_fw_600">Email</p>
-                              <p class="mb-0">jack@yopmail.com</p>
+                              <p class="mb-0 ct_fw_600">Frequency</p>
+                              <p class="mb-0">Gold Member</p>
                             </li>
                             <li>
-                              <p class="mb-0 ct_fw_600">Year Of Birth</p>
-                              <p class="mb-0">2006</p>
+                              <p class="mb-0 ct_fw_600">Next billing date</p>
+                              <p class="mb-0">September 18,2025</p>
+                            </li>
+                            <li>
+                              <p class="mb-0 ct_fw_600">
+                                Price (per Gold Member)
+                              </p>
+                              <p class="mb-0">Rs. 2000</p>
+                            </li>
+                            <li>
+                              <p class="mb-0 ct_fw_600">YCoins</p>
+                              <p class="mb-0">25000</p>
                             </li>
                           </ul>
                         </div>
