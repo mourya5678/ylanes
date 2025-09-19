@@ -640,3 +640,11 @@ hr.ct_light_hr {
   gap: 15px;
   margin-bottom: 10px;
 }
+
+.ct_green_btn {
+    background-color: #98dc8a;
+    padding: 4px 15px;
+    border-radius: 100px;
+    width: fit-content;
+    font-weight: 500;
+}
