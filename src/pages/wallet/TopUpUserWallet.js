@@ -43,7 +43,7 @@ const TopUpUserWallet = ({ messageApi }) => {
             };
             dispatch(topUpUserWalletYCoins({ payload: data, params: planID, callback, messageApi }));
         } else {
-            messageApi.error("Please select any plan to contineu");
+            messageApi.error("Please select any plan to continue");
         };
     };
 

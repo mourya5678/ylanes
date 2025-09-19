@@ -26,7 +26,6 @@ const Chat = ({ messageApi }) => {
     const [manageStep, setManageStep] = useState('1');
 
     const [filterUser, setFilterUser] = useState('');
-
     const userData = pipGetAccessToken("user_data");
 
     const filterUserList = chatList?.filter((item) => {
@@ -125,7 +124,6 @@ const Chat = ({ messageApi }) => {
         dispatch(getAllUserPreviousMessages({ payload: data, params: val, messageApi }));
     };
 
-
     const handleSendMessage = async (id, val, message) => {
         const body = {
             to: id,
@@ -161,17 +159,6 @@ const Chat = ({ messageApi }) => {
         };
         dispatch(getAllChatAfterReciveUsersData({ payload: data, messageApi }));
         handleGetReciveMessages(selectUserRef?.current?.conversation_key, selectUserRef?.current);
-        // if (msg.from == selectUserRef.current?.agora_account_id?.toLowerCase() && !msg?.ext?.profile_image) {
-        //     const data12 = {
-        //         id: msg?.id,
-        //         timestamp: msg?.time,
-        //         text: msg?.msg,
-        //         to_uid: msg?.to,
-        //         from_uid: msg?.from,
-        //         extra_metadata: msg?.ext
-        //     };
-        //     setUserChatMessages((pre) => [...pre, data12]);
-        // };
     };
 
     console.log({ userChatMessages });
@@ -303,7 +290,7 @@ const Chat = ({ messageApi }) => {
                                                                             <img src={selectUserData?.profile_image ? selectUserData?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
                                                                             <div>
                                                                                 <h4 className="ct_fs_18 ct_fw_600  mb-0">
-                                                                                    {selectUserData?.full_name ?? ""}
+                                                                                    {selectUserData?.name ? selectUserData?.name : selectUserData?.full_name ? selectUserData?.full_name : ""}
                                                                                 </h4>
                                                                             </div>
                                                                         </div>

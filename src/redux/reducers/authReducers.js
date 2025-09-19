@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, getAllPost, getAllPostComment, getFaqData, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
+import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
-import { getPollTypeData } from "../actions/createRoom";
+import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
 const initialStates = {
     isLoading: false,
@@ -76,25 +76,46 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
 
+        // getLikeAllPost
+        builder.addCase(getLikeAllPost.pending, (state, action) => {
+        });
+        builder.addCase(getLikeAllPost.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.allPosts = data ?? [];
+        });
+        builder.addCase(getLikeAllPost.rejected, (state, action) => {
+        });
+
         // likeUserPost
         builder.addCase(likeUserPost.pending, (state, action) => {
-            state.isLoading = true;
+            // state.isLoading = true;
         });
         builder.addCase(likeUserPost.fulfilled, (state, action) => {
-            state.isLoading = false;
+            // state.isLoading = false;
         });
         builder.addCase(likeUserPost.rejected, (state, action) => {
-            state.isLoading = false;
+            // state.isLoading = false;
         });
 
         // getAllPostComment
         builder.addCase(getAllPostComment.pending, (state, action) => {
+            state.allComments = [];
         });
         builder.addCase(getAllPostComment.fulfilled, (state, action) => {
             const { data } = action?.payload || {};
             state.allComments = data ?? [];
         });
         builder.addCase(getAllPostComment.rejected, (state, action) => {
+        });
+
+        // getAllPostCommentss
+        builder.addCase(getAllPostCommentss.pending, (state, action) => {
+        });
+        builder.addCase(getAllPostCommentss.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.allComments = data ?? [];
+        });
+        builder.addCase(getAllPostCommentss.rejected, (state, action) => {
         });
 
         // getMyProfileData
@@ -153,8 +174,8 @@ export const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getNotificationData.fulfilled, (state, action) => {
-            const { data } = action?.payload || {};
-            state.notificationData = data ?? []
+            const { notifications } = action?.payload || {};
+            state.notificationData = notifications?.data ?? []
             state.isLoading = false;
         });
         builder.addCase(getNotificationData.rejected, (state, action) => {
@@ -208,6 +229,38 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(getPollTypeData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getPollTypeDatass
+        builder.addCase(getPollTypeDatass.pending, (state, action) => {
+        });
+        builder.addCase(getPollTypeDatass.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.AllPollsData = data ?? []
+        });
+        builder.addCase(getPollTypeDatass.rejected, (state, action) => {
+        });
+
+        // deleteNotificationData
+        builder.addCase(deleteNotificationData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deleteNotificationData.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deleteNotificationData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // markAsReadToAllNotificationsDate
+        builder.addCase(markAsReadToAllNotificationsDate.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(markAsReadToAllNotificationsDate.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(markAsReadToAllNotificationsDate.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

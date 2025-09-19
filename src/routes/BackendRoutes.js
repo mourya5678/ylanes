@@ -12,7 +12,8 @@ export const getPostTopicsAPI = "bx_block_posts/posts/user_preferred_topics";
 export const getAllPostAPI = "bx_block_posts/posts";
 
 export const likePostAPI = "bx_block_like/likes";
-export const commentPostAPI = "bx_block_targetedfeed/comments";
+export const commentPostAPI = "bx_block_posts/posts/";
+// bx_block_posts/articles/article_comment
 
 export const userProfileAPI = "bx_block_profile/profiles/";
 export const updateUserProfileAPI = "account_block/accounts/";
@@ -28,6 +29,9 @@ export const sendFeedbackAPI = "bx_block_feedback/feedbacks";
 
 export const getRoomTypeAPI = "bx_block_different_rooms/rooms/get_room_types";
 export const createPollAPI = "bx_block_targetedfeed/polls";
+
+// export const getPollCommentAPI = "bx_block_targetedfeed/comments";
+export const getPollCommentAPI = "bx_block_targetedfeed/polls/";
 
 export const getPollDataAPI = "bx_block_targetedfeed/polls";
 export const createRoomAPI = "bx_block_different_rooms/rooms";
@@ -67,3 +71,7 @@ export const getAllPastRoomDataAPI = "bx_block_different_rooms/rooms/my_past_roo
 
 export const getAllMyRoomsDataAPI = "bx_block_different_rooms/rooms/my_upcoming_rooms";
 export const getAllRecommendedRoomsDataAPI = "bx_block_different_rooms/rooms/get_recommended_rooms";
+
+// Notification
+export const deleteNotificationAPI = "bx_block_notifications/notifications/";
+export const markAsReadToAllNotificationsAPI = "bx_block_notifications/notifications/read_all";

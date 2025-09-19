@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { commentUserPost, createUserPost, getAllPost, getAllPostComment, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { commentUserPost, createUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { Formik } from 'formik';
 import { CreatePostSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
@@ -33,7 +33,6 @@ const Home = ({ messageApi }) => {
   const [userData, setUserData] = useState({});
   const [addComment, setAddComment] = useState("");
 
-  const [sortData, setSortData] = useState('');
   const [isCreatePoll, setIsCreatePoll] = useState(false);
 
   const [filterBytopic, setFilterByTopic] = useState([]);
@@ -93,7 +92,7 @@ const Home = ({ messageApi }) => {
     resetForm();
     const callback = (response) => {
       setPostImages([]);
-      dispatch(getAllPost({ messageApi }));
+      dispatch(getLikeAllPost({ messageApi }));
       if (response?.data) {
         messageApi.success("Post created successfully");
       } else {
@@ -126,31 +125,31 @@ const Home = ({ messageApi }) => {
       },
     };
     const callback = (response) => {
-      dispatch(getAllPost({ messageApi }));
+      dispatch(getLikeAllPost({ messageApi }));
     };
     dispatch(likeUserPost({ payload: raw, callback, messageApi }));
   };
 
-  const handleCommentUserPost = (id) => {
+  const handleCommentUserPost = (value) => {
     const callback = (response) => {
-      dispatch(getAllPost({ messageApi }));
-      setAddComment();
-    };
-    const regex = /^(?!\s*$)[^\s]+$/;
-    if (regex.test(addComment)) {
-      var raw = {
-        data: {
-          attributes: {
-            likeable_id: id,
-            likeable_type: "BxBlockPosts::Post",
-            body: addComment.trim(),
-          },
-        },
+      setAddComment('');
+      if (response?.data?.attributes) {
+        messageApi?.success('Comment added successFully');
+      } else {
+        messageApi.error("Enable to create comment please try again!");
       };
-      dispatch(commentUserPost({ payload: raw, callback, messageApi }));
+      dispatch(getLikeAllPost({ messageApi }));
+      setSelectedPostId(value);
+      dispatch(getAllPostCommentss({ payload: value, messageApi }));
+    };
+    const regex = /^(?!\s*$).+$/;
+    if (regex.test(addComment)) {
+      const formData = new FormData();
+      formData.append("body", addComment.trim());
+      dispatch(commentUserPost({ payload: formData, params: `${value}/comments`, callback, messageApi }));
     } else {
       messageApi.error("Invalid comment: cannot be empty or contain spaces");
-    }
+    };
   };
 
   const handleGetCommentData = (id) => {
@@ -315,7 +314,6 @@ const Home = ({ messageApi }) => {
               <div className=" ct_side_bar_scrool_left ">
                 <div className="row">
                   <div className="col-md-12">
-
                     <div className="ct_upload_post_box">
                       <Formik
                         initialValues={initialState}
@@ -342,7 +340,7 @@ const Home = ({ messageApi }) => {
                                 <div className="ct_flex_1">
                                   <div className="d-flex align-items-start gap-3">
                                     <img
-                                      src={IMAGE_URL + userData?.attributes?.profile_image}
+                                      src={userData?.attributes?.profile_image ? IMAGE_URL + userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
                                       className="ct_img_40"
                                     />
                                     <div className="w-100">
@@ -465,15 +463,6 @@ const Home = ({ messageApi }) => {
                         )}
                       </Formik>
                     </div>
-                    {/* <div className="d-flex align-items-center gap-3 mt-2">
-                      <label className="toggle-switch">
-                        <input type="checkbox" />
-                        <div className="toggle-switch-background">
-                          <div className="toggle-switch-handle"></div>
-                        </div>
-                      </label>
-                      <p className="mb-0">Conection Comments</p>
-                    </div> */}
                   </div>
                   <div className="col-md-12 mt-4">
                     {displayUser?.length != 0 &&
@@ -482,10 +471,7 @@ const Home = ({ messageApi }) => {
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">
                               <img
-                                src={
-                                  IMAGE_URL +
-                                  item?.attributes?.user?.profile_image
-                                }
+                                src={item?.attributes?.user?.profile_image ? IMAGE_URL + item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                 alt=""
                                 className="ct_img_40 ct_flex_shrink_0"
                               />
@@ -507,8 +493,8 @@ const Home = ({ messageApi }) => {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    data-bs-target="#ct_delete_modal"
-                                    data-bs-toggle="modal"
+                                  // data-bs-target="#ct_delete_modal"
+                                  // data-bs-toggle="modal"
                                   >
                                     Delete
                                   </a>
@@ -516,8 +502,8 @@ const Home = ({ messageApi }) => {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    data-bs-target="#ct_block_modal"
-                                    data-bs-toggle="modal"
+                                  // data-bs-target="#ct_block_modal"
+                                  // data-bs-toggle="modal"
                                   >
                                     Block
                                   </a>
@@ -525,8 +511,8 @@ const Home = ({ messageApi }) => {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    data-bs-target="#ct_report_modal"
-                                    data-bs-toggle="modal"
+                                  // data-bs-target="#ct_report_modal"
+                                  // data-bs-toggle="modal"
                                   >
                                     Report
                                   </a>
@@ -552,7 +538,7 @@ const Home = ({ messageApi }) => {
                                     <div className="item">
                                       <div className="ct_post_img">
                                         <img
-                                          src={IMAGE_URL + item?.url}
+                                          src={item?.url ? IMAGE_URL + item?.url : "assets/img/dummy_user_img.png"}
                                           alt=""
                                         />
                                       </div>
@@ -567,7 +553,7 @@ const Home = ({ messageApi }) => {
                               <li>
                                 <div className="ct_like_btn d-flex align-items-center gap-2">
                                   <i
-                                    className="fa-regular fa-thumbs-up"
+                                    className={`fa-${item?.attributes?.liked ? 'solid' : 'regular'} fa-thumbs-up ct_cursor`}
                                     onClick={() =>
                                       handleLikeUserPost(
                                         item?.attributes?.id,
@@ -634,10 +620,10 @@ const Home = ({ messageApi }) => {
                                           allComments?.map((item) => (
                                             <div className="d-flex  gap-3 mb-3">
                                               <img
-                                                src={
+                                                src={item?.attributes?.user?.profile_image ?
                                                   IMAGE_URL +
                                                   item?.attributes?.user
-                                                    ?.profile_image
+                                                    ?.profile_image : "assets/img/dummy_user_img.png"
                                                 }
                                                 alt=""
                                                 className="ct_img_40 ct_bor ct_white_border_1"
@@ -670,15 +656,15 @@ const Home = ({ messageApi }) => {
                                           ))}
                                       </div>
                                     </div>
-                                    <div>
+                                    {/* <div>
                                       <p
                                         className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text"
-                                        data-bs-target="#ct_report_modal"
-                                        data-bs-toggle="modal"
+                                      // data-bs-target="#ct_report_modal"
+                                      // data-bs-toggle="modal"
                                       >
                                         Report
                                       </p>
-                                    </div>
+                                    </div> */}
                                   </div>
                                 </div>
                               </div>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { commentPostAPI, CreatePostAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { commentPostAPI, CreatePostAPI, deleteNotificationAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -65,6 +65,20 @@ export const getAllPost = createAsyncThunk('get-all-post', async (props) => {
     };
 });
 
+export const getLikeAllPost = createAsyncThunk('get-like-all-post', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllPostAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
 export const likeUserPost = createAsyncThunk('like-post', async (props) => {
     const { payload, callback, messageApi } = props;
     try {
@@ -72,6 +86,8 @@ export const likeUserPost = createAsyncThunk('like-post', async (props) => {
             url: likePostAPI,
             method: "POST",
             data: payload,
+            isSuccessToast: false,
+            isErrorToast: false,
             messageApi
         });
         callback(response);
@@ -83,13 +99,15 @@ export const likeUserPost = createAsyncThunk('like-post', async (props) => {
 });
 
 export const commentUserPost = createAsyncThunk('comment-post', async (props) => {
-    const { payload, callback, messageApi } = props;
+    const { payload, callback, messageApi, params } = props;
     try {
         const response = await API_REQUEST({
-            url: commentPostAPI,
+            url: commentPostAPI + params,
             method: "POST",
             data: payload,
-            messageApi
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false
         });
         callback(response);
         return response;
@@ -99,7 +117,23 @@ export const commentUserPost = createAsyncThunk('comment-post', async (props) =>
     };
 });
 
-export const getAllPostComment = createAsyncThunk('get-post-comment', async (props) => {
+
+// getPollDataAPI
+export const getAllPostComment = createAsyncThunk('post-comment', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllPostAPI + `/${payload}/comments`,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getAllPostCommentss = createAsyncThunk('get-post-commentss', async (props) => {
     const { payload, messageApi } = props;
     try {
         const response = await API_REQUEST({
@@ -174,24 +208,6 @@ export const getFaqData = createAsyncThunk('get-faq', async (props) => {
     };
 });
 
-export const getNotificationData = createAsyncThunk('get-notification', async (props) => {
-    const { messageApi } = props;
-    try {
-        const response = await API_REQUEST({
-            url: getNotificationAPI,
-            method: "GET",
-            data: "",
-            headers: {
-                deviceType: 'WEB',
-            },
-            messageApi
-        });
-        return response;
-    } catch (error) {
-        console.log(error);
-    };
-});
-
 // getTermsConditionsDataAPI
 export const getTermsConditionData = createAsyncThunk('get-term-condition', async (props) => {
     const { messageApi } = props;
@@ -236,4 +252,53 @@ export const provideFeedBackData = createAsyncThunk('send-feedback', async (prop
         console.log(error);
         callback(null, error);
     }
+});
+
+// Notification deleteNotificationAPI
+export const getNotificationData = createAsyncThunk('get-notification', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getNotificationAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const deleteNotificationData = createAsyncThunk('delete-notification', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: deleteNotificationAPI + payload,
+            method: "DELETE",
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
+    }
+});
+
+export const markAsReadToAllNotificationsDate = createAsyncThunk('mark-as-read', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: markAsReadToAllNotificationsAPI,
+            isSuccessToast: false,
+            isErrorToast: false,
+            method: "PUT",
+            messageApi,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
 });

@@ -71,15 +71,6 @@ const LoginScreen = ({ messageApi }) => {
                                         <div id="recaptcha-container"></div>
                                         <div className="mb-2">
                                             <label className="form-label">Enter Phone Number</label>
-                                            {/* <input
-                                                id="phone_number"
-                                                type="number"
-                                                className="form-control ct_input"
-                                                placeholder="Enter Phone Number"
-                                                value={values.phone_number}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                            /> */}
                                             <PhoneInput
                                                 id="phone_number"
                                                 className="form-control ct_input ct_input_grey_border_1 ct_border_radius_5 ct_h_44"
@@ -118,7 +109,7 @@ const LoginScreen = ({ messageApi }) => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <label for=""><span className="ct_text_op_6">Please read and agree to our</span> <a href={pageRoutes.termAndCondition} target='_blank' className="ct_link_under_line text-dark">Terms of Use</a> and <a className="ct_link_under_line text-dark"><span className="ct_text_op_6">Privacy Policy</span></a></label>
+                                            <label for=""><span className="ct_text_op_6">Please read and agree to our</span> <a href={pageRoutes?.termAndCondition} target='_blank' className="ct_link_under_line text-dark">Terms of Use</a> and <a href={pageRoutes?.privacyPolicy} target='_blank' className="ct_link_under_line text-dark"><span className="ct_text_op_6">Privacy Policy</span></a></label>
                                         </div>
                                         <ErrorMessage
                                             errors={errors}

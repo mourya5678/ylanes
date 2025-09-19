@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -12,6 +12,7 @@ const initialStates = {
     pastRoomList: [],
     recommendedList: [],
     myRoomList: [],
+    pollComments: [],
 };
 
 export const roomSlice = createSlice({
@@ -206,6 +207,44 @@ export const roomSlice = createSlice({
         });
         builder.addCase(getMyRoomData.rejected, (state, action) => {
             state.isCreateLoading = false;
+        });
+
+        // getPollCommentData
+        builder.addCase(getPollCommentData.pending, (state, action) => {
+            // state.isCreateLoading = true;
+            state.pollComments = []
+        });
+        builder.addCase(getPollCommentData.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.pollComments = data ?? [];
+            // state.isCreateLoading = false;
+        });
+        builder.addCase(getPollCommentData.rejected, (state, action) => {
+            // state.isCreateLoading = false;
+        });
+
+        // getPollCommentDatass
+        builder.addCase(getPollCommentDatass.pending, (state, action) => {
+            // state.isCreateLoading = true;
+        });
+        builder.addCase(getPollCommentDatass.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.pollComments = data ?? [];
+            // state.isCreateLoading = false;
+        });
+        builder.addCase(getPollCommentDatass.rejected, (state, action) => {
+            // state.isCreateLoading = false;
+        });
+
+        // commentUserPoll
+        builder.addCase(commentUserPoll.pending, (state, action) => {
+            // state.isCreateLoading = true;
+        });
+        builder.addCase(commentUserPoll.fulfilled, (state, action) => {
+            // state.isCreateLoading = false;
+        });
+        builder.addCase(commentUserPoll.rejected, (state, action) => {
+            // state.isCreateLoading = false;
         });
     }
 });

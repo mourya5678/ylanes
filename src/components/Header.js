@@ -101,7 +101,7 @@ const Header = ({ messageApi }) => {
                   <button onClick={() => setIsShow(!isShow)}>
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={IMAGE_URL + userData?.attributes?.profile_image}
+                        src={userData?.attributes?.profile_image ? IMAGE_URL + userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
                         alt=""
                         className="ct_img_30"
                       />

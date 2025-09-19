@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -31,6 +31,35 @@ export const createPollData = createAsyncThunk('create-roll', async (props) => {
     };
 });
 
+// getPollCommentAPI
+export const getPollCommentData = createAsyncThunk('get-poll-comments', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPollCommentAPI + payload + '/comments',
+            method: "GET",
+            // data: payload,
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+export const getPollCommentDatass = createAsyncThunk('get-poll-commentsss', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPollCommentAPI + payload + '/comments',
+            method: "GET",
+            // data: payload,
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
 export const getPollTypeData = createAsyncThunk('get-poll-data', async (props) => {
     const { messageApi } = props;
     try {
@@ -41,6 +70,39 @@ export const getPollTypeData = createAsyncThunk('get-poll-data', async (props) =
         });
         return response;
     } catch (error) {
+    };
+});
+
+export const getPollTypeDatass = createAsyncThunk('get-poll-datass', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPollDataAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// Poll Comments
+export const commentUserPoll = createAsyncThunk('comment-poll', async (props) => {
+    const { payload, callback, messageApi, params } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPollCommentAPI + params,
+            method: "POST",
+            data: payload,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
     };
 });
 
@@ -127,7 +189,8 @@ export const getAllChatAfterReciveUsersData = createAsyncThunk('chat-reciver-dat
             data: payload,
             messageApi,
             isPaythonApi: true,
-            isSuccessToast: false
+            isSuccessToast: false,
+            isErrorToast: false
         });
         return response;
     } catch (error) {
@@ -180,6 +243,7 @@ export const sendMessageToUser = createAsyncThunk('send-message-to-user', async 
             data: payload,
             isPaythonApi: true,
             isSuccessToast: false,
+            isErrorToast: false,
             messageApi
         });
         callback(response);
@@ -198,6 +262,7 @@ export const getAllUserPreviousMessages = createAsyncThunk('get-user-previous-me
             data: payload,
             isPaythonApi: true,
             isSuccessToast: false,
+            isErrorToast: false,
             messageApi
         });
         return response;
