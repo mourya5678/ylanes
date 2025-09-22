@@ -1,5 +1,6 @@
 import { lazy } from "react";
-import Dashboard from "../pages/home/Dashboard";
+
+const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 
 const Chat = lazy(() => import("../pages/chat"));
 const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
@@ -35,6 +36,8 @@ const Subscription = lazy(() => import("../pages/subscription"));
 const TopUpUserWallet = lazy(() => import("../pages/wallet/TopUpUserWallet"));
 
 const PostDetailsPage = lazy(() => import("../pages/home/PostDetailsPage"));
+const VideoCall = lazy(() => import("../components/AgoraVideoCall"));
+
 
 export const pageRoutes = {
     dashboard: '/home',
@@ -60,7 +63,8 @@ export const pageRoutes = {
     chat: '/connections',
     onBoarding: '/onboarding',
     privacyPolicy: '/privacy-policy',
-    postDetails: '/user-post'
+    postDetails: '/user-post',
+    videoCall: "/video-call"
 };
 
 export const AllRoutes = [
@@ -68,6 +72,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Video Call",
+        path: pageRoutes?.videoCall,
+        element: <VideoCall />,
         isPrivate: true
     },
     {
