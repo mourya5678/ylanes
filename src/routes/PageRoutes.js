@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
+const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
 
 const Chat = lazy(() => import("../pages/chat"));
 const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
@@ -64,7 +65,8 @@ export const pageRoutes = {
     onBoarding: '/onboarding',
     privacyPolicy: '/privacy-policy',
     postDetails: '/user-post',
-    videoCall: "/video-call"
+    videoCall: "/video-call",
+    roomDetails: '/room-details'
 };
 
 export const AllRoutes = [
@@ -72,6 +74,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Room Details",
+        path: pageRoutes?.roomDetails,
+        element: <RoomDetails />,
         isPrivate: true
     },
     {

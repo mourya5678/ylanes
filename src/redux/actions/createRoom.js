@@ -113,7 +113,9 @@ export const createRoomData = createAsyncThunk('create-room', async (props) => {
             url: createRoomAPI,
             method: "POST",
             data: payload,
-            messageApi
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false,
         });
         callback(response);
         return response;

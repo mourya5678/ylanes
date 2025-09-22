@@ -303,6 +303,7 @@ const CreateRoom = ({ messageApi }) => {
         const callback = (response) => {
             if (response?.meta?.message) {
                 messageApi.success(response?.meta?.message);
+                navigate(pageRoutes.myRoom);
             };
             setFieldValues({
                 anonymouslyName: "",
@@ -323,43 +324,26 @@ const CreateRoom = ({ messageApi }) => {
         const startTime = new Date(fieldValues.selectTime);
         const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        console.log({ userData })
         const formData = new FormData();
-        formData.append("room[start_time]", startTime)
-        formData.append("room[end_time]", endTime)
-        formData.append("room[your_take]", fieldValues.yourTake)
-        formData.append("room[is_global]", fieldValues.globalRoom)
-        formData.append("room[account_id]", userData?.id)
-        formData.append("room[category_id]", '')
-        formData.append("room[sub_category_id]", '')
-        formData.append("room[topic_id]", fieldValues.selectedTopic)
-        formData.append("room[room_type_id]", fieldValues.roomType)
-        formData.append("room[is_anonymously]", joinAnonymously)
-        formData.append("room[anonymously_name]", fieldValues.anonymouslyName)
-        formData.append("TZone", timeZone)
-
-        // const data = {
-        //     "room[start_time]": startTime,
-        //     "room[end_time]": endTime,
-        //     "room[your_take]": fieldValues.yourTake,
-        //     "room[is_global]": fieldValues.globalRoom,
-        //     "room[account_id]": userData?.id,
-        //     "room[category_id]": "",
-        //     "room[sub_category_id]": "",
-        //     "room[topic_id]": fieldValues.selectedTopic,
-        //     "room[room_type_id]": fieldValues.roomType,
-        //     "room[is_anonymously]": joinAnonymously,
-        //     "room[anonymously_name]": fieldValues.anonymouslyName,
-        //     "TZone": timeZone
-        // };
-        // console.log({ data });
+        formData.append("room[start_time]", startTime);
+        formData.append("room[end_time]", endTime);
+        formData.append("room[your_take]", fieldValues.yourTake);
+        formData.append("room[is_global]", fieldValues.globalRoom);
+        formData.append("room[account_id]", userData?.id);
+        formData.append("room[category_id]", '');
+        formData.append("room[sub_category_id]", '');
+        formData.append("room[topic_id]", fieldValues.selectedTopic);
+        formData.append("room[room_type_id]", fieldValues.roomType);
+        formData.append("room[is_anonymously]", joinAnonymously);
+        formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
+        formData.append("TZone", timeZone);
         dispatch(createRoomData({ payload: formData, callback, messageApi }))
     };
 
 
-    // if (isLoading || isCreateLoading) {
-    //     return <Loader />
-    // };
+    if (isLoading || isCreateLoading) {
+        return <Loader />
+    };
     return (
         <div>
             <Header messageApi={messageApi} />

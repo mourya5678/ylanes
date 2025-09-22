@@ -6,6 +6,7 @@ import { pageRoutes } from '../../routes/PageRoutes';
 import { getMyRoomData, getPastRoomData, getRecommendedRoomData, getUpcommingRoomData } from '../../redux/actions/createRoom';
 import Loader from '../../components/Loader';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
+import RoomRegisterModal from '../../components/Modals/RoomRegisterModal';
 
 const MyRoom = ({ messageApi }) => {
     const { isCreateLoading, pastRoomList, upcommingRoomList, recommendedList, myRoomList } = useSelector((state) => state.createRoomReducer);
@@ -16,6 +17,8 @@ const MyRoom = ({ messageApi }) => {
     const [activeTab, setActiveTab] = useState('1');
     const userData = pipGetAccessToken("user_data");
 
+    const [isRegisterShow, setIsRegisterShow] = useState(false);
+
     useEffect(() => {
         dispatch(getMyRoomData({ messageApi }));
         dispatch(getPastRoomData({ messageApi }));
@@ -23,9 +26,9 @@ const MyRoom = ({ messageApi }) => {
         dispatch(getRecommendedRoomData({ messageApi }));
     }, []);
 
-    // if (isCreateLoading) {
-    //     return <Loader />
-    // };
+    if (isCreateLoading) {
+        return <Loader />
+    };
     return (
         <div>
             <Header messageApi={messageApi} />
@@ -114,15 +117,15 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
                                                                 </div>
-                                                                <div>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -163,16 +166,16 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
                                                                 </div>
-                                                                <div>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
 
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -213,16 +216,16 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
                                                                 </div>
-                                                                <div>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
 
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -263,16 +266,16 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3'>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
                                                                 </div>
-                                                                <div>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
 
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
+                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails)}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -308,6 +311,11 @@ const MyRoom = ({ messageApi }) => {
                     </div>
                 </div>
             </section>
+            {isRegisterShow &&
+                <RoomRegisterModal
+                    onClose={() => setIsRegisterShow(false)}
+                />
+            }
         </div>
     )
 };
