@@ -1,30 +1,17 @@
 import React from 'react'
 import Header from '../../components/Header';
 import LandingHeader from '../../components/LandingPageHeader';
+import { Navigate, useNavigate } from "react-router";
+import { pageRoutes } from "../../routes/PageRoutes";
 
 const BlogsList = ({ messageApi }) => {
+  const Navigate = useNavigate();
   return (
     <div>
       <LandingHeader />
-      <section className="pt-4">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="ct_breadcrumb_ul">
-                <ul className="mb-0">
-                  <li>
-                    <a className="ct_fw_600 ct_yellow_text">Home</a>
-                  </li>
-                  <li className="ct_text_op_6">/</li>
-                  <li className="ct_text_op_6">Blogs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="ct_blog_section ct_py_70 mt-4">
-        <div className="container">
+
+      <section className=" ct_py_70">
+        <div className="container ">
           <h4 className="ct_fs_28 ct_fw_600 mb-4">Blogs</h4>
           <div className="row">
             <div className="col-xl-4 col-md-6  mb-4">
@@ -34,8 +21,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -51,7 +38,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -67,8 +54,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -84,7 +71,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -100,8 +87,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -117,7 +104,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -133,8 +120,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -150,7 +137,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -166,8 +153,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -183,7 +170,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -199,8 +186,8 @@ const BlogsList = ({ messageApi }) => {
                 </div>
                 <figcaption>
                   <h4 class="ct_fs_18 ct_minimise_cnt mb-0 ct_white_space_normal">
-                    Where to List Your Rental Property for Maximum Exposure
-                    and Minimal Fees
+                    Where to List Your Rental Property for Maximum Exposure and
+                    Minimal Fees
                   </h4>
                   <ul>
                     <li>Tips & Insights</li>
@@ -216,7 +203,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => Navigate(pageRoutes?.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -234,8 +221,8 @@ const BlogsList = ({ messageApi }) => {
             <img src="assets/img/logo_white.png" alt="" />
           </div>
           <p>
-            Redefining networking with a focus on authentic conversations,
-            deep insights, and lasting bonds.
+            Redefining networking with a focus on authentic conversations, deep
+            insights, and lasting bonds.
           </p>
           <div className="footer-nav mb-4">
             <a>About</a>
