@@ -1,9 +1,12 @@
 import { lazy } from "react";
-import BlogsList from "../pages/blogs";
-import BlogsDetails from "../pages/blogs/BlogsDetails";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
+
+const BlogsList = lazy(() => import("../pages/blogs"));
+const BlogsDetails = lazy(() => import("../pages/blogs/BlogsDetails"));
+
+const AboutUs = lazy(() => import("../pages/about"));
 
 const Chat = lazy(() => import("../pages/chat"));
 const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
@@ -70,7 +73,8 @@ export const pageRoutes = {
     videoCall: "/video-call",
     roomDetails: '/room-details',
     blogs: '/blogs',
-    blogsDetails: "/blogs-details"
+    blogsDetails: "/blogs-details",
+    aboutUs: "/about-us",
 };
 
 export const AllRoutes = [
@@ -78,6 +82,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "About Us",
+        path: pageRoutes?.aboutUs,
+        element: <AboutUs />,
         isPrivate: true
     },
     {
