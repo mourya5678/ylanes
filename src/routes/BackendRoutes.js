@@ -75,3 +75,6 @@ export const getAllRecommendedRoomsDataAPI = "bx_block_different_rooms/rooms/get
 // Notification
 export const deleteNotificationAPI = "bx_block_notifications/notifications/";
 export const markAsReadToAllNotificationsAPI = "bx_block_notifications/notifications/read_all";
+
+// Landing Faq
+export const getLandingFaqAPI = "bx_block_admin/policies/public_faq_list";

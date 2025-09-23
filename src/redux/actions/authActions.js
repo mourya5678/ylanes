@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { commentPostAPI, CreatePostAPI, deleteNotificationAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { commentPostAPI, CreatePostAPI, deleteNotificationAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -303,16 +303,16 @@ export const markAsReadToAllNotificationsDate = createAsyncThunk('mark-as-read',
     };
 });
 
-// export const getMyProfileData = createAsyncThunk('get-profile-data', async (props) => {
-//     const { payload, messageApi } = props;
-//     try {
-//         const response = await API_REQUEST({
-//             url: userProfileAPI + payload,
-//             method: "GET",
-//             messageApi
-//         });
-//         return response;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+export const getLandingPageFaq = createAsyncThunk('get-landing-faq', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getLandingFaqAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});

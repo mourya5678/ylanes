@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
+import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -16,7 +16,8 @@ const initialStates = {
     TermsAndConditions: {},
     PrivacyPolicy: {},
     RoomType: [],
-    AllPollsData: []
+    AllPollsData: [],
+    faqs: []
 };
 
 export const authSlice = createSlice({
@@ -261,6 +262,20 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(markAsReadToAllNotificationsDate.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getLandingPageFaq
+        builder.addCase(getLandingPageFaq.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getLandingPageFaq.fulfilled, (state, action) => {
+            const { meta } = action?.payload || {};
+            console.log({ meta });
+            state.faqs = meta?.data ?? [];
+            state.isLoading = false;
+        });
+        builder.addCase(getLandingPageFaq.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

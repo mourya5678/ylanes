@@ -53,7 +53,7 @@ const Faq = ({ messageApi }) => {
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
         </div >
     )
 };
