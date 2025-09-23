@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 input#phone_number {
     border: 0;
     outline: none;
@@ -26,14 +33,22 @@ input#phone_number {
     position: fixed;
     top: 0px;
     background-color: #e7edfb;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: flex-end;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
     z-index: 999;
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .loader {
@@ -43,7 +58,8 @@ input#phone_number {
     border-radius: 50%;
     border-top-color: transparent;
     position: relative;
-    animation: loaderAnimation 1.5s linear infinite;
+    -webkit-animation: loaderAnimation 1.5s linear infinite;
+            animation: loaderAnimation 1.5s linear infinite;
 }
 .ct_header_search_w_700{
     max-width: 700px;
@@ -59,58 +75,122 @@ input#phone_number {
     top: 50%;
     background-color: #ffcc00;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 }
 
 .loader::before {
-    animation: loaderAnimationBefore 1s linear infinite;
+    -webkit-animation: loaderAnimationBefore 1s linear infinite;
+            animation: loaderAnimationBefore 1s linear infinite;
 }
 
 .loader::after {
-    animation: loaderAnimationAfter 1s linear infinite;
+    -webkit-animation: loaderAnimationAfter 1s linear infinite;
+            animation: loaderAnimationAfter 1s linear infinite;
+}
+
+@-webkit-keyframes loaderAnimation {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
 }
 
 @keyframes loaderAnimation {
     0% {
-        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
     }
 
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loaderAnimationBefore {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 0;
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
     }
 }
 
 @keyframes loaderAnimationBefore {
     0% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
     }
 
     50% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
     }
 
     100% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@-webkit-keyframes loaderAnimationAfter {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
     }
 }
 
 @keyframes loaderAnimationAfter {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
     }
 
     50% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        -webkit-transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
     }
 
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
+        -webkit-transform: translate(-50%, -50%) scale(0);
+                transform: translate(-50%, -50%) scale(0);
     }
 }
 
@@ -122,8 +202,10 @@ input#phone_number {
 .ct_banner_right_img img {
     width: 100%;
     height: 400px;
-    object-fit: contain;
-    object-position: right;
+    -o-object-fit: contain;
+       object-fit: contain;
+    -o-object-position: right;
+       object-position: right;
 }
 
 .ct_header_px_50 {
@@ -151,15 +233,22 @@ input#phone_number {
     background-color: hsl(240.75deg 97.56% 16.08%);
     border-radius: 12px;
     color: #fff;
+    -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+    transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
     width: 100%;
     max-width: 80%;
     margin-inline: auto;
 }
 
 .ct_why_choose_card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+    -webkit-transform: translateY(-8px);
+        -ms-transform: translateY(-8px);
+            transform: translateY(-8px);
+    -webkit-box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .ct_why_bg .row {
@@ -184,7 +273,12 @@ input#phone_number {
 .ct_wbuzz_card {
     color: #000;
     border-radius: 30px;
+    -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+    transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+    display: -ms-grid;
     display: grid;
     padding-bottom: 0px !important;
     overflow: hidden;
@@ -195,7 +289,8 @@ input#phone_number {
     width: 100px;
     bottom: 0px;
     right: 0px;
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
     opacity: 0.;
     margin-top: auto !important;
     margin-left: auto;
@@ -204,8 +299,11 @@ input#phone_number {
 }
 
 .ct_wbuzz_card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translateY(-6px);
+        -ms-transform: translateY(-6px);
+            transform: translateY(-6px);
+    -webkit-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .ct_wbuzz_card h5 {
@@ -216,12 +314,18 @@ input#phone_number {
 .ct_review_card {
     border: 1px solid #eef6fb;
     border-radius: 20px !important;
+    -webkit-transition: -webkit-transform .28s ease, -webkit-box-shadow .28s ease;
+    transition: -webkit-transform .28s ease, -webkit-box-shadow .28s ease;
+    -o-transition: transform .28s ease, box-shadow .28s ease;
     transition: transform .28s ease, box-shadow .28s ease;
+    transition: transform .28s ease, box-shadow .28s ease, -webkit-transform .28s ease, -webkit-box-shadow .28s ease;
     padding: 10px !important;
 }
 
 .ct_review_card:hover {
-    transform: translateY(-6px);
+    -webkit-transform: translateY(-6px);
+        -ms-transform: translateY(-6px);
+            transform: translateY(-6px);
 }
 
 .ct_review_card p {
@@ -249,37 +353,52 @@ input#phone_number {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     border: none;
     cursor: pointer;
+    -webkit-transition: -webkit-transform .18s ease, -webkit-box-shadow .18s ease;
+    transition: -webkit-transform .18s ease, -webkit-box-shadow .18s ease;
+    -o-transition: transform .18s ease, box-shadow .18s ease;
     transition: transform .18s ease, box-shadow .18s ease;
+    transition: transform .18s ease, box-shadow .18s ease, -webkit-transform .18s ease, -webkit-box-shadow .18s ease;
     padding: 0;
 }
 
 .ct-nav-btn:active {
-    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+        -ms-transform: translateY(1px);
+            transform: translateY(1px);
 }
 
 .ct-nav-prev {
     background: #ffffff;
     border: 1px solid #eef2f6;
     color: #333;
-    box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
+    -webkit-box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
+            box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
 }
 
 .ct-nav-next {
     background: #0b0b3b;
     border: 1px solid rgba(0, 0, 0, 0.06);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
+    -webkit-box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
+            box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
 }
 
 .ct_review_card img {
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     border-radius: 15px;
 }
 
@@ -304,21 +423,32 @@ hr.ct_light_hr {
     /* Slightly lighter blue */
     color: #fff;
     border-radius: 15px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
 .ct_how_works_card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    -webkit-transform: translateY(-8px);
+        -ms-transform: translateY(-8px);
+            transform: translateY(-8px);
+    -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .ct_how_work_icon {
     width: 100px;
     height: 100px;
     border-radius: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-inline: auto;
     background-color: hsl(241.71deg 98.13% 20.98%);
 }
@@ -326,7 +456,8 @@ hr.ct_light_hr {
 .ct_how_work_icon img {
     width: 50px;
     height: 50px;
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
 }
 
 
@@ -355,6 +486,8 @@ hr.ct_light_hr {
     border-radius: 1rem;
     font-weight: 600;
     border: none;
+    -webkit-transition: background 0.3s;
+    -o-transition: background 0.3s;
     transition: background 0.3s;
 }
 
@@ -379,10 +512,17 @@ hr.ct_light_hr {
 }
 
 .footer-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     gap: 17px;
 }
 
@@ -408,6 +548,8 @@ hr.ct_light_hr {
     color: white;
     text-align: center;
     font-size: 18px;
+    -webkit-transition: background 0.3s;
+    -o-transition: background 0.3s;
     transition: background 0.3s;
 }
 
@@ -455,8 +597,12 @@ hr.ct_light_hr {
 }
 
 .et_pricing_card ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     font-size: 0.95rem;
 }
 
@@ -486,12 +632,18 @@ hr.ct_light_hr {
     position: absolute;
     top: -12px;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
 }
 
 .slider-indicators {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
 }
@@ -521,8 +673,12 @@ hr.ct_light_hr {
 }
 
 .et_pricing_card .ct_border_bg_1 ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 10px;
 }
 
@@ -535,8 +691,12 @@ hr.ct_light_hr {
 }
 
 .et_pricing_content ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 10px;
 }
 
@@ -548,6 +708,8 @@ hr.ct_light_hr {
 .ct_transparent_btn {
     background-color: transparent;
     color: #000;
+    -webkit-transition: 0.4s ease all;
+    -o-transition: 0.4s ease all;
     transition: 0.4s ease all;
 }
 
@@ -564,6 +726,8 @@ hr.ct_light_hr {
     color: #fff;
     position: relative;
     font-weight: 600;
+    -webkit-transition: 0.4s ease all;
+    -o-transition: 0.4s ease all;
     transition: 0.4s ease all;
     border: 1px solid #111;
     outline: none;
@@ -572,6 +736,8 @@ hr.ct_light_hr {
 .ct_transparent_btn {
     background-color: transparent;
     color: #000;
+    -webkit-transition: 0.4s ease all;
+    -o-transition: 0.4s ease all;
     transition: 0.4s ease all;
 }
 
@@ -596,7 +762,8 @@ hr.ct_light_hr {
 
     .ct_banner_right_img img {
         height: 300px;
-        object-position: center;
+        -o-object-position: center;
+           object-position: center;
     }
 }
 
@@ -611,7 +778,13 @@ hr.ct_light_hr {
 
     .ct-carousel-nav {
 
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+
+        -webkit-box-direction: normal;
+
+            -ms-flex-direction: column;
+
+                flex-direction: column;
     }
 }
 
@@ -635,7 +808,9 @@ hr.ct_light_hr {
 }
 
 .ct_persional_info_grid li {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 200px 15px auto;
   grid-template-columns: 200px auto;
   gap: 15px;
   margin-bottom: 10px;
@@ -645,6 +820,8 @@ hr.ct_light_hr {
     background-color: #98dc8a;
     padding: 4px 15px;
     border-radius: 100px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     font-weight: 500;
 }
