@@ -27,24 +27,29 @@ const TopUpUserWallet = ({ messageApi }) => {
     }, []);
 
     const handleUpgradeWalletYCoins = () => {
-        const callback = (response) => {
-            console.log(response);
-            openPaymentGateway(response?.transaction?.order_id,
-                response?.transaction?.id);
-        };
-        if (selectedPlan?.id) {
-            const amount = Number(selectedPlan?.rupees_ammount ?? 0) * (1 / (convertRupeeToYCoins ?? 1));
-            const planID = selectedPlan?.id;
-            const taxAmount = (amount * tax) / 100;
-            const totalAmount = amount + taxAmount;
-            const data = {
-                amount: selectedPlan?.rupees_ammount ?? 0,
-                total_amount: String(totalAmount),
+        console.log({ userData });
+        if (userData?.attributes?.subscription_status == "Active") {
+            const callback = (response) => {
+                console.log(response);
+                openPaymentGateway(response?.transaction?.order_id,
+                    response?.transaction?.id);
             };
-            dispatch(topUpUserWalletYCoins({ payload: data, params: planID, callback, messageApi }));
+            if (selectedPlan?.id) {
+                const amount = Number(selectedPlan?.rupees_ammount ?? 0) * (1 / (convertRupeeToYCoins ?? 1));
+                const planID = selectedPlan?.id;
+                const taxAmount = (amount * tax) / 100;
+                const totalAmount = amount + taxAmount;
+                const data = {
+                    amount: selectedPlan?.rupees_ammount ?? 0,
+                    total_amount: String(totalAmount),
+                };
+                dispatch(topUpUserWalletYCoins({ payload: data, params: planID, callback, messageApi }));
+            } else {
+                messageApi.error("Please select any plan to continue");
+            };
         } else {
-            messageApi.error("Please select any plan to continue");
-        };
+            messageApi.error("Please purchase a plan before adding a top-up");
+        }
     };
 
     const openPaymentGateway = (orderId, transactionId) => {

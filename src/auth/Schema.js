@@ -24,7 +24,16 @@ export const UpdateProfileSchema = Yup.object().shape({
             /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/,
             "Please enter valid email"
         ),
-    full_name: Yup.string().trim().required("Please enter profile name")
+    full_name: Yup.string().trim().required("Please enter profile name"),
+    bio: Yup.string()
+        .trim()
+        .required("Please enter bio")
+        .min(50, "Bio must be at least 50 characters")
+        .max(2000, "Bio cannot exceed 2000 characters"),
+    about_us: Yup.string()
+        .trim()
+        .required("Please enter About")
+        .max(100, "About cannot exceed 100 characters"),
 });
 
 export const CreatePollSchema = Yup.object().shape({

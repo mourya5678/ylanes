@@ -28,7 +28,9 @@ const UpdateProfile = ({ messageApi }) => {
         onboarding: userData?.attributes?.onboarding_details ?? '',
         genderType: userData?.attributes?.gender ?? '',
         birthOfYear: userData?.attributes?.birth_year ?? '',
-        email: userData?.attributes?.email ?? ''
+        email: userData?.attributes?.email ?? '',
+        bio: userData?.attributes?.bio ?? "",
+        about_us: userData?.attributes?.about_us ?? "",
     };
 
 
@@ -61,8 +63,9 @@ const UpdateProfile = ({ messageApi }) => {
         formData.append('preferred_sub_categories', `[]`);
         formData.append('email', values?.email);
         formData.append('full_phone_number', values?.phone);
-        formData.append('bio', '');
-        formData.append('personal_exp', '');
+        formData.append('bio', values?.bio);
+        formData.append('personal_exp', "");
+        formData.append('about_us', values.about_us);
         dispatch(updateUserProfileData({ payload: formData, data: userData?.id, callback, messageApi }))
     };
 
@@ -174,6 +177,42 @@ const UpdateProfile = ({ messageApi }) => {
                                                             <div className="form-group mb-4">
                                                                 <label className="ct_fw_500 mb-2">Gender</label>
                                                                 <input type="text" className="form-control ct_input" placeholder="Enter Gender" value={values.genderType} readOnly disabled />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-12">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">About</label>
+                                                                <textarea
+                                                                    id="about_us"
+                                                                    className="form-control"
+                                                                    placeholder="Enter About"
+                                                                    value={values.about_us}
+                                                                    onBlur={handleBlur}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <ErrorMessage
+                                                                    errors={errors}
+                                                                    touched={touched}
+                                                                    fieldName="about_us"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-12">
+                                                            <div className="form-group mb-4">
+                                                                <label className="ct_fw_500 mb-2">Bio</label>
+                                                                <textarea
+                                                                    id="bio"
+                                                                    className="form-control"
+                                                                    placeholder="Enter Bio"
+                                                                    value={values.bio}
+                                                                    onBlur={handleBlur}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <ErrorMessage
+                                                                    errors={errors}
+                                                                    touched={touched}
+                                                                    fieldName="bio"
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>

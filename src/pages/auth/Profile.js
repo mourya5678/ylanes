@@ -160,13 +160,13 @@ const Profile = ({ messageApi }) => {
                                         <div className="ct_white_bg mt-2">
                                             <h4 className="ct_fw_600 ct_fs_20 mb-3">Bio</h4>
                                             <p className='mb-0 ct_para_scroll ct_custom_scroll ct_text_op_6 ct_f_14'>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                                {userData?.attributes?.bio ?? ""}
                                             </p>
                                         </div>
                                         <div className="ct_white_bg mt-2">
                                             <h4 className="ct_fw_600 ct_fs_20 mb-2">About You</h4>
                                             <p className='mb-0 ct_para_scroll ct_custom_scroll ct_text_op_6 ct_f_14'>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                                {userData?.attributes?.about_us ?? ""}
                                             </p>
                                         </div>
                                     </div>
