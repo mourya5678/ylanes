@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 
-
-
-// Default-exported React component — usage: <AgoraCall APP_ID={...} TOKEN={...} channel={...} />
 export default function AgoraCall() {
     const clientRef = useRef(null);
     const localAudioTrackRef = useRef(null);
@@ -14,7 +11,7 @@ export default function AgoraCall() {
     const [joined, setJoined] = useState(false);
     const [mutedAudio, setMutedAudio] = useState(false);
     const [mutedVideo, setMutedVideo] = useState(false);
-    const [remoteUsers, setRemoteUsers] = useState([]); // array of user objects
+    const [remoteUsers, setRemoteUsers] = useState([]);
 
     const APP_ID = '611227230#1418219';
     const TOKEN = "007eJxTYPhTG7k57Ouib/OetWrYT6/mMHq4np13ouTiurc89y6FKu9SYDBIMkgzN7U0SrQwTjIxME+xtDA2SEtJMzU2MExKS7Ww4H59IaMhkJFh6Z1VrIwMEAjiczMkZyTm5aXmlKQWlzAwAACkViPv";
