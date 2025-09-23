@@ -491,7 +491,9 @@ body {
     background-color: #98dc8a;
     width: fit-content;
 }
-
+a{
+    cursor: pointer;
+}
 .ct_pricing_card_light_green:hover {
     border-color: var(--yellow) !important;
 }
