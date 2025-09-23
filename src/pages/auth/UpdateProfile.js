@@ -4,15 +4,18 @@ import { pipGetAccessToken } from '../../auth/Pip';
 import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UpdateProfileSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
 import { updateUserProfileData } from '../../redux/actions/authActions';
 import { pageRoutes } from '../../routes/PageRoutes';
+import Loader from '../../components/Loader';
 
 const UpdateProfile = ({ messageApi }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { isLoading } = useSelector((state) => state.authReducer);
+
 
     const [userData, setUserData] = useState({});
     const [updateUserImage, setUpdateUserImage] = useState();
@@ -63,6 +66,9 @@ const UpdateProfile = ({ messageApi }) => {
         dispatch(updateUserProfileData({ payload: formData, data: userData?.id, callback, messageApi }))
     };
 
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
             <Header messageApi={messageApi} />

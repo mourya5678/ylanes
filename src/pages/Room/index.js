@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +18,8 @@ const MyRoom = ({ messageApi }) => {
     const userData = pipGetAccessToken("user_data");
 
     const [isRegisterShow, setIsRegisterShow] = useState(false);
+    const actionCableData = useRef(null);
+
 
     useEffect(() => {
         dispatch(getMyRoomData({ messageApi }));
@@ -25,6 +27,48 @@ const MyRoom = ({ messageApi }) => {
         dispatch(getUpcommingRoomData({ messageApi }));
         dispatch(getRecommendedRoomData({ messageApi }));
     }, []);
+
+    const handleShowRoomStatus = (item, val) => {
+        let isHost = item?.attributes?.is_host;
+        let isRegistered = item?.attributes?.is_registered;
+        let roomId = item?.id;
+        let remainingRoomCount = Number(item?.attributes?.remaining_seats);
+        const currentTime = new Date().getTime() / 1000;
+        const belowTime = new Date(item?.attributes?.start_time).getTime() / 1000;
+        const finalTime = belowTime - currentTime;
+        let isEnter = false;
+        if (finalTime <= 300) {
+            console.log("hello")
+            isEnter = true;
+        };
+        let name = "";
+        if (val == true) {
+            if (isHost || isRegistered) {
+                if (isEnter) {
+                    if (item?.attributes?.joined_uers?.toString()?.includes(userData?.attributes?.id)) {
+                        name = "REJOIN";
+                    } else {
+                        name = "ENTER";
+                    };
+                } else {
+                    name = "CANCEL";
+                };
+            } else if (!isHost && !isRegistered && remainingRoomCount > 0) {
+                name = "REGISTER";
+            } else if (remainingRoomCount == 0) {
+                name = "FULL";
+            };
+        } else {
+            if (item?.attributes?.joined_uers?.includes(userData?.id)) {
+                name = "REJOIN";
+            } else if (isEnter == true && roomId == item?.id) {
+                name = "ENTER";
+            } else {
+                name = "CANCEL";
+            };
+        };
+        return name;
+    };
 
     if (isCreateLoading) {
         return <Loader />
@@ -117,15 +161,15 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>{handleShowRoomStatus(item, false)}</button>
                                                                 </div>
-                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -166,16 +210,16 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>{handleShowRoomStatus(item, true)}</button>
                                                                 </div>
-                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
 
                                                             </div>
-                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                            <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -216,16 +260,16 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>{handleShowRoomStatus(item, true)}</button>
                                                                 </div>
-                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
 
                                                             </div>
-                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
@@ -266,16 +310,17 @@ const MyRoom = ({ messageApi }) => {
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
-                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>Register</button>
+                                                                    <button className='ct_yellow_btn py-1 px-3' onClick={() => setIsRegisterShow(true)}>
+                                                                        {handleShowRoomStatus(item, false)}
+                                                                    </button>
                                                                 </div>
-                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
                                                                     <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
                                                                 </div>
                                                                 <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
-
                                                             </div>
-                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails)}>
+                                                            <div className="ct_cursor ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between" onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>

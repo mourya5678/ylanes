@@ -1,4 +1,6 @@
 import { lazy } from "react";
+import BlogsList from "../pages/blogs";
+import BlogsDetails from "../pages/blogs/BlogsDetails";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -66,7 +68,9 @@ export const pageRoutes = {
     privacyPolicy: '/privacy-policy',
     postDetails: '/user-post',
     videoCall: "/video-call",
-    roomDetails: '/room-details'
+    roomDetails: '/room-details',
+    blogs: '/blogs',
+    blogsDetails: "/blogs-details"
 };
 
 export const AllRoutes = [
@@ -74,6 +78,18 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Blog",
+        path: pageRoutes?.blogs,
+        element: <BlogsList />,
+        isPrivate: true
+    },
+    {
+        name: "Blogs Details",
+        path: pageRoutes?.blogsDetails,
+        element: <BlogsDetails />,
         isPrivate: true
     },
     {
