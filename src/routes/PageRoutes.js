@@ -7,6 +7,7 @@ const BlogsList = lazy(() => import("../pages/blogs"));
 const BlogsDetails = lazy(() => import("../pages/blogs/BlogsDetails"));
 
 const AboutUs = lazy(() => import("../pages/about"));
+const LandingFaq = lazy(() => import("../pages/faq"));
 
 const Chat = lazy(() => import("../pages/chat"));
 const OnBoardingScreen = lazy(() => import("../pages/onboarding"));
@@ -56,7 +57,7 @@ export const pageRoutes = {
     createRoom: "/create-room",
     userWallet: '/wallet',
     notification: '/notification',
-    faq: '/faq',
+    faq: '/faqs',
     refer: '/refer',
     termAndCondition: '/terms-and-condition',
     feedback: '/feedback',
@@ -75,6 +76,7 @@ export const pageRoutes = {
     blogs: '/blogs',
     blogsDetails: "/blogs-details",
     aboutUs: "/about-us",
+    landingFaq: "/faq",
 };
 
 export const AllRoutes = [
@@ -82,6 +84,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Landing FAQ",
+        path: pageRoutes?.landingFaq,
+        element: <LandingFaq />,
         isPrivate: true
     },
     {

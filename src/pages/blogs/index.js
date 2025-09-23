@@ -1,8 +1,12 @@
 import React from 'react'
 import Header from '../../components/Header';
 import LandingHeader from '../../components/LandingPageHeader';
+import { useNavigate } from 'react-router';
+import { pageRoutes } from '../../routes/PageRoutes';
 
 const BlogsList = ({ messageApi }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <LandingHeader />
@@ -51,7 +55,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -84,7 +88,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -117,7 +121,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -150,7 +154,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -183,7 +187,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -216,7 +220,7 @@ const BlogsList = ({ messageApi }) => {
 
                   <div class="mt-3">
                     <a
-                      href="blog-details.html"
+                      onClick={() => navigate(pageRoutes.blogsDetails)}
                       class="ct_orange_link ct_text_upercase"
                     >
                       Read More <i class="fa-solid fa-arrow-right ms-2"></i>

@@ -302,3 +302,17 @@ export const markAsReadToAllNotificationsDate = createAsyncThunk('mark-as-read',
         console.log(error);
     };
 });
+
+// export const getMyProfileData = createAsyncThunk('get-profile-data', async (props) => {
+//     const { payload, messageApi } = props;
+//     try {
+//         const response = await API_REQUEST({
+//             url: userProfileAPI + payload,
+//             method: "GET",
+//             messageApi
+//         });
+//         return response;
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });

@@ -32,8 +32,8 @@ const LandingHeader = () => {
                                     <li onClick={() => navigate(pageRoutes?.blogs)}>
                                         <a className={data == pageRoutes.blogs && "active"}>Blog</a>
                                     </li>
-                                    <li onClick={() => navigate(pageRoutes.faq)}>
-                                        <a className={data == pageRoutes.faq && "active"}>FAQs</a>
+                                    <li onClick={() => navigate(pageRoutes.landingFaq)}>
+                                        <a className={data == pageRoutes.landingFaq && "active"}>FAQs</a>
                                     </li>
                                 </ul>
                             </div>
