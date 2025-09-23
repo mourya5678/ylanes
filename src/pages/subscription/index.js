@@ -23,12 +23,12 @@ const Subscription = ({ messageApi }) => {
 
   const handlePurchasePlan = (val) => {
     const callback = (response) => {
-      handleOpenRazorPayModal(response)
+      handleOpenRazorPayModal(response, val)
     };
     dispatch(purchaseSubscriptionPlan({ payload: val?.amount, messageApi, callback }))
   };
 
-  const handleOpenRazorPayModal = (val) => {
+  const handleOpenRazorPayModal = (val, plan) => {
     var options = {
       description: "Refill wallet",
       name: "YLanes",
@@ -40,7 +40,7 @@ const Subscription = ({ messageApi }) => {
       handler: function (response) {
         // console.log("Razorpay Response:", response);
         const data = {
-          plan_id: 'unlimited',
+          plan_id: plan?.external_id,
           payload: { ...response }
         };
         const callback = (response) => {

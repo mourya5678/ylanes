@@ -1,10 +1,11 @@
 import React from 'react';
 import Header from '../../components/Header';
+import LandingHeader from '../../components/LandingPageHeader';
 
 const BlogsDetails = ({ messageApi }) => {
     return (
         <div>
-            <Header messageApi={messageApi} />
+            <LandingHeader />
             <section className="pt-4">
                 <div className="container">
                     <div className="row">

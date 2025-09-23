@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css";
+import LandingHeader from '../../components/LandingPageHeader';
 
 
 const Dashboard = ({ messageApi }) => {
@@ -25,46 +26,7 @@ const Dashboard = ({ messageApi }) => {
     };
     return (
         <div>
-            <header className="ct_header ct_header_px_50">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="ct_navbr_main">
-                                <div className="ct_logo">
-                                    <a>
-                                        <img src="assets/img/logo.png" alt="" />
-                                    </a>
-                                </div>
-                                <div className="ct_navbar">
-                                    <ul>
-                                        <div className="ct_close_menu">
-                                            <i className="fa-solid fa-xmark"></i>
-                                        </div>
-                                        <li onClick={() => navigate(pageRoutes.dashboard)}>
-                                            <a>Home</a>
-                                        </li>
-                                        <li>
-                                            <a>About</a>
-                                        </li>
-                                        <li>
-                                            <a>Blog</a>
-                                        </li>
-                                        <li onClick={() => navigate(pageRoutes.faq)}>
-                                            <a>FAQs</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="d-flex align-items-center gap-2">
-                                    <a className="ct_yellow_btn" onClick={() => navigate(pageRoutes.login)}>Enter YLanes</a>
-                                    <div className="ct_menu_bar">
-                                        <i className="fa-solid fa-bars-staggered"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <LandingHeader />
             <section className="ct_section_banner">
                 <div className="container-fluid">
                     <div className="row align-items-center">

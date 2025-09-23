@@ -5,6 +5,19 @@ import Header from '../../components/Header';
 const OnBoardingScreen = ({ messageApi }) => {
     const navigate = useNavigate();
 
+    const initialeState = {
+        referral_code: "",
+        profile_image: "",
+        profike_name: "",
+        year_of_birth: "",
+        gender: "",
+        email: ""
+    };
+
+    const handleNextButton = (val) => {
+        console.log({ val });
+    };
+
     return (
         <div>
             <Header messageApi={messageApi} />
