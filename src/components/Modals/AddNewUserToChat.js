@@ -4,7 +4,7 @@ import { IMAGE_URL } from '../../routes/BackendRoutes';
 const AddNewUserToChat = ({ onClose, displayUser }) => {
     return (
         <div className="modal show d-block ct_congratulation_modal_fade" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="ct_modal-dialog modal-dialog-centered">
                 <div className="modal-content py-4">
                     <div className="modal-header border-0 pt-0 pb-2">
                         <h1 className="modal-title ct_fs_20 ct_fw_600" id="ct_view_userLabel">New Chat</h1>

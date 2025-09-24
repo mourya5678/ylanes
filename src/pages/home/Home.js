@@ -165,9 +165,9 @@ const Home = ({ messageApi }) => {
     setPostImages((prev) => prev.filter((item, i) => i !== index));
   };
 
-  if (isLoading || isCreateLoading) {
-    return <Loader />;
-  };
+  // if (isLoading || isCreateLoading) {
+  //   return <Loader />;
+  // };
   return (
     <div>
       <Header messageApi={messageApi} />

@@ -94,8 +94,8 @@ const CreatePollModal = ({ messageApi, onClose }) => {
 
     return (
         <div className="modal show d-block ct_congratulation_modal_fade" >
-            <div className="modal-dialog modal-dialog-centered" style={{ pointerEvents: "auto" }}>
-                <div className="ct_upload_post_box">
+            <div className="modal-dialog ct_modal-dialog modal-dialog-centered" style={{ pointerEvents: "auto" }}>
+                <div className="ct_upload_post_box" style={{ zIndex: "1" }}>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={CreatePollSchema}

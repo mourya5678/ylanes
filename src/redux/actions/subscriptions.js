@@ -8,7 +8,9 @@ export const getAllSubscriptionPlan = createAsyncThunk('get-subscription-plan', 
         const response = await API_REQUEST({
             url: getAllSubscriptionPlanAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -21,7 +23,9 @@ export const getUserSubscriptionPlan = createAsyncThunk('get-user-subscription-p
         const response = await API_REQUEST({
             url: getUserSubscriptionPlanAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -111,7 +115,9 @@ export const getDashboardAllSubscriptionPlan = createAsyncThunk('get-dashboard-s
         const response = await API_REQUEST({
             url: getAllDashboardSubscriptionPlanAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {

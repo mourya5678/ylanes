@@ -186,7 +186,9 @@ export const getWalletTransaction = createAsyncThunk('wallet-transaction', async
         const response = await API_REQUEST({
             url: getWalletTransactionHistoryAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -200,7 +202,9 @@ export const getFaqData = createAsyncThunk('get-faq', async (props) => {
         const response = await API_REQUEST({
             url: getFaqListAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -215,7 +219,9 @@ export const getTermsConditionData = createAsyncThunk('get-term-condition', asyn
         const response = await API_REQUEST({
             url: getTermsConditionsDataAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -229,7 +235,9 @@ export const getPrivacyPolicyData = createAsyncThunk('get-privacy-policy', async
         const response = await API_REQUEST({
             url: getPrivacyPolicyDataAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
@@ -309,7 +317,9 @@ export const getLandingPageFaq = createAsyncThunk('get-landing-faq', async (prop
         const response = await API_REQUEST({
             url: getLandingFaqAPI,
             method: "GET",
-            messageApi
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
         });
         return response;
     } catch (error) {
