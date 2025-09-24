@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData } from "../actions/authActions";
+import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -276,6 +276,17 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(getLandingPageFaq.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // userOnboarding
+        builder.addCase(userOnboarding.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(userOnboarding.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(userOnboarding.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

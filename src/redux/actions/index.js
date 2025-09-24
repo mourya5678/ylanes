@@ -4,7 +4,7 @@ import { BASE_URL, BASE_URL1 } from "../../routes/BackendRoutes";
 import { pageRoutes } from '../../routes/PageRoutes';
 
 export const API_REQUEST = async (props) => {
-    const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = true, isSuccessToast = true, messageApi, isPaythonApi = false } = props;
+    const { BASE = BASE_URL, url, method, data, headers, params, isErrorToast = false, isSuccessToast = false, messageApi, isPaythonApi = false } = props;
     const token = pipGetAccessToken("yLanes_user_Token");
     const requestOptions = {
         url: !isPaythonApi ? BASE + url : BASE_URL1 + url,

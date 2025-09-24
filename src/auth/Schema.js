@@ -56,8 +56,14 @@ export const CreatePollSchema = Yup.object().shape({
 });
 
 export const onBoardingUserSchema = Yup.object().shape({
-    profile_image: Yup.mixed().required("Please upload a profile image"),
     profile_name: Yup.string().trim().required("Please enter profile name"),
     year_of_birth: Yup.string().trim().required("Please select year of birth"),
-    gender: Yup.string().required("Please select gender").oneOf(["men"], 'Only "men" is allowed'),
+    gender: Yup.string().required("Please select gender").oneOf(["Male"], 'Sorry you cannot signup, this is a platform exclusively for men'),
+    email: Yup.string()
+        .email("Please enter valid email")
+        .required("Please enter email")
+        .matches(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/,
+            "Please enter valid email"
+        )
 });

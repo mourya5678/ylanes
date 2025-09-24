@@ -78,3 +78,6 @@ export const markAsReadToAllNotificationsAPI = "bx_block_notifications/notificat
 
 // Landing Faq
 export const getLandingFaqAPI = "bx_block_admin/policies/public_faq_list";
+
+// onBoarding user
+export const userOnboardAPI = "account_block/accounts";

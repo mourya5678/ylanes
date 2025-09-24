@@ -47,9 +47,7 @@ const CreatePollModal = ({ messageApi, onClose }) => {
                 value: values.option2
             }
         ];
-
         const mergedOptions = [...options, ...data12];
-
         const listData = mergedOptions
             ?.filter((data) => !!data.value)
             .map((data) => ({
@@ -59,8 +57,6 @@ const CreatePollModal = ({ messageApi, onClose }) => {
         const convertedHour = parseInt(values.durationHours ?? 0, 10);
         const convertedMinute = parseInt(values.durationMinuts ?? 0, 10);
         const newTimestamp = new Date().getTime() + (convertedHour * 60 + convertedMinute) * 60 * 1000;
-
-        // \"catalogue_tag_ids[]\":\"1\",\"catalogue_tag_id\":\"1\",\"body\":\"Test\",\"options_attributes\":[{\"body\":\"A\"},{\"body\":\"B\"}],\"multiple_choice\":false,\"hours\":\"01\",\"minutes\":\"01\",\"start_date_time\":\"2025-09-08T09:12:27.613Z\",\"end_date_time\":\"2025-09-08T10:13:27.613Z\",\"poll\":{\"catalogue_tag_ids[]\":\"1\",\"catalogue_tag_id\":\"1\",\"body\":\"Test\",\"options_attributes\":[{\"body\":\"A\"},{\"body\":\"B\"}],\"multiple_choice\":false,\"hours\":\"01\",\"minutes\":\"01\",\"start_date_time\":\"2025-09-08T09:12:27.613Z\",\"end_date_time\":\"2025-09-08T10:13:27.613Z\"}}
         const data = {
             "catalogue_tag_ids[]": values?.topic,
             catalogue_tag_id: values?.topic,
@@ -85,7 +81,7 @@ const CreatePollModal = ({ messageApi, onClose }) => {
                 end_date_time: new Date(newTimestamp),
             }
         };
-        dispatch(createPollData({ payload: data, messageApi, callback }))
+        dispatch(createPollData({ payload: data, messageApi, callback }));
     };
 
     const handleRemoveOption = (id) => {

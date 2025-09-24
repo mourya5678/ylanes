@@ -3,16 +3,13 @@ import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "./Firebase";
 
 export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi, loaderValueChange }) => {
     try {
-        // Ensure a country code is included (default: +91)
         const fullPhoneNumber = mobileNumber.startsWith("+")
             ? mobileNumber
             : "+91" + mobileNumber;
-        // Ensure recaptcha container exists
         const recaptchaContainer = document.getElementById("recaptcha-container");
         if (!recaptchaContainer) {
             throw new Error("Missing <div id='recaptcha-container'></div> in your component.");
         };
-        // Initialize reCAPTCHA only once
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(
                 auth,
@@ -25,15 +22,12 @@ export const requestOtp = async ({ mobileNumber, isAgreed, navigate, messageApi,
                 }
             );
         };
-        // Request OTP
         const confirmationResult = await signInWithPhoneNumber(
             auth,
             fullPhoneNumber,
             window.recaptchaVerifier
         );
-        // ✅ Store non-serializable object globally
         window.confirmationResult = confirmationResult;
-        // ✅ Navigate with only serializable data
         loaderValueChange();
         navigate(pageRoutes.otpVerify, {
             state: {
