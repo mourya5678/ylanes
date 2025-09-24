@@ -294,7 +294,7 @@ const CreateRoom = ({ messageApi }) => {
         return errors;
     };
 
-    const handleSubmitCreateRoom = () => {
+    const handleSubmitCreateRoom = async () => {
         const errors = validateAllFields();
         if (Object.keys(errors).length > 0) {
             messageApi.error("Please Fill all the required fields");

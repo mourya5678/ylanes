@@ -21,14 +21,14 @@ const Subscription = ({ messageApi }) => {
     dispatch(getUserSubscriptionPlan({ messageApi }));
   }, []);
 
-  const handlePurchasePlan = (val) => {
+  const handlePurchasePlan = async (val) => {
     const callback = (response) => {
       handleOpenRazorPayModal(response, val)
     };
     dispatch(purchaseSubscriptionPlan({ payload: val?.amount, messageApi, callback }))
   };
 
-  const handleOpenRazorPayModal = (val, plan) => {
+  const handleOpenRazorPayModal = async (val, plan) => {
     var options = {
       description: "Refill wallet",
       name: "YLanes",
@@ -38,7 +38,6 @@ const Subscription = ({ messageApi }) => {
       prefill: {},
       theme: { color: "#528FF0" },
       handler: function (response) {
-        // console.log("Razorpay Response:", response);
         const data = {
           plan_id: plan?.external_id,
           payload: { ...response }
@@ -81,7 +80,6 @@ const Subscription = ({ messageApi }) => {
       <section className="ct_py_70">
         <div className="container">
           <div className="row">
-            {console.log({ userPlan })}
             <div className="col-md-12">
               <div className="d-flex align-items-center   gap-3 mb-5">
                 <a

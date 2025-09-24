@@ -17,20 +17,15 @@ const TopUpUserWallet = ({ messageApi }) => {
     const userData = pipGetAccessToken("user_data");
     const [selectedPlan, setSelectedPlan] = useState({});
 
-    console.log({ tax, convertRupeeToYCoins });
-
-
     useEffect(() => {
         dispatch(getTopUpPlan({ messageApi }));
         dispatch(getTaxDeatils({ messageApi }));
         dispatch(convertRupeeToYCoinData({ messageApi }));
     }, []);
 
-    const handleUpgradeWalletYCoins = () => {
-        console.log({ userData });
+    const handleUpgradeWalletYCoins = async () => {
         if (userData?.attributes?.subscription_status == "Active") {
             const callback = (response) => {
-                console.log(response);
                 openPaymentGateway(response?.transaction?.order_id,
                     response?.transaction?.id);
             };
@@ -52,7 +47,7 @@ const TopUpUserWallet = ({ messageApi }) => {
         }
     };
 
-    const openPaymentGateway = (orderId, transactionId) => {
+    const openPaymentGateway = async (orderId, transactionId) => {
         let key = razorPayTestKey;
         var options = {
             description: "Refill wallet",
@@ -63,7 +58,6 @@ const TopUpUserWallet = ({ messageApi }) => {
             prefill: {},
             theme: { color: "#528FF0" },
             handler: function (response) {
-                console.log("Razorpay Response:", { response });
                 const data = {
                     razorpay_payment_id: response?.razorpay_payment_id,
                     order_id: response?.razorpay_order_id,
@@ -71,7 +65,6 @@ const TopUpUserWallet = ({ messageApi }) => {
                     razorpay_signature: response?.razorpay_signature,
                 };
                 const callback = (res) => {
-                    console.log({ confirm: res });
                     if (res?.transaction) {
                         messageApi.success(res.message);
                         navigate(pageRoutes.userWallet);

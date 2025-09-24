@@ -15,9 +15,7 @@ const Notification = ({ messageApi }) => {
     dispatch(getNotificationData({ messageApi }));
   }, []);
 
-  console.log({ notificationData });
-
-  const deleteNotification = (val) => {
+  const deleteNotification = async (val) => {
     const callback = (response) => {
       messageApi.success(response?.message);
       dispatch(getNotificationData({ messageApi }));
@@ -25,7 +23,7 @@ const Notification = ({ messageApi }) => {
     dispatch(deleteNotificationData({ payload: val, callback, messageApi }));
   };
 
-  const markAsReadNotification = () => {
+  const markAsReadNotification = async () => {
     dispatch(markAsReadToAllNotificationsDate({ messageApi }));
   };
 

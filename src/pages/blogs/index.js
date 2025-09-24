@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from '../../components/Header';
 import LandingHeader from '../../components/LandingPageHeader';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';

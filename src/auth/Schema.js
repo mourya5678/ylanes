@@ -54,3 +54,10 @@ export const CreatePollSchema = Yup.object().shape({
             return !(value === "00" && durationHours === "00");
         }),
 });
+
+export const onBoardingUserSchema = Yup.object().shape({
+    profile_image: Yup.mixed().required("Please upload a profile image"),
+    profile_name: Yup.string().trim().required("Please enter profile name"),
+    year_of_birth: Yup.string().trim().required("Please select year of birth"),
+    gender: Yup.string().required("Please select gender").oneOf(["men"], 'Only "men" is allowed'),
+});

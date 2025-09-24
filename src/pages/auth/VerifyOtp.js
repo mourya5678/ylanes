@@ -93,7 +93,6 @@ const VerifyOtp = ({ messageApi }) => {
                 handleSmsConfirmation(result);
             };
         } catch (err) {
-            console.log({ err });
             setIsLoader(false);
             messageApi?.error(err?.message);
         };
@@ -133,7 +132,6 @@ const VerifyOtp = ({ messageApi }) => {
             data: data
         })
             .then((res) => {
-                console.log({ res })
                 setIsLoader(false);
                 if (res?.status == 201 || res?.status == 200) {
                     messageApi.success(res?.data?.meta?.message)
@@ -150,7 +148,6 @@ const VerifyOtp = ({ messageApi }) => {
             })
             .catch((err) => {
                 setIsLoader(false);
-                console.log({ err });
             });
     };
 

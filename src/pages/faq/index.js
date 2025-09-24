@@ -14,8 +14,6 @@ const LandingFaq = ({ messageApi }) => {
         dispatch(getLandingPageFaq({ messageApi }));
     }, []);
 
-    console.log({ faqs })
-
     if (isLoading) {
         return <Loader />;
     };

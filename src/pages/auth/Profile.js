@@ -34,8 +34,6 @@ const Profile = ({ messageApi }) => {
         setUserData(data);
     }, [profileData]);
 
-    console.log({ allConnections });
-
 
     if (isLoading || isCreateLoading) {
         return <Loader />;

@@ -12,7 +12,6 @@ const TermsOfUser = ({ messageApi }) => {
         dispatch(getTermsConditionData({ messageApi }));
     }, []);
 
-    console.log({ TermsAndConditions: TermsAndConditions })
 
     if (isLoading) {
         return <Loader />;

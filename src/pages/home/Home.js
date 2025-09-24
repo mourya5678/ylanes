@@ -91,7 +91,7 @@ const Home = ({ messageApi }) => {
     setUserData(data);
   }, [profileData]);
 
-  const handleSubmitDetails = (values, { setSubmitting, resetForm }) => {
+  const handleSubmitDetails = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
     resetForm();
     const callback = (response) => {
@@ -118,7 +118,7 @@ const Home = ({ messageApi }) => {
     setPostImages((prevImages) => [...prevImages, ...files]);
   };
 
-  const handleLikeUserPost = (id, isLike) => {
+  const handleLikeUserPost = async (id, isLike) => {
     var raw = {
       data: {
         attributes: {
@@ -134,7 +134,7 @@ const Home = ({ messageApi }) => {
     dispatch(likeUserPost({ payload: raw, callback, messageApi }));
   };
 
-  const handleCommentUserPost = (value) => {
+  const handleCommentUserPost = async (value) => {
     const callback = (response) => {
       setAddComment('');
       if (response?.data?.attributes) {
@@ -165,9 +165,9 @@ const Home = ({ messageApi }) => {
     setPostImages((prev) => prev.filter((item, i) => i !== index));
   };
 
-  // if (isLoading || isCreateLoading) {
-  //   return <Loader />;
-  // };
+  if (isLoading || isCreateLoading) {
+    return <Loader />;
+  };
   return (
     <div>
       <Header messageApi={messageApi} />

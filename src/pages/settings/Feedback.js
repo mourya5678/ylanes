@@ -13,9 +13,8 @@ const Feedback = ({ messageApi }) => {
 
     const [feedBackData, setFeedBackData] = useState();
 
-    const handleSendFeedBack = () => {
+    const handleSendFeedBack = async () => {
         const callback = (response) => {
-            console.log(response);
             messageApi.success("Feedback submitted successfully!")
             setFeedBackData();
             navigate(pageRoutes.setting);

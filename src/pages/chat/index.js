@@ -161,8 +161,6 @@ const Chat = ({ messageApi }) => {
         handleGetReciveMessages(selectUserRef?.current?.conversation_key, selectUserRef?.current);
     };
 
-    console.log({ userChatMessages });
-
     if (isCreateLoading) {
         return <Loader />;
     };

@@ -23,7 +23,7 @@ const LoginScreen = ({ messageApi }) => {
         isAgree: false
     };
 
-    const handleSubmitDetails = (values, { setSubmitting }) => {
+    const handleSubmitDetails = async (values, { setSubmitting }) => {
         setSubmitting(false);
         setIsLoader(true)
         requestOtp({

@@ -38,7 +38,6 @@ const MyRoom = ({ messageApi }) => {
         const finalTime = belowTime - currentTime;
         let isEnter = false;
         if (finalTime <= 300) {
-            console.log("hello")
             isEnter = true;
         };
         let name = "";

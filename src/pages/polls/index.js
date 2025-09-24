@@ -95,7 +95,7 @@ const Polls = ({ messageApi }) => {
     dispatch(getPollCommentData({ payload: id, messageApi }));
   };
 
-  const handleCreatePoll = (values, { setSubmitting }) => {
+  const handleCreatePoll = async (values, { setSubmitting }) => {
     setSubmitting(false);
     const callback = (response) => {
       if (response?.data?.status == 200 || response?.data?.status == 201) {
@@ -159,7 +159,7 @@ const Polls = ({ messageApi }) => {
     setOptions((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const handleCommentUserPost = (value) => {
+  const handleCommentUserPost = async (value) => {
     const callback = (response) => {
       setAddComment('');
       if (response?.data?.attributes) {

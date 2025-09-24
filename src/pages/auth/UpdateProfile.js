@@ -43,10 +43,8 @@ const UpdateProfile = ({ messageApi }) => {
         setUpdateUserImage(e?.target?.files[0]);
     };
 
-    const handleUpdateProfileData = (values) => {
-        console.log("values");
+    const handleUpdateProfileData = async (values) => {
         const callback = (response) => {
-            console.log(response);
             navigate(pageRoutes.profile)
         };
         const formData = new FormData();

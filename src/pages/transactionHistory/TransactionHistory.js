@@ -33,11 +33,9 @@ const TransactionHistory = ({ messageApi }) => {
     dispatch(getWalletTransaction({ messageApi }));
   }, []);
 
-  console.log({ trasactionData });
-
-  // if (isLoading) {
-  //     return <Loader />;
-  // };
+  if (isLoading) {
+    return <Loader />;
+  };
   return (
     <div>
       <Header messageApi={messageApi} />
