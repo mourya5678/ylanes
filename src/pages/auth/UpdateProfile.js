@@ -214,8 +214,9 @@ const UpdateProfile = ({ messageApi }) => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-4 text-center">
-                                                        <button onClick={handleSubmit} className="ct_yellow_btn mx-auto">Save Changes</button>
+                                                    <div className="mt-4 text-center d-flex align-items-center justify-content-end gap-3">
+                                                        <button type="button" onClick={() => navigate(-1)} className="ct_yellow_btn ">Cancel</button>
+                                                        <button onClick={handleSubmit} className="ct_yellow_btn">Save Changes</button>
                                                     </div>
                                                 </form>
                                             )}

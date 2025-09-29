@@ -39,7 +39,7 @@ const Dashboard = ({ messageApi }) => {
                                 </p>
                                 <h6 className=" ct_fs_16">Join this exclusive club and let your ideas flow freely.</h6>
                                 <div className="mt-4">
-                                    <a className="ct_yellow_btn ct_border_radius_10">Start Your Free Trial</a>
+                                    <a className="ct_yellow_btn ct_border_radius_10" onClick={() => navigate(pageRoutes.login)}>Start Your Free Trial</a>
                                 </div>
                             </div>
                         </div>
@@ -364,7 +364,7 @@ const Dashboard = ({ messageApi }) => {
                             Explore topics that matter—business, wellness, sports, and more<br />
                             —with men as interesting as you.
                         </p>
-                        <button className="newsletter-btn">Join Now And Start Your Free Trial</button>
+                        <button className="newsletter-btn" onClick={() => navigate(pageRoutes.login)}>Join Now And Start Your Free Trial</button>
                     </div>
                 </div>
             </section>

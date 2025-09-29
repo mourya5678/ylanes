@@ -34,8 +34,8 @@ export const subscriptionSlice = createSlice({
             state.isSubscriptionLoader = true;
         });
         builder.addCase(getDashboardAllSubscriptionPlan.fulfilled, (state, action) => {
-            const { data } = action?.payload || {};
-            state.allDashboardSubscription = data?.plans ?? []
+            const { plans } = action?.payload || {};
+            state.allDashboardSubscription = plans ?? []
             state.isSubscriptionLoader = false;
         });
         builder.addCase(getDashboardAllSubscriptionPlan.rejected, (state, action) => {

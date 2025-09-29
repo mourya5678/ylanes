@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, deleteNotificationData, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { createUserPost, deleteNotificationData, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -287,6 +287,17 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(userOnboarding.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // deleteUserPost
+        builder.addCase(deleteUserPost.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deleteUserPost.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deleteUserPost.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

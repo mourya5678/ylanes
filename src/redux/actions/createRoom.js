@@ -86,6 +86,22 @@ export const getPollTypeDatass = createAsyncThunk('get-poll-datass', async (prop
     };
 });
 
+export const answerPollData = createAsyncThunk('answer-poll', async (props) => {
+    const { payload, callback, param, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getPollCommentAPI + `${param}/votes`,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+    };
+});
+
 // Poll Comments
 export const commentUserPoll = createAsyncThunk('comment-poll', async (props) => {
     const { payload, callback, messageApi, params } = props;

@@ -189,6 +189,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
+
 .ct_poll_options ul p {
     background-color: #e6e6e65e;
     padding: 10px;
@@ -224,17 +225,18 @@ body {
 .ct_share_icon {
     width: 35px;
     height: 35px;
-    display: flex
-;
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: #e9e9e9;
     border-radius: 100px;
 }
-.ct_text_underline{
+
+.ct_text_underline {
     text-decoration: underline;
 }
-.ct_room_btn_outline{
+
+.ct_room_btn_outline {
     border-radius: 100px;
     border: 1px solid #e6e6e6;
     background-color: transparent;
@@ -244,10 +246,12 @@ body {
     gap: 6px;
     outline: none;
 }
-.ct_room_btn_outline.active{
+
+.ct_room_btn_outline.active {
     background-color: var(--yellow);
 }
-.ct_room_ragister_modal{
+
+.ct_room_ragister_modal {
     max-width: 800px;
     width: 100%;
     margin-inline: auto;
@@ -323,17 +327,20 @@ body {
 .swiper-pagination-bullet-active {
     background-color: var(--yellow) !important;
 }
-.ct_price_plan_info_grid li{
+
+.ct_price_plan_info_grid li {
     display: grid;
     grid-template-columns: 300px auto;
     gap: 10px;
 }
-.ct_price_plan_info_grid li + li {
+
+.ct_price_plan_info_grid li+li {
     margin-top: 10px;
     border-top: 1px solid #ecbc0052;
     padding-top: 10px;
 }
-.ct_breadcrumb_ul ul{
+
+.ct_breadcrumb_ul ul {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -341,106 +348,111 @@ body {
 
 
 
-    .ct_blog_img {
-        overflow: hidden;
-        transition: 0.4s ease all;
-        position: relative;
-        /* z-index: 1; */
-    }
+.ct_blog_img {
+    overflow: hidden;
+    transition: 0.4s ease all;
+    position: relative;
+    /* z-index: 1; */
+}
 
-    .ct_blog_img:before {
-        content: "";
-        position: absolute;
-        inset: 0px;
-        background-color: var(--orange);
-        opacity: 0.7;
-        scale: 0;
-        transition: 0.4s ease all;
-
-
-    }
-
- 
+.ct_blog_img:before {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    background-color: var(--orange);
+    opacity: 0.7;
+    scale: 0;
+    transition: 0.4s ease all;
 
 
-    .ct_blog_card:hover .ct_blog_img:before {
-        scale: 1;
-    }
-
-    .ct_blog_card:hover figcaption {
-        transform: translateY(-15px);
-    }
+}
 
 
 
-    .ct_blog_img img {
-        height: 250px;
-        width: 100%;
-        object-fit: cover;
-        transition: 0.4s ease all;
 
-    }
-.ct_blog_section{
+.ct_blog_card:hover .ct_blog_img:before {
+    scale: 1;
+}
+
+.ct_blog_card:hover figcaption {
+    transform: translateY(-15px);
+}
+
+
+
+.ct_blog_img img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    transition: 0.4s ease all;
+
+}
+
+.ct_blog_section {
     background-color: #f5f5f5;
 }
-    .ct_blog_card figcaption {
-        background-color: #fff;
-        width: calc(100% - 30px);
-        margin-top: -50px;
-        padding: 20px;
-        box-shadow: 0px 2px 4px 0px #0000000D;
-        transition: 0.4s ease all;
-        margin-inline: auto;
 
-        position: relative;
-    }
-    .ct_list_style_disc{
-        list-style: disc;
-    }
+.ct_blog_card figcaption {
+    background-color: #fff;
+    width: calc(100% - 30px);
+    margin-top: -50px;
+    padding: 20px;
+    box-shadow: 0px 2px 4px 0px #0000000D;
+    transition: 0.4s ease all;
+    margin-inline: auto;
 
-    .ct_blog_card ul {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding-top: 10px;
-        position: relative;
-        padding-bottom: 10px;
-        margin-bottom: 0px;
-    }
-    .ct_blog_card{
-        margin-bottom: 0px;
-    }
+    position: relative;
+}
 
-    .ct_blog_card ul:after {
-        content: "";
-        position: absolute;
-        bottom: 0px;
-        background-color: var(--orange);
-        width: 80px;
-        height: 4px;
-        border-radius: 100px;
+.ct_list_style_disc {
+    list-style: disc;
+}
 
-    }
+.ct_blog_card ul {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-top: 10px;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+}
 
-    .ct_blog_card ul li {
-        text-transform: uppercase;
-        color: #051D2D80;
-        font-weight: 600;
-        font-size: 14px;
-    }
+.ct_blog_card {
+    margin-bottom: 0px;
+}
 
-    .ct_grey_dot {
-        display: inline-block;
-        height: 10px;
-        width: 10px;
-        background-color: #051D2D80;
-        border-radius: 50%;
-    }
+.ct_blog_card ul:after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    background-color: var(--orange);
+    width: 80px;
+    height: 4px;
+    border-radius: 100px;
 
-    .ct_orange_link {
-        color: var(--yellow);
-        font-weight: 600;
-    }
+}
+
+.ct_blog_card ul li {
+    text-transform: uppercase;
+    color: #051D2D80;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ct_grey_dot {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background-color: #051D2D80;
+    border-radius: 50%;
+}
+
+.ct_orange_link {
+    color: var(--yellow);
+    font-weight: 600;
+}
+
 @media screen and (min-width:1200px) {
     .ct_side_bar_scrool_left {
         height: auto;
@@ -487,13 +499,31 @@ body {
 
 }
 
+.ct_fs_12 {
+    font-size: 12px;
+}
+
+.ct_poll_options li.progress {
+    height: auto;
+}
+
+/* .ct_poll_options li.progress .ct_fill_active_bar {
+    flex-direction: row;
+} */
+.ct_fill_active_bar {
+    color: #000;
+    flex-direction: row;
+}
+
 .ct_pricing_card_light_green span.ct_pricing_badge {
     background-color: #98dc8a;
     width: fit-content;
 }
-a{
+
+a {
     cursor: pointer;
 }
+
 .ct_pricing_card_light_green:hover {
     border-color: var(--yellow) !important;
 }
@@ -549,8 +579,8 @@ a{
     right: 18px;
 }
 
-.ct_full_poll_page_bg{
-        padding: 30px 15px;
+.ct_full_poll_page_bg {
+    padding: 30px 15px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.09);
     border-radius: 20px
 }
@@ -565,19 +595,21 @@ a{
 .ct_blog_dtl_img {
     overflow: hidden;
 }
+
 .ct_blog_dtl_img img {
     width: 100%;
     height: 350px;
     object-fit: contain;
-    transition: .4s 
-ease all;
+    transition: .4s ease all;
     background-color: #f2f2f2;
     border-radius: 5px;
 }
+
 .ct_blog_dtl_box h6 {
     font-size: 16px;
     margin-top: 25px;
 }
+
 .ct_blog_dtl_box h4 {
     font-size: 20px;
     font-weight: 600;

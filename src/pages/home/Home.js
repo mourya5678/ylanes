@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { commentUserPost, createUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { commentUserPost, createUserPost, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { Formik } from 'formik';
 import { CreatePostSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
@@ -18,6 +18,7 @@ import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import { getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
 import CreatePollModal from '../../components/Modals/CreatePollModal';
 import SharePostModal from '../../components/Modals/SharePostModal';
+import EditPostModal from '../../components/Modals/EditPostModal';
 
 const Home = ({ messageApi }) => {
   const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
@@ -40,6 +41,8 @@ const Home = ({ messageApi }) => {
   const [isShowForm, setIsShowForm] = useState(false);
 
   const [showShareModal, setShowShareModal] = useState(false);
+  const [isEditPost, setIsEditPost] = useState(false);
+
   const [shareCode, setShareCode] = useState({});
 
 
@@ -165,6 +168,25 @@ const Home = ({ messageApi }) => {
     setPostImages((prev) => prev.filter((item, i) => i !== index));
   };
 
+  const handleDeleteUserPost = (val, id) => {
+    console.log({ val, id: id?.id })
+    if (val == "current_user") {
+      const callback = (response) => {
+        if (response?.message) {
+          messageApi.success(response?.message);
+        } else {
+          messageApi.error(response?.message);
+        };
+        dispatch(getAllPost({ messageApi }));
+      };
+      dispatch(deleteUserPost({ payload: id?.id, callback, messageApi }));
+    };
+  };
+
+  const handleEditUserPost = () => {
+
+  };
+
   if (isLoading || isCreateLoading) {
     return <Loader />;
   };
@@ -204,15 +226,15 @@ const Home = ({ messageApi }) => {
                         <ul>
                           {item?.attributes?.options_attributes?.map((item) => (
                             <li>
-                              <div class="form-check ct_custom_radio">
+                              <div className="form-check ct_custom_radio">
                                 <input
-                                  class="form-check-input"
+                                  className="form-check-input"
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault1"
                                 />
                                 <label
-                                  class="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
+                                  className="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
                                   for="flexRadioDefault1"
                                 >
                                   {item?.body ?? ""}
@@ -241,7 +263,7 @@ const Home = ({ messageApi }) => {
                     </div>
                   )}
                 </div>
-                <div class="ct_outline_bg mt-4 p-3">
+                <div className="ct_outline_bg mt-4 p-3">
                   <h4 className="ct_fs_20 ct_fw_600 mb-4">My Rooms</h4>
                   {myRoomList?.length != 0 ? (
                     myRoomList?.slice(0, 1)?.map((item) => (
@@ -250,10 +272,10 @@ const Home = ({ messageApi }) => {
                         style={{ borderColor: "#e6e6e6" }}
                       >
                         <div>
-                          <h4 class="ct_fs_18 ct_0fw_600">
+                          <h4 className="ct_fs_18 ct_0fw_600">
                             Finance &amp; Economics
                           </h4>
-                          <small class="text-end d-block">Standard</small>
+                          <small className="text-end d-block">Standard</small>
                         </div>
                         <div>
                           <small className="ct_fs_14 ct_fw_500">
@@ -284,12 +306,12 @@ const Home = ({ messageApi }) => {
                               {item?.attributes?.room_price ?? 0}
                             </p>
                             <p className="mb-0">
-                              <i class="fa-solid fa-star me-1"></i>
+                              <i className="fa-solid fa-star me-1"></i>
                               {item?.attributes?.room_type_name ?? ""}
                             </p>
                           </div>
                           <div>
-                            <i class="fa-solid fa-share-nodes"></i>
+                            <i className="fa-solid fa-share-nodes"></i>
                           </div>
                         </div>
                       </div>
@@ -349,13 +371,13 @@ const Home = ({ messageApi }) => {
                                     />
                                     <div className="w-100">
                                       <div className='position-relative'>
-                                        <input type='text'
+                                        <textarea type='text'
                                           id="title"
                                           onClick={() => setIsShowForm(true)}
                                           value={values?.title}
                                           onBlur={handleBlur}
                                           onChange={handleChange}
-                                          className="form-control ct_border_radius_10 pe-5  ct_input border-0 ct_h_40"
+                                          className="form-control ct_border_radius_10 pe-5 ct_input border-0 h-auto" rows={2}
                                           placeholder="what is happning?"
                                         />
                                         {isShowForm &&
@@ -405,7 +427,7 @@ const Home = ({ messageApi }) => {
                                               alt=""
                                             />
                                             <i
-                                              class="fa-solid fa-xmark"
+                                              className="fa-solid fa-xmark"
                                               onClick={() =>
                                                 handleDeleteImage(i)
                                               }
@@ -494,33 +516,46 @@ const Home = ({ messageApi }) => {
                                 aria-expanded="false"
                               ></i>
                               <ul className="dropdown-menu">
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                  // data-bs-target="#ct_delete_modal"
-                                  // data-bs-toggle="modal"
-                                  >
-                                    Delete
+                                <li onClick={() => handleDeleteUserPost(item?.attributes?.user?.connection_status, item)}>
+                                  <a className="dropdown-item">
+                                    {item?.attributes?.user?.connection_status == "pending" ?
+                                      <i className="fa-solid fa--clock me-2"></i>
+                                      :
+                                      item?.attributes?.user?.connection_status == "current_user" ?
+                                        <i class="fa-solid fa-trash me-2"></i>
+                                        :
+                                        <i className="fa-solid fa-user-plus me-2"></i>
+                                    }
+                                    {item?.attributes?.user?.connection_status == "pending" ? 'Pending' : item?.attributes?.user?.connection_status == "connected" ? "Disconnect" : item?.attributes?.user?.connection_status == "not_connected" ? "Connect" : 'Delete'}
                                   </a>
                                 </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                  // data-bs-target="#ct_block_modal"
-                                  // data-bs-toggle="modal"
-                                  >
-                                    Block
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                  // data-bs-target="#ct_report_modal"
-                                  // data-bs-toggle="modal"
-                                  >
-                                    Report
-                                  </a>
-                                </li>
+                                {
+                                  item?.attributes?.user?.connection_status == "current_user" &&
+                                  <li onClick={() => handleEditUserPost(item)}>
+                                    <a className="dropdown-item">
+                                      <i class="fa-solid fa-pencil me-2"></i>
+                                      Edit
+                                    </a>
+                                  </li>
+                                }
+                                {
+                                  item?.attributes?.user?.connection_status != "current_user" &&
+                                  <li>
+                                    <a className="dropdown-item">
+                                      <i className="fa-solid fa-ban me-2"></i>
+                                      Block
+                                    </a>
+                                  </li>
+                                }
+                                {
+                                  item?.attributes?.user?.connection_status != "current_user" &&
+                                  <li>
+                                    <a className="dropdown-item">
+                                      <i className="fa-solid fa-flag me-2"></i>
+                                      Report
+                                    </a>
+                                  </li>
+                                }
                               </ul>
                             </div>
                           </div>
@@ -692,9 +727,9 @@ const Home = ({ messageApi }) => {
                   <ul className="mt-3">
                     <li>
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
@@ -707,31 +742,16 @@ const Home = ({ messageApi }) => {
                     </li>
                     <li className="mt-2">
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Oldest
-                        </p>
-                      </div>
-                    </li>
-                    <li className="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Newest
+                          Top
                         </p>
                       </div>
                     </li>
@@ -742,9 +762,9 @@ const Home = ({ messageApi }) => {
                   <ul className="mt-3">
                     <li>
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             checked={filterBytopic?.length == postTopic?.length}
                             onClick={() => {
@@ -764,9 +784,9 @@ const Home = ({ messageApi }) => {
                     {postTopic?.map((item) => (
                       <li>
                         <div className="d-flex align-items-center gap-1 mt-2">
-                          <div class="form-check ct_custom_check2">
+                          <div className="form-check ct_custom_check2">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               checked={filterBytopic?.includes(item?.attributes?.name) ? true : false}
                               onClick={() =>
@@ -803,6 +823,9 @@ const Home = ({ messageApi }) => {
           shareCode={shareCode}
           onClose={() => setShowShareModal(false)}
         />
+      }
+      {isEditPost &&
+        <EditPostModal />
       }
     </div>
   );

@@ -76,7 +76,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
 
     return (
         <div className="modal show d-block ct_congratulation_modal_fade" tabIndex="-1">
-            <div className="ct_modal-dialog modal-dialog-centered">
+            <div className="modal-dialog ct_modal-dialog  modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header pb-0 border-0">
                         <button
@@ -103,8 +103,8 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                         <label className='mb-2 ct_fw_600'>Time</label>
                                         <div className='ct_increase_decrease_btns'>
                                             <button onClick={() => handleTimeUpdate("minus")}><i class="fa-solid fa-minus"></i></button>
-                                            <div className='position-relative ct_pe_40'>
-                                                <input type='text' placeholder='' value={roomTime} readOnly />
+                                            <div className='position-relative'>
+                                                <input type='text' className='ct_pe_40' placeholder='' value={roomTime} readOnly />
                                                 <select className='ct_show_eye' value={selectAmPm} onChange={(e) => setSelectAmPm(e.target.value)}>
                                                     <option value="AM">AM</option>
                                                     <option value="PM">PM</option>

@@ -37,6 +37,23 @@ export const createUserPost = createAsyncThunk("create-post", async (props) => {
     };
 });
 
+// CreatePostAPI
+export const deleteUserPost = createAsyncThunk("delete-user-post", async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: CreatePostAPI + `/${payload}`,
+            method: "DELETE",
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error)
+        callback(null, error);
+    };
+});
+
 export const getPostTopics = createAsyncThunk('get-post-topic', async (props) => {
     const { messageApi } = props;
     try {
@@ -179,7 +196,6 @@ export const updateUserProfileData = createAsyncThunk('update-user-profile', asy
 });
 
 // getWalletTransactionHistoryAPI
-
 export const getWalletTransaction = createAsyncThunk('wallet-transaction', async (props) => {
     const { messageApi } = props;
     try {

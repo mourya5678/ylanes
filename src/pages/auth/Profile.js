@@ -158,13 +158,13 @@ const Profile = ({ messageApi }) => {
                                         <div className="ct_white_bg mt-2">
                                             <h4 className="ct_fw_600 ct_fs_20 mb-3">Bio</h4>
                                             <p className='mb-0 ct_para_scroll ct_custom_scroll ct_text_op_6 ct_f_14'>
-                                                {userData?.attributes?.bio ?? ""}
+                                                {userData?.attributes?.bio ?? "#N/A"}
                                             </p>
                                         </div>
                                         <div className="ct_white_bg mt-2">
                                             <h4 className="ct_fw_600 ct_fs_20 mb-2">About You</h4>
                                             <p className='mb-0 ct_para_scroll ct_custom_scroll ct_text_op_6 ct_f_14'>
-                                                {userData?.attributes?.about_us ?? ""}
+                                                {userData?.attributes?.about_us ?? "#N/A"}
                                             </p>
                                         </div>
                                     </div>

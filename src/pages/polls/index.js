@@ -10,8 +10,9 @@ import ErrorMessage from '../../layout/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { getPostTopics, likeUserPost } from '../../redux/actions/authActions';
-import { commentUserPoll, createPollData, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass } from '../../redux/actions/createRoom';
+import { answerPollData, commentUserPoll, createPollData, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass } from '../../redux/actions/createRoom';
 import CommentTime from '../../components/CommentTime';
+import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 
 
 const Polls = ({ messageApi }) => {
@@ -28,13 +29,15 @@ const Polls = ({ messageApi }) => {
   const [checkBox, setCheckBox] = useState(false);
 
   const [addComment, setAddComment] = useState("");
+  const [disable, setDisable] = useState(false);
 
+  const [isEnd, setIsEnd] = useState(false);
+  const [time, setTime] = useState('Poll ends in ');
 
   const [selectedPollId, setSelectedPollId] = useState();
   const [filterBytopic, setFilterByTopic] = useState([]);
 
-  var localData = []
-
+  var localData = [];
 
   const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
   const [minutes, setMinutes] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]);
@@ -181,6 +184,72 @@ const Polls = ({ messageApi }) => {
     } else {
       messageApi.error("Invalid comment: cannot be empty or contain spaces");
     };
+  };
+
+  const checkEnable = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    if (hours <= 0 && minutes <= 0) return false;
+    return true;
+  };
+
+  const timeRemaining = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const label = 'Poll ends in '
+    if (hours <= 0 && minutes <= 0) {
+      setIsEnd(true)
+      return 'Poll Ended';
+    } else if (hours === 0) {
+      return `${label} ${minutes} minutes`;
+    } else if (minutes === 0) {
+      return `${label} ${hours} hours`;
+    } else {
+      return `${label} ${hours} hours ${minutes} minutes`;
+    };
+  };
+
+  const handleSubmitPoll = async (selectedAnswer, val) => {
+    console.log({ val });
+    const isfailed = false;
+    const isEnable = checkEnable(val?.attributes?.end_date_time);
+    if (isEnable) {
+      let body = selectedAnswer?.my_choice == false ? {
+        my_choice: {
+          id: selectedAnswer?.id,
+          body: selectedAnswer?.body,
+          my_choice: selectedAnswer?.my_choice,
+          vote_count: selectedAnswer?.vote_count
+        },
+        option_id: selectedAnswer?.id
+      }
+        : {
+          option_id: selectedAnswer?.id
+        };
+      const callback = (response) => {
+        console.log(response);
+        dispatch(getPollTypeDatass({ messageApi }));
+      };
+      if (val?.attributes?.multiple_choice) {
+        console.log("if");
+        dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
+      } else {
+        console.log("else");
+        val?.attributes?.options_attributes?.map((item) => console.log({ item }));
+        dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
+      };
+    } else {
+      messageApi.error("This poll is closed. You can’t submit your answer anymore.");
+    };
+    const data = timeRemaining(val?.attributes?.end_date_time);
+    console.log({ data });
+    setTime(data);
   };
 
   if (isLoading) {
@@ -478,19 +547,10 @@ const Polls = ({ messageApi }) => {
                         )}
                       </Formik>
                     </div>
-                    {/* <div className="d-flex align-items-center gap-3 mt-2">
-                  <label className="toggle-switch">
-                    <input type="checkbox" />
-                    <div className="toggle-switch-background">
-                      <div className="toggle-switch-handle"></div>
-                    </div>
-                  </label>
-                  <p className="mb-0">Conection Comments</p>
-                </div> */}
                   </div>
                 </div>
                 <div className="row">
-                  {displayUser?.length != 0 &&
+                  {AllPollsData?.length != 0 &&
                     displayUser?.map((item) => (
                       <div className="col-md-12">
                         <div className="ct_uploaded_post_main mb-3">
@@ -520,7 +580,7 @@ const Polls = ({ messageApi }) => {
                               ></i>
                               <ul className="dropdown-menu">
                                 <li>
-                                  <a className="dropdown-item">Delete</a>
+                                  <a className="dropdown-item">{item?.attributes?.user?.connection_status == "pending" ? 'Pending' : item?.attributes?.user?.connection_status == "connected" ? "Disconnect" : item?.attributes?.user?.connection_status == "not_connected" ? "Connect" : 'Delete'}</a>
                                 </li>
                                 <li>
                                   <a className="dropdown-item">Block</a>
@@ -537,14 +597,27 @@ const Polls = ({ messageApi }) => {
                           <div className="ct_poll_options">
                             <ul>
                               {item?.attributes?.options_attributes?.map(
-                                (item) => (
-                                  <li>
-                                    <p className="mb-0">{item?.body ?? ""}</p>
-                                    {/* active */}
+                                (items) => (
+                                  <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
+                                    <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                      <span>{items?.body ?? ""}
+                                        {items?.my_choice &&
+                                          <small className='ct_text_op_6'>(Your vote)</small>
+                                        }
+                                      </span>
+                                    </p>
+                                    <div className='ct_show_eye'>
+                                      {items?.my_choice &&
+                                        <span>{items?.vote_count ?? 0}</span>
+                                      }
+                                    </div>
                                   </li>
-                                )
-                              )}
+                                ))}
                             </ul>
+                            <CalculatePollEndTime
+                              end_date_time={item?.attributes?.end_date_time}
+                            />
+                            {/* <small className='ct_text_op_6 ct_fs_12 d-block mt-2'><i class="fa-regular fa-clock me-1"></i>{()=>timeRemaining(item?.attributes?.end_date_time)}</small> */}
                           </div>
                           <div className="ct_like_comment_div">
                             <ul>
@@ -712,22 +785,7 @@ const Polls = ({ messageApi }) => {
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Oldest
-                        </p>
-                      </div>
-                    </li>
-                    <li className="mt-2">
-                      <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </div>
-                        <p className="mb-0" style={{ marginTop: "-5px" }}>
-                          Newest
+                          Top
                         </p>
                       </div>
                     </li>

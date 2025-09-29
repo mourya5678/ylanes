@@ -70,7 +70,7 @@ export const pageRoutes = {
     chat: '/connections',
     onBoarding: '/onboarding',
     privacyPolicy: '/privacy-policy',
-    postDetails: '/user-post',
+    postDetails: '/post-details',
     videoCall: "/video-call",
     roomDetails: '/room-details',
     blogs: '/blogs',

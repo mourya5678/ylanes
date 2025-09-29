@@ -5,7 +5,6 @@ import { pageRoutes } from '../../routes/PageRoutes';
 const LandingHeader = () => {
     const navigate = useNavigate();
     const data = window?.location?.pathname;
-    console.log(window?.location?.pathname)
 
     return (
         <header className="ct_header ct_header_px_50">
@@ -14,7 +13,7 @@ const LandingHeader = () => {
                     <div className="col-md-12">
                         <div className="ct_navbr_main">
                             <div className="ct_logo">
-                                <a>
+                                <a className=''>
                                     <img src="assets/img/logo.png" alt="" />
                                 </a>
                             </div>
