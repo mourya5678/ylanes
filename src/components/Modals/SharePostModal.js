@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IMAGE_URL, SHARE_BASE_URL } from '../../routes/BackendRoutes';
+import { SHARE_BASE_URL } from '../../routes/BackendRoutes';
 import { pipGetAccessToken } from '../../auth/Pip';
 import { sendMessageToUser } from '../../redux/actions/createRoom';
 
@@ -73,7 +73,7 @@ const SharePostModal = ({ shareCode, messageApi, onClose }) => {
                                         <li>
                                             <div className='d-flex align-items-center gap-2 justify-content-between pe-3'>
                                                 <div className='d-flex align-items-center gap-3 '>
-                                                    <img src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"} className='ct_img_30_small ct_flex_shrink_0' />
+                                                    <img src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"} className='ct_img_30_small ct_flex_shrink_0' />
                                                     <h5 className='mb-0 ct_fs_16'>{item?.attributes?.full_name ?? ""}</h5></div>
                                                 <button className='ct_yellow_btn py-1 px-3 ct_fs_14' onClick={() => handleMessageSend(item)}>Share</button>
                                             </div>

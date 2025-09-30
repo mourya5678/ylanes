@@ -1,5 +1,4 @@
 import React from 'react';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 
 const AddNewUserToChat = ({ onClose, displayUser }) => {
     return (
@@ -23,7 +22,7 @@ const AddNewUserToChat = ({ onClose, displayUser }) => {
                                     displayUser?.map((item) => (
                                         <li>
                                             <div className="d-flex align-items-center gap-2">
-                                                <img src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="" className="ct_img_40" />
+                                                <img src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="" className="ct_img_40" />
                                                 <p className="mb-0">{item?.attributes?.full_name ?? ""}</p>
                                             </div>
                                             <button type="button" className="ct_yellow_btn">+ Invite</button>

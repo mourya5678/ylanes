@@ -4,7 +4,6 @@ import { pageRoutes } from '../routes/PageRoutes';
 import { pipGetAccessToken, pipLogout } from '../auth/Pip';
 import { getMyProfileData } from '../redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { IMAGE_URL } from '../routes/BackendRoutes';
 
 const Header = ({ messageApi }) => {
   const { profileData } = useSelector((state) => state.authReducer);
@@ -101,7 +100,7 @@ const Header = ({ messageApi }) => {
                   <button onClick={() => setIsShow(!isShow)}>
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={userData?.attributes?.profile_image ? IMAGE_URL + userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
+                        src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
                         alt=""
                         className="ct_img_30"
                       />

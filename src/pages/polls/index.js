@@ -8,7 +8,6 @@ import { CreatePollSchema } from '../../auth/Schema';
 import { pageRoutes } from '../../routes/PageRoutes';
 import ErrorMessage from '../../layout/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { answerPollData, commentUserPoll, createPollData, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass } from '../../redux/actions/createRoom';
 import CommentTime from '../../components/CommentTime';
@@ -558,7 +557,6 @@ const Polls = ({ messageApi }) => {
                             <div className="ct_upload_user_name">
                               <img
                                 src={item?.attributes?.user?.profile_image ?
-                                  IMAGE_URL +
                                   item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"
                                 }
                                 alt=""
@@ -679,7 +677,7 @@ const Polls = ({ messageApi }) => {
                                           pollComments?.map((item) => (
                                             <div className="d-flex gap-3 mb-2">
                                               <img
-                                                src={item?.attributes?.user?.profile_image ? IMAGE_URL + item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
+                                                src={item?.attributes?.user?.profile_image ? item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                                 alt=""
                                                 className="ct_img_40 ct_bor ct_white_border_1"
                                               />

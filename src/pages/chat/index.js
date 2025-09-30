@@ -4,7 +4,6 @@ import { initChat, loginChat, logoutChat, sendMessage, setMessageListener } from
 import { useDispatch, useSelector } from 'react-redux';
 import { descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from '../../redux/actions/createRoom';
 import Loader from '../../components/Loader';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { pipGetAccessToken } from '../../auth/Pip';
 import AddNewUserToChat from '../../components/Modals/AddNewUserToChat';
 
@@ -415,7 +414,7 @@ const Chat = ({ messageApi }) => {
                                                         <div className="position-relative">
                                                             <img
                                                                 className="img-fluid ct_img_40"
-                                                                src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
+                                                                src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
                                                                 alt="user img"
                                                             />
                                                         </div>

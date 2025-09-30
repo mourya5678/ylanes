@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { pipGetAccessToken } from '../../auth/Pip';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -111,7 +110,7 @@ const UpdateProfile = ({ messageApi }) => {
                                             }) => (
                                                 <form className="ct_white_bg">
                                                     <div className="ct_profile_img">
-                                                        <img src={updateUserImage ? URL.createObjectURL(updateUserImage) : IMAGE_URL + userData?.attributes?.profile_image} alt="" />
+                                                        <img src={updateUserImage ? URL.createObjectURL(updateUserImage) : userData?.attributes?.profile_image} alt="" />
                                                         <label>
                                                             <input
                                                                 type="file"

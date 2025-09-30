@@ -3,7 +3,6 @@ import Header from '../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { commentUserPost, deleteUserPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getPostDataByID, likeUserPost } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -110,7 +109,7 @@ const PostDetailsPage = ({ messageApi }) => {
                                     <div className="d-flex align-items-center justify-content-between gap-2">
                                         <div className="ct_upload_user_name">
                                             <img
-                                                src={postDetails?.attributes?.user?.profile_image ? IMAGE_URL + postDetails?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
+                                                src={postDetails?.attributes?.user?.profile_image ? postDetails?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                                 alt=""
                                                 className="ct_img_40 ct_flex_shrink_0"
                                             />
@@ -190,7 +189,7 @@ const PostDetailsPage = ({ messageApi }) => {
                                                         <div className="item">
                                                             <div className="ct_post_img">
                                                                 <img
-                                                                    src={item?.url ? IMAGE_URL + item?.url : "assets/img/dummy_user_img.png"}
+                                                                    src={item?.url ? item?.url : "assets/img/dummy_user_img.png"}
                                                                     alt=""
                                                                 />
                                                             </div>
@@ -276,7 +275,6 @@ const PostDetailsPage = ({ messageApi }) => {
                                                                         <div className="d-flex  gap-3 mb-3">
                                                                             <img
                                                                                 src={item?.attributes?.user?.profile_image ?
-                                                                                    IMAGE_URL +
                                                                                     item?.attributes?.user
                                                                                         ?.profile_image : "assets/img/dummy_user_img.png"
                                                                                 }

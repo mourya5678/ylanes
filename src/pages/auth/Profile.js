@@ -5,7 +5,6 @@ import { toggleChange } from '../../redux/reducers/authReducers';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useNavigate } from 'react-router';
 import { pipGetAccessToken } from '../../auth/Pip';
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import { getMyProfileData } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
 import emojiFlags from "emoji-flags";
@@ -54,7 +53,7 @@ const Profile = ({ messageApi }) => {
                                         <i className="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <div className="ct_profile_img">
-                                        <img src={userData?.attributes?.profile_image ? IMAGE_URL + userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
+                                        <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
                                     </div>
                                     <div className="text-center mt-3 text-white">
                                         <h5 className="mb-0 ct_fs_18 ct_fw_600 mb-1">{userData?.attributes?.full_name ?? ""}</h5>
@@ -218,13 +217,11 @@ const Profile = ({ messageApi }) => {
                                             <div className="chat-list">
                                                 {allConnections?.length != 0 &&
                                                     allConnections?.map((item, i) => (
-                                                        <a
-                                                            className="d-flex align-items-center"
-                                                        >
+                                                        <a className="d-flex align-items-center">
                                                             <div className="position-relative">
                                                                 <img
                                                                     className="img-fluid ct_img_40"
-                                                                    src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
+                                                                    src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
                                                                     alt="user img"
                                                                 />
                                                             </div>

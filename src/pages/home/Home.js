@@ -12,7 +12,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { IMAGE_URL } from '../../routes/BackendRoutes';
 import CommentTime from '../../components/CommentTime';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import { getMyConnectionsData, getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
@@ -370,7 +369,7 @@ const Home = ({ messageApi }) => {
                                 <div className="ct_flex_1">
                                   <div className="d-flex align-items-start gap-3">
                                     <img
-                                      src={userData?.attributes?.profile_image ? IMAGE_URL + userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
+                                      src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
                                       className="ct_img_40"
                                     />
                                     <div className="w-100">
@@ -501,7 +500,7 @@ const Home = ({ messageApi }) => {
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name ct_cursor" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
                               <img
-                                src={item?.attributes?.user?.profile_image ? IMAGE_URL + item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
+                                src={item?.attributes?.user?.profile_image ? item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                 alt=""
                                 className="ct_img_40 ct_flex_shrink_0"
                               />
@@ -581,7 +580,7 @@ const Home = ({ messageApi }) => {
                                     <div className="item">
                                       <div className="ct_post_img">
                                         <img
-                                          src={item?.url ? IMAGE_URL + item?.url : "assets/img/dummy_user_img.png"}
+                                          src={item?.url ? item?.url : "assets/img/dummy_user_img.png"}
                                           alt=""
                                         />
                                       </div>
@@ -667,7 +666,6 @@ const Home = ({ messageApi }) => {
                                             <div className="d-flex  gap-3 mb-3">
                                               <img
                                                 src={item?.attributes?.user?.profile_image ?
-                                                  IMAGE_URL +
                                                   item?.attributes?.user
                                                     ?.profile_image : "assets/img/dummy_user_img.png"
                                                 }
