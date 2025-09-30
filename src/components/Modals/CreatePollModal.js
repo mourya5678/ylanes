@@ -278,12 +278,6 @@ const CreatePollModal = ({ messageApi, onClose }) => {
                                                 <label><span className="ct_text_op_6" es>Allow multiple reponses</span></label>
                                             </div>
                                         </div>
-                                        {/* {pollImages &&
-                                                            <div className="ct_single_uploaded_img mt-3">
-                                                                <img src={URL.createObjectURL(pollImages)} alt="" />
-                                                                <i className="fa-solid fa-xmark" onClick={handleDeleteImage}></i>
-                                                            </div>
-                                                        } */}
                                         <div className="d-flex align-items-center gap-3 justify-content-between ct_flex_col_575 ct_border_top_1 pt-3 mt-3 ">
                                             <div className="d-flex align-items-center gap-3 ct_w_100_575">
                                                 <select
@@ -300,18 +294,6 @@ const CreatePollModal = ({ messageApi, onClose }) => {
                                                         ))
                                                     }
                                                 </select>
-                                                {/* <div>
-                                                                    <label>
-                                                                        <input
-                                                                            accept="image/*"
-                                                                            type="file"
-                                                                            className="d-none"
-                                                                            id="ct_upload_file"
-                                                                            onChange={(e) => handleChangeImages(e)}
-                                                                        />
-                                                                        <i className="fa-solid fa-paperclip text-dark"></i>
-                                                                    </label>
-                                                                </div> */}
                                             </div>
                                             <button type="button" onClick={handleSubmit} className="ct_yellow_btn ct_white_nowrap ct_w_100_575">Create Poll</button>
                                         </div>

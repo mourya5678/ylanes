@@ -16,6 +16,7 @@ export const getAllPostAPI = "bx_block_posts/posts";
 
 export const likePostAPI = "bx_block_like/likes";
 export const commentPostAPI = "bx_block_posts/posts/";
+
 // bx_block_posts/articles/article_comment
 
 export const userProfileAPI = "bx_block_profile/profiles/";
@@ -45,10 +46,12 @@ export const getDiscoverAllConnectionAPI = "bx_block_profile/profiles/see_all_co
 export const sendInvitationToUserAPI = "bx_block_request_management/requests";
 export const getAllChatUserAPI = "user-chats";
 
+export const disconnectUserAPI = "bx_block_request_management/requests/disconnect_request?account_id=";
+export const sendMessageToUserAPI = "send-message";
+
 export const getPreviousMessagesAPI = "get-messages/";
 export const getAgoraTokenAPI = "token/user-direct?expire=3600";
 
-export const sendMessageToUserAPI = "send-message";
 
 // Subscription API 
 export const getAllSubscriptionPlanAPI = "bx_block_payments/subscription_plans";
@@ -84,3 +87,6 @@ export const getLandingFaqAPI = "bx_block_admin/policies/public_faq_list";
 
 // onBoarding user
 export const userOnboardAPI = "account_block/accounts";
+
+// [Block / Unblock] User
+export const blockUserAPI = "account_block/accounts/block_user";

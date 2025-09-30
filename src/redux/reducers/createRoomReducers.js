@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -256,6 +256,28 @@ export const roomSlice = createSlice({
         });
         builder.addCase(answerPollData.rejected, (state, action) => {
             // state.isCreateLoading = false;
+        });
+
+        // getPollTypeDatass
+        builder.addCase(getPollTypeDatass.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(getPollTypeDatass.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(getPollTypeDatass.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // disconnectUserConnection
+        builder.addCase(disconnectUserConnection.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(disconnectUserConnection.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(disconnectUserConnection.rejected, (state, action) => {
+            state.isCreateLoading = false;
         });
     }
 });

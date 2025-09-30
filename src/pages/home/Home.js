@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { commentUserPost, createUserPost, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { blockUserData, commentUserPost, createUserPost, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { Formik } from 'formik';
 import { CreatePostSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
@@ -14,7 +14,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import CommentTime from '../../components/CommentTime';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
-import { getMyConnectionsData, getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
+import { disconnectUserConnection, getMyConnectionsData, getMyRoomData, getPollTypeData, getUpcommingRoomData, sendInvitationToUser } from '../../redux/actions/createRoom';
 import CreatePollModal from '../../components/Modals/CreatePollModal';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import EditPostModal from '../../components/Modals/EditPostModal';
@@ -22,9 +22,7 @@ import EditPostModal from '../../components/Modals/EditPostModal';
 const Home = ({ messageApi }) => {
   const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
     useSelector((state) => state.authReducer);
-
   const { isCreateLoading, myRoomList } = useSelector((state) => state.createRoomReducer);
-
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,10 +42,9 @@ const Home = ({ messageApi }) => {
   const [isEditPost, setIsEditPost] = useState(false);
 
   const [shareCode, setShareCode] = useState({});
+  const [postDetails, setPostDetails] = useState({});
 
-
-  var localData = []
-
+  var localData = [];
   const initialState = {
     topic: "",
     title: "",
@@ -76,8 +73,6 @@ const Home = ({ messageApi }) => {
       return false;
     });
   };
-
-  // usage
   const displayUser = getDisplayUsers(allPosts, filterBytopic);
 
   useEffect(() => {
@@ -170,7 +165,7 @@ const Home = ({ messageApi }) => {
   };
 
   const handleDeleteUserPost = (val, id) => {
-    console.log({ val, id: id?.id })
+    console.log({ val, id: id?.id, data: id })
     if (val == "current_user") {
       const callback = (response) => {
         if (response?.message) {
@@ -182,12 +177,51 @@ const Home = ({ messageApi }) => {
       };
       dispatch(deleteUserPost({ payload: id?.id, callback, messageApi }));
     } else if (val == "not_connected") {
-
+      const callback = (response) => {
+        if (response?.message) {
+          messageApi?.success(response?.message);
+        } else {
+          messageApi?.error(response?.message);
+        };
+        dispatch(getAllPost({ messageApi }));
+      };
+      const raw = {
+        data: {
+          account_id: id?.attributes?.user?.id
+        },
+      };
+      console.log({ raw })
+      if (id?.attributes?.user?.connection_status != "pending") {
+        dispatch(sendInvitationToUser({ payload: raw, callback, messageApi }));
+      } else {
+        messageApi.error("Already a friend or previous request is pending to take action")
+      }
+    } else if (val == "connected") {
+      const callback = (response) => {
+        if (response?.message) {
+          messageApi?.success(response?.message);
+        } else {
+          messageApi?.error(response?.message);
+        };
+        dispatch(getAllPost({ messageApi }));
+      };
+      dispatch(disconnectUserConnection({ payload: id?.attributes?.user?.id, callback, messageApi }))
     };
   };
 
-  const handleEditUserPost = () => {
-
+  const handleBlockUser = (value) => {
+    const callback = (response) => {
+      if (response?.message) {
+        messageApi?.success(response?.message);
+      } else {
+        messageApi?.error(response?.message);
+      };
+      dispatch(getAllPost({ messageApi }));
+    };
+    let formData = new FormData();
+    formData.append("user_id", value?.user?.id);
+    console.log({ value });
+    dispatch(blockUserData({ payload: formData, callback, messageApi }));
   };
 
   if (isLoading || isCreateLoading) {
@@ -381,7 +415,7 @@ const Home = ({ messageApi }) => {
                                           onBlur={handleBlur}
                                           onChange={handleChange}
                                           className="form-control ct_border_radius_10 pe-5 ct_input border-0 h-auto" rows={2}
-                                          placeholder="what is happning?"
+                                          placeholder="What is happning?"
                                         />
                                         {isShowForm &&
                                           <i className="fa-solid fa-xmark ct_show_eye" onClick={() => {
@@ -496,6 +530,7 @@ const Home = ({ messageApi }) => {
                   <div className="col-md-12 mt-4">
                     {displayUser?.length != 0 &&
                       displayUser?.map((item) => (
+                        // !item?.attributes?.user?.is_blocked &&
                         <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name ct_cursor" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
@@ -522,7 +557,7 @@ const Home = ({ messageApi }) => {
                                 <li onClick={() => handleDeleteUserPost(item?.attributes?.user?.connection_status, item)}>
                                   <a className="dropdown-item">
                                     {item?.attributes?.user?.connection_status == "pending" ?
-                                      <i className="fa-solid fa--clock me-2"></i>
+                                      <i className="fa-solid fa-clock me-2"></i>
                                       :
                                       item?.attributes?.user?.connection_status == "current_user" ?
                                         <i class="fa-solid fa-trash me-2"></i>
@@ -534,7 +569,10 @@ const Home = ({ messageApi }) => {
                                 </li>
                                 {
                                   item?.attributes?.user?.connection_status == "current_user" &&
-                                  <li onClick={() => handleEditUserPost(item)}>
+                                  <li onClick={() => {
+                                    setIsEditPost(true)
+                                    setPostDetails(item)
+                                  }}>
                                     <a className="dropdown-item">
                                       <i class="fa-solid fa-pencil me-2"></i>
                                       Edit
@@ -544,7 +582,7 @@ const Home = ({ messageApi }) => {
                                 {
                                   item?.attributes?.user?.connection_status != "current_user" &&
                                   <li>
-                                    <a className="dropdown-item">
+                                    <a className="dropdown-item" onClick={() => handleBlockUser(item?.attributes)}>
                                       <i className="fa-solid fa-ban me-2"></i>
                                       Block
                                     </a>
@@ -823,8 +861,16 @@ const Home = ({ messageApi }) => {
           onClose={() => setShowShareModal(false)}
         />
       }
-      {isEditPost &&
-        <EditPostModal />
+      {isEditPost && postDetails &&
+        <EditPostModal
+          messageApi={messageApi}
+          postDetails={postDetails}
+          onClose={() => setIsEditPost(false)}
+          handleClose={() => {
+            setIsEditPost(false);
+            dispatch(getAllPost({ messageApi }));
+          }}
+        />
       }
     </div>
   );

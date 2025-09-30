@@ -8,8 +8,8 @@ import { CreatePollSchema } from '../../auth/Schema';
 import { pageRoutes } from '../../routes/PageRoutes';
 import ErrorMessage from '../../layout/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostTopics, likeUserPost } from '../../redux/actions/authActions';
-import { answerPollData, commentUserPoll, createPollData, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass } from '../../redux/actions/createRoom';
+import { blockUserData, deleteUserPoll, deleteUserPost, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { answerPollData, commentUserPoll, createPollData, disconnectUserConnection, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass, sendInvitationToUser } from '../../redux/actions/createRoom';
 import CommentTime from '../../components/CommentTime';
 import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 
@@ -17,6 +17,8 @@ import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 const Polls = ({ messageApi }) => {
   const { isLoading, postTopic, AllPollsData } = useSelector((state) => state.authReducer);
   const { pollComments } = useSelector((state) => state.createRoomReducer);
+  const { isCreateLoading } = useSelector((state) => state.createRoomReducer);
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -70,8 +72,8 @@ const Polls = ({ messageApi }) => {
   const displayUser = getDisplayUsers(AllPollsData, filterBytopic);
 
   useEffect(() => {
-    dispatch(getPostTopics({ messageApi }));
     dispatch(getPollTypeData({ messageApi }));
+    dispatch(getPostTopics({ messageApi }));
     const data = pipGetAccessToken("user_data");
     setUserData(data);
   }, []);
@@ -251,7 +253,68 @@ const Polls = ({ messageApi }) => {
     setTime(data);
   };
 
-  if (isLoading) {
+  const handleDeleteUserPost = (val, id) => {
+    console.log({ val, id: id?.id, data: id })
+    if (val == "current_user") {
+      const callback = (response) => {
+        console.log({ response })
+        if (response?.meta?.message) {
+          messageApi.success(response?.meta?.message);
+        } else {
+          messageApi.error(response?.meta?.message);
+        };
+        dispatch(getPollTypeDatass({ messageApi }));
+      };
+      dispatch(deleteUserPoll({ payload: id?.id, callback, messageApi }));
+    } else if (val == "not_connected") {
+      const callback = (response) => {
+        if (response?.message) {
+          messageApi?.success(response?.message);
+        } else {
+          messageApi?.error(response?.message);
+        };
+        dispatch(getPollTypeDatass({ messageApi }));
+      };
+      const raw = {
+        data: {
+          account_id: id?.attributes?.user?.id
+        },
+      };
+      console.log({ raw })
+      if (id?.attributes?.user?.connection_status != "pending") {
+        dispatch(sendInvitationToUser({ payload: raw, callback, messageApi }));
+      } else {
+        messageApi.error("Already a friend or previous request is pending to take action")
+      }
+    } else if (val == "connected") {
+      const callback = (response) => {
+        if (response?.message) {
+          messageApi?.success(response?.message);
+        } else {
+          messageApi?.error(response?.message);
+        };
+        dispatch(getPollTypeDatass({ messageApi }));
+      };
+      dispatch(disconnectUserConnection({ payload: id?.attributes?.user?.id, callback, messageApi }))
+    };
+  };
+
+  const handleBlockUser = (value) => {
+    const callback = (response) => {
+      if (response?.message) {
+        messageApi?.success(response?.message);
+      } else {
+        messageApi?.error(response?.message);
+      };
+      dispatch(getPollTypeDatass({ messageApi }));
+    };
+    let formData = new FormData();
+    formData.append("user_id", value?.user?.id);
+    console.log({ value });
+    dispatch(blockUserData({ payload: formData, callback, messageApi }));
+  };
+
+  if (isLoading || isCreateLoading) {
     return <Loader />;
   };
   return (
@@ -577,14 +640,24 @@ const Polls = ({ messageApi }) => {
                                 aria-expanded="false"
                               ></i>
                               <ul className="dropdown-menu">
-                                <li>
-                                  <a className="dropdown-item">{item?.attributes?.user?.connection_status == "pending" ? 'Pending' : item?.attributes?.user?.connection_status == "connected" ? "Disconnect" : item?.attributes?.user?.connection_status == "not_connected" ? "Connect" : 'Delete'}</a>
+                                <li onClick={() => handleDeleteUserPost(item?.attributes?.user?.connection_status, item)}>
+                                  <a className="dropdown-item">
+                                    {item?.attributes?.user?.connection_status == "pending" ?
+                                      <i className="fa-solid fa-clock me-2"></i>
+                                      :
+                                      item?.attributes?.user?.connection_status == "current_user" ?
+                                        <i class="fa-solid fa-trash me-2"></i>
+                                        :
+                                        <i className="fa-solid fa-user-plus me-2"></i>
+                                    }
+                                    {item?.attributes?.user?.connection_status == "pending" ? 'Pending' : item?.attributes?.user?.connection_status == "connected" ? "Disconnect" : item?.attributes?.user?.connection_status == "not_connected" ? "Connect" : 'Delete'}
+                                  </a>
                                 </li>
-                                <li>
-                                  <a className="dropdown-item">Block</a>
+                                <li className={`${item?.attributes?.user?.connection_status == "current_user" && "d-none"}`} onClick={() => handleBlockUser(item?.attributes)}>
+                                  <a className="dropdown-item"><i className="fa-solid fa-ban me-2"></i>Block</a>
                                 </li>
-                                <li>
-                                  <a className="dropdown-item">Report</a>
+                                <li className={`${item?.attributes?.user?.connection_status == "current_user" && "d-none"}`}>
+                                  <a className="dropdown-item"><i className="fa-solid fa-flag me-2"></i>Report</a>
                                 </li>
                               </ul>
                             </div>

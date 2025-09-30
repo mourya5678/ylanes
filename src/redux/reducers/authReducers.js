@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, deleteNotificationData, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -312,6 +312,39 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(deleteUserPost.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // updatePostDetails
+        builder.addCase(updatePostDetails.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(updatePostDetails.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(updatePostDetails.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // blockUserData
+        builder.addCase(blockUserData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(blockUserData.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(blockUserData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // deleteUserPoll
+        builder.addCase(deleteUserPoll.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deleteUserPoll.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deleteUserPoll.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

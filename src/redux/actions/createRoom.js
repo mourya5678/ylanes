@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -173,6 +173,21 @@ export const sendInvitationToUser = createAsyncThunk('send-invite', async (props
             url: sendInvitationToUserAPI,
             method: "POST",
             data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+    };
+});
+
+export const disconnectUserConnection = createAsyncThunk('disconnect-user', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: disconnectUserAPI + payload,
+            method: "POST",
             messageApi
         });
         callback(response);

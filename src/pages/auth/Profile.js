@@ -226,14 +226,10 @@ const Profile = ({ messageApi }) => {
                                                                 />
                                                             </div>
                                                             <div className="flex-grow-1 ms-3">
-                                                                <div
-                                                                    className="d-flex align-items-center gap-2 justify-content-between"
-                                                                >
+                                                                <div className="d-flex align-items-center gap-2 justify-content-between">
                                                                     <h3 className="ct_fs_16 ct_fw_600 mb-0">{item?.attributes?.full_name ?? ""}</h3>
                                                                 </div>
-                                                                <div
-                                                                    className="d-flex align-items-center gap-2 justify-content-between"
-                                                                ></div>
+                                                                <div className="d-flex align-items-center gap-2 justify-content-between"></div>
                                                             </div>
                                                             <div className="">
                                                                 <button className="ct_yellow_btn ct_white_nowrap">

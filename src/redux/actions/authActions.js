@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { commentPostAPI, CreatePostAPI, deleteNotificationAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -43,6 +43,22 @@ export const deleteUserPost = createAsyncThunk("delete-user-post", async (props)
     try {
         const response = await API_REQUEST({
             url: CreatePostAPI + `/${payload}`,
+            method: "DELETE",
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        console.log(error)
+        callback(null, error);
+    };
+});
+
+export const deleteUserPoll = createAsyncThunk("delete-user-poll", async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: createPollAPI + `/${payload}`,
             method: "DELETE",
             messageApi
         });
@@ -373,5 +389,39 @@ export const userOnboarding = createAsyncThunk('user-onboarding', async (props) 
     } catch (error) {
         console.log(error);
         callback(null, error)
+    };
+});
+
+export const updatePostDetails = createAsyncThunk('update-post', async (props) => {
+    const { messageApi, payload, param, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: commentPostAPI + param,
+            method: "PUT",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        console.log({ error });
+    };
+});
+
+export const blockUserData = createAsyncThunk('block-user', async (props) => {
+    const { messageApi, payload, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: blockUserAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        console.log({ error });
     };
 });
