@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createUserPost, deleteNotificationData, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { createUserPost, deleteNotificationData, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -17,7 +17,8 @@ const initialStates = {
     PrivacyPolicy: {},
     RoomType: [],
     AllPollsData: [],
-    faqs: []
+    faqs: [],
+    postDetails: {},
 };
 
 export const authSlice = createSlice({
@@ -74,6 +75,19 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(getAllPost.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getPostDataByID
+        builder.addCase(getPostDataByID.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getPostDataByID.fulfilled, (state, action) => {
+            const { data } = action?.payload || {};
+            state.postDetails = data ?? {};
+            state.isLoading = false;
+        });
+        builder.addCase(getPostDataByID.rejected, (state, action) => {
             state.isLoading = false;
         });
 

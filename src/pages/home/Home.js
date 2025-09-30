@@ -15,7 +15,7 @@ import { Navigation } from "swiper/modules";
 import { IMAGE_URL } from '../../routes/BackendRoutes';
 import CommentTime from '../../components/CommentTime';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
-import { getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
+import { getMyConnectionsData, getMyRoomData, getPollTypeData, getUpcommingRoomData } from '../../redux/actions/createRoom';
 import CreatePollModal from '../../components/Modals/CreatePollModal';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import EditPostModal from '../../components/Modals/EditPostModal';
@@ -25,6 +25,7 @@ const Home = ({ messageApi }) => {
     useSelector((state) => state.authReducer);
 
   const { isCreateLoading, myRoomList } = useSelector((state) => state.createRoomReducer);
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -81,11 +82,12 @@ const Home = ({ messageApi }) => {
   const displayUser = getDisplayUsers(allPosts, filterBytopic);
 
   useEffect(() => {
-    dispatch(getPostTopics({ messageApi }));
     dispatch(getAllPost({ messageApi }));
     dispatch(getMyRoomData({ messageApi }));
+    dispatch(getPostTopics({ messageApi }));
     dispatch(getPollTypeData({ messageApi }));
     const data = pipGetAccessToken("user_data");
+    dispatch(getMyConnectionsData({ messageApi }));
     dispatch(getMyProfileData({ payload: data?.id, messageApi }));
   }, []);
 
@@ -180,6 +182,8 @@ const Home = ({ messageApi }) => {
         dispatch(getAllPost({ messageApi }));
       };
       dispatch(deleteUserPost({ payload: id?.id, callback, messageApi }));
+    } else if (val == "not_connected") {
+
     };
   };
 
@@ -495,7 +499,7 @@ const Home = ({ messageApi }) => {
                       displayUser?.map((item) => (
                         <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
-                            <div className="ct_upload_user_name">
+                            <div className="ct_upload_user_name ct_cursor" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
                               <img
                                 src={item?.attributes?.user?.profile_image ? IMAGE_URL + item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                 alt=""
@@ -559,11 +563,11 @@ const Home = ({ messageApi }) => {
                               </ul>
                             </div>
                           </div>
-                          <p className="ct_para_scroll ct_custom_scroll mt-3">
+                          <p className="ct_para_scroll ct_cursor ct_custom_scroll mt-3" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
                             {item?.attributes?.body ?? ""}
                           </p>
                           {item?.attributes?.docs?.length != 0 && (
-                            <div className="item">
+                            <div className="item ct_cursor" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
                               <Swiper
                                 modules={[Navigation]}
                                 spaceBetween={30}
@@ -699,11 +703,7 @@ const Home = ({ messageApi }) => {
                                       </div>
                                     </div>
                                     {/* <div>
-                                      <p
-                                        className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text"
-                                      // data-bs-target="#ct_report_modal"
-                                      // data-bs-toggle="modal"
-                                      >
+                                      <p className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text">
                                         Report
                                       </p>
                                     </div> */}
@@ -808,6 +808,7 @@ const Home = ({ messageApi }) => {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section >

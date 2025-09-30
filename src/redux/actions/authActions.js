@@ -82,6 +82,20 @@ export const getAllPost = createAsyncThunk('get-all-post', async (props) => {
     };
 });
 
+export const getPostDataByID = createAsyncThunk('get-post-by-id', async (props) => {
+    const { messageApi, payload } = props;
+    try {
+        const response = await API_REQUEST({
+            url: commentPostAPI + `${payload.slice(1)}/public_show`,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
 export const getLikeAllPost = createAsyncThunk('get-like-all-post', async (props) => {
     const { messageApi } = props;
     try {

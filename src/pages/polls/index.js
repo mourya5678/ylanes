@@ -617,7 +617,6 @@ const Polls = ({ messageApi }) => {
                             <CalculatePollEndTime
                               end_date_time={item?.attributes?.end_date_time}
                             />
-                            {/* <small className='ct_text_op_6 ct_fs_12 d-block mt-2'><i class="fa-regular fa-clock me-1"></i>{()=>timeRemaining(item?.attributes?.end_date_time)}</small> */}
                           </div>
                           <div className="ct_like_comment_div">
                             <ul>
@@ -642,9 +641,6 @@ const Polls = ({ messageApi }) => {
                                     {item?.attributes?.comment_count ?? 0}
                                   </p>
                                 </div>
-                              </li>
-                              <li className="ct_book_mark_icon">
-                                <i className="fa-regular fa-share-from-square"></i>
                               </li>
                               <li className="ms-auto ct_text_op_6 ct_fs_14">
                                 # {item?.attributes?.topic ?? ""}

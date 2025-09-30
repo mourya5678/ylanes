@@ -45,7 +45,6 @@ const Chat = ({ messageApi }) => {
         selectUserRef.current = selectUserData;
     }, [selectUserData]);
 
-
     useEffect(() => {
         const data = {
             phone_number: userData?.attributes?.phone_number,
@@ -416,7 +415,7 @@ const Chat = ({ messageApi }) => {
                                                         <div className="position-relative">
                                                             <img
                                                                 className="img-fluid ct_img_40"
-                                                                src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
+                                                                src={item?.attributes?.profile_image ? IMAGE_URL + item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
                                                                 alt="user img"
                                                             />
                                                         </div>

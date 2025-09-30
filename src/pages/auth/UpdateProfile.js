@@ -45,7 +45,12 @@ const UpdateProfile = ({ messageApi }) => {
 
     const handleUpdateProfileData = async (values) => {
         const callback = (response) => {
-            navigate(pageRoutes.profile)
+            if (response?.meta?.success) {
+                messageApi?.success(response?.meta?.message);
+            } else {
+                messageApi?.error("Unable to update profile! Please try again after sometime.");
+            };
+            navigate(pageRoutes.profile);
         };
         const formData = new FormData();
         formData.append("type", "update_profile");
