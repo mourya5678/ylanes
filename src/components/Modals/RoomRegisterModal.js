@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { registerRoomData } from '../../redux/actions/createRoom';
+import { useDispatch } from 'react-redux';
 
 
-const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
+const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    console.log({ registerData });
 
     const [joinAnonymously, setJoinAnonymously] = useState(false);
     const [isAddResources, setIsAddResources] = useState(false);
@@ -22,8 +27,6 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
         yourTake: "",
     });
 
-
-    console.log({ registerData });
     const handleAddField = () => {
         setResources([...resources, { id: resources[resources?.length - 1]?.id + 1, values: "" }]);
     };
@@ -32,7 +35,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
         setResources(resources?.filter((resource) => resource?.id !== id));
         if (resources?.length == 1) {
             setIsAddResources(false);
-        }
+        };
     };
 
     const handleChange = (id, value) => {
@@ -164,7 +167,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
         return errors;
     };
 
-    const handleSubmitCreateRoom = async () => {
+    const handleRegisterUser = async () => {
         const errors = validateAllFields();
         if (Object.keys(errors).length > 0) {
             messageApi.error("Please Fill all the required fields");
@@ -173,7 +176,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
         const callback = (response) => {
             if (response?.meta?.message) {
                 messageApi.success(response?.meta?.message);
-                navigate(pageRoutes.myRoom);
+                onHandleClose();
             };
             setFieldValues({
                 anonymouslyName: "",
@@ -185,22 +188,20 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
             });
         };
         const formData = new FormData();
-        formData.append("room[your_take]", fieldValues.yourTake);
-        formData.append("room[is_anonymously]", joinAnonymously);
-        formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
-        // dispatch(createRoomData({ payload: formData, callback, messageApi }))
+        formData.append("registered_room[your_take]", fieldValues.yourTake);
+        formData.append('registered_room[room_id]', registerData?.id);
+        formData.append('registered_room[anonymously_name]', fieldValues.anonymouslyName);
+        if (resources?.length != 0) {
+            resources?.map((item) => (
+                formData.append('registered_room[resources_attributes][][url]', item)
+            ))
+        };
+        dispatch(registerRoomData({ payload: formData, param: registerData?.id, callback, messageApi }));
     };
 
-
     return (
-        <div
-            className="modal  d-block ct_congratulation_modal_fade"
-            tabIndex="-1"
-        >
-            <div
-                className="ct_modal-dialog modal-dialog-centered"
-                style={{ maxWidth: "100%" }}
-            >
+        <div className="modal  d-block ct_congratulation_modal_fade" tabIndex="-1">
+            <div className="ct_modal-dialog modal-dialog-centered" style={{ maxWidth: "100%" }}>
                 <div className="ct_room_ragister_modal ct_white_bg p-4 ">
                     <div className="d-flex align-items-center gap-2 justify-content-between mb-4 ">
                         <h4 className="ct_fs_20 mb-0 ct_fw_600">Register for Room</h4>
@@ -214,10 +215,6 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
                         <h6 className="mb-0 ct_fw_600">
                             Price : <span className="ct_yellow_text">{registerData?.attributes?.room_price ?? 0} YCoins</span>
                         </h6>
-                        {/* <a class="ct_outline_border ct_w_100_767 text-dark">
-                            <img alt="" width="20px" src="assets/img/wallet_icon.png" />
-                            205890
-                        </a> */}
                     </div>
                     <form>
                         <div className="form-group mb-3">
@@ -249,7 +246,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
                                         Add Resources
                                     </p>
                                 </div>
-                                {isAddResources && (
+                                {isAddResources && resources?.length != 3 && (
                                     <div onClick={handleAddField}>
                                         <i className="fa-solid fa-plus ct_cursor_pointer"></i>
                                     </div>
@@ -275,24 +272,44 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
                                 ))
                             }
                         </div>
-                        <div class="d-flex align-items-center mb-3 ">
-                            <div class="form-check ct_custom_check2">
+                        <div className="d-flex align-items-center ">
+                            <div className="form-check ct_custom_check2">
                                 <input
-                                    class="form-check-input ct_cursor"
-                                    id="flexCheckDefault"
+                                    className="form-check-input ct_cursor"
                                     type="checkbox"
                                     value=""
+                                    id="flexCheckDefault"
+                                    checked={joinAnonymously}
+                                    onClick={() => setJoinAnonymously(!joinAnonymously)}
                                 />
                             </div>
-                            <p class="mb-0">JOIN ANONYMOUSLY</p>
+                            <p className="mb-2">JOIN ANONYMOUSLY</p>
                         </div>
+                        {joinAnonymously &&
+                            <div>
+                                <div className="form-group mt-2 mb-2">
+                                    <label className="ct_fw_500 mb-2">
+                                        Anonymous Screen Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Anonymous Screen Name"
+                                        className="form-control ct_input"
+                                        value={fieldValues?.anonymouslyName}
+                                        onChange={(e) => handleChange("anonymouse name", e.target.value)}
+                                    />
+                                </div>
+                                {fieldError?.join_anonymously_error && (
+                                    <p style={{ color: "red", whiteSpace: "normal", wordWrap: "break-word" }} className="text-red-500 text-xs">{fieldError?.join_anonymously_error}</p>
+                                )}
+                            </div>
+                        }
                         <p className="d-block mb-0 ct_fs_14  ct_text_op_6">
                             All calls are scheduled for 1 hour and extendable to 2 hours at
                             no extra cost.
                         </p>
-
                         <div className="text-center mt-4">
-                            <button className="ct_yellow_btn px-5">Register</button>
+                            <button type="button" className="ct_yellow_btn px-5" onClick={handleRegisterUser}>Register</button>
                         </div>
                     </form>
                 </div>

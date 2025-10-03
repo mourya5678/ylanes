@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, registerRoomAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -358,5 +358,23 @@ export const getMyRoomData = createAsyncThunk('get-my-room-list', async (props) 
         return response;
     } catch (error) {
         console.log(error);
+    };
+});
+
+export const registerRoomData = createAsyncThunk('register-room', async (props) => {
+    const { payload, callback, messageApi, param } = props;
+    try {
+        const response = await API_REQUEST({
+            url: registerRoomAPI + param,
+            method: "POST",
+            data: payload,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
     };
 });

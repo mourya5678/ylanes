@@ -337,6 +337,11 @@ const CreateRoom = ({ messageApi }) => {
         formData.append("room[is_anonymously]", joinAnonymously);
         formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
         formData.append("TZone", timeZone);
+        // formData.append()
+        formData.append(
+            'registered_room[resources_attributes][][url]',
+            this.state.oneLink,
+        );
         dispatch(createRoomData({ payload: formData, callback, messageApi }))
     };
 
@@ -444,7 +449,7 @@ const CreateRoom = ({ messageApi }) => {
                                                     Add Resources
                                                 </p>
                                             </div>
-                                            {isAddResources && (
+                                            {isAddResources && resources?.length != 3 && (
                                                 <div onClick={handleAddField}>
                                                     <i className="fa-solid fa-plus ct_cursor_pointer"></i>
                                                 </div>

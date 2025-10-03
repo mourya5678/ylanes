@@ -91,6 +91,8 @@ export const userOnboardAPI = "account_block/accounts";
 // [Block / Unblock] User
 export const blockUserAPI = "account_block/accounts/block_user";
 
-
 // Blogs 
-export const getAllBlogsDataAPI = "bx_block_admin/dynamic_blogs"
+export const getAllBlogsDataAPI = "bx_block_admin/dynamic_blogs";
+
+// Register in Room
+export const registerRoomAPI = "bx_block_different_rooms/rooms/registered_in_rooms?id=";

@@ -357,6 +357,13 @@ const MyRoom = ({ messageApi }) => {
             {isRegisterShow && registerData &&
                 <RoomRegisterModal
                     onClose={() => setIsRegisterShow(false)}
+                    onHandleClose={() => {
+                        setIsRegisterShow(false);
+                        dispatch(getMyRoomData({ messageApi }));
+                        dispatch(getPastRoomData({ messageApi }));
+                        dispatch(getUpcommingRoomData({ messageApi }));
+                        dispatch(getRecommendedRoomData({ messageApi }));
+                    }}
                     registerData={registerData}
                     messageApi={messageApi}
                 />

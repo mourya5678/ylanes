@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, registerRoomData, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -277,6 +277,17 @@ export const roomSlice = createSlice({
             state.isCreateLoading = false;
         });
         builder.addCase(disconnectUserConnection.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // registerRoomData
+        builder.addCase(registerRoomData.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(registerRoomData.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(registerRoomData.rejected, (state, action) => {
             state.isCreateLoading = false;
         });
     }
