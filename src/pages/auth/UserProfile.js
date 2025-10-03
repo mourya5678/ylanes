@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleChange } from '../../redux/reducers/authReducers';
-import { pageRoutes } from '../../routes/PageRoutes';
-import { useNavigate } from 'react-router';
-import { pipGetAccessToken } from '../../auth/Pip';
-import { getMyProfileData } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
-import emojiFlags from "emoji-flags";
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
 import ReactCountryFlag from 'react-country-flag';
+import { toggleChange } from '../../redux/reducers/authReducers';
+import { getMyProfileData, getUserProfileData } from '../../redux/actions/authActions';
 import { getMyConnectionsData } from '../../redux/actions/createRoom';
+import { pipGetAccessToken } from '../../auth/Pip';
+import Header from '../../components/Header';
+import { pageRoutes } from '../../routes/PageRoutes';
 
-
-const Profile = ({ messageApi }) => {
-    const { isToggle, profileData, isLoading } = useSelector((state) => state.authReducer);
+const UserProfile = ({ messageApi }) => {
+    const { isToggle, userProfileData, isLoading } = useSelector((state) => state.authReducer);
     const { isCreateLoading, allConnections } = useSelector((state) => state.createRoomReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { state } = useLocation();
 
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(userProfileData ?? {});
 
     useEffect(() => {
-        const data = pipGetAccessToken("user_data");
-        dispatch(getMyProfileData({ payload: data?.id, messageApi }));
-        dispatch(getMyConnectionsData({ messageApi }));
+        dispatch(getUserProfileData({ payload: state?.data, messageApi }));
+        // dispatch(getMyConnectionsData({ messageApi }));  
     }, []);
 
     useEffect(() => {
-        const data = pipGetAccessToken("user_data");
-        setUserData(data);
-    }, [profileData]);
+        setUserData(userProfileData);
+    }, [userProfileData]);
 
 
     if (isLoading || isCreateLoading) {
@@ -48,9 +45,6 @@ const Profile = ({ messageApi }) => {
                             </div>
                             <div className="ct_profile_bg">
                                 <form>
-                                    <a className="ct_edit_profile_icon" onClick={() => navigate(pageRoutes.updateProfile)}>
-                                        <i className="fa-solid fa-pen-to-square"></i>
-                                    </a>
                                     <div className="ct_profile_img">
                                         <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="" />
                                     </div>
@@ -73,7 +67,7 @@ const Profile = ({ messageApi }) => {
                                                 </a>
                                             </li>
                                             <li className="text-center text-white">
-                                                <a className="text-white" onClick={() => navigate(pageRoutes.userWallet)}>
+                                                <a className="text-white">
                                                     <i className="fa-regular fa-credit-card"></i>
                                                     <p className="mb-1 ct_fs_14 ct_text_op_6">WALLET</p>
                                                     <h6 className="smb-0">{userData?.attributes?.ycoins ?? 0}</h6>
@@ -119,17 +113,6 @@ const Profile = ({ messageApi }) => {
                                             onClick={() => dispatch(toggleChange("3"))}
                                         >
                                             Resources
-                                        </button>
-                                    </li>
-                                    <li className="nav-item" role="presentation">
-                                        <button
-                                            className={`nav-link ${isToggle == 4 && "active"}`}
-                                            type="button"
-                                            role="tab"
-                                            tabindex="-1"
-                                            onClick={() => dispatch(toggleChange("4"))}
-                                        >
-                                            Connections
                                         </button>
                                     </li>
                                 </ul>
@@ -207,78 +190,14 @@ const Profile = ({ messageApi }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div
-                                        className={`tab-pane fade ${isToggle == 4 && "active show"}`}
-                                        role="tabpanel"
-                                        aria-labelledby="pills-contact-tab"
-                                    >
-                                        <div className="ct_white_bg">
-                                            <div className="chat-list">
-                                                {allConnections?.length != 0 &&
-                                                    allConnections?.map((item, i) => (
-                                                        <a className="d-flex align-items-center">
-                                                            <div className="position-relative">
-                                                                <img
-                                                                    className="img-fluid ct_img_40"
-                                                                    src={item?.attributes?.profile_image ? item?.attributes?.profile_image : "/assets/img/dummy_user_img.png"}
-                                                                    alt="user img"
-                                                                />
-                                                            </div>
-                                                            <div className="flex-grow-1 ms-3">
-                                                                <div className="d-flex align-items-center gap-2 justify-content-between">
-                                                                    <h3 className="ct_fs_16 ct_fw_600 mb-0">{item?.attributes?.full_name ?? ""}</h3>
-                                                                </div>
-                                                                <div className="d-flex align-items-center gap-2 justify-content-between"></div>
-                                                            </div>
-                                                            <div className="">
-                                                                <button className="ct_yellow_btn ct_white_nowrap">
-                                                                    Connected
-                                                                </button>
-                                                            </div>
-                                                        </a>
-                                                    ))}
-                                                {/* <a
-                                                    className="d-flex align-items-center"
-                                                >
-                                                    <div className="position-relative">
-                                                        <img
-                                                            className="img-fluid ct_img_40"
-                                                            src="assets/img/user.png"
-                                                            data-bs-target="#full_view_img"
-                                                            data-bs-toggle="modal"
-                                                            alt="user img"
-                                                        />
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <div
-                                                            className="d-flex align-items-center gap-2 justify-content-between"
-                                                        >
-                                                            <h3 className="ct_fs_16 ct_fw_600 mb-0">Jane Doe</h3>
-                                                        </div>
-                                                        <div
-                                                            className="d-flex align-items-center gap-2 justify-content-between"
-                                                        ></div>
-                                                    </div>
-                                                    <div className="">
-                                                        <button className="ct_yellow_btn ct_white_nowrap">
-                                                            Connected
-                                                        </button>
-                                                    </div>
-                                                </a> */}
-                                            </div>
-                                            <div className="text-center">
-                                                <button className="ct_yellow_btn mt-4">Descover More</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </div >
+            </section >
+        </div >
     )
 };
 
-export default Profile
+export default UserProfile;

@@ -636,6 +636,58 @@ a {
 }
 
 .ct_copy_btn {
-    border-radius: 10px;
+    border-radius: 10px !important;
     right: 0px;
+}
+
+.ct_pe_20 {
+    padding-right: 20px;
+}
+
+.ct_add_chat_btn {
+    border-radius: 6px !important;
+    width: 35px;
+    height: 35px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background-color: #000 !important;
+    border-color: #000 !important;
+}
+
+.ct_add_chat_btn i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.ct_yellow_btn {
+    background-color: #ffcb00;
+    padding: 10px 30px;
+    border-radius: 100px;
+    color: #000;
+    position: relative;
+    font-weight: 600;
+    -webkit-transition: 0.4s ease all;
+    -o-transition: 0.4s ease all;
+    transition: 0.4s ease all;
+    border: 1px solid #ffcb00;
+    outline: none;
+}
+
+.py-2 {
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
+}
+
+.ct_position_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+@media screen and (max-width:991px) {
+    .ct_pe_20 {
+        padding-right: 0px;
+    }
 }

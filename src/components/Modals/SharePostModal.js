@@ -44,11 +44,11 @@ const SharePostModal = ({ shareCode, messageApi, onClose }) => {
     return (
         <div className="modal show d-block ct_congratulation_modal_fade ct_modal_w_700" tabIndex="-1">
             <div className="ct_modal-dialog  modal-dialog-centered  justify-content-center">
-                <div className='ct_copy_modal'>
+                <div className='ct_copy_modal position-relative'>
                     <div className="modal-header border-0 pt-0 pb-2">
-                        <button onClick={onClose} type="button" className="btn-close"></button>
+                        <button onClick={onClose} type="button" className="btn-close ct_position_close"></button>
                     </div>
-                    <div className={`${isListShow ? "d-none" : ""}`}>
+                    <div className={`${isListShow ? "d-none" : "mt-4"}`}>
                         <div className='form-group mb-3'>
                             <div className='position-relative'>
                                 <input type='text' value={`${SHARE_BASE_URL}post-details?${shareCode?.id}`} className='form-control ct_input ps-5' style={{ paddingRight: "110px" }} readOnly />

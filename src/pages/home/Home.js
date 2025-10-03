@@ -52,28 +52,45 @@ const Home = ({ messageApi }) => {
 
   const getDisplayUsers = (allPosts, filterByTopic) => {
     if (!filterByTopic || filterByTopic.length === 0) {
-      // no filter applied → show all posts
-      return allPosts;
-    }
-
+      return allPosts?.filter(
+        (item) => !item?.attributes?.user?.is_blocked
+      );
+    };
     return allPosts?.filter((item) => {
+      if (item?.attributes?.user?.is_blocked) return false;
       const topics = item?.attributes?.topics;
-
-      // If topics is a string → convert to array
       if (typeof topics === "string") {
         return filterByTopic.includes(topics);
-      }
-
-      // If topics is an array → normal check
+      };
       if (Array.isArray(topics)) {
         return topics.some((topic) => filterByTopic.includes(topic));
-      }
-
-      // If topics is something else (null/undefined/object) → skip
+      };
       return false;
     });
   };
   const displayUser = getDisplayUsers(allPosts, filterBytopic);
+
+  const getDisplayUsers2 = (AllPollsData, filterByTopic) => {
+    if (!filterByTopic || filterByTopic.length === 0) {
+      return AllPollsData?.filter(
+        (item) => !item?.attributes?.user?.is_blocked
+      );
+    };
+    return AllPollsData?.filter((item) => {
+      if (item?.attributes?.user?.is_blocked) return false;
+      const topic = item?.attributes?.topic;
+      if (typeof topic === "string") {
+        return filterByTopic.includes(topic);
+      };
+      if (Array.isArray(topic)) {
+        return topic.some((t) => filterByTopic.includes(t));
+      };
+      return false;
+    });
+  };
+
+  // usage
+  const displayUser2 = getDisplayUsers2(AllPollsData, filterBytopic);
 
   useEffect(() => {
     dispatch(getAllPost({ messageApi }));
@@ -251,8 +268,8 @@ const Home = ({ messageApi }) => {
                       Create Poll
                     </a>
                   </div>
-                  {AllPollsData?.length != 0 ? (
-                    AllPollsData?.slice(0, 1)?.map((item) => (
+                  {displayUser2?.length != 0 ? (
+                    displayUser2?.slice(0, 1)?.map((item) => (
                       <div
                         className="ct_outline_border  ct_border_radius_10 mt-3 d-block"
                         style={{ borderColor: "#e6e6e6" }}
@@ -404,6 +421,7 @@ const Home = ({ messageApi }) => {
                                   <div className="d-flex align-items-start gap-3">
                                     <img
                                       src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"}
+                                      onClick={() => navigate(pageRoutes.profile)}
                                       className="ct_img_40"
                                     />
                                     <div className="w-100">
@@ -530,15 +548,17 @@ const Home = ({ messageApi }) => {
                   <div className="col-md-12 mt-4">
                     {displayUser?.length != 0 &&
                       displayUser?.map((item) => (
-                        // !item?.attributes?.user?.is_blocked &&
                         <div className="ct_uploaded_post_main mb-4 ">
                           <div className="d-flex align-items-center justify-content-between gap-2">
-                            <div className="ct_upload_user_name ct_cursor" onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)}>
+                            <div className="ct_upload_user_name ct_cursor"
+                              onClick={() => navigate(pageRoutes.userProfile, { state: { data: item?.attributes?.user?.id } })}
+                            >
                               <img
                                 src={item?.attributes?.user?.profile_image ? item?.attributes?.user?.profile_image : "assets/img/dummy_user_img.png"}
                                 alt=""
                                 className="ct_img_40 ct_flex_shrink_0"
                               />
+                              {/* onClick={() => navigate(`${pageRoutes.postDetails}?${item?.id}`)} */}
                               <p className="mb-0 ct_fw_600">
                                 {item?.attributes?.user?.name ?? ""}
                               </p>
@@ -610,7 +630,7 @@ const Home = ({ messageApi }) => {
                                 spaceBetween={30}
                                 slidesPerView={3}
                                 navigation
-                                loop
+                                loop={item?.attributes?.docs?.length > 2}
                                 autoplay={{ delay: 2000 }}
                               >
                                 {item?.attributes?.docs?.map((item) => (

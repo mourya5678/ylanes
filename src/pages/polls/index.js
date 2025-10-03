@@ -54,15 +54,18 @@ const Polls = ({ messageApi }) => {
 
   const getDisplayUsers = (AllPollsData, filterByTopic) => {
     if (!filterByTopic || filterByTopic.length === 0) {
-      return AllPollsData;
-    }
+      return AllPollsData?.filter(
+        (item) => !item?.attributes?.user?.is_blocked
+      );
+    };
     return AllPollsData?.filter((item) => {
+      if (item?.attributes?.user?.is_blocked) return false;
       const topic = item?.attributes?.topic;
       if (typeof topic === "string") {
         return filterByTopic.includes(topic);
       };
       if (Array.isArray(topic)) {
-        return topic.some((topic) => filterByTopic.includes(topic));
+        return topic.some((t) => filterByTopic.includes(t));
       };
       return false;
     });
@@ -612,9 +615,10 @@ const Polls = ({ messageApi }) => {
                   </div>
                 </div>
                 <div className="row">
-                  {AllPollsData?.length != 0 &&
+                  {displayUser?.length != 0 &&
                     displayUser?.map((item) => (
                       <div className="col-md-12">
+                        {console.log({ item })}
                         <div className="ct_uploaded_post_main mb-3">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">
@@ -624,6 +628,7 @@ const Polls = ({ messageApi }) => {
                                 }
                                 alt=""
                                 className="ct_img_40 ct_flex_shrink_0"
+                                onClick={() => navigate(pageRoutes.userProfile, { state: { data: item?.attributes?.user?.id } })}
                               />
                               <p className="mb-0 ct_fw_600">
                                 {item?.attributes?.user?.name ?? ""}

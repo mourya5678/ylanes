@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { updatePostDetails } from '../../redux/actions/authActions';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css/navigation";
 import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 
 const EditPostModal = ({ messageApi, onClose, postDetails, handleClose }) => {
@@ -124,68 +124,66 @@ const EditPostModal = ({ messageApi, onClose, postDetails, handleClose }) => {
                                                     <i className="fa-solid fa-paperclip text-dark ct_cursor_pointer"></i>
                                                 </label>
                                             </div>
-                                            {imagesList?.length != 0 && (
-                                                <div className="item">
+                                            {/* <div className="item ct_cursor">
+                                                {imagesList?.length != 0 && (
                                                     <Swiper
                                                         modules={[Navigation]}
-                                                        spaceBetween={30}
-                                                        slidesPerView={3}
+                                                        spaceBetween={2}
+                                                        slidesPerView={2}
                                                         navigation
-                                                        loop
+                                                        loop={imagesList?.length > 2}
                                                         autoplay={{ delay: 2000 }}
                                                     >
                                                         {imagesList?.map((item, i) => (
-                                                            <SwiperSlide>
+                                                            <SwiperSlide key={i}>
                                                                 <div className="item">
                                                                     <div className="ct_post_img ct_single_uploaded_img">
-                                                                        <img
-                                                                            src={item?.url}
-                                                                            alt=""
-                                                                        />
+                                                                        <img src={item?.url} alt="" />
                                                                         <i
                                                                             className="fa-solid fa-xmark"
-                                                                            onClick={() =>
-                                                                                handleDeleteImage(item)
-                                                                            }
+                                                                            onClick={() => handleDeleteImage(item)}
                                                                         ></i>
                                                                     </div>
                                                                 </div>
                                                             </SwiperSlide>
                                                         ))}
                                                     </Swiper>
-                                                </div>
-                                            )}
-                                            {postImages?.length != 0 && (
-                                                <div className="item mt-2">
-                                                    <Swiper
-                                                        modules={[Navigation]}
-                                                        spaceBetween={30}
-                                                        slidesPerView={3}
-                                                        navigation
-                                                        loop
-                                                        autoplay={{ delay: 2000 }}
-                                                    >
-                                                        {postImages?.map((item, i) => (
-                                                            <SwiperSlide>
-                                                                <div className="item">
-                                                                    <div className="ct_post_img ct_single_uploaded_img">
-                                                                        <img
-                                                                            src={URL.createObjectURL(item)}
-                                                                            alt=""
-                                                                        />
-                                                                        <i
-                                                                            className="fa-solid fa-xmark"
-                                                                            onClick={() =>
-                                                                                handleRemoveImage(i)
-                                                                            }
-                                                                        ></i>
+                                                )}
+                                            </div>
+                                            */}
+                                            <div className="item ct_cursor">
+                                                {postImages?.length != 0 && (
+                                                    <div className="item mt-2">
+                                                        <Swiper
+                                                            modules={[Navigation]}
+                                                            spaceBetween={30}
+                                                            slidesPerView={3}
+                                                            navigation
+                                                            loop={imagesList?.length > 3}
+                                                            autoplay={{ delay: 2000 }}
+                                                        >
+                                                            {postImages?.map((item, i) => (
+                                                                <SwiperSlide>
+                                                                    <div className="item">
+                                                                        <div className="ct_post_img ct_single_uploaded_img">
+                                                                            <img
+                                                                                src={URL.createObjectURL(item)}
+                                                                                alt=""
+                                                                            />
+                                                                            <i
+                                                                                className="fa-solid fa-xmark"
+                                                                                onClick={() =>
+                                                                                    handleRemoveImage(i)
+                                                                                }
+                                                                            ></i>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </SwiperSlide>
-                                                        ))}
-                                                    </Swiper>
-                                                </div>
-                                            )}
+                                                                </SwiperSlide>
+                                                            ))}
+                                                        </Swiper>
+                                                    </div>
+                                                )}
+                                            </div>
                                             <button
                                                 type="button"
                                                 onClick={handleSubmit}

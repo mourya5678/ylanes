@@ -6,11 +6,17 @@ import { descoverAllConnectionsData, getAllChatAfterReciveUsersData, getAllChatU
 import Loader from '../../components/Loader';
 import { pipGetAccessToken } from '../../auth/Pip';
 import AddNewUserToChat from '../../components/Modals/AddNewUserToChat';
+import { blockUserData } from '../../redux/actions/authActions';
+import { useNavigate } from 'react-router';
+import { pageRoutes } from '../../routes/PageRoutes';
 
 const Chat = ({ messageApi }) => {
     const { isCreateLoading, discoverAllConnections, chatList, allConnections, previousMessages } = useSelector((state) => state?.createRoomReducer);
+    const { isLoading } = useSelector((state) => state.authReducer);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const scrollRef = useRef(null);
 
     const [isAddUserModalShow, setIsAddUserModalShow] = useState(false)
@@ -159,7 +165,37 @@ const Chat = ({ messageApi }) => {
         handleGetReciveMessages(selectUserRef?.current?.conversation_key, selectUserRef?.current);
     };
 
-    if (isCreateLoading) {
+    const handleBlockUser = (value) => {
+        const callback = (response) => {
+            if (response?.message) {
+                messageApi?.success(response?.message);
+            } else {
+                messageApi?.error(response?.message);
+            };
+            const data = {
+                phone_number: userData?.attributes?.phone_number,
+                unique_auth_id: userData?.attributes?.unique_auth_id,
+            };
+            dispatch(getAllChatUsersData({ payload: data, messageApi }));
+        };
+        let formData = new FormData();
+        formData.append("user_id", value);
+        dispatch(blockUserData({ payload: formData, callback, messageApi }));
+    };
+
+    // const handleDisconnectUser = () => {
+    //     const callback = (response) => {
+    //         if (response?.message) {
+    //             messageApi?.success(response?.message);
+    //         } else {
+    //             messageApi?.error(response?.message);
+    //         };
+    //         dispatch(getAllPost({ messageApi }));
+    //     };
+    //     dispatch(disconnectUserConnection({ payload: id?.attributes?.user?.id, callback, messageApi }))
+    // };
+
+    if (isCreateLoading || isLoading) {
         return <Loader />;
     };
     return (
@@ -192,7 +228,7 @@ const Chat = ({ messageApi }) => {
                                                         <div
                                                             className="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
                                                             <h4 className="ct_fs_16 mb-0 ct_fw_600 ct_nunito_font">Contacts ({chatList?.length})</h4>
-                                                            {/* <h4 className="ct_fs_16 mb-0 ct_fw_600 ct_nunito_font ct_text_op_05">{chatList?.length}</h4> */}
+                                                            <a className="ct_yellow_btn ct_add_chat_btn px-3 py-2 h-auto" onClick={() => setIsAddUserModalShow(true)}><i class="fa-solid fa-comment-medical"></i></a>
                                                         </div>
                                                         <div className="position-relative">
                                                             <input
@@ -267,10 +303,11 @@ const Chat = ({ messageApi }) => {
                                                         <div>
                                                             <h4 className="ct_fs_20 ct_fw_600">Messages</h4>
                                                             <p>Click on a contact to view messages.</p>
-                                                            <div className="">
+                                                            {/* <div className="">
                                                                 <a className="ct_yellow_btn d-flex align-items-center justify-content-center gap-2">
-                                                                    <span> New Message</span></a>
-                                                            </div>
+                                                                    <span> New Message</span>
+                                                                </a>
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 }
@@ -291,8 +328,42 @@ const Chat = ({ messageApi }) => {
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div>
-                                                                        <a className="ct_yellow_btn px-3 py-2 h-auto" onClick={() => setIsAddUserModalShow(true)}>+ Add New Chat</a>
+                                                                    <div className='ct_pe_20'>
+                                                                        {/* <a className="ct_yellow_btn px-3 py-2 h-auto" onClick={() => setIsAddUserModalShow(true)}>+ Add New Chat</a> */}
+                                                                        <div className="dropdown ct_post_setting_drop">
+                                                                            <i
+                                                                                className="fa-solid fa-ellipsis-vertical"
+                                                                                type="button"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false"
+                                                                            ></i>
+                                                                            <ul className="dropdown-menu">
+                                                                                {console.log({ selectUserData: selectUserData })}
+                                                                                <li >
+                                                                                    <a className="dropdown-item">
+                                                                                        <i className="fa-solid fa-user-xmark"></i> Disconnect
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li onClick={() => navigate(pageRoutes.userProfile, { state: { data: selectUserData?.peer?.account_id } })}>
+                                                                                    <a className="dropdown-item">
+                                                                                        <i class="fa-solid fa-user me-2"></i>
+                                                                                        Profile
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a className="dropdown-item" >
+                                                                                        <i class="fa-solid fa-flag me-2"></i>
+                                                                                        Report User
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a className="dropdown-item" onClick={() => handleBlockUser(selectUserData?.peer?.account_id)}>
+                                                                                        <i className="fa-solid fa-ban me-2"></i>
+                                                                                        Block User
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="modal-body">

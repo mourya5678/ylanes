@@ -97,22 +97,6 @@ const Subscription = ({ messageApi }) => {
                   <div className="row">
                     <div className="col-md-6 ">
                       <div className="ct_pricing_card p-4 h-auto ct_pricing_card_light_green position-relative">
-                        {/* <div class="ribbon-content">
-                                                    <span class="ribbon">{item?.status ?? ''} </span>
-                                                </div>
-                                                <div>
-                                                    <div className="ct_pricing_title">
-                                                        <div className='ct_price_head_bg'>
-                                                            <h2 className="ct_fs_35 text-center mb-0 ct_fw_600 d-flex align-items-center gap-2 justify-content-center">
-                                                                Rs {item?.amount ?? 0} <span className='ct_fs_16'>/ {item?.period ?? ''}</span></h2>
-                                                        </div>
-                                                        <ul class="ct_mt_30 mb-4 px-3">
-                                                            <li>
-                                                                {item?.name ?? ""}
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div> */}
                         <ul class="ct_price_plan_info_grid">
                           <li>
                             <p class="mb-0 ct_fw_600">{item?.name ?? ""}</p>
@@ -161,7 +145,6 @@ const Subscription = ({ messageApi }) => {
                               </p>
                               <div className="ct_pricing_title">
                                 <h2 className="ct_fs_35 text-center mb-0 ct_fw_600">
-                                  {/* {item?.currency} */}
                                   Rs {item?.amount ?? 0}
                                 </h2>
                                 <p className="mb-0 text-center">

@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import UserProfile from "../pages/auth/UserProfile";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -53,6 +54,7 @@ export const pageRoutes = {
     login: '/login',
     setting: '/setting',
     profile: '/profile',
+    userProfile: "/user-pofile",
     updateProfile: '/update-profile',
     createRoom: "/create-room",
     userWallet: '/wallet',
@@ -84,6 +86,12 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "User Profile",
+        path: pageRoutes?.userProfile,
+        element: <UserProfile />,
         isPrivate: true
     },
     {

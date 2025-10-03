@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -10,6 +10,7 @@ const initialStates = {
     allPosts: [],
     allComments: [],
     profileData: {},
+    userProfileData: {},
     trasactionData: [],
     faqList: [],
     notificationData: [],
@@ -345,6 +346,19 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(deleteUserPoll.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getUserProfileData
+        builder.addCase(getUserProfileData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getUserProfileData.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const { data } = action?.payload || {};
+            state.userProfileData = data ?? {};
+        });
+        builder.addCase(getUserProfileData.rejected, (state, action) => {
             state.isLoading = false;
         });
     }
