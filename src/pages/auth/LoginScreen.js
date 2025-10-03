@@ -11,7 +11,6 @@ import { requestOtp } from "../../auth/requestOtp";
 import { useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 
-
 const LoginScreen = ({ messageApi }) => {
     const { isLoading } = useSelector((state) => state.authReducer);
 
@@ -19,7 +18,7 @@ const LoginScreen = ({ messageApi }) => {
     const [isLoader, setIsLoader] = useState(false);
 
     const initialeState = {
-        phone_number: '',
+        phone_number: '+91',
         isAgree: false
     };
 
@@ -74,7 +73,7 @@ const LoginScreen = ({ messageApi }) => {
                                             <PhoneInput
                                                 id="phone_number"
                                                 className="form-control ct_input ct_input_grey_border_1 ct_border_radius_5 ct_h_44"
-                                                defaultCountry="US"
+                                                defaultCountry="IN"
                                                 value={values?.phone_number}
                                                 onChange={(val) => {
                                                     const safeVal = val ?? '';

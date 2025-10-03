@@ -11,6 +11,7 @@ const RoomDetails = ({ messageApi }) => {
   const [isShow, setIsShow] = useState(false);
   const navigate = useNavigate();
 
+  console.log({ state: state?.data });
 
   return (
     <div>
@@ -118,7 +119,8 @@ const RoomDetails = ({ messageApi }) => {
                         <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
                           <p className="mb-0">
                             <i class="fa-solid fa-heart ct_yellow_text"></i>{" "}
-                            <span className="ct_text_op_6">{item?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age_range[0] ?? 0}-{item?.attributes?.participant?.data?.attributes?.age_range[1] ?? 0} yrs)</span>
+                            {console.log({ item })}
+                            <span className="ct_text_op_6">{item?.attributes?.participant?.data?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age_range[0] ?? 0}-{item?.attributes?.participant?.data?.attributes?.age_range[1] ?? 0} yrs)</span>
                           </p>
                           <button className="ct_yellow_btn py-1 px-3">
                             {item?.id == userData?.id ? 'Host' : "Guest"}

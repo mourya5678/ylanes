@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
-import { pipGetAccessToken, pipViewDate, pipViewDate2 } from '../../auth/Pip';
+import { pipGetAccessToken, pipViewDate, pipViewDate2, pipViewDate3 } from '../../auth/Pip';
 import { getPostTopics } from '../../redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
@@ -37,7 +37,7 @@ const CreateRoom = ({ messageApi }) => {
         selectedTopic: "",
         yourTake: "",
         roomType: "",
-        globalRoom: false,
+        globalRoom: true,
         selectTime: ""
     });
 
@@ -310,7 +310,7 @@ const CreateRoom = ({ messageApi }) => {
                 selectedTopic: "",
                 yourTake: "",
                 roomType: "",
-                globalRoom: false,
+                globalRoom: true,
                 selectTime: ""
             });
             setFieldError({
@@ -405,7 +405,7 @@ const CreateRoom = ({ messageApi }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Select Date and Time"
-                                                value={fieldValues?.selectTime ? pipViewDate2(fieldValues?.selectTime) : ''}
+                                                value={fieldValues?.selectTime ? pipViewDate3(fieldValues?.selectTime) : ''}
                                                 onClick={() => setIsModalShow(true)}
                                                 className="form-control ct_input"
                                             />

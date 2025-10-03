@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -20,6 +20,7 @@ const initialStates = {
     AllPollsData: [],
     faqs: [],
     postDetails: {},
+    blogsData: [],
 };
 
 export const authSlice = createSlice({
@@ -359,6 +360,19 @@ export const authSlice = createSlice({
             state.userProfileData = data ?? {};
         });
         builder.addCase(getUserProfileData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getBlogsData
+        builder.addCase(getBlogsData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getBlogsData.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const { data } = action?.payload || {};
+            state.blogsData = data ?? {};
+        });
+        builder.addCase(getBlogsData.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

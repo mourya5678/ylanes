@@ -237,7 +237,6 @@ const Home = ({ messageApi }) => {
     };
     let formData = new FormData();
     formData.append("user_id", value?.user?.id);
-    console.log({ value });
     dispatch(blockUserData({ payload: formData, callback, messageApi }));
   };
 

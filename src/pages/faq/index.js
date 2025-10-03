@@ -3,6 +3,7 @@ import LandingHeader from '../../components/LandingPageHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandingPageFaq } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
+import LandingPageFooter from '../../components/LandingPageFooter';
 
 const LandingFaq = ({ messageApi }) => {
     const { isLoading, faqs } = useSelector((state) => state.authReducer);
@@ -53,6 +54,7 @@ const LandingFaq = ({ messageApi }) => {
                     </div>
                 </div>
             </section>
+            <LandingPageFooter />
         </div>
     )
 };

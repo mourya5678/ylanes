@@ -1,7 +1,12 @@
 import React from 'react';
 import LandingHeader from '../../components/LandingPageHeader';
+import { useLocation } from 'react-router';
 
 const BlogsDetails = ({ messageApi }) => {
+  const { state } = useLocation();
+
+  console.log({ state });
+
   return (
     <div>
       <LandingHeader />
@@ -12,200 +17,10 @@ const BlogsDetails = ({ messageApi }) => {
             <div className="col-md-12">
               <div class="ct_blog_dtl_box ct_blog_sticky">
                 <div class="ct_blog_dtl_img">
-                  <img src="assets/img/blog.png" alt="assets/img/blog.png" />
+                  <img src={state?.data?.image_url} alt="" />
                 </div>
-                <h6 className="ct_fs_14 ct_text_op_6">OCTOBER 7, 2022</h6>
-                <h4 class="text-naviblue">Dummy Title Goes Here</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium.
-                </p>
-                <p>
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                  odit aut fugit, sed quia consequuntur magni dolores eos qui
-                  ratione voluptatem sequi nesciunt.
-                </p>
-
-                <div>
-                  <h4 class="ct_fs_20 ct_fw_600">Step 1: Dummy Step Title</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Quis autem vel eum iure reprehenderit qui in ea voluptate
-                    velit esse quam nihil molestiae consequatur.
-                  </p>
-                  <ul class="ps-4 ct_list_style_disc">
-                    <li>Dummy list item one</li>
-                    <li>Dummy list item two</li>
-                    <li>Dummy list item three</li>
-                  </ul>
-                  <p>
-                    Ut enim ad minima veniam, quis nostrum exercitationem
-                    ullam corporis suscipit laboriosam nisi ut aliquid ex ea
-                    commodi consequatur?
-                  </p>
-                </div>
-
-                <div class="step">
-                  <h4 class="ct_fs_20 ct_fw_600">Step 2: Dummy Step Title</h4>
-                  <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur.
-                  </p>
-                  <ul class="ps-4 ct_list_style_disc">
-                    <li>
-                      <strong>Dummy bold:</strong> Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                      <strong>Dummy bold:</strong> Sed ut perspiciatis unde
-                      omnis.
-                    </li>
-                  </ul>
-                  <p>
-                    Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 class="ct_fs_20 ct_fw_600">Step 3: Dummy Step Title</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Ut enim ad minima veniam, quis nostrum exercitationem.
-                  </p>
-                  <ul class="ps-4 ct_list_style_disc">
-                    <li>
-                      <strong>Dummy:</strong> Item description text.
-                    </li>
-                    <li>
-                      <strong>Dummy:</strong> Item description text.
-                    </li>
-                    <li>
-                      <strong>Dummy:</strong> Item description text.
-                    </li>
-                  </ul>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                </div>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 4: Dummy Step Title</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <ul class="ps-4 ct_list_style_disc">
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                </ul>
-                <p class="callout">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 5: Dummy Step Title</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <ul class="ps-4 ct_list_style_disc">
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                  <li>
-                    <strong>Dummy:</strong> List item text.
-                  </li>
-                </ul>
-                <p class="muted">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 6: Dummy Step Title</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <ul class="ps-4 ct_list_style_disc">
-                  <li>Dummy list item</li>
-                  <li>Dummy list item</li>
-                  <li>Dummy list item</li>
-                  <li>Dummy list item</li>
-                </ul>
-                <p class="muted">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 7: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-                <p class="muted">Lorem ipsum dolor sit amet.</p>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 8: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 9: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 10: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 11: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 12: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 13: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Step 14: Dummy Step Title</h4>
-                <ul class="ps-4 ct_list_style_disc mb-3">
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                  <li>Dummy item</li>
-                </ul>
-
-                <h4 class="ct_fs_20 ct_fw_600">Conclusion</h4>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Vivamus efficitur, augue sit amet bibendum malesuada, libero
-                  odio hendrerit felis, vitae egestas justo sapien sed risus.
-                </p>
+                <h4 class="text-naviblue mt-4">{state?.data?.heading ?? ""}</h4>
+                <div dangerouslySetInnerHTML={{ __html: state?.data?.description ?? "" }}></div>
               </div>
             </div>
           </div>

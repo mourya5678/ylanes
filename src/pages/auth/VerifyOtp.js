@@ -10,9 +10,11 @@ import { BASE_URL, SMSConfirmationAPI } from '../../routes/BackendRoutes';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { pipSetAccessToken } from '../../auth/Pip';
 import Loader from '../../components/Loader';
+import { requestOtp, resendOtp } from '../../auth/requestOtp';
 
 const VerifyOtp = ({ messageApi }) => {
     const { isLoading } = useSelector((state) => state.authReducer);
+    const { state } = useLocation();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -24,6 +26,8 @@ const VerifyOtp = ({ messageApi }) => {
     const [canResend, setCanResend] = useState(false);
 
     const [isLoader, setIsLoader] = useState(false);
+    const [isLoader1, setIsLoader1] = useState(false);
+
     const [otp, setOtp] = useState('');
 
     useEffect(() => {
@@ -151,11 +155,22 @@ const VerifyOtp = ({ messageApi }) => {
             });
     };
 
+    const handleResentOtp = async () => {
+        if (!isLoader1) {
+            resendOtp({
+                mobileNumber: state?.mobileNumber,
+                messageApi,
+                loaderValueChange: () => setIsLoader1(false),
+            })
+        };
+    };
+
     if (isLoading || isLoader) {
         return <Loader />;
     };
     return (
         <div className="ct_login_center_main">
+            <div id="recaptcha-container"></div>
             <div className="container">
                 <div className="row">
                     <div className="col-xl-6 col-lg-7 col-md-10 mx-auto">
@@ -177,7 +192,11 @@ const VerifyOtp = ({ messageApi }) => {
                                         renderInput={(props) => <input {...props} />}
                                     />
                                 </div>
-                                <p className="ct_link_under_line text-center mb-0 mt-3 ct_text_op_6">Resend OTP in {formatTime(timeLeft)}</p>
+                                {timeLeft == 0 ?
+                                    <p className="ct_link_under_line text-center mb-0 mt-3 ct_text_op_6" onClick={handleResentOtp}>Resend Otp</p>
+                                    :
+                                    <p className="ct_link_under_line text-center mb-0 mt-3 ct_text_op_6"> Resend OTP in {formatTime(timeLeft)}</p>
+                                }
                                 <div className="text-center mt-5">
                                     <button type="button" onClick={handleOtpSubmit} className="ct_yellow_btn mx-auto">Submit</button>
                                 </div>

@@ -1,6 +1,197 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import * as Yup from 'yup';
+import { pageRoutes } from '../../routes/PageRoutes';
 
-const RoomRegisterModal = ({ onClose }) => {
+
+const RoomRegisterModal = ({ onClose, registerData, messageApi }) => {
+    const navigate = useNavigate();
+
+    const [joinAnonymously, setJoinAnonymously] = useState(false);
+    const [isAddResources, setIsAddResources] = useState(false);
+
+    const [resources, setResources] = useState([]);
+    const [fieldError, setFieldError] = useState({
+        your_take_error: "",
+        join_anonymously_error: "",
+    });
+
+    const [errors, setErrors] = useState([]);
+    const [fieldValues, setFieldValues] = useState({
+        anonymouslyName: "",
+        yourTake: "",
+    });
+
+
+    console.log({ registerData });
+    const handleAddField = () => {
+        setResources([...resources, { id: resources[resources?.length - 1]?.id + 1, values: "" }]);
+    };
+
+    const handleRemoveField = (id) => {
+        setResources(resources?.filter((resource) => resource?.id !== id));
+        if (resources?.length == 1) {
+            setIsAddResources(false);
+        }
+    };
+
+    const handleChange = (id, value) => {
+        const validation = Yup.string().trim().required("Field is required");
+        const urlValidation = Yup.string()
+            .trim()
+            .required("Resource link is required")
+            .matches(
+                /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/\S*)?$/,
+                "Enter a valid URL (e.g., google.com or https://google.com)"
+            );
+        const validation1 = Yup.string()
+            .trim()
+            .required("Your take is required")
+            .min(50, "Your take must be at least 50 characters")
+            .max(300, "Your take must be less than 300 characters");
+        const isValid = validation.isValidSync(value);
+
+        if (id == "anonymouse name") {
+            setFieldValues((pre) => ({
+                ...pre,
+                anonymouslyName: value
+            }));
+            setFieldError((prev) => ({
+                ...prev,
+                join_anonymously_error: isValid ? "" : "Anonymouse screen name is required",
+            }));
+        } else if (id == "your take") {
+            setFieldValues((pre) => ({
+                ...pre,
+                yourTake: value
+            }));
+            try {
+                validation1.validateSync(value);
+                setFieldError((prev) => ({
+                    ...prev,
+                    your_take_error: ""
+                }));
+            } catch (err) {
+                setFieldError((prev) => ({
+                    ...prev,
+                    your_take_error: err.message
+                }));
+            };
+        } else {
+            setResources(resources.map((resource) =>
+                resource.id == id ? { ...resource, values: value } : resource
+            ));
+            urlValidation
+                .validate(value)
+                .then(() => {
+                    setErrors((prev) => ({
+                        ...prev,
+                        [id]: "",
+                    }));
+                })
+                .catch((err) => {
+                    setErrors((prev) => ({
+                        ...prev,
+                        [id]: err.message,
+                    }));
+                });
+        };
+    };
+
+    const validateAllFields = () => {
+        let errors = {};
+        const urlValidation = Yup.string()
+            .trim()
+            .required("Resource link is required")
+            .matches(
+                /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/\S*)?$/,
+                "Enter a valid URL (e.g., google.com or https://google.com)"
+            );
+        if (joinAnonymously) {
+            if (!fieldValues.anonymouslyName?.trim()) {
+                setFieldError((prev) => ({
+                    ...prev,
+                    join_anonymously_error: "Anonymouse screen name is required",
+                }));
+                errors.anonymosly = "error";
+            }
+        };
+        if (!fieldValues.yourTake?.trim()) {
+            setFieldError((prev) => ({
+                ...prev,
+                your_take_error: "Your take is required"
+            }));
+            errors.your_take = "Your take is required";
+        } else if (fieldValues.yourTake.length < 50) {
+            setFieldError((prev) => ({
+                ...prev,
+                your_take_error: "Your take must be at least 50 characters"
+            }));
+            errors.your_take = "Your take must be at least 50 characters";
+        } else if (fieldValues.yourTake.length > 300) {
+            setFieldError((prev) => ({
+                ...prev,
+                your_take_error: "Your take must be less than 300 characters"
+            }));
+            errors.your_take = "Your take must be less than 300 characters";
+        }
+        if (isAddResources) {
+            if (resources && resources.length > 0) {
+                const newResourceErrors = {};
+                resources.forEach((resource) => {
+                    if (!resource.values?.trim()) {
+                        newResourceErrors[resource.id] = "Resource link is required";
+                    } else {
+                        try {
+                            urlValidation.validateSync(resource.values);
+                            newResourceErrors[resource.id] = "";
+                        } catch (err) {
+                            newResourceErrors[resource.id] = err.message;
+                        }
+                    }
+                });
+                setErrors((prev) => ({
+                    ...prev,
+                    ...newResourceErrors
+                }));
+                if (Object.values(newResourceErrors).some((msg) => msg)) {
+                    errors.resource = "error";
+                } else {
+                    delete errors.resource;
+                }
+            }
+        }
+        return errors;
+    };
+
+    const handleSubmitCreateRoom = async () => {
+        const errors = validateAllFields();
+        if (Object.keys(errors).length > 0) {
+            messageApi.error("Please Fill all the required fields");
+            return;
+        };
+        const callback = (response) => {
+            if (response?.meta?.message) {
+                messageApi.success(response?.meta?.message);
+                navigate(pageRoutes.myRoom);
+            };
+            setFieldValues({
+                anonymouslyName: "",
+                yourTake: "",
+            });
+            setFieldError({
+                your_take_error: "",
+                join_anonymously_error: "",
+            });
+        };
+        const formData = new FormData();
+        formData.append("room[your_take]", fieldValues.yourTake);
+        formData.append("room[is_anonymously]", joinAnonymously);
+        formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
+        // dispatch(createRoomData({ payload: formData, callback, messageApi }))
+    };
+
+
     return (
         <div
             className="modal  d-block ct_congratulation_modal_fade"
@@ -13,7 +204,6 @@ const RoomRegisterModal = ({ onClose }) => {
                 <div className="ct_room_ragister_modal ct_white_bg p-4 ">
                     <div className="d-flex align-items-center gap-2 justify-content-between mb-4 ">
                         <h4 className="ct_fs_20 mb-0 ct_fw_600">Register for Room</h4>
-
                         <button
                             type="button"
                             class="btn-close"
@@ -22,12 +212,12 @@ const RoomRegisterModal = ({ onClose }) => {
                     </div>
                     <div className="d-flex align-items-center justify-content-between gap-3 mb-3">
                         <h6 className="mb-0 ct_fw_600">
-                            Price : <span className="ct_yellow_text">300 YCoins</span>
+                            Price : <span className="ct_yellow_text">{registerData?.attributes?.room_price ?? 0} YCoins</span>
                         </h6>
-                        <a class="ct_outline_border ct_w_100_767 text-dark">
+                        {/* <a class="ct_outline_border ct_w_100_767 text-dark">
                             <img alt="" width="20px" src="assets/img/wallet_icon.png" />
                             205890
-                        </a>
+                        </a> */}
                     </div>
                     <form>
                         <div className="form-group mb-3">
@@ -37,14 +227,53 @@ const RoomRegisterModal = ({ onClose }) => {
                             <textarea
                                 className="form-control ct_input h-auto"
                                 rows="4"
+                                onChange={(e) => handleChange("your take", e.target.value)}
                                 placeholder="Please share what you will be bringing to this conversation a subtopic, experience, question, perspective, some ideas, etc. You can also share any relevant resources such as YouTube links, websites, Instagram / Pinterest pages, etc. using the link below"
                             ></textarea>
+                            {fieldError?.your_take_error && (
+                                <p style={{ color: "red", whiteSpace: "normal", wordWrap: "break-word" }} className="text-red-500 text-xs">{fieldError?.your_take_error}</p>
+                            )}
                         </div>
-                        <div class="d-flex align-items-center gap-3 ct_cursor mb-3">
-                            <label for="ct_upload_file">
-                                <i class="fa-solid fa-paperclip text-dark"></i>
-                            </label>
-                            <p class="mb-0">Add Resources</p>
+                        <div className="col-md-12">
+                            <div className="d-flex align-items-center gap-3 justify-content-between mb-2">
+                                <div className="d-flex align-items-center gap-3 ct_cursor" onClick={() => {
+                                    setIsAddResources(true)
+                                    resources?.length == 0 && setResources([{ id: 1, value: "" }])
+                                }}>
+                                    <label for="ct_upload_file">
+                                        <i className="fa-solid fa-paperclip text-dark"></i>
+                                    </label>
+                                    <p
+                                        className="mb-0"
+                                    >
+                                        Add Resources
+                                    </p>
+                                </div>
+                                {isAddResources && (
+                                    <div onClick={handleAddField}>
+                                        <i className="fa-solid fa-plus ct_cursor_pointer"></i>
+                                    </div>
+                                )}
+                            </div>
+                            {isAddResources &&
+                                resources?.map((item) => (
+                                    <div className='mb-4'>
+                                        <div className='position-relative mb-1'>
+                                            <input
+                                                type='text'
+                                                value={item?.values}
+                                                onChange={(e) => handleChange(item?.id, e.target.value)}
+                                                className='form-control ct_input pe-5'
+                                                placeholder='Enter your resource link'
+                                            />
+                                            <i className='fa-solid fa-trash-can ct_show_eye text-danger ct_cursor_pointer' onClick={() => handleRemoveField(item?.id)}></i>
+                                        </div>
+                                        {errors[item.id] && (
+                                            <p style={{ color: "red", whiteSpace: "normal", wordWrap: "break-word" }} className="text-red-500 text-xs">{errors[item.id]}</p>
+                                        )}
+                                    </div>
+                                ))
+                            }
                         </div>
                         <div class="d-flex align-items-center mb-3 ">
                             <div class="form-check ct_custom_check2">

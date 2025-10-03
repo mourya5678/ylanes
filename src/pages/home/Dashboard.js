@@ -9,7 +9,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css";
 import LandingHeader from '../../components/LandingPageHeader';
-
+import LandingPageFooter from '../../components/LandingPageFooter';
 
 const Dashboard = ({ messageApi }) => {
     const { isSubscriptionLoader, allDashboardSubscription } = useSelector((state) => state.subscriptionReducer);
@@ -368,27 +368,7 @@ const Dashboard = ({ messageApi }) => {
                     </div>
                 </div>
             </section>
-            <footer className="ct_footer_bg">
-                <div className="container">
-                    <div className="footer-logo mb-3">
-                        <img src="assets/img/logo_white.png" alt="" />
-                    </div>
-                    <p>Redefining networking with a focus on authentic conversations, deep insights, and lasting bonds.</p>
-                    <div className="footer-nav mb-4">
-                        <a>About</a>
-                        <a>Blog</a>
-                        <a>FAQs</a>
-                        <a>Privacy Policy</a>
-                    </div>
-                    <div className="footer-icons mb-4">
-                        <a aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-                        <a aria-label="LinkedIn"><i className="fa-brands fa-linkedin"></i></a>
-                    </div>
-                    <div className="footer-bottom">
-                        © 2024 yLanes. All rights reserved
-                    </div>
-                </div>
-            </footer>
+            <LandingPageFooter />
         </div >
     )
 };

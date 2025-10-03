@@ -58,7 +58,7 @@ export const getAllSubscriptionPlanAPI = "bx_block_payments/subscription_plans";
 export const purchaseSubscriptionPlanAPI = "bx_block_payments/razorpays/order_for_unlimited_subscription?amount=";
 
 export const createSubscriptionPlanAPI = "bx_block_payments/razorpays/create_subscriptions";
-export const getAllDashboardSubscriptionPlanAPI = "bx_block_payments/razorpays/get_all_subscription_plans";
+export const getAllDashboardSubscriptionPlanAPI = "bx_block_categories/topics/get_all_subscription_plans";
 
 export const getUserSubscriptionPlanAPI = "bx_block_payments/subscription_details";
 export const getTopupPlanAPI = "bx_block_ycoins/top_up_wallets/top_up_plans";
@@ -90,3 +90,7 @@ export const userOnboardAPI = "account_block/accounts";
 
 // [Block / Unblock] User
 export const blockUserAPI = "account_block/accounts/block_user";
+
+
+// Blogs 
+export const getAllBlogsDataAPI = "bx_block_admin/dynamic_blogs"
