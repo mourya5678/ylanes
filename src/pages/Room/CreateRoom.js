@@ -338,13 +338,13 @@ const CreateRoom = ({ messageApi }) => {
         formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
         formData.append("TZone", timeZone);
         // formData.append()
-        formData.append(
-            'registered_room[resources_attributes][][url]',
-            this.state.oneLink,
-        );
+        if (resources?.length != 0) {
+            resources?.map((item) => (
+                formData.append('room[resources_attributes][][url]', item)
+            ))
+        }
         dispatch(createRoomData({ payload: formData, callback, messageApi }))
     };
-
 
     if (isLoading || isCreateLoading) {
         return <Loader />

@@ -10,8 +10,6 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose })
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    console.log({ registerData });
-
     const [joinAnonymously, setJoinAnonymously] = useState(false);
     const [isAddResources, setIsAddResources] = useState(false);
 
@@ -177,7 +175,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose })
             if (response?.meta?.message) {
                 messageApi.success(response?.meta?.message);
                 onHandleClose();
-            };
+            }
             setFieldValues({
                 anonymouslyName: "",
                 yourTake: "",

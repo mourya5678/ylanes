@@ -375,6 +375,7 @@ export const registerRoomData = createAsyncThunk('register-room', async (props) 
         callback(response);
         return response;
     } catch (error) {
+        messageApi.error(error?.data?.errors[0]?.message)
         callback(null, error);
     };
 });
