@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, registerRoomAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { cancelRoomByHostAPI, cancelRoomByUserAPI, createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, registerRoomAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -368,6 +368,46 @@ export const registerRoomData = createAsyncThunk('register-room', async (props) 
             url: registerRoomAPI + param,
             method: "POST",
             data: payload,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        messageApi.error(error?.data?.errors[0]?.message)
+        callback(null, error);
+    };
+});
+
+// Cancel Room By Host
+export const roomCancelByHost = createAsyncThunk('room-cancel-by-host', async (props) => {
+    const { payload, callback, messageApi, headers } = props;
+    try {
+        const response = await API_REQUEST({
+            url: cancelRoomByHostAPI,
+            method: "POST",
+            data: payload,
+            headers: headers,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        messageApi.error(error?.data?.errors[0]?.message)
+        callback(null, error);
+    };
+});
+
+export const roomCancelByUser = createAsyncThunk('room-cancel-by-user', async (props) => {
+    const { payload, callback, messageApi, headers } = props;
+    try {
+        const response = await API_REQUEST({
+            url: cancelRoomByUserAPI + payload,
+            method: "POST",
+            headers: headers,
             messageApi,
             isSuccessToast: false,
             isErrorToast: false,

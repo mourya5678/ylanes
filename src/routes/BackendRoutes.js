@@ -96,3 +96,13 @@ export const getAllBlogsDataAPI = "bx_block_admin/dynamic_blogs";
 
 // Register in Room
 export const registerRoomAPI = "bx_block_different_rooms/rooms/registered_in_rooms?id=";
+
+// Landing Page
+export const getWhyYlanesDataAPI = "bx_block_categories/topics/get_all_why_ylanes";
+export const getAllTopicAndDetailAPI = "bx_block_categories/topics/public_index";
+
+export const getReviewDataAPI = "bx_block_categories/topics/get_all";
+
+// Room Cancel  
+export const cancelRoomByHostAPI = "bx_block_different_rooms/rooms/delete_room";
+export const cancelRoomByUserAPI = "bx_block_different_rooms/rooms/delete_registered_room?registered_room_id=";

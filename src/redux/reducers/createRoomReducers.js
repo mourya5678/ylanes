@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, registerRoomData, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, registerRoomData, roomCancelByHost, roomCancelByUser, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -288,6 +288,28 @@ export const roomSlice = createSlice({
             state.isCreateLoading = false;
         });
         builder.addCase(registerRoomData.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // roomCancelByHost
+        builder.addCase(roomCancelByHost.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(roomCancelByHost.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(roomCancelByHost.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // roomCancelByUser
+        builder.addCase(roomCancelByUser.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(roomCancelByUser.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(roomCancelByUser.rejected, (state, action) => {
             state.isCreateLoading = false;
         });
     }

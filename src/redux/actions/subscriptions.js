@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { createSubscriptionPlanAPI, getAllDashboardSubscriptionPlanAPI, getAllSubscriptionPlanAPI, getTaxDataAPI, getTopupPlanAPI, getUserSubscriptionPlanAPI, purchaseSubscriptionPlanAPI, rupeeToYCoinConvertion, topupWalletAPI, verifyPaymentTransactionAPI } from "../../routes/BackendRoutes";
+import { createSubscriptionPlanAPI, getAllDashboardSubscriptionPlanAPI, getAllSubscriptionPlanAPI, getAllTopicAndDetailAPI, getReviewDataAPI, getTaxDataAPI, getTopupPlanAPI, getUserSubscriptionPlanAPI, getWhyYlanesDataAPI, purchaseSubscriptionPlanAPI, rupeeToYCoinConvertion, topupWalletAPI, verifyPaymentTransactionAPI } from "../../routes/BackendRoutes";
 
 export const getAllSubscriptionPlan = createAsyncThunk('get-subscription-plan', async (props) => {
     const { messageApi } = props;
@@ -155,5 +155,53 @@ export const createSubscriptionPlan = createAsyncThunk('create-subscription-plan
         return response;
     } catch (error) {
         callback(null, error);
+    };
+});
+
+// get Why Ylanes
+export const getDashboardWhyYlanes = createAsyncThunk('get-dashboard-why-ylanes', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getWhyYlanesDataAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// Get Topic And Details
+export const getDashboardTopicAndDetails = createAsyncThunk('get-dashboard-topic-details', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllTopicAndDetailAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+    };
+});
+
+// Get Reviews
+export const getDashboardReview = createAsyncThunk('get-dashboard-review', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getReviewDataAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
     };
 });

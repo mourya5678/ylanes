@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan } from '../../redux/actions/subscriptions';
+import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getDashboardReview, getDashboardTopicAndDetails, getDashboardWhyYlanes } from '../../redux/actions/subscriptions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { useNavigate } from 'react-router';
@@ -12,13 +12,16 @@ import LandingHeader from '../../components/LandingPageHeader';
 import LandingPageFooter from '../../components/LandingPageFooter';
 
 const Dashboard = ({ messageApi }) => {
-    const { isSubscriptionLoader, allDashboardSubscription } = useSelector((state) => state.subscriptionReducer);
+    const { isSubscriptionLoader, allDashboardSubscription, whyYlanesData, buzzList, reviewList } = useSelector((state) => state.subscriptionReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getDashboardAllSubscriptionPlan({ messageApi }));
+        dispatch(getDashboardWhyYlanes({ messageApi }));
+        dispatch(getDashboardTopicAndDetails({ messageApi }));
+        dispatch(getDashboardReview({ messageApi }));
     }, []);
 
     if (isSubscriptionLoader) {
@@ -55,33 +58,16 @@ const Dashboard = ({ messageApi }) => {
                 <div className="container-fluid text-center">
                     <h2 className="mb-5 fw-bold">Why YLanes?</h2>
                     <div className="row  g-4">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_why_choose_card p-4 h-100 rounded">
-                                <h5 className="ct_fs_20 mb-4">Exclusivity</h5>
-                                <p>
-                                    Exclusivity - A private club where only members shape the conversations
-                                    through posts, polls, and small-group video calls
-                                </p>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_why_choose_card p-4 h-100 rounded">
-                                <h5 className="ct_fs_20 mb-4">Intellectual Stimulation</h5>
-                                <p>
-                                    Engage in thought-provoking conversations with a community of wise,
-                                    witty, and curious minds.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_why_choose_card p-4 h-100 rounded">
-                                <h5 className="ct_fs_20 mb-4">Freedom to Express</h5>
-                                <p>
-                                    Express yourself freely—no need for names or social media links,
-                                    just authentic ideas.
-                                </p>
-                            </div>
-                        </div>
+                        {whyYlanesData?.length != 0 &&
+                            whyYlanesData?.map((item) => (
+                                <div className="col-lg-4 col-md-6">
+                                    <div className="ct_why_choose_card p-4 h-100 rounded">
+                                        <h5 className="ct_fs_20 mb-4">{item?.heading}</h5>
+                                        <div dangerouslySetInnerHTML={{ __html: item?.paragraph ?? "" }}></div>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </section>
@@ -89,14 +75,18 @@ const Dashboard = ({ messageApi }) => {
                 <div className="container-fluid">
                     <h2 className="text-center fw-bold mb-5">What's the Buzz?</h2>
                     <div className="row g-4">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#c6a3f7" }}>
-                                <h5 className="fw-bold">Business & Start-ups</h5>
-                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
-                                <img src="assets/img/icon_1.png" alt="Business" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
+                        {buzzList?.length != 0 &&
+                            buzzList?.map((item) => (
+                                <div className="col-lg-4 col-md-6">
+                                    <div className="ct_wbuzz_card p-4 pe-0 h-100" style={{ background: "#c6a3f7" }}>
+                                        <h5 className="fw-bold pe-4">{item?.attributes?.name ?? ""}</h5>
+                                        <p className='ct_para_scroll pe-4 ct_custom_scroll pe-0'>{item?.attributes?.description ?? ""}</p>
+                                        <img src="assets/img/icon_1.png" alt="Business" className="img-fluid mt-3" />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        {/* <div className="col-lg-4 col-md-6">
                             <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffad61" }}>
                                 <h5 className="fw-bold">Finance & Economics</h5>
                                 <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
@@ -147,7 +137,7 @@ const Dashboard = ({ messageApi }) => {
                                     future of work?</p>
                                 <img src="assets/img/icon_8.png" alt="Chill Zone" className="img-fluid mt-3" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -167,6 +157,42 @@ const Dashboard = ({ messageApi }) => {
                         }}
                         className="ct_review_slider"
                     >
+                        {reviewList?.length != 0 &&
+                            reviewList?.map((item) => (
+                                <SwiperSlide>
+                                    {console.log({ item })}
+                                    <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                        <div className="me-4 flex-shrink-0" style={{ maxWidth: "165px" }}>
+                                            <img src={item?.image_url ?? "assets/img/asset_3.png"} alt="User 1" className="img-fluid rounded-3" />
+                                        </div>
+                                        <div>
+                                            <span className="fs-2 text-warning">“</span>
+                                            <div dangerouslySetInnerHTML={{ __html: item?.review ?? "" }}></div>
+                                            {/* <p className="mb-3">
+                                                {item?.review ?? ""}
+                                            </p> */}
+                                            <hr className="ct_light_hr" />
+                                            <h6 className="fw-bold mb-0">{item?.name ?? ""}</h6>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            ))
+                        }
+                        {/* <SwiperSlide>
+                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
+                                <div className="me-4 flex-shrink-0">
+                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
+                                </div>
+                                <div>
+                                    <span className="fs-2 text-warning">“</span>
+                                    <p className="mb-3">
+                                        The discussions here are insightful and fun...
+                                    </p>
+                                    <hr className="ct_light_hr" />
+                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
+                                </div>
+                            </div>
+                        </SwiperSlide>
                         <SwiperSlide>
                             <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                 <div className="me-4 flex-shrink-0">
@@ -196,37 +222,7 @@ const Dashboard = ({ messageApi }) => {
                                     <h6 className="fw-bold mb-0">Corey Michael</h6>
                                 </div>
                             </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_3.png" alt="User 1" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        YLanes is where my brain goes to hang out...
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Gustavo Culhane</h6>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        The discussions here are insightful and fun...
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
-                                </div>
-                            </div>
-                        </SwiperSlide>
+                        </SwiperSlide> */}
                     </Swiper>
                 </div>
             </section>

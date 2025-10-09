@@ -337,13 +337,12 @@ const CreateRoom = ({ messageApi }) => {
         formData.append("room[is_anonymously]", joinAnonymously);
         formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
         formData.append("TZone", timeZone);
-        // formData.append()
         if (resources?.length != 0) {
             resources?.map((item) => (
-                formData.append('room[resources_attributes][][url]', item)
+                formData.append('room[room_resources_attributes][][url]', item?.values)
             ))
-        }
-        dispatch(createRoomData({ payload: formData, callback, messageApi }))
+        };
+        dispatch(createRoomData({ payload: formData, callback, messageApi }));
     };
 
     if (isLoading || isCreateLoading) {
@@ -395,7 +394,7 @@ const CreateRoom = ({ messageApi }) => {
                                                 <option value="">Select Room Type</option>
                                                 {RoomType?.map((item) => (
                                                     <option value={item?.id}>
-                                                        {item?.attributes?.name}
+                                                        {item?.attributes?.name ?? ''} - {item?.attributes?.ycoins ?? 0}
                                                     </option>
                                                 ))}
                                             </select>

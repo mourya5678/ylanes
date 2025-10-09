@@ -12,7 +12,19 @@
 }
 
 .ct_post_img img {
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.ct_bakc_bg {
+    display: block;
+    top: 0px;
+    right: 0px;
+    color: #000;
+    position: relative;
+}
+
+.ct_fw_600 {
+    font-weight: 600;
 }
 
 body {
@@ -684,6 +696,30 @@ a {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: 18px !important;
+    background-color: #f9f9f9ab !important;
+    font-weight: 600 !important;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: #000 !important;
+    width: 35px !important;
+    height: 35px !important;
+
+    border-radius: 100px !important;
+
 }
 
 @media screen and (max-width:991px) {

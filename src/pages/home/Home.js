@@ -627,7 +627,7 @@ const Home = ({ messageApi }) => {
                               <Swiper
                                 modules={[Navigation]}
                                 spaceBetween={30}
-                                slidesPerView={3}
+                                slidesPerView={2}
                                 navigation
                                 loop={item?.attributes?.docs?.length > 2}
                                 autoplay={{ delay: 2000 }}

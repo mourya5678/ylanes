@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { convertRupeeToYCoinData, getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getTaxDeatils, getTopUpPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan, topUpUserWalletYCoins, verifyPaymentTransactionData } from "../actions/subscriptions";
+import { convertRupeeToYCoinData, getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getDashboardReview, getDashboardTopicAndDetails, getDashboardWhyYlanes, getTaxDeatils, getTopUpPlan, getUserSubscriptionPlan, purchaseSubscriptionPlan, topUpUserWalletYCoins, verifyPaymentTransactionData } from "../actions/subscriptions";
 
 const initialStates = {
     isSubscriptionLoader: false,
@@ -9,6 +9,9 @@ const initialStates = {
     topUpPlan: [],
     tax: 0,
     convertRupeeToYCoins: 1,
+    whyYlanesData: [],
+    buzzList: [],
+    reviewList: [],
 };
 
 export const subscriptionSlice = createSlice({
@@ -65,6 +68,19 @@ export const subscriptionSlice = createSlice({
             state.isSubscriptionLoader = false;
         });
 
+        // getDashboardWhyYlanes
+        builder.addCase(getDashboardWhyYlanes.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getDashboardWhyYlanes.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {};
+            state.whyYlanesData = data ?? [];
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getDashboardWhyYlanes.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
         // getTopUpPlan
         builder.addCase(getTopUpPlan.pending, (state, action) => {
             state.isSubscriptionLoader = true;
@@ -107,7 +123,6 @@ export const subscriptionSlice = createSlice({
         });
         builder.addCase(convertRupeeToYCoinData.fulfilled, (state, action) => {
             const { data } = action?.payload;
-            console.log({ data });
             var value = Number(
                 String(data?.constant_value).replace(/[^0-9.]/g, "")
             );
@@ -129,6 +144,31 @@ export const subscriptionSlice = createSlice({
             state.isSubscriptionLoader = false;
         });
 
+        // getDashboardTopicAndDetails
+        builder.addCase(getDashboardTopicAndDetails.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getDashboardTopicAndDetails.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {};
+            state.buzzList = data ?? [];
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getDashboardTopicAndDetails.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
+
+        // getDashboardReview
+        builder.addCase(getDashboardReview.pending, (state, action) => {
+            state.isSubscriptionLoader = true;
+        });
+        builder.addCase(getDashboardReview.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {};
+            state.reviewList = data ?? [];
+            state.isSubscriptionLoader = false;
+        });
+        builder.addCase(getDashboardReview.rejected, (state, action) => {
+            state.isSubscriptionLoader = false;
+        });
     }
 });
 

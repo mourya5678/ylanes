@@ -1603,7 +1603,7 @@ button:focus {
   -o-object-fit: contain;
   object-fit: contain;
   border-radius: 10px;
-  /* background-color: #f5f5f5; */
+  background-color: #f5f5f5;
 }
 
 .ct_like_comment_div {

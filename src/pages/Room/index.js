@@ -3,10 +3,11 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageRoutes } from '../../routes/PageRoutes';
-import { getMyRoomData, getPastRoomData, getRecommendedRoomData, getUpcommingRoomData } from '../../redux/actions/createRoom';
+import { getMyRoomData, getPastRoomData, getRecommendedRoomData, getUpcommingRoomData, roomCancelByHost, roomCancelByUser } from '../../redux/actions/createRoom';
 import Loader from '../../components/Loader';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import RoomRegisterModal from '../../components/Modals/RoomRegisterModal';
+import CancelRoomModal from '../../components/Modals/CancelRoomModal';
 
 const MyRoom = ({ messageApi }) => {
     const { isCreateLoading, pastRoomList, upcommingRoomList, recommendedList, myRoomList } = useSelector((state) => state.createRoomReducer);
@@ -18,16 +19,22 @@ const MyRoom = ({ messageApi }) => {
     const userData = pipGetAccessToken("user_data");
 
     const [isRegisterShow, setIsRegisterShow] = useState(false);
+    const [isCancelModal, setIsCancelModal] = useState(false);
+
     const [registerData, setRegisterData] = useState({});
 
     const actionCableData = useRef(null);
 
     useEffect(() => {
+        getRoomData();
+    }, []);
+
+    const getRoomData = () => {
         dispatch(getMyRoomData({ messageApi }));
         dispatch(getPastRoomData({ messageApi }));
         dispatch(getUpcommingRoomData({ messageApi }));
         dispatch(getRecommendedRoomData({ messageApi }));
-    }, []);
+    };
 
     const handleShowRoomStatus = (item, val) => {
         let isHost = item?.attributes?.is_host;
@@ -68,6 +75,38 @@ const MyRoom = ({ messageApi }) => {
             };
         };
         return name;
+    };
+
+    const handleOpenModal = (val, item) => {
+        setRegisterData(item);
+        if (val == "CANCEL") {
+            setIsCancelModal(true);
+        } else {
+            setIsRegisterShow(true)
+        };
+    };
+
+    const handleCancelRoom = () => {
+        setIsCancelModal(false);
+        console.log({ registerData: registerData?.attributes?.host?.data?.id, userData: userData?.id });
+        const callback = (response) => {
+            messageApi.success(response?.message ?? "");
+            getRoomData();
+        };
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const unixTime = Math.floor(Date.now() / 1000).toString();
+        const headers = {
+            "TZone": timeZone,
+            "UTime": unixTime
+        };
+        if (registerData?.attributes?.host?.data?.id == userData?.id) {
+            var formData = new FormData();
+            formData.append("room_id", String(registerData?.id));
+            dispatch(roomCancelByHost({ payload: formData, callback, messageApi, headers: headers }));
+        } else {
+            const data = registerData?.id
+            dispatch(roomCancelByUser({ payload: data, callback, messageApi, headers: headers }));
+        };
     };
 
     if (isCreateLoading) {
@@ -162,8 +201,9 @@ const MyRoom = ({ messageApi }) => {
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
                                                                     <button className='ct_yellow_btn py-1 px-3' onClick={() => {
-                                                                        setRegisterData(item)
-                                                                        setIsRegisterShow(true)
+                                                                        // setRegisterData(item)
+                                                                        // setIsRegisterShow(true)
+                                                                        handleOpenModal(handleShowRoomStatus(item, false), item)
                                                                     }}>{handleShowRoomStatus(item, false)}</button>
                                                                 </div>
                                                                 <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
@@ -366,6 +406,12 @@ const MyRoom = ({ messageApi }) => {
                     }}
                     registerData={registerData}
                     messageApi={messageApi}
+                />
+            }
+            {isCancelModal &&
+                <CancelRoomModal
+                    onClose={() => setIsCancelModal(false)}
+                    handleRoomCancel={handleCancelRoom}
                 />
             }
         </div>
