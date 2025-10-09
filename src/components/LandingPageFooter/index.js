@@ -19,7 +19,7 @@ const LandingPageFooter = () => {
                     <a onClick={() => navigate(pageRoutes.aboutUs)}>About</a>
                     <a onClick={() => navigate(pageRoutes.blogs)}>Blog</a>
                     <a onClick={() => navigate(pageRoutes.landingFaq)}>FAQs</a>
-                    <a onClick={() => navigate(pageRoutes.privacyPolicy)}>Privacy Policy</a>
+                    <a onClick={() => navigate(pageRoutes.landingPrivacyPolicy)}>Privacy Policy</a>
                 </div>
                 <div className="footer-icons mb-4">
                     <a aria-label="Instagram">

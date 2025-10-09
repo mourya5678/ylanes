@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import UserProfile from "../pages/auth/UserProfile";
+import TermsOfUse from "../pages/policies/TermsOfUse";
+import LandingPrivacyPolicy from "../pages/policies/LandingPrivacyPolicy";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -79,6 +81,8 @@ export const pageRoutes = {
     blogsDetails: "/blogs-details",
     aboutUs: "/about-us",
     landingFaq: "/faq",
+    landingTermOfUse: "/term-and-condition",
+    landingPrivacyPolicy: "/privayc_policy"
 };
 
 export const AllRoutes = [
@@ -86,6 +90,18 @@ export const AllRoutes = [
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
+        isPrivate: true
+    },
+    {
+        name: "Terms Of Use",
+        path: pageRoutes?.landingTermOfUse,
+        element: <TermsOfUse />,
+        isPrivate: true
+    },
+    {
+        name: "Landing Privacy Policy",
+        path: pageRoutes?.landingPrivacyPolicy,
+        element: <LandingPrivacyPolicy />,
         isPrivate: true
     },
     {

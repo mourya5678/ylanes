@@ -108,7 +108,7 @@ const LoginScreen = ({ messageApi }) => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <label for=""><span className="ct_text_op_6">Please read and agree to our</span> <a href={pageRoutes?.termAndCondition} target='_blank' className="ct_link_under_line text-dark">Terms of Use</a> and <a href={pageRoutes?.privacyPolicy} target='_blank' className="ct_link_under_line text-dark"><span className="ct_text_op_6">Privacy Policy</span></a></label>
+                                            <label for=""><span className="ct_text_op_6">Please read and agree to our</span> <a href={pageRoutes?.landingTermOfUse} target='_blank' className="ct_link_under_line text-dark">Terms of Use</a> and <a href={pageRoutes?.landingPrivacyPolicy} target='_blank' className="ct_link_under_line text-dark"><span className="ct_text_op_6">Privacy Policy</span></a></label>
                                         </div>
                                         <ErrorMessage
                                             errors={errors}
