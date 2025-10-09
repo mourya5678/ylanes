@@ -17,6 +17,9 @@ export const getAllPostAPI = "bx_block_posts/posts";
 export const likePostAPI = "bx_block_like/likes";
 export const commentPostAPI = "bx_block_posts/posts/";
 
+// Get Post Data
+export const getAllUserPostAPI = "bx_block_posts/posts/web_index";
+
 // bx_block_posts/articles/article_comment
 
 export const userProfileAPI = "bx_block_profile/profiles/";

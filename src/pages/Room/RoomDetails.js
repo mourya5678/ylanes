@@ -108,7 +108,7 @@ const RoomDetails = ({ messageApi }) => {
                           <span className="ct_text_op_6">{state?.data?.attributes?.host?.data?.attributes?.hearts ?? 0} M ({state?.data?.attributes?.host?.data?.attributes?.age ?? 0} yrs)</span>
                         </p>
                         <button className="ct_yellow_btn py-1 px-3">
-                          {state?.data?.attributes?.host?.data?.id == userData?.id ? 'Host' : "Guest"}
+                          Host
                         </button>
                       </div>
                       <p className="mb-0 ct_para_scroll">
@@ -122,11 +122,10 @@ const RoomDetails = ({ messageApi }) => {
                         <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
                           <p className="mb-0">
                             <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
-                            {console.log({ item })}
                             <span className="ct_text_op_6">{item?.attributes?.participant?.data?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age ?? 0} yrs)</span>
                           </p>
                           <button className="ct_yellow_btn py-1 px-3">
-                            {item?.id == userData?.id ? 'Host' : "Guest"}
+                            Guest
                           </button>
                         </div>
                         <p className="mb-0 ct_para_scroll">
@@ -136,10 +135,9 @@ const RoomDetails = ({ messageApi }) => {
                     ))}
                 </div>
                 <div className={`tab-pane fade ${tabManage == "2" ? "active show" : ""}`} role="tabpanel">
-                  {state?.data?.attributes?.participants?.data?.length != 0 &&
-                    state?.data?.attributes?.participants?.data?.map((items) => (
-                      items?.attributes?.resources?.length != 0 &&
-                      <div className="ct_white_bg p-3">
+                  {state?.data?.attributes?.room_resources?.length != 0 &&
+                    state?.data?.attributes?.room_resources?.map((items) => (
+                      <div className="ct_white_bg p-3 mb-2">
                         <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
                           <div className="d-flex align-items-center gap-3">
                             <div className="ct_upload_user_name">
@@ -166,7 +164,7 @@ const RoomDetails = ({ messageApi }) => {
                         </div>
                         <div className="d-flex align-items-center justify-content-between gap-3 mt-3">
                           <p className="mb-0 ct_text_op_6">
-                            https://ylanes.com:9000/create-room
+                            {items ?? ""}
                           </p>
                           <p className="mb-0">
                             <span className="ct_fw_500"> 0</span>{" "}

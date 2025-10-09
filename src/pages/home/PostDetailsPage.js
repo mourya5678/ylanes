@@ -100,7 +100,7 @@ const PostDetailsPage = ({ messageApi }) => {
             <Header messageApi={messageApi} />
             <section className="py-4 pb-4 position-relative">
                 <div className='d-flex align-items-center gap-4'>
-                    <div className='ct_back_icon ct_fw_600 ct_bakc_bg'>
+                    <div className='ct_back_icon ct_fw_600 ct_bakc_bg' onClick={() => navigate(-1)}>
                         <i class="fa-solid fa-arrow-left me-1"></i>
                     </div>
                     <h4 className='ct_fs_20 ct_fw_600 mb-0'> Post Details</h4>

@@ -36,8 +36,8 @@ export const pipViewDate = (date) => {
 };
 
 export const pipViewDate2 = (date) => {
-    // return moment(date).format("MMM DD, YYYY - h:mm A");
-    return moment.utc(date).format("DD-MM-YYYY - h:mm:A");
+    return moment(date).format("MMM DD, YYYY - h:mm A");
+    // return moment.utc(date).format("DD-MM-YYYY - h:mm:A");
 };
 
 export const pipViewDate3 = (date) => {

@@ -294,6 +294,31 @@ const CreateRoom = ({ messageApi }) => {
         return errors;
     };
 
+    const handleDateTime = (text, time) => {
+        let momentDate = moment(text || this.showCurrentTimeInTimeSelector());
+        let momentTime = moment(
+            time || this.showCurrentTimeInTimeSelector(),
+            'hh:mmA',
+        );
+        momentDate.set('hour', momentTime.hour());
+        momentDate.set('minute', momentTime.minute());
+        momentDate.set('second', 0);
+        if (!momentDate.isBefore(moment.now())) {
+            let startTime = momentDate.format('DD/MM/YYYY hh:mmA');
+            let startTimeSend = momentDate.format('YYYY-MM-DD HH:mm:ss');
+            let endTime = momentDate
+                .add(7199, 'seconds')
+                .format('YYYY-MM-DD HH:mm:ss');
+            this.setState({
+                dateTime: startTime,
+                endTime: endTime,
+                dateTimeSend: startTimeSend,
+            });
+        } else {
+            this.showAlertPopup(`You cannot select the past time.`);
+        }
+    };
+
     const handleSubmitCreateRoom = async () => {
         const errors = validateAllFields();
         if (Object.keys(errors).length > 0) {
@@ -321,9 +346,15 @@ const CreateRoom = ({ messageApi }) => {
                 join_anonymously_error: "",
             });
         };
-        const startTime = new Date(fieldValues.selectTime);
+        console.log(fieldValues.selectTime)
+        const startTime = moment(fieldValues.selectTime).format("YYYY-MM-DD HH:mm:ss");
         const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const unixTime = Math.floor(Date.now() / 1000).toString();
+        const headers = {
+            'TZone': timeZone,
+            "UTime": unixTime
+        }
         const formData = new FormData();
         formData.append("room[start_time]", startTime);
         formData.append("room[end_time]", endTime);
@@ -337,12 +368,13 @@ const CreateRoom = ({ messageApi }) => {
         formData.append("room[is_anonymously]", joinAnonymously);
         formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
         formData.append("TZone", timeZone);
+
         if (resources?.length != 0) {
             resources?.map((item) => (
                 formData.append('room[room_resources_attributes][][url]', item?.values)
             ))
         };
-        dispatch(createRoomData({ payload: formData, callback, messageApi }));
+        // dispatch(createRoomData({ payload: formData, callback, messageApi, headers }));
     };
 
     if (isLoading || isCreateLoading) {

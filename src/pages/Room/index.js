@@ -23,7 +23,6 @@ const MyRoom = ({ messageApi }) => {
 
     const [registerData, setRegisterData] = useState({});
 
-    const actionCableData = useRef(null);
 
     useEffect(() => {
         getRoomData();
@@ -88,10 +87,12 @@ const MyRoom = ({ messageApi }) => {
 
     const handleCancelRoom = () => {
         setIsCancelModal(false);
-        console.log({ registerData: registerData?.attributes?.host?.data?.id, userData: userData?.id });
         const callback = (response) => {
-            messageApi.success(response?.message ?? "");
+            if (response?.message) {
+                messageApi.success(response?.message ?? "");
+            };
             getRoomData();
+            setActiveTab(activeTab);
         };
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const unixTime = Math.floor(Date.now() / 1000).toString();
@@ -201,8 +202,6 @@ const MyRoom = ({ messageApi }) => {
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
                                                                     <button className='ct_yellow_btn py-1 px-3' onClick={() => {
-                                                                        // setRegisterData(item)
-                                                                        // setIsRegisterShow(true)
                                                                         handleOpenModal(handleShowRoomStatus(item, false), item)
                                                                     }}>{handleShowRoomStatus(item, false)}</button>
                                                                 </div>
@@ -307,8 +306,7 @@ const MyRoom = ({ messageApi }) => {
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
                                                                     <button className='ct_yellow_btn py-1 px-3' onClick={() => {
-                                                                        setRegisterData(item)
-                                                                        setIsRegisterShow(true)
+                                                                        handleOpenModal(handleShowRoomStatus(item, false), item)
                                                                     }}>{handleShowRoomStatus(item, true)}</button>
                                                                 </div>
                                                                 <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
@@ -399,6 +397,7 @@ const MyRoom = ({ messageApi }) => {
                     onClose={() => setIsRegisterShow(false)}
                     onHandleClose={() => {
                         setIsRegisterShow(false);
+                        setActiveTab(activeTab);
                         dispatch(getMyRoomData({ messageApi }));
                         dispatch(getPastRoomData({ messageApi }));
                         dispatch(getUpcommingRoomData({ messageApi }));

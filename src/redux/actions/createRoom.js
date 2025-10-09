@@ -123,12 +123,13 @@ export const commentUserPoll = createAsyncThunk('comment-poll', async (props) =>
 });
 
 export const createRoomData = createAsyncThunk('create-room', async (props) => {
-    const { payload, callback, messageApi } = props;
+    const { payload, callback, messageApi, headers } = props;
     try {
         const response = await API_REQUEST({
             url: createRoomAPI,
             method: "POST",
             data: payload,
+            headers: headers,
             messageApi,
             isSuccessToast: false,
             isErrorToast: false,

@@ -172,9 +172,9 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose })
             return;
         };
         const callback = (response) => {
-            if (response?.meta?.message) {
-                messageApi.success(response?.meta?.message);
-                onHandleClose();
+            onHandleClose();
+            if (response) {
+                messageApi.success("Room registered successfully.");
             }
             setFieldValues({
                 anonymouslyName: "",
