@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { cancelRoomByHostAPI, cancelRoomByUserAPI, createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, registerRoomAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
+import { cancelRoomByHostAPI, cancelRoomByUserAPI, createPollAPI, createRoomAPI, disconnectUserAPI, getAgoraTokenAPI, getAllChatUserAPI, getAllConnectionsAPI, getAllMyRoomsDataAPI, getAllPastRoomDataAPI, getAllRecommendedRoomsDataAPI, getAllUpcommingRoomDataAPI, getDiscoverAllConnectionAPI, getPollCommentAPI, getPollDataAPI, getPreviousMessagesAPI, getRoomTypeAPI, joinVideoCallRoomAPI, registerRoomAPI, sendInvitationToUserAPI, sendMessageToUserAPI } from "../../routes/BackendRoutes";
 
 export const getRoomTypeData = createAsyncThunk('get-room-type', async (props) => {
     const { messageApi } = props;
@@ -137,6 +137,7 @@ export const createRoomData = createAsyncThunk('create-room', async (props) => {
         callback(response);
         return response;
     } catch (error) {
+        messageApi.error(error?.data?.errors?.message)
         callback(null, error);
     };
 });
@@ -410,6 +411,26 @@ export const roomCancelByUser = createAsyncThunk('room-cancel-by-user', async (p
             method: "POST",
             headers: headers,
             messageApi,
+            isSuccessToast: false,
+            isErrorToast: false,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        messageApi.error(error?.data?.errors[0]?.message)
+        callback(null, error);
+    };
+});
+
+// Video Call
+export const joinRoomVideoCall = createAsyncThunk('join-video-call', async (props) => {
+    const { callback, messageApi, payload } = props;
+    try {
+        const response = await API_REQUEST({
+            url: joinVideoCallRoomAPI,
+            method: "POST",
+            messageApi,
+            data: payload,
             isSuccessToast: false,
             isErrorToast: false,
         });

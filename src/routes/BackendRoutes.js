@@ -109,3 +109,6 @@ export const getReviewDataAPI = "bx_block_categories/topics/get_all";
 // Room Cancel  
 export const cancelRoomByHostAPI = "bx_block_different_rooms/rooms/delete_room";
 export const cancelRoomByUserAPI = "bx_block_different_rooms/rooms/delete_registered_room?registered_room_id=";
+
+// Join Video Call
+export const joinVideoCallRoomAPI = "bx_block_different_rooms/rooms/join_room";

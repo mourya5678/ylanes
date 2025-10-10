@@ -1,23 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
+import { useLocation } from "react-router";
+import { useDispatch } from "react-redux";
+import { joinRoomVideoCall } from "../../redux/actions/createRoom";
 
-export default function AgoraCall() {
+export default function AgoraCall({ messageApi }) {
+    const { state } = useLocation();
+    const dispatch = useDispatch();
+
     const clientRef = useRef(null);
     const localAudioTrackRef = useRef(null);
+
     const localVideoTrackRef = useRef(null);
     const localPlayerRef = useRef(null);
-    const remoteContainerRef = useRef(null);
 
+    const remoteContainerRef = useRef(null);
     const [joined, setJoined] = useState(false);
+
     const [mutedAudio, setMutedAudio] = useState(false);
     const [mutedVideo, setMutedVideo] = useState(false);
+
     const [remoteUsers, setRemoteUsers] = useState([]);
 
-    const APP_ID = '611227230#1418219';
-    const TOKEN = "007eJxTYPhTG7k57Ouib/OetWrYT6/mMHq4np13ouTiurc89y6FKu9SYDBIMkgzN7U0SrQwTjIxME+xtDA2SEtJMzU2MExKS7Ww4H59IaMhkJFh6Z1VrIwMEAjiczMkZyTm5aXmlKQWlzAwAACkViPv";
+    // const APP_ID = '611227230#1418219';
+    // const TOKEN = "007eJxTYPhTG7k57Ouib/OetWrYT6/mMHq4np13ouTiurc89y6FKu9SYDBIMkgzN7U0SrQwTjIxME+xtDA2SEtJMzU2MExKS7Ww4H59IaMhkJFh6Z1VrIwMEAjiczMkZyTm5aXmlKQWlzAwAACkViPv";
 
-    const CHANNEL = "channeltest";
-
+    // const CHANNEL = "channeltest";
     const makeRemoteId = (uid) => `remote-player-${uid}`;
 
     useEffect(() => {
@@ -58,7 +66,7 @@ export default function AgoraCall() {
         };
     }, []);
 
-    const joinChannel = async () => {
+    const joinChannel = async (TOKEN, APP_ID, CHANNEL) => {
         if (joined) return;
         const client = clientRef.current;
         try {
@@ -127,12 +135,25 @@ export default function AgoraCall() {
         };
     };
 
+    const handleJoinVideoCall = () => {
+        console.log({ state: state?.data });
+        const callback = (response) => {
+            if (response?.agora_token) {
+                joinChannel(response?.agora_token, response?.agora_app_id, response?.agora_channel)
+            };
+        };
+        const data = {
+            room_id: state?.data?.id
+        };
+        dispatch(joinRoomVideoCall({ payload: data, messageApi, callback }));
+    };
+
     return (
         <div className="p-4 max-w-4xl mx-auto">
             <h2 className="text-xl font-semibold mb-4">Agora Video Call (React)</h2>
             <div className="flex gap-4 mb-4">
                 <button
-                    onClick={joinChannel}
+                    onClick={handleJoinVideoCall}
                     className="px-4 py-2 rounded shadow bg-green-500 text-white disabled:opacity-50"
                     disabled={joined}
                 >

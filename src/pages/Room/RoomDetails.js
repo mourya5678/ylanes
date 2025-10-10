@@ -144,9 +144,9 @@ const RoomDetails = ({ messageApi }) => {
                               <img
                                 alt=""
                                 className="ct_img_40 ct_flex_shrink_0"
-                                src="assets/img/user.png"
+                                src={state?.data?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
                               />
-                              <p className="mb-0 ct_fw_600">Sam</p>
+                              <p className="mb-0 ct_fw_600">{state?.data?.attributes?.host?.data?.attributes?.full_name ?? ""}</p>
                             </div>
                             <p className="mb-0">
                               <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}

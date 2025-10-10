@@ -338,6 +338,8 @@ const CreateRoom = ({ messageApi }) => {
                 globalRoom: true,
                 selectTime: ""
             });
+            setResources([]);
+            setErrors([]);
             setFieldError({
                 your_take_error: "",
                 select_topic_error: "",
@@ -346,9 +348,9 @@ const CreateRoom = ({ messageApi }) => {
                 join_anonymously_error: "",
             });
         };
-        console.log(fieldValues.selectTime)
-        const startTime = moment(fieldValues.selectTime).format("YYYY-MM-DD HH:mm:ss");
-        const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
+        const startTime = moment(fieldValues.selectTime).utc().format("YYYY-MM-DD HH:mm:ss");
+        const endTime = moment(startTime).add(7199, 'seconds')
+            .format('YYYY-MM-DD HH:mm:ss');;
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const unixTime = Math.floor(Date.now() / 1000).toString();
         const headers = {
@@ -374,7 +376,7 @@ const CreateRoom = ({ messageApi }) => {
                 formData.append('room[room_resources_attributes][][url]', item?.values)
             ))
         };
-        // dispatch(createRoomData({ payload: formData, callback, messageApi, headers }));
+        dispatch(createRoomData({ payload: formData, callback, messageApi, headers }));
     };
 
     if (isLoading || isCreateLoading) {

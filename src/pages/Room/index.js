@@ -80,6 +80,8 @@ const MyRoom = ({ messageApi }) => {
         setRegisterData(item);
         if (val == "CANCEL") {
             setIsCancelModal(true);
+        } else if (val == "ENTER") {
+            navigate(pageRoutes.videoCall, { state: { data: item } });
         } else {
             setIsRegisterShow(true)
         };
@@ -306,7 +308,7 @@ const MyRoom = ({ messageApi }) => {
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
                                                                     <button className='ct_yellow_btn py-1 px-3' onClick={() => {
-                                                                        handleOpenModal(handleShowRoomStatus(item, false), item)
+                                                                        handleOpenModal(handleShowRoomStatus(item, true), item)
                                                                     }}>{handleShowRoomStatus(item, true)}</button>
                                                                 </div>
                                                                 <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>

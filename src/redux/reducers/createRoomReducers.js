@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, registerRoomData, roomCancelByHost, roomCancelByUser, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
+import { answerPollData, commentUserPoll, createPollData, createRoomData, descoverAllConnectionsData, disconnectUserConnection, getAllChatAfterReciveUsersData, getAllChatUsersData, getAllPreviousMessages, getAllUserPreviousMessages, getMyConnectionsData, getMyRoomData, getPastRoomData, getPollCommentData, getPollCommentDatass, getPollTypeDatass, getRecommendedRoomData, getRoomTypeData, getUpcommingRoomData, getUserAgoraToken, joinRoomVideoCall, registerRoomData, roomCancelByHost, roomCancelByUser, sendInvitationToUser, sendMessageToUser } from "../actions/createRoom";
 
 const initialStates = {
     isCreateLoading: false,
@@ -310,6 +310,17 @@ export const roomSlice = createSlice({
             state.isCreateLoading = false;
         });
         builder.addCase(roomCancelByUser.rejected, (state, action) => {
+            state.isCreateLoading = false;
+        });
+
+        // joinRoomVideoCall
+        builder.addCase(joinRoomVideoCall.pending, (state, action) => {
+            state.isCreateLoading = true;
+        });
+        builder.addCase(joinRoomVideoCall.fulfilled, (state, action) => {
+            state.isCreateLoading = false;
+        });
+        builder.addCase(joinRoomVideoCall.rejected, (state, action) => {
             state.isCreateLoading = false;
         });
     }
