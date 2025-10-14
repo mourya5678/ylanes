@@ -130,10 +130,6 @@ const RoomDetails = ({ messageApi }) => {
                     state?.data?.attributes?.participants?.data?.map((item) => (
                       <div className="ct_white_bg p-3 mb-3">
                         <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
-                          {/* <p className="mb-0">
-                            <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
-                            <span className="ct_text_op_6">{item?.attributes?.participant?.data?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age ?? 0} yrs)</span>
-                          </p> */}
                           <div className="d-flex align-items-center gap-3">
                             <div className="ct_upload_user_name">
                               <img

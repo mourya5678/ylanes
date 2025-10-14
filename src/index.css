@@ -37,18 +37,18 @@ input#phone_number {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: end;
-        -ms-flex-align: end;
-            align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
     z-index: 999;
     width: 100%;
     height: 100%;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .loader {
@@ -59,12 +59,14 @@ input#phone_number {
     border-top-color: transparent;
     position: relative;
     -webkit-animation: loaderAnimation 1.5s linear infinite;
-            animation: loaderAnimation 1.5s linear infinite;
+    animation: loaderAnimation 1.5s linear infinite;
 }
-.ct_header_search_w_700{
+
+.ct_header_search_w_700 {
     max-width: 700px;
     margin-left: auto;
 }
+
 .loader::before,
 .loader::after {
     content: '';
@@ -76,41 +78,41 @@ input#phone_number {
     background-color: #ffcc00;
     border-radius: 50%;
     -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .loader::before {
     -webkit-animation: loaderAnimationBefore 1s linear infinite;
-            animation: loaderAnimationBefore 1s linear infinite;
+    animation: loaderAnimationBefore 1s linear infinite;
 }
 
 .loader::after {
     -webkit-animation: loaderAnimationAfter 1s linear infinite;
-            animation: loaderAnimationAfter 1s linear infinite;
+    animation: loaderAnimationAfter 1s linear infinite;
 }
 
 @-webkit-keyframes loaderAnimation {
     0% {
         -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
         -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
 @keyframes loaderAnimation {
     0% {
         -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
         -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -118,19 +120,19 @@ input#phone_number {
     0% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 
     50% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 
     100% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
@@ -138,19 +140,19 @@ input#phone_number {
     0% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 
     50% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 
     100% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
@@ -158,19 +160,19 @@ input#phone_number {
     0% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 
     50% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 
     100% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 }
 
@@ -178,19 +180,19 @@ input#phone_number {
     0% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 
     50% {
         opacity: 1;
         -webkit-transform: translate(-50%, -50%) scale(1);
-                transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 
     100% {
         opacity: 0;
         -webkit-transform: translate(-50%, -50%) scale(0);
-                transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 }
 
@@ -203,9 +205,9 @@ input#phone_number {
     width: 100%;
     height: 400px;
     -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
     -o-object-position: right;
-       object-position: right;
+    object-position: right;
 }
 
 .ct_header_px_50 {
@@ -245,10 +247,10 @@ input#phone_number {
 
 .ct_why_choose_card:hover {
     -webkit-transform: translateY(-8px);
-        -ms-transform: translateY(-8px);
-            transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    transform: translateY(-8px);
     -webkit-box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
-            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .ct_why_bg .row {
@@ -290,7 +292,7 @@ input#phone_number {
     bottom: 0px;
     right: 0px;
     -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
     opacity: 0.;
     margin-top: auto !important;
     margin-left: auto;
@@ -300,10 +302,10 @@ input#phone_number {
 
 .ct_wbuzz_card:hover {
     -webkit-transform: translateY(-6px);
-        -ms-transform: translateY(-6px);
-            transform: translateY(-6px);
+    -ms-transform: translateY(-6px);
+    transform: translateY(-6px);
     -webkit-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .ct_wbuzz_card h5 {
@@ -324,8 +326,8 @@ input#phone_number {
 
 .ct_review_card:hover {
     -webkit-transform: translateY(-6px);
-        -ms-transform: translateY(-6px);
-            transform: translateY(-6px);
+    -ms-transform: translateY(-6px);
+    transform: translateY(-6px);
 }
 
 .ct_review_card p {
@@ -357,11 +359,11 @@ input#phone_number {
     display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     border: none;
     cursor: pointer;
     -webkit-transition: -webkit-transform .18s ease, -webkit-box-shadow .18s ease;
@@ -374,8 +376,8 @@ input#phone_number {
 
 .ct-nav-btn:active {
     -webkit-transform: translateY(1px);
-        -ms-transform: translateY(1px);
-            transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    transform: translateY(1px);
 }
 
 .ct-nav-prev {
@@ -383,7 +385,7 @@ input#phone_number {
     border: 1px solid #eef2f6;
     color: #333;
     -webkit-box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
-            box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
+    box-shadow: 0 2px 8px rgba(15, 22, 49, 0.03);
 }
 
 .ct-nav-next {
@@ -391,14 +393,14 @@ input#phone_number {
     border: 1px solid rgba(0, 0, 0, 0.06);
     color: #fff;
     -webkit-box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
-            box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
+    box-shadow: 0 6px 18px rgba(11, 11, 59, 0.18);
 }
 
 .ct_review_card img {
     width: 100%;
     height: 250px;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     border-radius: 15px;
 }
 
@@ -430,10 +432,10 @@ hr.ct_light_hr {
 
 .ct_how_works_card:hover {
     -webkit-transform: translateY(-8px);
-        -ms-transform: translateY(-8px);
-            transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    transform: translateY(-8px);
     -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .ct_how_work_icon {
@@ -444,11 +446,11 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     margin-inline: auto;
     background-color: hsl(241.71deg 98.13% 20.98%);
 }
@@ -457,7 +459,7 @@ hr.ct_light_hr {
     width: 50px;
     height: 50px;
     -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
 }
 
 
@@ -516,13 +518,13 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
     gap: 17px;
 }
 
@@ -601,8 +603,8 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     font-size: 0.95rem;
 }
 
@@ -633,8 +635,8 @@ hr.ct_light_hr {
     top: -12px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-            transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .slider-indicators {
@@ -642,8 +644,8 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
 }
@@ -677,8 +679,8 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     gap: 10px;
 }
 
@@ -695,8 +697,8 @@ hr.ct_light_hr {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     gap: 10px;
 }
 
@@ -763,7 +765,7 @@ hr.ct_light_hr {
     .ct_banner_right_img img {
         height: 300px;
         -o-object-position: center;
-           object-position: center;
+        object-position: center;
     }
 }
 
@@ -782,38 +784,42 @@ hr.ct_light_hr {
 
         -webkit-box-direction: normal;
 
-            -ms-flex-direction: column;
+        -ms-flex-direction: column;
 
-                flex-direction: column;
+        flex-direction: column;
     }
 }
 
 
-.ct_dash_header_navbar > ul{
+.ct_dash_header_navbar>ul {
     gap: 15px !important;
 }
-.ct_dash_header_navbar_main{
+
+.ct_dash_header_navbar_main {
     gap: 25px;
 }
-.ct_searchable_list{
+
+.ct_searchable_list {
     position: absolute;
     width: 100%;
 }
-.ct_searchable_list li{
+
+.ct_searchable_list li {
     position: relative;
 }
-.ct_small_yellow_btn{
+
+.ct_small_yellow_btn {
     padding: 6px 12px;
     font-size: 14px;
 }
 
 .ct_persional_info_grid li {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 200px 15px auto;
-  grid-template-columns: 200px auto;
-  gap: 15px;
-  margin-bottom: 10px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 200px 15px auto;
+    grid-template-columns: 200px auto;
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
 .ct_green_btn {
@@ -824,4 +830,18 @@ hr.ct_light_hr {
     width: -moz-fit-content;
     width: fit-content;
     font-weight: 500;
+}
+
+.ct_img_20 {
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+}
+
+.ct_live_badge {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
 }

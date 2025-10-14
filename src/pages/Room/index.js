@@ -206,9 +206,8 @@ const MyRoom = ({ messageApi }) => {
                                         <ul>
                                             {myRoomList?.length != 0 ?
                                                 myRoomList?.map((item) => (
-                                                    <li className="mb-3">
+                                                    <li className="mb-0">
                                                         <div className="ct_white_bg">
-                                                            {console.log({ item: item })}
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
@@ -216,17 +215,48 @@ const MyRoom = ({ messageApi }) => {
                                                                         handleOpenModal(handleShowRoomStatus(item, false), item)
                                                                     }}>{handleShowRoomStatus(item, false)}</button>
                                                                 </div>
-                                                                <div className='ct_cursor' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
-                                                                    <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
-                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                <div className='ct_cursor d-flex align-items-start gap-1 mb-3' onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
+                                                                    <img
+                                                                        alt=""
+                                                                        className="ct_img_40 ct_flex_shrink_0 me-2"
+                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                    />
+                                                                    <div>
+                                                                        <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
+                                                                        <p className='mb-0 ct_fs_14 ct_para_scroll ct_custom_scroll'>{item?.attributes?.your_take ?? ""}</p>
+                                                                    </div>
                                                                 </div>
-                                                                <small className='ct_text_op_6 d-block text-end mt-3'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+                                                                {item?.attributes?.participants?.data?.length == 0 &&
+                                                                    <small className='ct_text_op_6 d-block text-end'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+                                                                }
                                                             </div>
+                                                            {item?.attributes?.participants?.data?.length != 0 &&
+                                                                <div className='ct_border_top_1 pt-3 d-flex align-items-center justify-content-between mt-2'>
+                                                                    <ul className='d-flex align-items-center gap-2'>
+                                                                        {item?.attributes?.participants?.data?.length != 0 &&
+                                                                            item?.attributes?.participants?.data?.map((items) => (
+                                                                                <li className='d-flex align-items-center gap-0'>
+                                                                                    <img
+                                                                                        alt=""
+                                                                                        className="ct_img_20 ct_flex_shrink_0 me-2"
+                                                                                        src={items?.attributes?.participant?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                                    />
+                                                                                    <div className='d-flex align-items-center gap-1'>
+                                                                                        <i className='fa-solid fa-heart ct_yellow_text'></i>
+                                                                                        <span className='ct_fs_12'>{items?.attributes?.participant?.data?.attributes?.hearts ?? 0}</span>
+                                                                                    </div>
+                                                                                </li>
+                                                                            ))}
+                                                                    </ul>
+                                                                    <small className='ct_text_op_6 d-block text-end'>{item?.attributes?.remaining_seats ?? 0} seat available</small>
+                                                                </div>
+                                                            }
                                                             <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between ct_cursor" onClick={() => navigate(pageRoutes.roomDetails, { state: { data: item } })}>
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
                                                                         {pipViewDate2(item?.attributes?.start_time)}
+                                                                        {/* <span className='ct_live_badge'>LIVE</span> */}
                                                                     </p>
                                                                     <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
                                                                     <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
@@ -367,8 +397,13 @@ const MyRoom = ({ messageApi }) => {
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
                                                                 </div>
                                                                 <div>
+                                                                    <img
+                                                                        alt=""
+                                                                        className="ct_img_40 ct_flex_shrink_0 me-2"
+                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                    />
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
-                                                                    {/* <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p> */}
+
                                                                 </div>
                                                             </div>
                                                             <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
@@ -379,7 +414,36 @@ const MyRoom = ({ messageApi }) => {
                                                                     </p>
                                                                     <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
-                                                                <a className='ct_fs_14 text-dark' onClick={() => handleManageFeedBackForm(item?.attributes?.feedback_received)}>{item?.attributes?.feedback_received ?? ""}</a>
+                                                                {
+                                                                    item?.attributes?.feedback_received?.meta?.total_hearts ?
+                                                                        <>
+
+                                                                        </>
+                                                                        :
+                                                                        <a className='ct_fs_14 text-dark' onClick={() => handleManageFeedBackForm(item?.attributes?.feedback_received)}>{item?.attributes?.feedback_received ?? ""}</a>
+                                                                }
+                                                            </div>
+                                                            <div className=''>
+                                                                {item?.attributes?.feedback_received?.meta?.total_hearts &&
+                                                                    <p className="mb-0 ct_fs_14 mt-3 d-flex align-items-center gap-2">
+                                                                        Your Feedback {" "}<i className="fa-solid fa-heart ct_yellow_text"></i>
+                                                                        <span className="">
+                                                                            {item?.attributes?.feedback_received?.meta?.total_hearts ?? "0"}
+                                                                        </span>
+                                                                    </p>
+                                                                }
+                                                                {item?.attributes?.feedback_received?.data?.length != 0 &&
+                                                                    <ul className='ct_para_scroll ct_custom_scroll pe-3 mt-3' style={{ maxHeight: "147px" }}>
+                                                                        {item?.attributes?.feedback_received?.data?.map((val) => (
+                                                                            val?.attributes?.feedback != "" &&
+                                                                            <li className='mb-2 ct_outline_bg p-2 ct_border_radius_10'>
+                                                                                <p className='ct_para_scroll mb-0 ct_custom_scroll' style={{ maxHeight: "147px" }}>
+                                                                                    {val?.attributes?.feedback ?? ""}
+                                                                                </p>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
                                                     </li>
@@ -403,7 +467,7 @@ const MyRoom = ({ messageApi }) => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             {isRegisterShow && registerData &&
                 <RoomRegisterModal
                     onClose={() => setIsRegisterShow(false)}
@@ -419,18 +483,20 @@ const MyRoom = ({ messageApi }) => {
                     messageApi={messageApi}
                 />
             }
-            {isCancelModal &&
+            {
+                isCancelModal &&
                 <CancelRoomModal
                     onClose={() => setIsCancelModal(false)}
                     handleRoomCancel={handleCancelRoom}
                 />
             }
-            {isSendFeedBackModal &&
+            {
+                isSendFeedBackModal &&
                 <SendFeedback
                     onClose={() => setIsSendFeedBackModal(false)}
                 />
             }
-        </div>
+        </div >
     )
 };
 
