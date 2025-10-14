@@ -3,6 +3,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 import { useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { joinRoomVideoCall } from "../../redux/actions/createRoom";
+import VideoCallPreview from "./VideoCallPreview";
 
 export default function AgoraCall({ messageApi }) {
     const { state } = useLocation();
@@ -10,6 +11,8 @@ export default function AgoraCall({ messageApi }) {
 
     const clientRef = useRef(null);
     const localAudioTrackRef = useRef(null);
+
+    const [isPreview, setIsPreView] = useState(true)
 
     const localVideoTrackRef = useRef(null);
     const localPlayerRef = useRef(null);
@@ -20,12 +23,10 @@ export default function AgoraCall({ messageApi }) {
     const [mutedAudio, setMutedAudio] = useState(false);
     const [mutedVideo, setMutedVideo] = useState(false);
 
+    const [isAudio, setIsAudio] = useState(true);
+    const [isVideo, setIsVideo] = useState(true);
+
     const [remoteUsers, setRemoteUsers] = useState([]);
-
-    // const APP_ID = '611227230#1418219';
-    // const TOKEN = "007eJxTYPhTG7k57Ouib/OetWrYT6/mMHq4np13ouTiurc89y6FKu9SYDBIMkgzN7U0SrQwTjIxME+xtDA2SEtJMzU2MExKS7Ww4H59IaMhkJFh6Z1VrIwMEAjiczMkZyTm5aXmlKQWlzAwAACkViPv";
-
-    // const CHANNEL = "channeltest";
     const makeRemoteId = (uid) => `remote-player-${uid}`;
 
     useEffect(() => {
@@ -66,31 +67,95 @@ export default function AgoraCall({ messageApi }) {
         };
     }, []);
 
-    const joinChannel = async (TOKEN, APP_ID, CHANNEL) => {
+    // const joinChannel = async (TOKEN, APP_ID, CHANNEL, USER_UID = null) => {
+    //     if (joined) return;
+    //     const client = clientRef.current;
+    //     try {
+    //         const uid = await client.join(APP_ID, CHANNEL, TOKEN || null, USER_UID || null);
+    //         localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
+    //         localVideoTrackRef.current = await AgoraRTC.createCameraVideoTrack();
+    //         if (mutedAudio) {
+    //             await localAudioTrackRef.current.setEnabled(false);
+    //         }
+    //         if (mutedVideo) {
+    //             await localVideoTrackRef.current.setEnabled(false);
+    //         }
+    //         const localDiv = document.createElement("div");
+    //         localDiv.id = "local-player";
+    //         localDiv.style.width = "320px";
+    //         localDiv.style.height = "240px";
+    //         localDiv.style.margin = "8px";
+    //         if (!localPlayerRef.current) {
+    //             localPlayerRef.current = document.getElementById("local-player-container");
+    //         }
+    //         localPlayerRef.current.appendChild(localDiv);
+    //         localVideoTrackRef.current.play(localDiv);
+    //         await client.publish([localAudioTrackRef.current, localVideoTrackRef.current]);
+    //         setJoined(true);
+    //         setMutedAudio(mutedAudio || false);
+    //         setMutedVideo(mutedVideo || false);
+    //     } catch (err) {
+    //         alert("Failed to join channel: " + err.message);
+    //     }
+    // };
+
+    const joinChannel = async (TOKEN, APP_ID, CHANNEL, USER_UID = null) => {
         if (joined) return;
+
         const client = clientRef.current;
+
         try {
-            const uid = await client.join(APP_ID, CHANNEL, TOKEN || null, null);
-            localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
-            localVideoTrackRef.current = await AgoraRTC.createCameraVideoTrack();
+            // Join the channel first
+            const uid = await client.join(APP_ID, CHANNEL, TOKEN || null, USER_UID || null);
+
+            // Create local tracks only if NOT muted
+            if (!mutedAudio) {
+                localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
+            } else {
+                localAudioTrackRef.current = null;
+            }
+
+            if (!mutedVideo) {
+                localVideoTrackRef.current = await AgoraRTC.createCameraVideoTrack();
+            } else {
+                localVideoTrackRef.current = null;
+            }
+
+            // Create the local video container
             const localDiv = document.createElement("div");
             localDiv.id = "local-player";
             localDiv.style.width = "320px";
             localDiv.style.height = "240px";
             localDiv.style.margin = "8px";
+
             if (!localPlayerRef.current) {
                 localPlayerRef.current = document.getElementById("local-player-container");
-            };
+            }
             localPlayerRef.current.appendChild(localDiv);
-            localVideoTrackRef.current.play(localDiv);
-            await client.publish([localAudioTrackRef.current, localVideoTrackRef.current]);
+
+            // Only play video if it's active
+            if (localVideoTrackRef.current) {
+                localVideoTrackRef.current.play(localDiv);
+            }
+
+            // Prepare list of active tracks to publish
+            const tracksToPublish = [];
+            if (localAudioTrackRef.current) tracksToPublish.push(localAudioTrackRef.current);
+            if (localVideoTrackRef.current) tracksToPublish.push(localVideoTrackRef.current);
+
+            // Publish only if any active track exists
+            if (tracksToPublish.length > 0) {
+                await client.publish(tracksToPublish);
+            }
+
+            // Update state
             setJoined(true);
-            setMutedAudio(false);
-            setMutedVideo(false);
+            setMutedAudio(!!mutedAudio);
+            setMutedVideo(!!mutedVideo);
         } catch (err) {
-            console.error("Agora join error:", err);
             alert("Failed to join channel: " + err.message);
-        };
+            console.error(err);
+        }
     };
 
     const leaveChannel = async () => {
@@ -112,34 +177,84 @@ export default function AgoraCall({ messageApi }) {
             if (remoteContainerRef.current) remoteContainerRef.current.innerHTML = "";
             setRemoteUsers([]);
             setJoined(false);
+            setIsPreView(true);
         } catch (err) {
             console.error("Agora leave error:", err);
         };
     };
 
-    const toggleAudio = async () => {
+    const toggleAudio1 = async () => {
         if (!localAudioTrackRef.current) return;
         const newMuted = !mutedAudio;
         await localAudioTrackRef.current.setEnabled(!newMuted);
         setMutedAudio(newMuted);
+        setIsAudio(!isAudio);
     };
 
-    const toggleVideo = async () => {
+    const toggleVideo1 = async () => {
         if (!localVideoTrackRef.current) return;
         const newMuted = !mutedVideo;
         await localVideoTrackRef.current.setEnabled(!newMuted);
         setMutedVideo(newMuted);
+        setIsVideo(!isVideo);
         if (!newMuted) {
             const el = document.getElementById("local-player");
             if (el) localVideoTrackRef.current.play(el);
         };
     };
 
+    const toggleAudio = async () => {
+        if (!isAudio) {
+            setIsAudio(true)
+            const client = clientRef.current;
+            if (localAudioTrackRef.current) {
+                const enabled = !mutedAudio;
+                await localAudioTrackRef.current.setEnabled(enabled);
+                setMutedAudio(!enabled);
+            } else {
+                try {
+                    localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
+                    await client.publish([localAudioTrackRef.current]);
+                    setMutedAudio(false);
+                } catch (err) {
+                    console.error("Failed to turn on mic:", err);
+                }
+            }
+        } else {
+            toggleAudio1()
+        }
+    };
+
+    const toggleVideo = async () => {
+        if (!isVideo) {
+            setIsVideo(true)
+            const client = clientRef.current;
+            if (localVideoTrackRef.current) {
+                const enabled = !mutedVideo;
+                await localVideoTrackRef.current.setEnabled(enabled);
+                setMutedVideo(!enabled);
+            } else {
+                try {
+                    localVideoTrackRef.current = await AgoraRTC.createCameraVideoTrack();
+                    const localDiv = document.getElementById("local-player");
+                    if (localDiv) localVideoTrackRef.current.play(localDiv);
+                    await client.publish([localVideoTrackRef.current]);
+                    setMutedVideo(false);
+                } catch (err) {
+                    console.error("Failed to turn on camera:", err);
+                }
+            }
+        } else {
+            toggleVideo1();
+        };
+    };
+
     const handleJoinVideoCall = () => {
-        console.log({ state: state?.data });
+        setIsPreView(false);
         const callback = (response) => {
             if (response?.agora_token) {
-                joinChannel(response?.agora_token, response?.agora_app_id, response?.agora_channel)
+                console.log({ response });
+                joinChannel(response?.agora_token, response?.agora_app_id, response?.agora_channel, response?.agora_user_uid)
             };
         };
         const data = {
@@ -149,58 +264,67 @@ export default function AgoraCall({ messageApi }) {
     };
 
     return (
-        <div className="p-4 max-w-4xl mx-auto">
-            <h2 className="text-xl font-semibold mb-4">Agora Video Call (React)</h2>
-            <div className="flex gap-4 mb-4">
-                <button
+        <>
+            {isPreview ?
+                <VideoCallPreview
+                    remoteContainerRef={remoteContainerRef}
                     onClick={handleJoinVideoCall}
-                    className="px-4 py-2 rounded shadow bg-green-500 text-white disabled:opacity-50"
-                    disabled={joined}
-                >
-                    Join
-                </button>
-                <button
-                    onClick={leaveChannel}
-                    className="px-4 py-2 rounded shadow bg-red-500 text-white"
-                    disabled={!joined}
-                >
-                    Leave
-                </button>
-                <button
-                    onClick={toggleAudio}
-                    className="px-4 py-2 rounded shadow bg-gray-200"
-                    disabled={!joined}
-                >
-                    {mutedAudio ? "Unmute Audio" : "Mute Audio"}
-                </button>
-                <button
-                    onClick={toggleVideo}
-                    className="px-4 py-2 rounded shadow bg-gray-200"
-                    disabled={!joined}
-                >
-                    {mutedVideo ? "Enable Video" : "Disable Video"}
-                </button>
-            </div>
-            <div className="flex gap-4 items-start">
-                <div>
-                    <h3 className="mb-2">Local</h3>
-                    <div
-                        id="local-player-container"
-                        ref={localPlayerRef}
-                        className="rounded border p-2"
-                        style={{ width: 340 }}
-                    />
+                    toggleAudio={toggleAudio1}
+                    toggleVideo={toggleVideo1}
+                    mutedAudio={mutedAudio}
+                    mutedVideo={mutedVideo}
+                    localAudioTrackRef={localAudioTrackRef}
+                    localVideoTrackRef={localVideoTrackRef}
+                    joined={joined}
+                />
+                :
+                <div className="p-4 max-w-4xl mx-auto">
+                    <h2 className="text-xl font-semibold mb-4">Agora Video Call (React)</h2>
+                    <div className="flex gap-4 mb-4">
+                        <button
+                            onClick={leaveChannel}
+                            className="px-4 py-2 rounded shadow bg-red-500 text-white me-2"
+                            disabled={!joined}
+                        >
+                            Leave
+                        </button>
+                        <button
+                            onClick={toggleAudio}
+                            className="px-4 py-2 rounded shadow bg-gray-200 me-2"
+                            disabled={!joined}
+                        >
+                            {mutedAudio ? "Unmute Audio" : "Mute Audio"}
+                        </button>
+                        <button
+                            onClick={toggleVideo}
+                            className="px-4 py-2 rounded shadow bg-gray-200 me-2"
+                            disabled={!joined}
+                        >
+                            {mutedVideo ? "Enable Video" : "Disable Video"}
+                        </button>
+                    </div>
+                    <div className="flex gap-4 items-start">
+                        <div>
+                            <h3 className="mb-2">Local</h3>
+                            <div
+                                id="local-player-container"
+                                ref={localPlayerRef}
+                                className="rounded border p-2"
+                                style={{ width: 340 }}
+                            />
+                        </div>
+                        <div>
+                            <h3 className="mb-2">Remote</h3>
+                            <div
+                                id="remote-player-container"
+                                ref={remoteContainerRef}
+                                className="flex flex-wrap border rounded p-2"
+                                style={{ minWidth: 340, minHeight: 260 }}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h3 className="mb-2">Remote</h3>
-                    <div
-                        id="remote-player-container"
-                        ref={remoteContainerRef}
-                        className="flex flex-wrap border rounded p-2"
-                        style={{ minWidth: 340, minHeight: 260 }}
-                    />
-                </div>
-            </div>
-        </div>
+            }
+        </>
     );
 };
