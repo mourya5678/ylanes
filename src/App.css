@@ -465,6 +465,19 @@ body {
     font-weight: 600;
 }
 
+.ct_fit_content {
+    width: fit-content;
+}
+
+.ct_report_list_1234 li {
+    background-color: #f5f5f5;
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
 @media screen and (min-width:1200px) {
     .ct_side_bar_scrool_left {
         height: auto;
@@ -645,6 +658,7 @@ a {
     max-width: 600px;
     width: 100%;
     margin-inline: auto;
+    height: 100vh;
 }
 
 .ct_copy_btn {
@@ -720,6 +734,18 @@ a {
 
     border-radius: 100px !important;
 
+}
+
+.ct_host_badge {
+    background-color: var(--yellow);
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+}
+
+.ct_dropdown_left345 {
+    right: 0px !important;
+    left: auto !important;
 }
 
 @media screen and (max-width:991px) {
