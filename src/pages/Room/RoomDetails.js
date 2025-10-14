@@ -103,10 +103,20 @@ const RoomDetails = ({ messageApi }) => {
                   {state?.data?.attributes?.host?.data?.attributes?.full_name &&
                     <div className="ct_white_bg p-3 mb-3">
                       <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
-                        <p className="mb-0">
-                          <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
-                          <span className="ct_text_op_6">{state?.data?.attributes?.host?.data?.attributes?.hearts ?? 0} M ({state?.data?.attributes?.host?.data?.attributes?.age ?? 0} yrs)</span>
-                        </p>
+                        <div className="d-flex align-items-center gap-3">
+                          <div className="ct_upload_user_name">
+                            <img
+                              alt=""
+                              className="ct_img_40 ct_flex_shrink_0"
+                              src={state?.data?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                            />
+                            <p className="mb-0 ct_fw_600">{state?.data?.attributes?.host?.data?.attributes?.full_name ?? ""}</p>
+                          </div>
+                          <p className="mb-0">
+                            <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
+                            <span className="ct_text_op_6">{state?.data?.attributes?.host?.data?.attributes?.hearts ?? 0} M ({state?.data?.attributes?.host?.data?.attributes?.age ?? 0} yrs)</span>
+                          </p>
+                        </div>
                         <button className="ct_yellow_btn py-1 px-3">
                           Host
                         </button>
@@ -120,10 +130,24 @@ const RoomDetails = ({ messageApi }) => {
                     state?.data?.attributes?.participants?.data?.map((item) => (
                       <div className="ct_white_bg p-3 mb-3">
                         <div className="d-flex align-items-center gap-3 mb-2 justify-content-between">
-                          <p className="mb-0">
+                          {/* <p className="mb-0">
                             <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
                             <span className="ct_text_op_6">{item?.attributes?.participant?.data?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age ?? 0} yrs)</span>
-                          </p>
+                          </p> */}
+                          <div className="d-flex align-items-center gap-3">
+                            <div className="ct_upload_user_name">
+                              <img
+                                alt=""
+                                className="ct_img_40 ct_flex_shrink_0"
+                                src={item?.attributes?.participant?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                              />
+                              <p className="mb-0 ct_fw_600">{item?.attributes?.participant?.data?.attributes?.full_name ?? ""}</p>
+                            </div>
+                            <p className="mb-0">
+                              <i className="fa-solid fa-heart ct_yellow_text"></i>{" "}
+                              <span className="ct_text_op_6">{item?.attributes?.participant?.data?.attributes?.hearts ?? 0} M ({item?.attributes?.participant?.data?.attributes?.age ?? 0} yrs)</span>
+                            </p>
+                          </div>
                           <button className="ct_yellow_btn py-1 px-3">
                             Guest
                           </button>

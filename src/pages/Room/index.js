@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import RoomRegisterModal from '../../components/Modals/RoomRegisterModal';
 import CancelRoomModal from '../../components/Modals/CancelRoomModal';
+import SendFeedback from '../../components/Modals/SendFeedback';
 
 const MyRoom = ({ messageApi }) => {
     const { isCreateLoading, pastRoomList, upcommingRoomList, recommendedList, myRoomList } = useSelector((state) => state.createRoomReducer);
@@ -21,6 +22,7 @@ const MyRoom = ({ messageApi }) => {
     const [isRegisterShow, setIsRegisterShow] = useState(false);
     const [isCancelModal, setIsCancelModal] = useState(false);
 
+    const [isSendFeedBackModal, setIsSendFeedBackModal] = useState(false);
     const [registerData, setRegisterData] = useState({});
 
 
@@ -112,6 +114,12 @@ const MyRoom = ({ messageApi }) => {
         };
     };
 
+    const handleManageFeedBackForm = (value) => {
+        if (value == "See your feedback") {
+            setIsSendFeedBackModal(true);
+        };
+    };
+
     if (isCreateLoading) {
         return <Loader />
     };
@@ -200,6 +208,7 @@ const MyRoom = ({ messageApi }) => {
                                                 myRoomList?.map((item) => (
                                                     <li className="mb-3">
                                                         <div className="ct_white_bg">
+                                                            {console.log({ item: item })}
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>
                                                                     <h4 className="ct_fs_18 ct_fw_600 mb-0">{item?.attributes?.topic_name ?? ""}</h4>
@@ -359,7 +368,7 @@ const MyRoom = ({ messageApi }) => {
                                                                 </div>
                                                                 <div>
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
-                                                                    <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p>
+                                                                    {/* <p className='mb-0 ct_fs_14'>{item?.attributes?.your_take ?? ""}</p> */}
                                                                 </div>
                                                             </div>
                                                             <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">
@@ -370,6 +379,7 @@ const MyRoom = ({ messageApi }) => {
                                                                     </p>
                                                                     <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
+                                                                <a className='ct_fs_14 text-dark' onClick={() => handleManageFeedBackForm(item?.attributes?.feedback_received)}>{item?.attributes?.feedback_received ?? ""}</a>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -413,6 +423,11 @@ const MyRoom = ({ messageApi }) => {
                 <CancelRoomModal
                     onClose={() => setIsCancelModal(false)}
                     handleRoomCancel={handleCancelRoom}
+                />
+            }
+            {isSendFeedBackModal &&
+                <SendFeedback
+                    onClose={() => setIsSendFeedBackModal(false)}
                 />
             }
         </div>
