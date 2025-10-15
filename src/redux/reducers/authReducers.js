@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -21,6 +21,7 @@ const initialStates = {
     faqs: [],
     postDetails: {},
     blogsData: [],
+    userVideoData: {},
 };
 
 export const authSlice = createSlice({
@@ -375,6 +376,21 @@ export const authSlice = createSlice({
         builder.addCase(getBlogsData.rejected, (state, action) => {
             state.isLoading = false;
         });
+
+        // getUserDetailsForVideoCall
+        builder.addCase(getUserDetailsForVideoCall.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getUserDetailsForVideoCall.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const { data } = action?.payload || {};
+            console.log({ data: data });
+            state.userVideoData = data ?? {};
+        });
+        builder.addCase(getUserDetailsForVideoCall.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
     }
 });
 

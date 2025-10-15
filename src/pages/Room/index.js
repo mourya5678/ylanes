@@ -15,13 +15,10 @@ const MyRoom = ({ messageApi }) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const [activeTab, setActiveTab] = useState('1');
     const userData = pipGetAccessToken("user_data");
-
     const [isRegisterShow, setIsRegisterShow] = useState(false);
     const [isCancelModal, setIsCancelModal] = useState(false);
-
     const [isSendFeedBackModal, setIsSendFeedBackModal] = useState(false);
     const [registerData, setRegisterData] = useState({});
 
@@ -206,7 +203,7 @@ const MyRoom = ({ messageApi }) => {
                                         <ul>
                                             {myRoomList?.length != 0 ?
                                                 myRoomList?.map((item) => (
-                                                    <li className="mb-0">
+                                                    <li className="mb-3">
                                                         <div className="ct_white_bg">
                                                             <div>
                                                                 <div className='d-flex align-items-center justify-content-between gap-2 mb-3'>

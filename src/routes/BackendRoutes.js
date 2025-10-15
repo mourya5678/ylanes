@@ -112,3 +112,5 @@ export const cancelRoomByUserAPI = "bx_block_different_rooms/rooms/delete_regist
 
 // Join Video Call
 export const joinVideoCallRoomAPI = "bx_block_different_rooms/rooms/join_room";
+
+export const getUserDataOfVideoCallAPI = "join-room";

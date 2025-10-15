@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -453,5 +453,25 @@ export const getBlogsData = createAsyncThunk('get-blogs', async (props) => {
         return response;
     } catch (error) {
         console.log(error);
+    };
+});
+
+export const getUserDetailsForVideoCall = createAsyncThunk('get-video-call-data', async (props) => {
+    const { payload, messageApi, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getUserDataOfVideoCallAPI,
+            method: "POST",
+            data: payload,
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+            isPaythonApi: true
+        });
+        callback(response)
+        return response;
+    } catch (error) {
+        console.log(error);
+        callback(null, error);
     };
 });
