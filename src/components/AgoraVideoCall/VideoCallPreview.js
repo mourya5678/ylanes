@@ -108,8 +108,6 @@ const VideoCallPreview = ({
     isVideoAvailable
 }) => {
     const navigate = useNavigate();
-    const [isAudio, setIsAudio] = useState(true);
-    const [isVideo, setIsVideo] = useState(true);
 
     useEffect(() => {
         let mounted = true;
