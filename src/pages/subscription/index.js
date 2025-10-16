@@ -97,28 +97,28 @@ const Subscription = ({ messageApi }) => {
                   <div className="row">
                     <div className="col-md-6 ">
                       <div className="ct_pricing_card p-4 h-auto ct_pricing_card_light_green position-relative">
-                        <ul class="ct_price_plan_info_grid">
+                        <ul className="ct_price_plan_info_grid">
                           <li>
-                            <p class="mb-0 ct_fw_600">{item?.name ?? ""}</p>
-                            <p class="mb-0 ct_green_btn">{item?.status ?? ''}</p>
+                            <p className="mb-0 ct_fw_600">{item?.name ?? ""}</p>
+                            <p className="mb-0 ct_green_btn">{item?.status ?? ''}</p>
                           </li>
                           <li>
-                            <p class="mb-0 ct_fw_600">Frequency</p>
-                            <p class="mb-0">{item?.name ?? ""}</p>
+                            <p className="mb-0 ct_fw_600">Frequency</p>
+                            <p className="mb-0">{item?.name ?? ""}</p>
                           </li>
                           <li>
-                            <p class="mb-0 ct_fw_600">Plan</p>
-                            <p class="mb-0">{item?.period ?? ""}</p>
+                            <p className="mb-0 ct_fw_600">Plan</p>
+                            <p className="mb-0">{item?.period ?? ""}</p>
                           </li>
                           <li>
-                            <p class="mb-0 ct_fw_600">
+                            <p className="mb-0 ct_fw_600">
                               Price (per Gold Member)
                             </p>
-                            <p class="mb-0">Rs. {item?.amount ?? 0}</p>
+                            <p className="mb-0">Rs. {item?.amount ?? 0}</p>
                           </li>
                           <li>
-                            <p class="mb-0 ct_fw_600">YCoins</p>
-                            <p class="mb-0">{item?.ycoins ?? 0}</p>
+                            <p className="mb-0 ct_fw_600">YCoins</p>
+                            <p className="mb-0">{item?.ycoins ?? 0}</p>
                           </li>
                         </ul>
                       </div>

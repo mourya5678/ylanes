@@ -651,7 +651,7 @@ const Polls = ({ messageApi }) => {
                                       <i className="fa-solid fa-clock me-2"></i>
                                       :
                                       item?.attributes?.user?.connection_status == "current_user" ?
-                                        <i class="fa-solid fa-trash me-2"></i>
+                                        <i className="fa-solid fa-trash me-2"></i>
                                         :
                                         <i className="fa-solid fa-user-plus me-2"></i>
                                     }
@@ -833,9 +833,9 @@ const Polls = ({ messageApi }) => {
                   <ul className="mt-3">
                     <li>
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
@@ -848,9 +848,9 @@ const Polls = ({ messageApi }) => {
                     </li>
                     <li className="mt-2">
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
@@ -868,9 +868,9 @@ const Polls = ({ messageApi }) => {
                   <ul className="mt-3">
                     <li>
                       <div className="d-flex align-items-center gap-1">
-                        <div class="form-check ct_custom_check2">
+                        <div className="form-check ct_custom_check2">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             checked={filterBytopic?.length == postTopic?.length}
                             onClick={() => {
@@ -890,9 +890,9 @@ const Polls = ({ messageApi }) => {
                     {postTopic?.map((item) => (
                       <li>
                         <div className="d-flex align-items-center gap-1 mt-2">
-                          <div class="form-check ct_custom_check2">
+                          <div className="form-check ct_custom_check2">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="checkbox"
                               checked={filterBytopic?.includes(item?.attributes?.name) ? true : false}
                               onClick={() =>

@@ -29,7 +29,7 @@ const ReferCode = ({ onClose, messageApi }) => {
                             </div>
                             <div className='position-relative'>
                                 <input type='text' value={userData?.attributes?.referral_code ?? ''} className='form-control ct_input ps-5' style={{ paddingRight: "110px" }} readOnly />
-                                <i className='ct_input_icon_left'><i class="fa-solid fa-link"></i></i>
+                                <i className='ct_input_icon_left'><i className="fa-solid fa-link"></i></i>
                                 <button className='ct_yellow_btn ct_show_eye mt-0 position-absolute right-0 ct_copy_btn' onClick={handleCopy}>Copy</button>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ const AboutTopicDetails = ({ onClose, data }) => {
                             <h4 className="ct_fs_20 mb-0 ct_fw_600">About this topic</h4>
                             <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 onClick={onClose}
                             ></button>
                         </div>

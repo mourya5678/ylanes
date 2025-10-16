@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -73,6 +73,31 @@ const MyRoom = ({ messageApi }) => {
             };
         };
         return name;
+    };
+
+    const handleShowRoomStartTime = (value) => {
+        // const date = new Date(value);
+        // const now = new Date();
+        // if (date > now) {
+        //     return pipViewDate2(value)
+        // } else {
+        //     return <span className='ct_live_badge'>LIVE</span>;
+        // };
+        const date = new Date(value);
+        const now = new Date();
+
+        // Calculate time difference in milliseconds
+        const diffMs = date - now;
+
+        // 5 minutes in milliseconds
+        const fiveMinutes = 5 * 60 * 1000;
+
+        // If event is within next 5 minutes or already started → show LIVE
+        if (diffMs <= fiveMinutes) {
+            return <span className='ct_live_badge'>LIVE</span>;
+        } else {
+            return pipViewDate2(value);
+        }
     };
 
     const handleOpenModal = (val, item) => {
@@ -252,14 +277,15 @@ const MyRoom = ({ messageApi }) => {
                                                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
                                                                     <p className="mb-0">
                                                                         <i className="fa-regular fa-clock me-2"></i>
-                                                                        {pipViewDate2(item?.attributes?.start_time)}
+                                                                        {handleShowRoomStartTime(item?.attributes?.start_time)}
+                                                                        {/* {pipViewDate2(item?.attributes?.start_time)} */}
                                                                         {/* <span className='ct_live_badge'>LIVE</span> */}
                                                                     </p>
                                                                     <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
-                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                    <p className='mb-0'><i className="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
                                                                 <div>
-                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                    <i className="fa-solid fa-share-nodes"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -309,10 +335,10 @@ const MyRoom = ({ messageApi }) => {
                                                                         {pipViewDate2(item?.attributes?.start_time)}
                                                                     </p>
                                                                     <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
-                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                    <p className='mb-0'><i className="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
                                                                 <div>
-                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                    <i className="fa-solid fa-share-nodes"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -360,10 +386,10 @@ const MyRoom = ({ messageApi }) => {
                                                                         {pipViewDate2(item?.attributes?.start_time)}
                                                                     </p>
                                                                     <p className='mb-0'><img alt="" width="20px" className='me-1' src="assets/img/wallet_icon.png" />{item?.attributes?.room_price ?? 0}</p>
-                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                    <p className='mb-0'><i className="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
                                                                 <div>
-                                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                                    <i className="fa-solid fa-share-nodes"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -409,7 +435,7 @@ const MyRoom = ({ messageApi }) => {
                                                                         <i className="fa-regular fa-clock me-2"></i>
                                                                         {pipViewDate2(item?.attributes?.start_time)}
                                                                     </p>
-                                                                    <p className='mb-0'><i class="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
+                                                                    <p className='mb-0'><i className="fa-solid fa-star me-1"></i>{item?.attributes?.room_type_name ?? ""}</p>
                                                                 </div>
                                                                 {
                                                                     item?.attributes?.feedback_received?.meta?.total_hearts ?

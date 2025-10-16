@@ -228,7 +228,7 @@ const Chat = ({ messageApi }) => {
                                                         <div
                                                             className="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
                                                             <h4 className="ct_fs_16 mb-0 ct_fw_600 ct_nunito_font">Contacts ({chatList?.length})</h4>
-                                                            <a className="ct_yellow_btn ct_add_chat_btn px-3 py-2 h-auto" onClick={() => setIsAddUserModalShow(true)}><i class="fa-solid fa-comment-medical"></i></a>
+                                                            <a className="ct_yellow_btn ct_add_chat_btn px-3 py-2 h-auto" onClick={() => setIsAddUserModalShow(true)}><i className="fa-solid fa-comment-medical"></i></a>
                                                         </div>
                                                         <div className="position-relative">
                                                             <input
@@ -346,13 +346,13 @@ const Chat = ({ messageApi }) => {
                                                                                 </li>
                                                                                 <li onClick={() => navigate(pageRoutes.userProfile, { state: { data: selectUserData?.peer?.account_id } })}>
                                                                                     <a className="dropdown-item">
-                                                                                        <i class="fa-solid fa-user me-2"></i>
+                                                                                        <i className="fa-solid fa-user me-2"></i>
                                                                                         Profile
                                                                                     </a>
                                                                                 </li>
                                                                                 <li>
                                                                                     <a className="dropdown-item" >
-                                                                                        <i class="fa-solid fa-flag me-2"></i>
+                                                                                        <i className="fa-solid fa-flag me-2"></i>
                                                                                         Report User
                                                                                     </a>
                                                                                 </li>

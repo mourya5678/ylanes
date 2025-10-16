@@ -285,6 +285,7 @@ const Home = ({ messageApi }) => {
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault1"
+                                  disabled
                                 />
                                 <label
                                   className="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
@@ -579,7 +580,7 @@ const Home = ({ messageApi }) => {
                                       <i className="fa-solid fa-clock me-2"></i>
                                       :
                                       item?.attributes?.user?.connection_status == "current_user" ?
-                                        <i class="fa-solid fa-trash me-2"></i>
+                                        <i className="fa-solid fa-trash me-2"></i>
                                         :
                                         <i className="fa-solid fa-user-plus me-2"></i>
                                     }
@@ -593,7 +594,7 @@ const Home = ({ messageApi }) => {
                                     setPostDetails(item)
                                   }}>
                                     <a className="dropdown-item">
-                                      <i class="fa-solid fa-pencil me-2"></i>
+                                      <i className="fa-solid fa-pencil me-2"></i>
                                       Edit
                                     </a>
                                   </li>

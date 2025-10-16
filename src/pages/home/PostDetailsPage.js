@@ -101,7 +101,7 @@ const PostDetailsPage = ({ messageApi }) => {
             <section className="py-4 pb-4 position-relative">
                 <div className='d-flex align-items-center gap-4'>
                     <div className='ct_back_icon ct_fw_600 ct_bakc_bg' onClick={() => navigate(-1)}>
-                        <i class="fa-solid fa-arrow-left me-1"></i>
+                        <i className="fa-solid fa-arrow-left me-1"></i>
                     </div>
                     <h4 className='ct_fs_20 ct_fw_600 mb-0'> Post Details</h4>
                 </div>
@@ -109,7 +109,6 @@ const PostDetailsPage = ({ messageApi }) => {
                     <div className="row">
                         <div className="col-md-12 mt-4">
                             {postDetails != 0 &&
-                                // allPosts?.map((item) => (
                                 postDetails?.attributes?.id == post_id?.slice(1) &&
                                 <div className="ct_uploaded_post_main mb-4 ">
                                     <div className="d-flex align-items-center justify-content-between gap-2">
@@ -140,7 +139,7 @@ const PostDetailsPage = ({ messageApi }) => {
                                                             <i className="fa-solid fa--clock me-2"></i>
                                                             :
                                                             postDetails?.attributes?.user?.connection_status == "current_user" ?
-                                                                <i class="fa-solid fa-trash me-2"></i>
+                                                                <i className="fa-solid fa-trash me-2"></i>
                                                                 :
                                                                 <i className="fa-solid fa-user-plus me-2"></i>
                                                         }
@@ -151,7 +150,7 @@ const PostDetailsPage = ({ messageApi }) => {
                                                     postDetails?.attributes?.user?.connection_status == "current_user" &&
                                                     <li onClick={() => handleEditUserPost(postDetails)}>
                                                         <a className="dropdown-item">
-                                                            <i class="fa-solid fa-pencil me-2"></i>
+                                                            <i className="fa-solid fa-pencil me-2"></i>
                                                             Edit
                                                         </a>
                                                     </li>
@@ -315,18 +314,12 @@ const PostDetailsPage = ({ messageApi }) => {
                                                                     ))}
                                                             </div>
                                                         </div>
-                                                        {/* <div>
-                                                                              <p className="mb-0 ct_fw_500 ct_white_nowrap ct_yellow_text">
-                                                                                Report
-                                                                              </p>
-                                                                            </div> */}
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
                                 </div>
-                                // ))
                             }
                         </div>
                     </div>

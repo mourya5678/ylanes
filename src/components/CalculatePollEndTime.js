@@ -29,7 +29,7 @@ const CalculatePollEndTime = ({ end_date_time }) => {
     return (
         <div>
             <small className='ct_text_op_6 ct_fs_12 d-block mt-2'>
-                <i class="fa-regular fa-clock me-1" />
+                <i className="fa-regular fa-clock me-1" />
                 {showTime ?? ""}
             </small>
         </div>

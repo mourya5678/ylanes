@@ -138,8 +138,8 @@ const Header = ({ messageApi }) => {
                       <a
                         className="dropdown-item"
                         onClick={() => {
-                          navigate(pageRoutes.login)
                           pipLogout(messageApi)
+                          navigate(pageRoutes.login)
                         }}
                       >
                         <img

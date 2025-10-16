@@ -151,7 +151,7 @@ const VideoCallPreview = ({
                 }
             } catch (error) {
                 console.error("Error starting preview:", error);
-                alert("Unable to access audio/video devices. Please check your browser permissions.");
+                messageApi.error("Unable to access audio/video devices. Please check your browser permissions.");
             }
         };
         startPreview();
@@ -165,7 +165,7 @@ const VideoCallPreview = ({
             <div className="ct_video_call_main_bg_3">
                 <div className="d-flex align-items-center gap-3 mb-4">
                     <div className="ct_back_btn34" onClick={() => navigate(pageRoutes.myRoom)}>
-                        <i class="fa-solid fa-chevron-left"></i>Back
+                        <i className="fa-solid fa-chevron-left"></i>Back
                     </div>
                     <h2 className="ct_fs_20 ct_fw_600 text-center mb-0 mx-auto">Video Call Preview</h2>
                 </div>
@@ -184,10 +184,10 @@ const VideoCallPreview = ({
                 />
                 <div className="d-flex justify-content-center gap-2 mt-4 mb-2">
                     <button onClick={toggleAudio} className={`ct_video_action_btn ${!isAudioAvailable && "ct_disable_call"}`}>
-                        {mutedAudio ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}
+                        {mutedAudio ? <i className="fa-solid fa-microphone"></i> : <i className="fa-solid fa-microphone-slash"></i>}
                     </button>
                     <button onClick={toggleVideo} className={`ct_video_action_btn ${!isVideoAvailable && "ct_disable_call"}`}>
-                        {mutedVideo ? <i class="fa-solid fa-video"></i> : <i class="fa-solid fa-video-slash"></i>}
+                        {mutedVideo ? <i className="fa-solid fa-video"></i> : <i className="fa-solid fa-video-slash"></i>}
                     </button>
                 </div>
 

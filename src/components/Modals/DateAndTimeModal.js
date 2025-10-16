@@ -102,7 +102,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                     <div className='form-group mt-4'>
                                         <label className='mb-2 ct_fw_600'>Time</label>
                                         <div className='ct_increase_decrease_btns'>
-                                            <button onClick={() => handleTimeUpdate("minus")}><i class="fa-solid fa-minus"></i></button>
+                                            <button onClick={() => handleTimeUpdate("minus")}><i className="fa-solid fa-minus"></i></button>
                                             <div className='position-relative'>
                                                 <input type='text' className='ct_pe_40' placeholder='' value={roomTime} readOnly />
                                                 <select className='ct_show_eye' value={selectAmPm} onChange={(e) => setSelectAmPm(e.target.value)}>
@@ -110,7 +110,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                                     <option value="PM">PM</option>
                                                 </select>
                                             </div>
-                                            <button onClick={() => handleTimeUpdate("plus")}><i class="fa-solid fa-plus"></i></button>
+                                            <button onClick={() => handleTimeUpdate("plus")}><i className="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </figcaption>

@@ -114,3 +114,6 @@ export const cancelRoomByUserAPI = "bx_block_different_rooms/rooms/delete_regist
 export const joinVideoCallRoomAPI = "bx_block_different_rooms/rooms/join_room";
 
 export const getUserDataOfVideoCallAPI = "join-room";
+
+export const getLandingPolicyDataAPI = "bx_block_posts/articles/get_all_policies?type=policies";
+export const getLandingTermOfUseDataAPI = "bx_block_posts/articles/get_all_policies?type=terms";

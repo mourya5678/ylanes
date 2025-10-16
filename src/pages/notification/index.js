@@ -70,58 +70,6 @@ const Notification = ({ messageApi }) => {
                         </div>
                       </li>
                     ))}
-                  {/* <li>
-                    <div>
-                      <h4 className="ct_fs_18 ct_text_061F61 ct_fw_600">
-                        Someone wants to connect with you!
-                      </h4>
-                      <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                        jack invited you to connect 16 days ago
-                      </p>
-                    </div>
-                    <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                      <i>16 days ago</i>
-                    </p>
-                  </li>
-                  <li>
-                    <div>
-                      <h4 className="ct_fs_18 ct_text_061F61 ct_fw_600">
-                        Someone wants to connect with you!
-                      </h4>
-                      <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                        jack invited you to connect 16 days ago
-                      </p>
-                    </div>
-                    <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                      <i>16 days ago</i>
-                    </p>
-                  </li>
-                  <li>
-                    <div>
-                      <h4 className="ct_fs_18 ct_text_061F61 ct_fw_600">
-                        Someone wants to connect with you!
-                      </h4>
-                      <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                        jack invited you to connect 16 days ago
-                      </p>
-                    </div>
-                    <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                      <i>16 days ago</i>
-                    </p>
-                  </li>
-                  <li>
-                    <div>
-                      <h4 className="ct_fs_18 ct_text_061F61 ct_fw_600">
-                        Someone wants to connect with you!
-                      </h4>
-                      <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                        jack invited you to connect 16 days ago
-                      </p>
-                    </div>
-                    <p className="mb-0 ct_text_4B5563 ct_fs_14">
-                      <i>16 days ago</i>
-                    </p>
-                  </li> */}
                 </ul>
               </div>
             </div>

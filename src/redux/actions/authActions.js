@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -473,5 +473,37 @@ export const getUserDetailsForVideoCall = createAsyncThunk('get-video-call-data'
     } catch (error) {
         console.log(error);
         callback(null, error);
+    };
+});
+
+export const getLandingPolicyDetails = createAsyncThunk('get-landing-policy', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getLandingPolicyDataAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getLandingTermOfUseDetails = createAsyncThunk('get-landing-term-of-use', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getLandingTermOfUseDataAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
     };
 });

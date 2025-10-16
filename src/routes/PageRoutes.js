@@ -96,13 +96,13 @@ export const AllRoutes = [
         name: "Terms Of Use",
         path: pageRoutes?.landingTermOfUse,
         element: <TermsOfUse />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "Landing Privacy Policy",
         path: pageRoutes?.landingPrivacyPolicy,
         element: <LandingPrivacyPolicy />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "User Profile",
@@ -114,25 +114,25 @@ export const AllRoutes = [
         name: "Landing FAQ",
         path: pageRoutes?.landingFaq,
         element: <LandingFaq />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "About Us",
         path: pageRoutes?.aboutUs,
         element: <AboutUs />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "Blog",
         path: pageRoutes?.blogs,
         element: <BlogsList />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "Blogs Details",
         path: pageRoutes?.blogsDetails,
         element: <BlogsDetails />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "Room Details",
@@ -150,7 +150,7 @@ export const AllRoutes = [
         name: "Landing Page",
         path: pageRoutes.landingPage,
         element: <Dashboard />,
-        isPrivate: true
+        isPrivate: false
     },
     {
         name: "Poll",
@@ -180,7 +180,7 @@ export const AllRoutes = [
         name: "Login",
         path: pageRoutes?.login,
         element: <LoginScreen />,
-        isPrivate: true,
+        isPrivate: false,
     },
     {
         name: "User Wallet",
@@ -234,7 +234,7 @@ export const AllRoutes = [
         name: "OTP Verification",
         path: pageRoutes.otpVerify,
         element: <VerifyOtp />,
-        isPrivate: true,
+        isPrivate: false,
     },
     {
         name: "Subscription",

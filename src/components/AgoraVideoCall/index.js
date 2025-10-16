@@ -574,6 +574,38 @@ export default function AgoraCall({ messageApi }) {
     const userData = pipGetAccessToken("user_data");
     const publishedRef = useRef({ audio: false, video: false });
 
+    const uservalue = [
+        {
+            audio: false,
+            video: false,
+            name: "Abhay Mourya",
+            uid: "9754932059"
+        },
+        {
+            audio: false,
+            video: false,
+            name: "Chetan Rathore",
+            uid: "9754854787"
+        },
+        {
+            audio: false,
+            video: false,
+            name: "Kabir Khan",
+            uid: "4521548787"
+        },
+        {
+            audio: false,
+            video: false,
+            name: "Mayank Tomar",
+            uid: "9754878485"
+        },
+        {
+            audio: false,
+            video: false,
+            name: "Palash Jain",
+            uid: "7854784512"
+        }
+    ];
     const makeRemoteId = (uid) => `remote-player-${uid}`;
 
     useEffect(() => {
@@ -608,7 +640,6 @@ export default function AgoraCall({ messageApi }) {
 
     useEffect(() => {
         userDataVideo.forEach((u) => {
-            console.log({ uuuuuuuu: u })
             if (u.video && u.videoTrack) {
                 const el = document.getElementById(makeRemoteId(u.uid));
                 if (el && el.childNodes.length === 0) {
@@ -787,7 +818,7 @@ export default function AgoraCall({ messageApi }) {
             setIsPreView(false);
         } catch (err) {
             console.error("Failed to join channel:", err);
-            alert("Failed to join: " + (err?.message || err));
+            messageApi.error("Failed to join: " + (err?.message || err));
         };
     };
 
@@ -875,7 +906,7 @@ export default function AgoraCall({ messageApi }) {
                 };
             } catch (err) {
                 console.error("Failed to create mic:", err);
-                alert("Unable to access microphone. Please check permissions or device.");
+                messageApi.error("Unable to access microphone. Please check permissions or device.");
             };
         } catch (err) {
             console.error("toggleAudio error:", err);
@@ -957,7 +988,7 @@ export default function AgoraCall({ messageApi }) {
                 };
             } catch (err) {
                 console.error("Failed to create camera:", err);
-                alert("Unable to access camera. Please check permissions or device.");
+                messageApi.error("Unable to access camera. Please check permissions or device.");
             };
         } catch (err) {
             console.error("toggleVideo error:", err);
@@ -1008,48 +1039,61 @@ export default function AgoraCall({ messageApi }) {
                                 </button>
                             )}
                         </div>
-
-                        <div className="ct_video_call_grid">
-                            {joined && (
-                                <div className="ct_signle_video_call">
-                                    <h4>{userData?.attributes?.full_name ?? ""}</h4>
-                                    {localVideoTrackRef.current ? (
-                                        <div id="local-player" />
-                                    ) : (
-                                        <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
-                                    )}
-                                    <div className="mt-1 text-sm">🎤 {isAudio ? "On" : "Off"} | 📷 {isVideo ? "On" : "Off"}</div>
+                        {/* ct_video_call_grid_full */}
+                        {/* 2 -3 ct_grid_2_234 */}
+                        <div className={`ct_video_call_grid ${userDataVideo?.length == 0 ? "ct_video_call_grid_full" : userDataVideo?.length == 1 ? "ct_grid_2_234" : userDataVideo?.length == 2 && "ct_grid_2_234"}`}>
+                            {/* {joined && ( */}
+                            <div className="ct_signle_video_call">
+                                <h4>{userData?.attributes?.full_name ?? ""}</h4>
+                                {localVideoTrackRef.current ? (
+                                    <div id="local-player" />
+                                ) : (
+                                    // <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
+                                    <img src={"assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
+                                )}
+                                <div className="mt-1 d-flex align-items-center gap-3 ct_overlay_video_btn_455">
+                                    <button onClick={toggleAudio} className="ct_video_action_btn"> {!isAudio ? <i className="fa-solid fa-microphone"></i> : <i className="fa-solid fa-microphone-slash"></i>}</button>
+                                    <button onClick={toggleVideo} className="ct_video_action_btn">
+                                        {!isVideo ? <i className="fa-solid fa-video"></i> : <i className="fa-solid fa-video-slash"></i>}
+                                    </button>
                                 </div>
-                            )}
-
-                            <div className="ct_grid_4_234">
-                                {userDataVideo.map((u) => (
-                                    <div key={u.uid} className="ct_signle_video_call">
-                                        <h4 className="ct_fs_20 ct_fw_600 mb-2">{u.name}</h4>
-                                        {u.video ? (
-                                            <div id={makeRemoteId(u.uid)} style={{ width: "100%", height: "240px", background: "#000" }} />
-                                        ) : (
-                                            <img src={u.profile_image_url || "assets/img/dummy_user_img.png"} alt={u.name} className="rounded-full mx-auto" />
-                                        )}
-                                        <div className="mt-1 text-sm">🎤 {u.audio ? "On" : "Off"} | 📷 {u.video ? "On" : "Off"}</div>
-                                    </div>
-                                ))}
                             </div>
+                            {/* )} */}
+                            {/* ct_grid_2_234 ct_grid_1_234 */}
+                            {userDataVideo?.length != 0 &&
+                                <div className={`ct_grid_4_234 ${userDataVideo?.length == 1 ? "ct_grid_1_234" : userDataVideo?.length == 2 && "ct_grid_1_234"}`}>
+                                    {userDataVideo.map((u) => (
+                                        <div key={u.uid} className={`ct_multiple_video_call ${userDataVideo?.length == 1 ? "single" : userDataVideo?.length == 2 && "double"}`}>
+                                            <h4 className="ct_fs_20 ct_fw_600 mb-2">{u.name}</h4>
+                                            {u.video ? (
+                                                <div id={makeRemoteId(u.uid)} style={{ width: "100%", height: "calc(100vh - 200px)" }} />
+                                            ) : (
+                                                <img src={u.profile_image_url || "assets/img/dummy_user_img.png"} alt={u.name} className="rounded-full mx-auto" />
+                                            )}
+                                            <div className="mt-1 d-flex align-items-center gap-3 ct_overlay_video_btn_455">
+                                                <button className="ct_video_action_btn bg-transparent border-0 w-auto h-auto" style={{ color: "#333" }}> {u.audio ? <i className="fa-solid fa-microphone"></i> : <i className="fa-solid fa-microphone-slash" style={{ color: "#333" }}></i>} </button>
+                                                <button className="ct_video_action_btn bg-transparent border-0 w-auto h-auto">
+                                                    {u.video ? <i className="fa-solid fa-video"></i> : <i className="fa-solid fa-video-slash"></i>}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            }
                         </div>
-
-                        <div className="mt-3 ct_fs_20 text-center">Total users in call: {userDataVideo.length + (joined ? 1 : 0)}</div>
-
-                        <div className="mt-4 d-flex gap-2 justify-content-center">
+                        {/* <div className="mt-3 ct_fs_20 text-center">Total users in call: {userDataVideo.length + (joined ? 1 : 0)}</div> */}
+                        {/* <div className="mt-4 d-flex gap-2 justify-content-center">
                             <button onClick={toggleAudio} className={`ct_video_action_btn ${!isAudioAvailable && "ct_disable_call"}`}>
-                                {mutedAudio ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}
+                                {mutedAudio ? <i className="fa-solid fa-microphone"></i> : <i className="fa-solid fa-microphone-slash"></i>}
                             </button>
                             <button onClick={toggleVideo} className={`ct_video_action_btn ${!isVideoAvailable && "ct_disable_call"}`}>
-                                {mutedVideo ? <i class="fa-solid fa-video"></i> : <i class="fa-solid fa-video-slash"></i>}
+                                {mutedVideo ? <i className="fa-solid fa-video"></i> : <i className="fa-solid fa-video-slash"></i>}
                             </button>
-                        </div>
+                        </div> */}
                     </div>
-                </div>
-            )}
+                </div >
+            )
+            }
         </>
     );
 }

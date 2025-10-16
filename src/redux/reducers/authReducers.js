@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -22,6 +22,8 @@ const initialStates = {
     postDetails: {},
     blogsData: [],
     userVideoData: {},
+    landingPolicy: {},
+    landingTerm: {}
 };
 
 export const authSlice = createSlice({
@@ -371,7 +373,7 @@ export const authSlice = createSlice({
         builder.addCase(getBlogsData.fulfilled, (state, action) => {
             state.isLoading = false;
             const { data } = action?.payload || {};
-            state.blogsData = data ?? {};
+            state.blogsData = data ?? [];
         });
         builder.addCase(getBlogsData.rejected, (state, action) => {
             state.isLoading = false;
@@ -391,6 +393,29 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
 
+        // getLandingPolicyDetails
+        builder.addCase(getLandingPolicyDetails.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getLandingPolicyDetails.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.landingPolicy = action?.payload[0] ?? {};
+        });
+        builder.addCase(getLandingPolicyDetails.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getLandingTermOfUseDetails
+        builder.addCase(getLandingTermOfUseDetails.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getLandingTermOfUseDetails.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.landingTerm = action?.payload[0] ?? {};
+        });
+        builder.addCase(getLandingTermOfUseDetails.rejected, (state, action) => {
+            state.isLoading = false;
+        });
     }
 });
 

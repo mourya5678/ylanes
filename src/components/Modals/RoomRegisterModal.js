@@ -205,7 +205,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose })
                         <h4 className="ct_fs_20 mb-0 ct_fw_600">Register for Room</h4>
                         <button
                             type="button"
-                            class="btn-close"
+                            className="btn-close"
                             onClick={onClose}
                         ></button>
                     </div>
@@ -216,7 +216,7 @@ const RoomRegisterModal = ({ onClose, registerData, messageApi, onHandleClose })
                     </div>
                     <form>
                         <div className="form-group mb-3">
-                            <lable class=" ct_fw_600 text-start mb-2 d-block">
+                            <lable className=" ct_fw_600 text-start mb-2 d-block">
                                 Your Take
                             </lable>
                             <textarea

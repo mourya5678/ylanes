@@ -25,10 +25,13 @@ export const pipDeleteTokenAuth = () => {
 };
 
 export const pipLogout = (messageApi) => {
-    // localStorage.removeItem("ylanes_Token");
-    // localStorage.removeItem("ylanes_firebaseToken");
-    // localStorage.removeItem("user_data");
+    localStorage.removeItem("ylanes_Token");
+    localStorage.removeItem("ylanes_firebaseToken");
+    localStorage.removeItem("user_data");
+    localStorage.removeItem("ylanes-fcm");
+    localStorage.removeItem("yLanes_user_Token");
     messageApi.success('Logout successfully!');
+
 };
 
 export const pipViewDate = (date) => {

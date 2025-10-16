@@ -9,7 +9,7 @@ const SendFeedback = ({ onClose }) => {
                         <button onClick={onClose} type="button" className="btn-close ct_position_close"></button>
                     </div>
                     <div className='mt-0'>
-                        <div class="mb-4">
+                        <div className="mb-4">
                             <h4 className="ct_fw_600 ct_fs_20 mb-1">Room Ended</h4>
                             <p className='mb-0 ct_text_op_6 ct_fs_14'>Gift hearts to your roommates</p>
                         </div>
@@ -21,29 +21,29 @@ const SendFeedback = ({ onClose }) => {
                                         <div>
                                             <p className='mb-0 ct_fs_14'>Mark</p>
                                             <div className='d-flex align-items-center gap-1'>
-                                                <i class="fa-solid fa-heart ct_yellow_text"></i>
+                                                <i className="fa-solid fa-heart ct_yellow_text"></i>
                                                 <span className='ct_host_badge '>HOST</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className='d-flex align-items-center gap-2 mt-2'>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
                                     </div>
                                 </div>
                                 <div className='d-flex align-items-center gap-3'>
-                                    <i class="fa-solid fa-user-check"></i>
+                                    <i className="fa-solid fa-user-check"></i>
 
-                                    <div class="dropdown ct_right_dropdown ">
-                                        <button class="" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    <div className="dropdown ct_right_dropdown ">
+                                        <button className="" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
-                                        <ul class="dropdown-menu ct_dropdown_left345" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">Report User</a></li>
-                                            <li><a class="dropdown-item" href="#">Block User</a></li>
+                                        <ul className="dropdown-menu ct_dropdown_left345" aria-labelledby="dropdownMenuButton1">
+                                            <li><a className="dropdown-item" href="#">Report User</a></li>
+                                            <li><a className="dropdown-item" href="#">Block User</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@ const SendFeedback = ({ onClose }) => {
                                 <div>
                                     <p className='mb-0 ct_fs_14 text-start'>Mark</p>
                                     <div className='d-flex align-items-center gap-1 justify-content-center'>
-                                        <i class="fa-solid fa-heart ct_yellow_text"></i>
+                                        <i className="fa-solid fa-heart ct_yellow_text"></i>
                                         <span className='ct_fs_12 ct_text_op_6 '>10 M (18-24 yrs)</span>
                                     </div>
                                 </div>
@@ -92,19 +92,19 @@ const SendFeedback = ({ onClose }) => {
                         <ul className='mt-4 ct_report_list_1234'>
                             <li className='d-flex align-items-center gap-2 justify-content-between py-2 ct_fs_14'>
                                 <span>Offensive language or gesture</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </li>
                             <li className='d-flex align-items-center gap-2 justify-content-between py-2 ct_fs_14  '>
                                 <span>Arguing / debating / ridiculing</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </li>
                             <li className='d-flex align-items-center gap-2 justify-content-between py-2 ct_fs_14  '>
                                 <span>harassing / bullying</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </li>
                             <li className='d-flex align-items-center gap-2 justify-content-between py-2 ct_fs_14  '>
                                 <span>Curious onlooker with no relevance to the topic</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </li>
                         </ul>
                     </div>
@@ -112,7 +112,7 @@ const SendFeedback = ({ onClose }) => {
                     {/* fourth screen  */}
 
                     <div className='mt-0 d-none'>
-                        <div class="mb-4 text-center">
+                        <div className="mb-4 text-center">
                             <h4 className="ct_fw_600 ct_fs_20 mb-1">Thank you for your feedback</h4>
                             <p className='mb-0 ct_text_op_6 ct_fs_14'>How would you like to rate this conversation</p>
                         </div>

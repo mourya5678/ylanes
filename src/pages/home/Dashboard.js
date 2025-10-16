@@ -86,58 +86,6 @@ const Dashboard = ({ messageApi }) => {
                                 </div>
                             ))
                         }
-                        {/* <div className="col-lg-4 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffad61" }}>
-                                <h5 className="fw-bold">Finance & Economics</h5>
-                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
-                                    future of work?</p>
-                                <img src="assets/img/icon_2.png" alt="Finance" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#e66ab4" }}>
-                                <h5 className="fw-bold">Geo-Politics</h5>
-                                <p>Are massive IPL salaries uplifting cricket or disrupting the global balance of the sport?</p>
-                                <img src="assets/img/icon_3.png" alt="Geo Politics" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffeb77" }}>
-                                <h5 className="fw-bold">Family & Relationships</h5>
-                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
-                                <img src="assets/img/icon_4.png" alt="Family" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#8dd0f7" }}>
-                                <h5 className="fw-bold">Health & Wellness</h5>
-                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
-                                <img src="assets/img/icon_5.png" alt="Health" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#a8d97f" }}>
-                                <h5 className="fw-bold">Sports</h5>
-                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
-                                    future of work?</p>
-                                <img src="assets/img/icon_6.png" alt="Sports" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-8 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#ffb16d" }}>
-                                <h5 className="fw-bold">Travel & Adventure</h5>
-                                <p>Are Indian VCs chasing growth at the cost of sustainability, or is this the bold risk startups need?</p>
-                                <img src="assets/img/icon_7.png" alt="Travel" className="img-fluid mt-3" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="ct_wbuzz_card p-4 h-100 " style={{ background: "#d48de2" }}>
-                                <h5 className="fw-bold">Chill Zone (Movies & Jokes)</h5>
-                                <p>With Elon Musk pushing for a return to office, is remote work nearing its end? What does it mean for the
-                                    future of work?</p>
-                                <img src="assets/img/icon_8.png" alt="Chill Zone" className="img-fluid mt-3" />
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </section>
@@ -168,9 +116,6 @@ const Dashboard = ({ messageApi }) => {
                                         <div>
                                             <span className="fs-2 text-warning">“</span>
                                             <div dangerouslySetInnerHTML={{ __html: item?.review ?? "" }}></div>
-                                            {/* <p className="mb-3">
-                                                {item?.review ?? ""}
-                                            </p> */}
                                             <hr className="ct_light_hr" />
                                             <h6 className="fw-bold mb-0">{item?.name ?? ""}</h6>
                                         </div>
@@ -178,51 +123,6 @@ const Dashboard = ({ messageApi }) => {
                                 </SwiperSlide>
                             ))
                         }
-                        {/* <SwiperSlide>
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        The discussions here are insightful and fun...
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_3.png" alt="User 1" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        YLanes is where my brain goes to hang out...
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Gustavo Culhane</h6>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="ct_review_card p-4 rounded d-flex align-items-center">
-                                <div className="me-4 flex-shrink-0">
-                                    <img src="assets/img/asset_4.png" alt="User 2" className="img-fluid rounded-3" />
-                                </div>
-                                <div>
-                                    <span className="fs-2 text-warning">“</span>
-                                    <p className="mb-3">
-                                        The discussions here are insightful and fun...
-                                    </p>
-                                    <hr className="ct_light_hr" />
-                                    <h6 className="fw-bold mb-0">Corey Michael</h6>
-                                </div>
-                            </div>
-                        </SwiperSlide> */}
                     </Swiper>
                 </div>
             </section>
@@ -365,7 +265,7 @@ const Dashboard = ({ messageApi }) => {
                 </div>
             </section>
             <LandingPageFooter />
-        </div >
+        </div>
     )
 };
 

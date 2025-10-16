@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LandingPageFooter from '../../components/LandingPageFooter';
 import LandingHeader from '../../components/LandingPageHeader';
+import { getLandingTermOfUseDetails } from '../../redux/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
 
-const TermsOfUse = () => {
+const TermsOfUse = ({ messageApi }) => {
+    const { isLoading, landingTerm } = useSelector((state) => state.authReducer);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLandingTermOfUseDetails({ messageApi }));
+    }, []);
+
+    console.log({ landingTerm })
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
             <LandingHeader />
@@ -15,8 +29,8 @@ const TermsOfUse = () => {
                                     Terms & Conditions
                                 </h4>
                             </div>
-                            {/* <div className="terms-conditions" dangerouslySetInnerHTML={{ __html: TermsAndConditions?.description }}>
-                            </div> */}
+                            <div className="terms-conditions" dangerouslySetInnerHTML={{ __html: landingTerm?.content ?? "<p></p>" }}>
+                            </div>
                         </div>
                     </div>
                 </div>

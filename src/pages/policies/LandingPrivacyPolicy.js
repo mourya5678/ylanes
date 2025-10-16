@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LandingHeader from '../../components/LandingPageHeader';
 import LandingPageFooter from '../../components/LandingPageFooter';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLandingPolicyDetails } from '../../redux/actions/authActions';
+import Loader from '../../components/Loader';
 
-const LandingPrivacyPolicy = () => {
+const LandingPrivacyPolicy = ({ messageApi }) => {
+    const { isLoading, landingPolicy } = useSelector((state) => state.authReducer);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLandingPolicyDetails({ messageApi }));
+    }, []);
+
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
             <LandingHeader />
@@ -15,8 +28,8 @@ const LandingPrivacyPolicy = () => {
                                     Privacy Policy
                                 </h4>
                             </div>
-                            {/* <div className="terms-conditions" dangerouslySetInnerHTML={{ __html: TermsAndConditions?.description }}>
-                            </div> */}
+                            <div className="terms-conditions" dangerouslySetInnerHTML={{ __html: landingPolicy?.description ?? "<p> </p>" }}>
+                            </div>
                         </div>
                     </div>
                 </div>
