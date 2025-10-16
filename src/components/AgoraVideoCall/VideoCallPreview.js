@@ -88,6 +88,8 @@
 
 import React, { useEffect, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
+import { useNavigate } from "react-router";
+import { pageRoutes } from "../../routes/PageRoutes";
 
 const VideoCallPreview = ({
     mutedAudio,
@@ -100,7 +102,15 @@ const VideoCallPreview = ({
     mutedVideo,
     localVideoTrackRef,
     onClick,
+    setIsVideoAvailable,
+    setIsAudioAvailable,
+    isAudioAvailable,
+    isVideoAvailable
 }) => {
+    const navigate = useNavigate();
+    const [isAudio, setIsAudio] = useState(true);
+    const [isVideo, setIsVideo] = useState(true);
+
     useEffect(() => {
         let mounted = true;
         const startPreview = async () => {
@@ -108,6 +118,8 @@ const VideoCallPreview = ({
                 const devices = await AgoraRTC.getDevices();
                 const hasAudio = devices.some((d) => d.kind === "audioinput");
                 const hasVideo = devices.some((d) => d.kind === "videoinput");
+                setIsAudioAvailable(hasAudio);
+                setIsVideoAvailable(hasVideo);
                 if (!hasAudio && !hasVideo) {
                     messageApi?.error?.(
                         "No audio or video devices found. Please connect a microphone or camera."
@@ -144,43 +156,46 @@ const VideoCallPreview = ({
         };
         startPreview();
         return () => {
-            // NOTE: we intentionally DO NOT close tracks here so the parent can reuse preview tracks when joining.
-            // If you want to free devices when leaving preview, uncomment the lines below.
-            // if (localAudioTrackRef.current) { localAudioTrackRef.current.close(); localAudioTrackRef.current = null; }
-            // if (localVideoTrackRef.current) { localVideoTrackRef.current.close(); localVideoTrackRef.current = null; }
             mounted = false;
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div className="p-4 text-center">
-            <h2 className="text-xl font-semibold mb-4">Video Call Preview</h2>
-            <div
-                id="local-preview"
-                ref={remoteContainerRef}
-                style={{
-                    width: "320px",
-                    height: "240px",
-                    backgroundColor: "#000",
-                    margin: "0 auto",
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                }}
-            />
-            <div className="flex justify-center gap-4 mt-4 mb-2">
-                <button onClick={toggleAudio} className="px-4 py-2 rounded shadow bg-gray-200 me-2">
-                    {mutedAudio ? "Unmute Audio" : "Mute Audio"}
-                </button>
-                <button onClick={toggleVideo} className="px-4 py-2 rounded shadow bg-gray-200">
-                    {mutedVideo ? "Enable Video" : "Disable Video"}
-                </button>
-            </div>
+            <div className="ct_video_call_main_bg_3">
+                <div className="d-flex align-items-center gap-3 mb-4">
+                    <div className="ct_back_btn34" onClick={() => navigate(pageRoutes.myRoom)}>
+                        <i class="fa-solid fa-chevron-left"></i>Back
+                    </div>
+                    <h2 className="ct_fs_20 ct_fw_600 text-center mb-0 mx-auto">Video Call Preview</h2>
+                </div>
+                <div
+                    id="local-preview"
+                    ref={remoteContainerRef}
+                    style={{
+                        width: "100%",
+                        maxWidth: "800px",
+                        height: "calc(100vh - 300px)",
+                        backgroundColor: "#000",
+                        margin: "0 auto",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                    }}
+                />
+                <div className="d-flex justify-content-center gap-2 mt-4 mb-2">
+                    <button onClick={toggleAudio} className={`ct_video_action_btn ${!isAudioAvailable && "ct_disable_call"}`}>
+                        {mutedAudio ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}
+                    </button>
+                    <button onClick={toggleVideo} className={`ct_video_action_btn ${!isVideoAvailable && "ct_disable_call"}`}>
+                        {mutedVideo ? <i class="fa-solid fa-video"></i> : <i class="fa-solid fa-video-slash"></i>}
+                    </button>
+                </div>
 
-            <div className="mt-6">
-                <button onClick={onClick} className="px-4 py-2 rounded shadow bg-gray-200">
-                    {joined ? "Joined" : "Join Call"}
-                </button>
+                <div className="mt-6">
+                    <button onClick={onClick} className="ct_yellow_btn ct_border_radius_10 mt-4">
+                        {joined ? "Joined" : "Join Call"}
+                    </button>
+                </div>
             </div>
         </div>
     )

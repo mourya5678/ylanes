@@ -1,6 +1,7 @@
 import WebIM from "agora-chat";
 
 const APP_ID = '611227230#1418219';
+
 let messageCallback = null;
 let conn = null;
 

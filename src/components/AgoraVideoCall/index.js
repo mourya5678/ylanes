@@ -550,32 +550,32 @@ export default function AgoraCall({ messageApi }) {
 
     const clientRef = useRef(null);
 
-    // preview/local tracks refs
     const localAudioTrackRef = useRef(null);
     const localVideoTrackRef = useRef(null);
 
-    // DOM refs
-    const remoteContainerRef = useRef(null); // preview container
-    const localPlayerRef = useRef(null); // local player container after join
+    const remoteContainerRef = useRef(null);
+    const localPlayerRef = useRef(null);
 
-    // state
     const [isPreview, setIsPreView] = useState(true);
     const [joined, setJoined] = useState(false);
 
-    const [mutedAudio, setMutedAudio] = useState(false); // true => audio muted
-    const [mutedVideo, setMutedVideo] = useState(false); // true => video muted
+    const [mutedAudio, setMutedAudio] = useState(false);
+    const [mutedVideo, setMutedVideo] = useState(false);
 
-    const [isAudio, setIsAudio] = useState(true); // track exists / enabled state shorthand
+    const [isAudio, setIsAudio] = useState(true);
     const [isVideo, setIsVideo] = useState(true);
+
+    const [isAudioAvailable, setIsAudioAvailable] = useState(true);
+    const [isVideoAvailable, setIsVideoAvailable] = useState(true);
 
     const [remoteUsers, setRemoteUsers] = useState([]);
     const [userDataVideo, setUserDataVideo] = useState([]);
-    const userData = pipGetAccessToken("user_data");
 
+    const userData = pipGetAccessToken("user_data");
     const publishedRef = useRef({ audio: false, video: false });
+
     const makeRemoteId = (uid) => `remote-player-${uid}`;
 
-    // init client once
     useEffect(() => {
         clientRef.current = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
         return () => {
@@ -596,7 +596,6 @@ export default function AgoraCall({ messageApi }) {
                 console.warn(`Remote container for user ${uid} not found`);
                 return;
             }
-            console.log({ remoteDiv: remoteDiv, uid })
             videoTrack?.play(remoteDiv);
         } catch (err) {
             console.error("playRemoteVideo error:", err);
@@ -845,13 +844,10 @@ export default function AgoraCall({ messageApi }) {
     const toggleAudio = async () => {
         const client = clientRef.current;
         try {
-            // if there's an audio track
             if (localAudioTrackRef.current) {
-                const willMute = !mutedAudio === false ? false : !mutedAudio; // compute new muted value
-                // simpler: const newMuted = !mutedAudio;
+                const willMute = !mutedAudio === false ? false : !mutedAudio;
                 const newMuted = !mutedAudio;
                 if (newMuted) {
-                    // mute: unpublish if joined, and disable track
                     if (joined && client) {
                         try { await client.unpublish([localAudioTrackRef.current]); } catch (e) { }
                         publishedRef.current.audio = false;
@@ -860,7 +856,6 @@ export default function AgoraCall({ messageApi }) {
                     setMutedAudio(true);
                     setIsAudio(false);
                 } else {
-                    // unmute: enable and publish if joined
                     try { await localAudioTrackRef.current.setEnabled(true); } catch (e) { }
                     if (joined && client) {
                         try { await client.publish([localAudioTrackRef.current]); publishedRef.current.audio = true; } catch (e) { console.warn("publish audio failed", e); }
@@ -870,7 +865,6 @@ export default function AgoraCall({ messageApi }) {
                 };
                 return;
             };
-            // if no audio track exists, try to create and publish if joined
             try {
                 localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
                 setMutedAudio(false);
@@ -996,56 +990,64 @@ export default function AgoraCall({ messageApi }) {
                     localAudioTrackRef={localAudioTrackRef}
                     localVideoTrackRef={localVideoTrackRef}
                     joined={joined}
+                    setIsVideoAvailable={(val) => setIsVideoAvailable(val)}
+                    setIsAudioAvailable={(val) => setIsAudioAvailable(val)}
+                    isVideoAvailable={isVideoAvailable}
+                    isAudioAvailable={isAudioAvailable}
                 />
             ) : (
                 <div className="p-4">
-                    <div className="mb-3 flex gap-2">
-                        {!joined ? (
-                            <button onClick={joinChannel} className="btn btn-primary">
-                                Join Call
-                            </button>
-                        ) : (
-                            <button onClick={leaveChannel} className="btn btn-danger">
-                                Leave Call
-                            </button>
-                        )}
-                    </div>
+                    <div className="ct_video_call_main_bg_3">
+                        <div className="mb-3 d-flex gap-2 justify-content-end">
+                            {!joined ? (
+                                <button onClick={handleJoinVideoCall} className="ct_yellow_btn ct_border_radius_10">
+                                    Join Call
+                                </button>
+                            ) : (
+                                <button onClick={leaveChannel} className="btn btn-danger">
+                                    Leave Call
+                                </button>
+                            )}
+                        </div>
 
-                    <div className="grid grid-cols-3 gap-4">
-                        {joined && (
-                            <div className="border rounded p-2 text-center">
-                                <h4>{userData?.attributes?.full_name ?? ""}</h4>
-                                {localVideoTrackRef.current ? (
-                                    <div id="local-player" />
-                                ) : (
-                                    <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
-                                )}
-                                <div className="mt-1 text-sm">🎤 {isAudio ? "On" : "Off"} | 📷 {isVideo ? "On" : "Off"}</div>
+                        <div className="ct_video_call_grid">
+                            {joined && (
+                                <div className="ct_signle_video_call">
+                                    <h4>{userData?.attributes?.full_name ?? ""}</h4>
+                                    {localVideoTrackRef.current ? (
+                                        <div id="local-player" />
+                                    ) : (
+                                        <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
+                                    )}
+                                    <div className="mt-1 text-sm">🎤 {isAudio ? "On" : "Off"} | 📷 {isVideo ? "On" : "Off"}</div>
+                                </div>
+                            )}
+
+                            <div className="ct_grid_4_234">
+                                {userDataVideo.map((u) => (
+                                    <div key={u.uid} className="ct_signle_video_call">
+                                        <h4 className="ct_fs_20 ct_fw_600 mb-2">{u.name}</h4>
+                                        {u.video ? (
+                                            <div id={makeRemoteId(u.uid)} style={{ width: "100%", height: "240px", background: "#000" }} />
+                                        ) : (
+                                            <img src={u.profile_image_url || "assets/img/dummy_user_img.png"} alt={u.name} className="rounded-full mx-auto" />
+                                        )}
+                                        <div className="mt-1 text-sm">🎤 {u.audio ? "On" : "Off"} | 📷 {u.video ? "On" : "Off"}</div>
+                                    </div>
+                                ))}
                             </div>
-                        )}
+                        </div>
 
-                        {userDataVideo.map((u) => (
-                            <div key={u.uid} className="border rounded p-2 text-center">
-                                <h4>{u.name}</h4>
-                                {u.video ? (
-                                    <div id={makeRemoteId(u.uid)} style={{ width: "320px", height: "240px", margin: "8px", background: "#000" }} />
-                                ) : (
-                                    <img src={u.profile_image_url || "assets/img/dummy_user_img.png"} alt={u.name} className="rounded-full mx-auto" />
-                                )}
-                                <div className="mt-1 text-sm">🎤 {u.audio ? "On" : "Off"} | 📷 {u.video ? "On" : "Off"}</div>
-                            </div>
-                        ))}
-                    </div>
+                        <div className="mt-3 ct_fs_20 text-center">Total users in call: {userDataVideo.length + (joined ? 1 : 0)}</div>
 
-                    <div className="mt-3">Total users in call: {userDataVideo.length + (joined ? 1 : 0)}</div>
-
-                    <div className="mt-4 flex gap-2">
-                        <button onClick={toggleAudio} className="px-4 py-2 rounded bg-gray-200">
-                            {mutedAudio ? "Unmute Audio" : "Mute Audio"}
-                        </button>
-                        <button onClick={toggleVideo} className="px-4 py-2 rounded bg-gray-200">
-                            {mutedVideo ? "Enable Video" : "Disable Video"}
-                        </button>
+                        <div className="mt-4 d-flex gap-2 justify-content-center">
+                            <button onClick={toggleAudio} className={`ct_video_action_btn ${!isAudioAvailable && "ct_disable_call"}`}>
+                                {mutedAudio ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}
+                            </button>
+                            <button onClick={toggleVideo} className={`ct_video_action_btn ${!isVideoAvailable && "ct_disable_call"}`}>
+                                {mutedVideo ? <i class="fa-solid fa-video"></i> : <i class="fa-solid fa-video-slash"></i>}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

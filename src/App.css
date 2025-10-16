@@ -466,7 +466,7 @@ body {
 }
 
 .ct_fit_content {
-    width: fit-content;
+    width: fit-content !important;
 }
 
 .ct_report_list_1234 li {
@@ -476,6 +476,51 @@ body {
     border-radius: 10px;
 
     cursor: pointer;
+}
+
+/* .ct_video_call_grid {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+} */
+
+.ct_signle_video_call {
+    height: 100%;
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.ct_grid_4_234 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+#remote-player-9755764211 {
+    border-radius: 10px;
+}
+
+
+
+.ct_back_btn34 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.4s ease all;
+    cursor: pointer;
+    background-color: #e6e6e6;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.ct_disable_call {
+    background-color: #d8d8d8 !important;
+    cursor: no-drop !important;
+}
+
+.ct_back_btn34:hover {
+    color: var(--yellow);
 }
 
 @media screen and (min-width:1200px) {
@@ -746,6 +791,32 @@ a {
 .ct_dropdown_left345 {
     right: 0px !important;
     left: auto !important;
+}
+
+.ct_video_action_btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: #eee;
+    transition: 0.4s ease all;
+}
+
+.ct_video_action_btn:hover {
+    background-color: var(--yellow);
+}
+
+.ct_video_call_main_bg_3 {
+    background-color: #f5f5f5;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #eee;
+}
+
+.ct_video_call_grid {
+    display: grid;
+    grid-template-columns: 300px auto;
+    gap: 20px;
 }
 
 @media screen and (max-width:991px) {
