@@ -579,7 +579,6 @@ export default function AgoraCall({ messageApi }) {
     useEffect(() => {
         clientRef.current = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
         return () => {
-            // cleanup on unmount
             if (clientRef.current) {
                 try {
                     clientRef.current.removeAllListeners();
