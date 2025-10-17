@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -414,6 +414,40 @@ export const authSlice = createSlice({
             state.landingTerm = action?.payload[0] ?? {};
         });
         builder.addCase(getLandingTermOfUseDetails.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // submitUserFeedBack
+        builder.addCase(submitUserFeedBack.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(submitUserFeedBack.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(submitUserFeedBack.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // submitRoomFeedBack
+        builder.addCase(submitRoomFeedBack.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(submitRoomFeedBack.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(submitRoomFeedBack.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getReportReason
+        builder.addCase(getReportReason.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getReportReason.fulfilled, (state, action) => {
+            console.log({ action: action?.payload })
+            state.isLoading = false;
+        });
+        builder.addCase(getReportReason.rejected, (state, action) => {
             state.isLoading = false;
         });
     }

@@ -21,6 +21,7 @@ const MyRoom = ({ messageApi }) => {
     const [isCancelModal, setIsCancelModal] = useState(false);
     const [isSendFeedBackModal, setIsSendFeedBackModal] = useState(false);
     const [registerData, setRegisterData] = useState({});
+    const [pastCallData, setPastCallData] = useState({});
 
 
     useEffect(() => {
@@ -76,23 +77,10 @@ const MyRoom = ({ messageApi }) => {
     };
 
     const handleShowRoomStartTime = (value) => {
-        // const date = new Date(value);
-        // const now = new Date();
-        // if (date > now) {
-        //     return pipViewDate2(value)
-        // } else {
-        //     return <span className='ct_live_badge'>LIVE</span>;
-        // };
         const date = new Date(value);
         const now = new Date();
-
-        // Calculate time difference in milliseconds
         const diffMs = date - now;
-
-        // 5 minutes in milliseconds
         const fiveMinutes = 5 * 60 * 1000;
-
-        // If event is within next 5 minutes or already started → show LIVE
         if (diffMs <= fiveMinutes) {
             return <span className='ct_live_badge'>LIVE</span>;
         } else {
@@ -136,7 +124,8 @@ const MyRoom = ({ messageApi }) => {
         };
     };
 
-    const handleManageFeedBackForm = (value) => {
+    const handleManageFeedBackForm = (value, item) => {
+        setPastCallData(item);
         if (value == "See your feedback") {
             setIsSendFeedBackModal(true);
         };
@@ -440,10 +429,9 @@ const MyRoom = ({ messageApi }) => {
                                                                 {
                                                                     item?.attributes?.feedback_received?.meta?.total_hearts ?
                                                                         <>
-
                                                                         </>
                                                                         :
-                                                                        <a className='ct_fs_14 text-dark' onClick={() => handleManageFeedBackForm(item?.attributes?.feedback_received)}>{item?.attributes?.feedback_received ?? ""}</a>
+                                                                        <a className='ct_fs_14 text-dark' onClick={() => handleManageFeedBackForm(item?.attributes?.feedback_received, item)}>{item?.attributes?.feedback_received ?? ""}</a>
                                                                 }
                                                             </div>
                                                             <div className=''>
@@ -506,17 +494,21 @@ const MyRoom = ({ messageApi }) => {
                     messageApi={messageApi}
                 />
             }
-            {
-                isCancelModal &&
+            {isCancelModal &&
                 <CancelRoomModal
                     onClose={() => setIsCancelModal(false)}
                     handleRoomCancel={handleCancelRoom}
                 />
             }
-            {
-                isSendFeedBackModal &&
+            {isSendFeedBackModal &&
                 <SendFeedback
                     onClose={() => setIsSendFeedBackModal(false)}
+                    pastCallData={pastCallData}
+                    messageApi={messageApi}
+                    handleClose={() => {
+                        setIsSendFeedBackModal(false)
+                        getRoomData()
+                    }}
                 />
             }
         </div >

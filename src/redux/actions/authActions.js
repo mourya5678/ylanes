@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -497,6 +497,57 @@ export const getLandingTermOfUseDetails = createAsyncThunk('get-landing-term-of-
     try {
         const response = await API_REQUEST({
             url: getLandingTermOfUseDataAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const submitUserFeedBack = createAsyncThunk('submit-user-feedback', async (props) => {
+    const { messageApi, payload, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: submitFeedBackAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        console.log({ error });
+    };
+});
+
+export const submitRoomFeedBack = createAsyncThunk('submit-room-feedback', async (props) => {
+    const { messageApi, payload, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: submitRoomFeedBackAPI,
+            method: "POST",
+            data: payload,
+            messageApi,
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        messageApi?.error(error?.data?.errors[0]?.message)
+        console.log({ error });
+    };
+});
+
+export const getReportReason = createAsyncThunk('get-report-reason', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getReportReasonAPI,
             method: "GET",
             messageApi,
             isErrorToast: false,

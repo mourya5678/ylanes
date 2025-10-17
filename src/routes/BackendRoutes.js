@@ -117,3 +117,8 @@ export const getUserDataOfVideoCallAPI = "join-room";
 
 export const getLandingPolicyDataAPI = "bx_block_posts/articles/get_all_policies?type=policies";
 export const getLandingTermOfUseDataAPI = "bx_block_posts/articles/get_all_policies?type=terms";
+
+export const submitFeedBackAPI = "bx_block_different_rooms/participant_feedbacks";
+export const submitRoomFeedBackAPI = "bx_block_different_rooms/room_feedback/";
+
+export const getReportReasonAPI = "bx_block_admin/web_contents/get_web_content?request_type=APP&content_key=FEEDBACK_USER_REPORT_REASONS"
