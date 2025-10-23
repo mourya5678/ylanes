@@ -121,4 +121,10 @@ export const getLandingTermOfUseDataAPI = "bx_block_posts/articles/get_all_polic
 export const submitFeedBackAPI = "bx_block_different_rooms/participant_feedbacks";
 export const submitRoomFeedBackAPI = "bx_block_different_rooms/room_feedback/";
 
-export const getReportReasonAPI = "bx_block_admin/web_contents/get_web_content?request_type=APP&content_key=FEEDBACK_USER_REPORT_REASONS"
+export const getReportReasonAPI = "bx_block_admin/web_contents/get_web_content?request_type=APP&content_key=FEEDBACK_USER_REPORT_REASONS";
+
+export const reportParticipantUserAPI = "bx_block_different_rooms/reported_user"
+export const getAllblockedUserAPI = "account_block/accounts/get_blocked_users"
+
+export const getAllFriendRequestListAPI = "bx_block_request_management/requests";
+export const unblockUserAPI = "account_block/accounts/unblock_user";

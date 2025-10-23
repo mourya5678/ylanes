@@ -123,6 +123,38 @@ const Settings = ({ messageApi }) => {
                   </li>
                   <li>
                     <a
+                      onClick={() => navigate(pageRoutes.blockUser)}
+                      className="d-flex align-items-center gap-2 justify-content-between text-dark"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src="assets/img/block-user.png"
+                          alt=""
+                          width="20px"
+                        />
+                        <p className="mb-0 ct_fw_600">Blocked User</p>
+                      </div>
+                      <i className="fa-solid fa-chevron-right text-dark"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => navigate(pageRoutes.friendRequests)}
+                      className="d-flex align-items-center gap-2 justify-content-between text-dark"
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src="assets/img/ImageFriendRequest.png"
+                          alt=""
+                          width="20px"
+                        />
+                        <p className="mb-0 ct_fw_600">Friend Request</p>
+                      </div>
+                      <i className="fa-solid fa-chevron-right text-dark"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
                       onClick={() => navigate(pageRoutes.deactiveAccount)}
                       className="d-flex align-items-center gap-2 justify-content-between text-danger"
                     >

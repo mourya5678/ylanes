@@ -845,3 +845,10 @@ hr.ct_light_hr {
     border-radius: 5px;
     font-size: 12px;
 }
+
+.ct_action_btn {
+    background-color: var(--yellow);
+    padding: 5px 15px;
+    border-radius: 100px;
+    border: 1px solid var(--yellow);
+}

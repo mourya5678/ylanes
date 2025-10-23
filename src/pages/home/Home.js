@@ -44,6 +44,9 @@ const Home = ({ messageApi }) => {
   const [shareCode, setShareCode] = useState({});
   const [postDetails, setPostDetails] = useState({});
 
+  const [isLatest, setIsLatest] = useState(true);
+  const [isConnectionComments, setIsConnectionsComments] = useState(false);
+
   var localData = [];
   const initialState = {
     topic: "",
@@ -93,10 +96,10 @@ const Home = ({ messageApi }) => {
   const displayUser2 = getDisplayUsers2(AllPollsData, filterBytopic);
 
   useEffect(() => {
-    dispatch(getAllPost({ messageApi }));
+    dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
     dispatch(getMyRoomData({ messageApi }));
     dispatch(getPostTopics({ messageApi }));
-    dispatch(getPollTypeData({ messageApi }));
+    dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
     const data = pipGetAccessToken("user_data");
     dispatch(getMyConnectionsData({ messageApi }));
     dispatch(getMyProfileData({ payload: data?.id, messageApi }));
@@ -106,6 +109,11 @@ const Home = ({ messageApi }) => {
     const data = pipGetAccessToken("user_data");
     setUserData(data);
   }, [profileData]);
+
+  useEffect(() => {
+    dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+    dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+  }, [isConnectionComments, isLatest]);
 
   const handleSubmitDetails = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(false);
@@ -787,8 +795,9 @@ const Home = ({ messageApi }) => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
                             id="flexCheckDefault"
+                            onClick={() => setIsLatest(true)}
+                            checked={isLatest}
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>
@@ -802,8 +811,9 @@ const Home = ({ messageApi }) => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
+                            onClick={() => setIsLatest(false)}
                             id="flexCheckDefault"
+                            checked={!isLatest}
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>

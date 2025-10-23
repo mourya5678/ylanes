@@ -2,6 +2,8 @@ import { lazy } from "react";
 import UserProfile from "../pages/auth/UserProfile";
 import TermsOfUse from "../pages/policies/TermsOfUse";
 import LandingPrivacyPolicy from "../pages/policies/LandingPrivacyPolicy";
+import BlockedUsers from "../pages/settings/BlockedUsers";
+import FriendRequest from "../pages/settings/FriendRequest";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -82,7 +84,9 @@ export const pageRoutes = {
     aboutUs: "/about-us",
     landingFaq: "/faq",
     landingTermOfUse: "/term-and-condition",
-    landingPrivacyPolicy: "/privayc_policy"
+    landingPrivacyPolicy: "/privayc_policy",
+    blockUser: "/block-users",
+    friendRequests: '/friend-request'
 };
 
 export const AllRoutes = [
@@ -91,6 +95,18 @@ export const AllRoutes = [
         path: pageRoutes?.dashboard,
         element: <Home />,
         isPrivate: true
+    },
+    {
+        name: "Blocked Users",
+        path: pageRoutes.blockUser,
+        element: <BlockedUsers />,
+        isPrivate: true,
+    },
+    {
+        name: "Friend Request",
+        path: pageRoutes.friendRequests,
+        element: <FriendRequest />,
+        isPrivate: true,
     },
     {
         name: "Terms Of Use",

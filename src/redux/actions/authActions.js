@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllblockedUserAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllFriendRequestListAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, reportParticipantUserAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, unblockUserAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -85,10 +85,10 @@ export const getPostTopics = createAsyncThunk('get-post-topic', async (props) =>
 });
 
 export const getAllPost = createAsyncThunk('get-all-post', async (props) => {
-    const { messageApi } = props;
+    const { messageApi, typeDropDown, connectionStatus } = props;
     try {
         const response = await API_REQUEST({
-            url: getAllPostAPI,
+            url: getAllPostAPI + `?sortby=${typeDropDown.toLowerCase()}&connection_comments=${connectionStatus}`,
             method: "GET",
             messageApi
         });
@@ -440,6 +440,23 @@ export const blockUserData = createAsyncThunk('block-user', async (props) => {
     };
 });
 
+export const unBlockUserData = createAsyncThunk('unblock-user', async (props) => {
+    const { messageApi, payload, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: unblockUserAPI,
+            method: "DELETE",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        console.log({ error });
+    };
+});
+
 export const getBlogsData = createAsyncThunk('get-blogs', async (props) => {
     const { messageApi } = props;
     try {
@@ -556,5 +573,74 @@ export const getReportReason = createAsyncThunk('get-report-reason', async (prop
         return response;
     } catch (error) {
         console.log(error);
+    };
+});
+
+export const reportParticipants = createAsyncThunk('report-participant', async (props) => {
+    const { messageApi, payload, callback } = props;
+    try {
+        const response = await API_REQUEST({
+            url: reportParticipantUserAPI,
+            method: "POST",
+            data: payload,
+            messageApi
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        messageApi.error(error?.data?.errors[0]?.message);
+        console.log({ error });
+    };
+});
+
+export const getBlockedUsers = createAsyncThunk('get-blocked-users', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllblockedUserAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const getAllFriendRequests = createAsyncThunk('get-friend-request', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllFriendRequestListAPI,
+            method: "GET",
+            messageApi,
+            isErrorToast: false,
+            isSuccessToast: false,
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    };
+});
+
+export const acceptRejectFriendRequest = createAsyncThunk('accept-reject-friend-request', async (props) => {
+    const { messageApi, payload, callback, params } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getAllFriendRequestListAPI + `/${params}`,
+            method: "PATCH",
+            data: payload,
+            messageApi,
+            isSuccessToast: true
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        messageApi?.error(error?.data?.errors[0]?.message)
+        console.log({ error });
     };
 });

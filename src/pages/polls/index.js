@@ -38,6 +38,9 @@ const Polls = ({ messageApi }) => {
   const [selectedPollId, setSelectedPollId] = useState();
   const [filterBytopic, setFilterByTopic] = useState([]);
 
+  const [isLatest, setIsLatest] = useState(true);
+  const [isConnectionComments, setIsConnectionsComments] = useState(false);
+
   var localData = [];
 
   const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
@@ -75,11 +78,15 @@ const Polls = ({ messageApi }) => {
   const displayUser = getDisplayUsers(AllPollsData, filterBytopic);
 
   useEffect(() => {
-    dispatch(getPollTypeData({ messageApi }));
+    dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
     dispatch(getPostTopics({ messageApi }));
     const data = pipGetAccessToken("user_data");
     setUserData(data);
   }, []);
+
+  useEffect(() => {
+    dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+  }, [isLatest, isConnectionComments])
 
   const handleLikeUserPoll = (id, isLike) => {
     var raw = {
@@ -837,7 +844,8 @@ const Polls = ({ messageApi }) => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
+                            onClick={() => setIsLatest(true)}
+                            checked={isLatest}
                             id="flexCheckDefault"
                           />
                         </div>
@@ -852,8 +860,9 @@ const Polls = ({ messageApi }) => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
+                            onClick={() => setIsLatest(false)}
                             id="flexCheckDefault"
+                            checked={!isLatest}
                           />
                         </div>
                         <p className="mb-0" style={{ marginTop: "-5px" }}>

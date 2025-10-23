@@ -204,7 +204,21 @@ const Dashboard = ({ messageApi }) => {
                                     }}
                                     className="ct_review_slider"
                                 >
-                                    {allDashboardSubscription?.length != 0 &&
+                                    <SwiperSlide>
+                                        <div className="ct_border_bg_1">
+                                            <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Feed participation pricing</h5>
+                                            <div className="ct_border_bg_1">
+                                                <ul className="text-start">
+                                                    <li> Like post/comment     0 YCoins</li>
+                                                    <li> Post/Comment     10 YCoins</li>
+                                                    <li> Send connection request    10 YCoins</li>
+                                                    <li> Connection request refund     10 YCoins</li>
+                                                    <li> Accept connection request     10 YCoins</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                    {/* {allDashboardSubscription?.length != 0 &&
                                         allDashboardSubscription?.map((item) => (
                                             <SwiperSlide>
                                                 <div className="ct_border_bg_1">
@@ -220,7 +234,7 @@ const Dashboard = ({ messageApi }) => {
                                                     </div>
                                                 </div>
                                             </SwiperSlide>
-                                        ))}
+                                        ))} */}
                                 </Swiper>
                             </div>
                         </div>

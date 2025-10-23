@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { joinRoomVideoCall } from "../../redux/actions/createRoom";
 import VideoCallPreview from "./VideoCallPreview";
 import { getUserDetailsForVideoCall } from "../../redux/actions/authActions";
 import { pipGetAccessToken } from "../../auth/Pip";
+import { pageRoutes } from "../../routes/PageRoutes";
 
 // export default function AgoraCall({ messageApi }) {
 //     const { state } = useLocation();
@@ -547,6 +548,7 @@ import { pipGetAccessToken } from "../../auth/Pip";
 export default function AgoraCall({ messageApi }) {
     const { state } = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const clientRef = useRef(null);
 
@@ -865,6 +867,7 @@ export default function AgoraCall({ messageApi }) {
             setRemoteUsers([]);
             setJoined(false);
             publishedRef.current = { audio: false, video: false };
+            navigate(pageRoutes.myRoom)
             setIsPreView(true);
         } catch (err) {
             console.error("Agora leave error:", err);

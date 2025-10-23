@@ -625,6 +625,19 @@ body {
     background-color: transparent !important;
 }
 
+.ct_section_inner_loader {
+    position: absolute !important;
+    left: 0px;
+}
+
+.ct_height_for_loader {
+    height: 350px
+}
+
+
+.ct_action_btn{
+    
+}
 @media screen and (min-width:1200px) {
     .ct_side_bar_scrool_left {
         height: auto;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { acceptRejectFriendRequest, blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllFriendRequests, getAllPost, getAllPostComment, getAllPostCommentss, getBlockedUsers, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, reportParticipants, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, unBlockUserData, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -23,7 +23,9 @@ const initialStates = {
     blogsData: [],
     userVideoData: {},
     landingPolicy: {},
-    landingTerm: {}
+    landingTerm: {},
+    blockedUsersList: [],
+    getFriendRequestList: []
 };
 
 export const authSlice = createSlice({
@@ -450,6 +452,69 @@ export const authSlice = createSlice({
         builder.addCase(getReportReason.rejected, (state, action) => {
             state.isLoading = false;
         });
+
+        // reportParticipants
+        builder.addCase(reportParticipants.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(reportParticipants.fulfilled, (state, action) => {
+            console.log({ action: action?.payload })
+            state.isLoading = false;
+        });
+        builder.addCase(reportParticipants.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getBlockedUsers
+        builder.addCase(getBlockedUsers.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getBlockedUsers.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {}
+            state.blockedUsersList = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getBlockedUsers.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // getAllFriendRequests
+        builder.addCase(getAllFriendRequests.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getAllFriendRequests.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {}
+            state.getFriendRequestList = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(getAllFriendRequests.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // unBlockUserData
+        builder.addCase(unBlockUserData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(unBlockUserData.fulfilled, (state, action) => {
+            const { data } = action?.payload ?? {}
+            state.getFriendRequestList = data ?? []
+            state.isLoading = false;
+        });
+        builder.addCase(unBlockUserData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // acceptRejectFriendRequest
+        builder.addCase(acceptRejectFriendRequest.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(acceptRejectFriendRequest.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(acceptRejectFriendRequest.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
     }
 });
 
