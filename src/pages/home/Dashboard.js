@@ -191,6 +191,18 @@ const Dashboard = ({ messageApi }) => {
                     <div className="row g-4">
                         <div className="col-xl-3 col-lg-6 col-md-6 mb-4 mb-xl-0">
                             <div className="et_pricing_card position-relative ">
+                                <div className='ct_border_bg_1'>
+                                    <h5 class="text-center mb-2 ct_fs_20 mt-3 ">Free</h5>
+                                    <div
+                                        className="ct_border_bg_1">
+                                        <ul className="text-start">
+                                            <li> Sign-up<span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
+                                            <li> Referral fill <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
+                                            <li> Profile fill <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
                                 <Swiper
                                     modules={[Pagination, Autoplay]}
                                     spaceBetween={20}
@@ -205,36 +217,21 @@ const Dashboard = ({ messageApi }) => {
                                     className="ct_review_slider"
                                 >
                                     <SwiperSlide>
-                                        <div className="ct_border_bg_1">
-                                            <h5 className="text-center mb-4 ct_fs_24 mt-3 ">Feed participation pricing</h5>
-                                            <div className="ct_border_bg_1">
+                                        <div className="">
+                                            <h5 className="text-center mb-2 ct_fs_20 mt-3 ">Feed participation pricing</h5>
+
+                                            <div
+                                                className="ct_border_bg_1">
                                                 <ul className="text-start">
-                                                    <li> Like post/comment     0 YCoins</li>
-                                                    <li> Post/Comment     10 YCoins</li>
-                                                    <li> Send connection request    10 YCoins</li>
-                                                    <li> Connection request refund     10 YCoins</li>
-                                                    <li> Accept connection request     10 YCoins</li>
+                                                    <li> Like post/comment <span className='ct_white_nowrap ct_small_dot_4 ms-auto'>  0 YCoins</span></li>
+                                                    <li> Post/Comment <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
+                                                    <li> Send connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
+                                                    <li> Connection request refund <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
+                                                    <li> Accept connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </SwiperSlide>
-                                    {/* {allDashboardSubscription?.length != 0 &&
-                                        allDashboardSubscription?.map((item) => (
-                                            <SwiperSlide>
-                                                <div className="ct_border_bg_1">
-                                                    <h5 className="text-center mb-4 ct_fs_24 mt-3 ">{item?.name ?? ""}</h5>
-                                                    <div className="ct_border_bg_1">
-                                                        <ul className="text-start">
-                                                            {item?.description?.split(",")?.map((item) => (
-                                                                <li>
-                                                                    {item ?? ''}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </SwiperSlide>
-                                        ))} */}
                                 </Swiper>
                             </div>
                         </div>
@@ -255,7 +252,7 @@ const Dashboard = ({ messageApi }) => {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button className="ct_black_btn mt-auto ct_transparent_btn">Get Started</button>
+                                        <button className="ct_black_btn mt-auto ct_transparent_btn" onClick={() => navigate(pageRoutes.login)}>Subscribe</button>
                                     </div>
                                 </div>
                             ))}
