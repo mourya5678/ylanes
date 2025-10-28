@@ -227,7 +227,6 @@ const Polls = ({ messageApi }) => {
   };
 
   const handleSubmitPoll = async (selectedAnswer, val) => {
-    console.log({ val });
     const isfailed = false;
     const isEnable = checkEnable(val?.attributes?.end_date_time);
     if (isEnable) {
@@ -244,30 +243,24 @@ const Polls = ({ messageApi }) => {
           option_id: selectedAnswer?.id
         };
       const callback = (response) => {
-        console.log(response);
         dispatch(getPollTypeDatass({ messageApi }));
       };
       if (val?.attributes?.multiple_choice) {
-        console.log("if");
         dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
       } else {
-        console.log("else");
-        val?.attributes?.options_attributes?.map((item) => console.log({ item }));
+        val?.attributes?.options_attributes?.map((item) => console.log("item"));
         dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
       };
     } else {
       messageApi.error("This poll is closed. You can’t submit your answer anymore.");
     };
     const data = timeRemaining(val?.attributes?.end_date_time);
-    console.log({ data });
     setTime(data);
   };
 
   const handleDeleteUserPost = (val, id) => {
-    console.log({ val, id: id?.id, data: id })
     if (val == "current_user") {
       const callback = (response) => {
-        console.log({ response })
         if (response?.meta?.message) {
           messageApi.success(response?.meta?.message);
         } else {
@@ -290,7 +283,6 @@ const Polls = ({ messageApi }) => {
           account_id: id?.attributes?.user?.id
         },
       };
-      console.log({ raw })
       if (id?.attributes?.user?.connection_status != "pending") {
         dispatch(sendInvitationToUser({ payload: raw, callback, messageApi }));
       } else {
@@ -320,7 +312,6 @@ const Polls = ({ messageApi }) => {
     };
     let formData = new FormData();
     formData.append("user_id", value?.user?.id);
-    console.log({ value });
     dispatch(blockUserData({ payload: formData, callback, messageApi }));
   };
 
@@ -625,7 +616,6 @@ const Polls = ({ messageApi }) => {
                   {displayUser?.length != 0 &&
                     displayUser?.map((item) => (
                       <div className="col-md-12">
-                        {console.log({ item })}
                         <div className="ct_uploaded_post_main mb-3">
                           <div className="d-flex align-items-center justify-content-between gap-2">
                             <div className="ct_upload_user_name">

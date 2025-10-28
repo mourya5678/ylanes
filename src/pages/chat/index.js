@@ -338,7 +338,6 @@ const Chat = ({ messageApi }) => {
                                                                                 aria-expanded="false"
                                                                             ></i>
                                                                             <ul className="dropdown-menu">
-                                                                                {console.log({ selectUserData: selectUserData })}
                                                                                 <li >
                                                                                     <a className="dropdown-item">
                                                                                         <i className="fa-solid fa-user-xmark"></i> Disconnect

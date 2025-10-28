@@ -292,7 +292,6 @@ export const authSlice = createSlice({
         });
         builder.addCase(getLandingPageFaq.fulfilled, (state, action) => {
             const { meta } = action?.payload || {};
-            console.log({ meta });
             state.faqs = meta?.data ?? [];
             state.isLoading = false;
         });
@@ -388,7 +387,6 @@ export const authSlice = createSlice({
         builder.addCase(getUserDetailsForVideoCall.fulfilled, (state, action) => {
             state.isLoading = false;
             const { data } = action?.payload || {};
-            console.log({ data: data });
             state.userVideoData = data ?? {};
         });
         builder.addCase(getUserDetailsForVideoCall.rejected, (state, action) => {
@@ -446,7 +444,6 @@ export const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getReportReason.fulfilled, (state, action) => {
-            console.log({ action: action?.payload })
             state.isLoading = false;
         });
         builder.addCase(getReportReason.rejected, (state, action) => {
@@ -458,7 +455,6 @@ export const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(reportParticipants.fulfilled, (state, action) => {
-            console.log({ action: action?.payload })
             state.isLoading = false;
         });
         builder.addCase(reportParticipants.rejected, (state, action) => {

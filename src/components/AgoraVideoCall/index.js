@@ -694,7 +694,7 @@ export default function AgoraCall({ messageApi }) {
                 console.error("Subscribe failed:", err);
                 return;
             }
-            console.log({ object: user })
+            // console.log({ object: user })
             if (mediaType === "video") playRemoteVideo(user.uid, user.videoTrack);
             if (mediaType === "audio") user.audioTrack?.play();
 
@@ -758,7 +758,7 @@ export default function AgoraCall({ messageApi }) {
         try {
             // join with null UID to avoid UID_CONFLICT
             const uid = await client.join(APP_ID, CHANNEL, TOKEN || null, USER_UID);
-            console.log("Joined channel uid:", uid);
+            // console.log("Joined channel uid:", uid);
             // create local player container ref if not present
             if (!localPlayerRef.current) {
                 const container = document.getElementById("local-player-container");

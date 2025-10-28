@@ -190,7 +190,6 @@ const Home = ({ messageApi }) => {
   };
 
   const handleDeleteUserPost = (val, id) => {
-    console.log({ val, id: id?.id, data: id })
     if (val == "current_user") {
       const callback = (response) => {
         if (response?.message) {
@@ -215,7 +214,6 @@ const Home = ({ messageApi }) => {
           account_id: id?.attributes?.user?.id
         },
       };
-      console.log({ raw })
       if (id?.attributes?.user?.connection_status != "pending") {
         dispatch(sendInvitationToUser({ payload: raw, callback, messageApi }));
       } else {

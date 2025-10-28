@@ -118,9 +118,7 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
 
     const handleReportUser = (value) => {
         setIsloader(true);
-        console.log({ value, reportUser });
         const callback = (response) => {
-            console.log(response);
             setIsloader(false);
             setIsReport(false)
             if (response) {
@@ -146,7 +144,6 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
             return;
         };
         const callback = (response) => {
-            console.log(response);
             setIsloader(false);
             setIsRoomFeedBack(true)
         };
@@ -179,7 +176,6 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
                     setIsloader(false);
                 } else {
                     const callback = (response) => {
-                        console.log(response);
                         setIsloader(false);
                         handleClose();
                         if (response) {
@@ -208,10 +204,8 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
     const handleSubmitFinalReview = () => {
         setIsloader(true);
         if (selectReason != "") {
-            console.log(wantRefund)
             const callback = (response) => {
                 setIsloader(false);
-                console.log(response);
                 if (response) {
                     messageApi.success("Feedback send successfully");
                 }

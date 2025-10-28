@@ -13,7 +13,6 @@ const TermsOfUse = ({ messageApi }) => {
         dispatch(getLandingTermOfUseDetails({ messageApi }));
     }, []);
 
-    console.log({ landingTerm })
     if (isLoading) {
         return <Loader />;
     };

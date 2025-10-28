@@ -108,7 +108,6 @@ const Dashboard = ({ messageApi }) => {
                         {reviewList?.length != 0 &&
                             reviewList?.map((item) => (
                                 <SwiperSlide>
-                                    {console.log({ item })}
                                     <div className="ct_review_card p-4 rounded d-flex align-items-center">
                                         <div className="me-4 flex-shrink-0" style={{ maxWidth: "165px" }}>
                                             <img src={item?.image_url ?? "assets/img/asset_3.png"} alt="User 1" className="img-fluid rounded-3" />
@@ -244,9 +243,12 @@ const Dashboard = ({ messageApi }) => {
                                             <div className="price w-100 py-3">RS {item?.amount ?? 0}</div>
                                             <div className="ct_border_bg_1">
                                                 <ul className="text-start">
-                                                    {item?.description?.split(",")?.map((item) => (
+                                                    <li>
+                                                        {item?.ycoins ?? 0} {" "}YCoins
+                                                    </li>
+                                                    {item?.description?.split(",")?.map((items) => (
                                                         <li>
-                                                            {item ?? ''}
+                                                            {items ?? ''}
                                                         </li>
                                                     ))}
                                                 </ul>

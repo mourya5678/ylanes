@@ -117,7 +117,6 @@ export const commentUserPoll = createAsyncThunk('comment-poll', async (props) =>
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     };
 });
@@ -302,7 +301,7 @@ export const getAllUserPreviousMessages = createAsyncThunk('get-user-previous-me
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -317,7 +316,7 @@ export const getUpcommingRoomData = createAsyncThunk('get-upcomming-room-list', 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -331,7 +330,7 @@ export const getPastRoomData = createAsyncThunk('get-past-room-list', async (pro
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -345,7 +344,7 @@ export const getRecommendedRoomData = createAsyncThunk('get-recommended-room-lis
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -359,7 +358,7 @@ export const getMyRoomData = createAsyncThunk('get-my-room-list', async (props) 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const AboutTopicDetails = ({ onClose, data }) => {
-    console.log({ data });
     return (
         <div
             className="modal  d-block ct_congratulation_modal_fade"

@@ -13,8 +13,6 @@ const RoomDetails = ({ messageApi }) => {
 
   const navigate = useNavigate();
 
-  console.log({ state: state?.data });
-
   return (
     <div>
       <Header messageApi={messageApi} />

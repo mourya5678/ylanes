@@ -5,8 +5,6 @@ import { useLocation } from 'react-router';
 const BlogsDetails = ({ messageApi }) => {
   const { state } = useLocation();
 
-  console.log({ state });
-
   return (
     <div>
       <LandingHeader />

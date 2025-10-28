@@ -14,7 +14,6 @@ const FriendRequest = ({ messageApi }) => {
 
     const handleAcceptRejectFriendRequest = (value, data) => {
         const callback = (response) => {
-            console.log({ response });
             dispatch(getAllFriendRequests({ messageApi }));
         };
         var raw = {

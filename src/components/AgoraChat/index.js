@@ -15,13 +15,13 @@ export const initChat = () => {
     });
     conn.addEventHandler("connection", {
         onConnected: () => {
-            console.log("Connected to Agora Chat");
+            // console.log("Connected to Agora Chat");
         },
         onDisconnected: () => {
-            console.log("Disconnected from Agora Chat");
+            // console.log("Disconnected from Agora Chat");
         },
         onTextMessage: (msg) => {
-            console.log("New Message:", msg);
+            // console.log("New Message:", msg);
             if (messageCallback) {
                 messageCallback(msg);
             };
@@ -37,7 +37,7 @@ export const loginChat = async (userId, passwordOrToken) => {
             user: userId,
             accessToken: passwordOrToken,
         });
-        console.log("Login successful:", userId);
+        // console.log("Login successful:", userId);
     } catch (err) {
         console.error("Login failed:", err);
     };
@@ -63,7 +63,7 @@ export const sendMessage = async (to, msg, chatType = "singleChat") => {
 export const logoutChat = () => {
     if (!conn) return;
     conn.close();
-    console.log("Logged out from Agora Chat");
+    // console.log("Logged out from Agora Chat");
 };
 
 export const setMessageListener = (callback) => {

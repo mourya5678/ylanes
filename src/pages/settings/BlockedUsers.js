@@ -13,7 +13,6 @@ const BlockedUsers = ({ messageApi }) => {
     }, []);
 
     const handleUnblockUser = (value) => {
-        console.log({ value })
         const callback = (response) => {
             dispatch(getBlockedUsers({ messageApi }));
             if (response?.message) {
@@ -52,7 +51,6 @@ const BlockedUsers = ({ messageApi }) => {
                                         {blockedUsersList?.length != 0 &&
                                             blockedUsersList?.map((item, i) => (
                                                 <tr>
-                                                    {console.log({ item })}
                                                     <td>{i + 1}</td>
                                                     <td>
                                                         <div className='d-flex align-items-center gap-2'>

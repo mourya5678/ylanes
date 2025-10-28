@@ -17,7 +17,7 @@ export const requestOtp = async ({ mobileNumber, navigate, messageApi, loaderVal
                 {
                     size: "invisible",
                     callback: (response) => {
-                        console.log("reCAPTCHA solved:", response);
+                        // console.log("reCAPTCHA solved:", response);
                     },
                 }
             );
@@ -55,7 +55,6 @@ export const requestOtp = async ({ mobileNumber, navigate, messageApi, loaderVal
 
 export const resendOtp = async ({ mobileNumber, messageApi, loaderValueChange }) => {
     try {
-        console.log({ mobileNumber })
         const fullPhoneNumber = mobileNumber.startsWith("+")
             ? mobileNumber
             : "+91" + mobileNumber;
@@ -73,7 +72,7 @@ export const resendOtp = async ({ mobileNumber, messageApi, loaderValueChange })
             {
                 size: "invisible",
                 callback: (response) => {
-                    console.log("reCAPTCHA solved again:", response);
+                    // console.log("reCAPTCHA solved again:", response);
                 },
             }
         );

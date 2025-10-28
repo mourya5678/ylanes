@@ -27,7 +27,6 @@ const EditPostModal = ({ messageApi, onClose, postDetails, handleClose }) => {
     const handleUpdatePostData = (values, { setSubmitting }) => {
         setSubmitting(false);
         const callback = (response) => {
-            console.log({ response });
             messageApi.success(response?.meta?.message);
             handleClose();
         };
@@ -41,7 +40,6 @@ const EditPostModal = ({ messageApi, onClose, postDetails, handleClose }) => {
         if (postImages?.length != 0) {
             postImages?.map((item) => formData.append("docs[]", item));
         };
-        console.log({ formData });
         dispatch(updatePostDetails({ payload: formData, callback, messageApi, param: values?.id }));
     };
 

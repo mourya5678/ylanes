@@ -28,10 +28,7 @@ const PostDetailsPage = ({ messageApi }) => {
         dispatch(getPostDataByID({ messageApi, payload: post_id }))
     }, []);
 
-    console.log({ postDetails });
-
     const handleDeleteUserPost = (val, id) => {
-        console.log({ val, id: id?.id })
         if (val == "current_user") {
             const callback = (response) => {
                 if (response?.message) {

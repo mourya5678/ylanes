@@ -4,7 +4,6 @@ import { pipGetAccessToken } from '../../auth/Pip';
 const ReferCode = ({ onClose, messageApi }) => {
     const userData = pipGetAccessToken("user_data");
 
-    console.log({ userData: userData?.attributes?.referral_code });
     const handleCopy = () => {
         const text = userData?.attributes?.referral_code ?? '';
         if (text.trim() !== "") {

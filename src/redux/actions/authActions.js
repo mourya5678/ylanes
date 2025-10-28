@@ -32,7 +32,6 @@ export const createUserPost = createAsyncThunk("create-post", async (props) => {
         callback(response);
         return response;
     } catch (error) {
-        console.log(error)
         callback(null, error);
     };
 });
@@ -49,7 +48,6 @@ export const deleteUserPost = createAsyncThunk("delete-user-post", async (props)
         callback(response);
         return response;
     } catch (error) {
-        console.log(error)
         callback(null, error);
     };
 });
@@ -65,7 +63,6 @@ export const deleteUserPoll = createAsyncThunk("delete-user-poll", async (props)
         callback(response);
         return response;
     } catch (error) {
-        console.log(error)
         callback(null, error);
     };
 });
@@ -80,7 +77,7 @@ export const getPostTopics = createAsyncThunk('get-post-topic', async (props) =>
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -94,7 +91,7 @@ export const getAllPost = createAsyncThunk('get-all-post', async (props) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -108,7 +105,7 @@ export const getPostDataByID = createAsyncThunk('get-post-by-id', async (props) 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -122,7 +119,7 @@ export const getLikeAllPost = createAsyncThunk('get-like-all-post', async (props
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -140,7 +137,6 @@ export const likeUserPost = createAsyncThunk('like-post', async (props) => {
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     };
 });
@@ -159,7 +155,6 @@ export const commentUserPost = createAsyncThunk('comment-post', async (props) =>
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     };
 });
@@ -176,7 +171,7 @@ export const getAllPostComment = createAsyncThunk('post-comment', async (props) 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -190,7 +185,7 @@ export const getAllPostCommentss = createAsyncThunk('get-post-commentss', async 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -204,7 +199,7 @@ export const getMyProfileData = createAsyncThunk('get-profile-data', async (prop
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 });
 
@@ -218,7 +213,7 @@ export const getUserProfileData = createAsyncThunk('get-user-profile-data', asyn
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 });
 
@@ -234,7 +229,6 @@ export const updateUserProfileData = createAsyncThunk('update-user-profile', asy
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error)
     };
 });
@@ -252,7 +246,7 @@ export const getWalletTransaction = createAsyncThunk('wallet-transaction', async
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -268,7 +262,7 @@ export const getFaqData = createAsyncThunk('get-faq', async (props) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -285,7 +279,7 @@ export const getTermsConditionData = createAsyncThunk('get-term-condition', asyn
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -301,7 +295,7 @@ export const getPrivacyPolicyData = createAsyncThunk('get-privacy-policy', async
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -317,7 +311,6 @@ export const provideFeedBackData = createAsyncThunk('send-feedback', async (prop
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     }
 });
@@ -333,7 +326,7 @@ export const getNotificationData = createAsyncThunk('get-notification', async (p
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -350,7 +343,6 @@ export const deleteNotificationData = createAsyncThunk('delete-notification', as
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     }
 });
@@ -367,7 +359,7 @@ export const markAsReadToAllNotificationsDate = createAsyncThunk('mark-as-read',
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error)
     };
 });
 
@@ -383,7 +375,7 @@ export const getLandingPageFaq = createAsyncThunk('get-landing-faq', async (prop
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -401,7 +393,6 @@ export const userOnboarding = createAsyncThunk('user-onboarding', async (props) 
         callback(response);
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error)
     };
 });
@@ -419,7 +410,6 @@ export const updatePostDetails = createAsyncThunk('update-post', async (props) =
         return response;
     } catch (error) {
         callback(null, error);
-        console.log({ error });
     };
 });
 
@@ -436,7 +426,6 @@ export const blockUserData = createAsyncThunk('block-user', async (props) => {
         return response;
     } catch (error) {
         callback(null, error);
-        console.log({ error });
     };
 });
 
@@ -453,7 +442,6 @@ export const unBlockUserData = createAsyncThunk('unblock-user', async (props) =>
         return response;
     } catch (error) {
         callback(null, error);
-        console.log({ error });
     };
 });
 
@@ -469,7 +457,7 @@ export const getBlogsData = createAsyncThunk('get-blogs', async (props) => {
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -488,7 +476,6 @@ export const getUserDetailsForVideoCall = createAsyncThunk('get-video-call-data'
         callback(response)
         return response;
     } catch (error) {
-        console.log(error);
         callback(null, error);
     };
 });
@@ -505,7 +492,7 @@ export const getLandingPolicyDetails = createAsyncThunk('get-landing-policy', as
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -521,7 +508,7 @@ export const getLandingTermOfUseDetails = createAsyncThunk('get-landing-term-of-
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -538,7 +525,6 @@ export const submitUserFeedBack = createAsyncThunk('submit-user-feedback', async
         return response;
     } catch (error) {
         callback(null, error);
-        console.log({ error });
     };
 });
 
@@ -556,7 +542,6 @@ export const submitRoomFeedBack = createAsyncThunk('submit-room-feedback', async
     } catch (error) {
         callback(null, error);
         messageApi?.error(error?.data?.errors[0]?.message)
-        console.log({ error });
     };
 });
 
@@ -572,7 +557,7 @@ export const getReportReason = createAsyncThunk('get-report-reason', async (prop
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -590,7 +575,6 @@ export const reportParticipants = createAsyncThunk('report-participant', async (
     } catch (error) {
         callback(null, error);
         messageApi.error(error?.data?.errors[0]?.message);
-        console.log({ error });
     };
 });
 
@@ -606,7 +590,7 @@ export const getBlockedUsers = createAsyncThunk('get-blocked-users', async (prop
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -622,7 +606,7 @@ export const getAllFriendRequests = createAsyncThunk('get-friend-request', async
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     };
 });
 
@@ -641,6 +625,5 @@ export const acceptRejectFriendRequest = createAsyncThunk('accept-reject-friend-
     } catch (error) {
         callback(null, error);
         messageApi?.error(error?.data?.errors[0]?.message)
-        console.log({ error });
     };
 });
