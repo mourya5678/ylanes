@@ -8,14 +8,14 @@ import { CreatePollSchema } from '../../auth/Schema';
 import { pageRoutes } from '../../routes/PageRoutes';
 import ErrorMessage from '../../layout/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { blockUserData, deleteUserPoll, deleteUserPost, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { blockUserData, deleteUserPoll, deleteUserPost, getMyProfileDatass, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { answerPollData, commentUserPoll, createPollData, disconnectUserConnection, getPollCommentData, getPollCommentDatass, getPollTypeData, getPollTypeDatass, sendInvitationToUser } from '../../redux/actions/createRoom';
 import CommentTime from '../../components/CommentTime';
 import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 
 
 const Polls = ({ messageApi }) => {
-  const { isLoading, postTopic, AllPollsData } = useSelector((state) => state.authReducer);
+  const { isLoading, postTopic, AllPollsData, profileData } = useSelector((state) => state.authReducer);
   const { pollComments } = useSelector((state) => state.createRoomReducer);
   const { isCreateLoading } = useSelector((state) => state.createRoomReducer);
 
@@ -42,6 +42,7 @@ const Polls = ({ messageApi }) => {
   const [isConnectionComments, setIsConnectionsComments] = useState(false);
 
   var localData = [];
+  const user_data = pipGetAccessToken("user_data");
 
   const [hours, setHours] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
   const [minutes, setMinutes] = useState(['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]);
@@ -85,6 +86,11 @@ const Polls = ({ messageApi }) => {
   }, []);
 
   useEffect(() => {
+    const data = pipGetAccessToken("user_data");
+    setUserData(data);
+  }, [profileData]);
+
+  useEffect(() => {
     dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
   }, [isLatest, isConnectionComments])
 
@@ -99,7 +105,8 @@ const Polls = ({ messageApi }) => {
       },
     };
     const callback = (response) => {
-      dispatch(getPollTypeDatass({ messageApi }));
+      dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
     };
     dispatch(likeUserPost({ payload: raw, callback, messageApi }));
   };
@@ -120,7 +127,8 @@ const Polls = ({ messageApi }) => {
       setOptions([]);
       setCheckBox(false);
       setIsShowForm(false);
-      dispatch(getPollTypeData({ messageApi }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+      dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
     };
     let data12 = [
       {
@@ -181,7 +189,8 @@ const Polls = ({ messageApi }) => {
       } else {
         messageApi.error("Enable to create comment please try again!");
       };
-      dispatch(getPollTypeDatass({ messageApi }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+      dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
       setSelectedPollId(value);
       setTimeout(() => {
         dispatch(getPollCommentDatass({ payload: value, messageApi }));
@@ -243,7 +252,8 @@ const Polls = ({ messageApi }) => {
           option_id: selectedAnswer?.id
         };
       const callback = (response) => {
-        dispatch(getPollTypeDatass({ messageApi }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+        dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
       };
       if (val?.attributes?.multiple_choice) {
         dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
@@ -266,7 +276,8 @@ const Polls = ({ messageApi }) => {
         } else {
           messageApi.error(response?.meta?.message);
         };
-        dispatch(getPollTypeDatass({ messageApi }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+        dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
       };
       dispatch(deleteUserPoll({ payload: id?.id, callback, messageApi }));
     } else if (val == "not_connected") {
@@ -276,7 +287,8 @@ const Polls = ({ messageApi }) => {
         } else {
           messageApi?.error(response?.message);
         };
-        dispatch(getPollTypeDatass({ messageApi }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+        dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
       };
       const raw = {
         data: {
@@ -295,7 +307,8 @@ const Polls = ({ messageApi }) => {
         } else {
           messageApi?.error(response?.message);
         };
-        dispatch(getPollTypeDatass({ messageApi }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+        dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
       };
       dispatch(disconnectUserConnection({ payload: id?.attributes?.user?.id, callback, messageApi }))
     };
@@ -308,7 +321,8 @@ const Polls = ({ messageApi }) => {
       } else {
         messageApi?.error(response?.message);
       };
-      dispatch(getPollTypeDatass({ messageApi }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+      dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
     };
     let formData = new FormData();
     formData.append("user_id", value?.user?.id);

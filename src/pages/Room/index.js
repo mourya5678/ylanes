@@ -9,6 +9,7 @@ import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
 import RoomRegisterModal from '../../components/Modals/RoomRegisterModal';
 import CancelRoomModal from '../../components/Modals/CancelRoomModal';
 import SendFeedback from '../../components/Modals/SendFeedback';
+import { getMyProfileDatass } from '../../redux/actions/authActions';
 
 const MyRoom = ({ messageApi }) => {
     const { isCreateLoading, pastRoomList, upcommingRoomList, recommendedList, myRoomList } = useSelector((state) => state.createRoomReducer);
@@ -485,6 +486,7 @@ const MyRoom = ({ messageApi }) => {
                     onHandleClose={() => {
                         setIsRegisterShow(false);
                         setActiveTab(activeTab);
+                        dispatch(getMyProfileDatass({ payload: userData?.id, messageApi }));
                         dispatch(getMyRoomData({ messageApi }));
                         dispatch(getPastRoomData({ messageApi }));
                         dispatch(getUpcommingRoomData({ messageApi }));
@@ -508,6 +510,7 @@ const MyRoom = ({ messageApi }) => {
                     handleClose={() => {
                         setIsSendFeedBackModal(false)
                         getRoomData()
+                        dispatch(getMyProfileDatass({ payload: userData?.id, messageApi }));
                     }}
                 />
             }

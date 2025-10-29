@@ -137,6 +137,8 @@ export const likeUserPost = createAsyncThunk('like-post', async (props) => {
         callback(response);
         return response;
     } catch (error) {
+        console.log({ error })
+        messageApi.error(error?.data?.errors?.message);
         callback(null, error);
     };
 });
@@ -190,6 +192,20 @@ export const getAllPostCommentss = createAsyncThunk('get-post-commentss', async 
 });
 
 export const getMyProfileData = createAsyncThunk('get-profile-data', async (props) => {
+    const { payload, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: userProfileAPI + payload,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        // console.log(error);
+    }
+});
+
+export const getMyProfileDatass = createAsyncThunk('get-profile-datas', async (props) => {
     const { payload, messageApi } = props;
     try {
         const response = await API_REQUEST({

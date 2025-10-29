@@ -260,13 +260,13 @@ export const roomSlice = createSlice({
 
         // getPollTypeDatass
         builder.addCase(getPollTypeDatass.pending, (state, action) => {
-            state.isCreateLoading = true;
+            // state.isCreateLoading = true;
         });
         builder.addCase(getPollTypeDatass.fulfilled, (state, action) => {
-            state.isCreateLoading = false;
+            // state.isCreateLoading = false;
         });
         builder.addCase(getPollTypeDatass.rejected, (state, action) => {
-            state.isCreateLoading = false;
+            // state.isCreateLoading = false;
         });
 
         // disconnectUserConnection

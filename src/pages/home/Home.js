@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { blockUserData, commentUserPost, createUserPost, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
+import { blockUserData, commentUserPost, createUserPost, deleteUserPost, getAllPost, getAllPostComment, getAllPostCommentss, getLikeAllPost, getMyProfileData, getMyProfileDatass, getPostTopics, likeUserPost } from '../../redux/actions/authActions';
 import { Formik } from 'formik';
 import { CreatePostSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
@@ -46,6 +46,8 @@ const Home = ({ messageApi }) => {
 
   const [isLatest, setIsLatest] = useState(true);
   const [isConnectionComments, setIsConnectionsComments] = useState(false);
+  const user_data = pipGetAccessToken("user_data");
+
 
   var localData = [];
   const initialState = {
@@ -91,7 +93,6 @@ const Home = ({ messageApi }) => {
       return false;
     });
   };
-
   // usage
   const displayUser2 = getDisplayUsers2(AllPollsData, filterBytopic);
 
@@ -121,6 +122,7 @@ const Home = ({ messageApi }) => {
     const callback = (response) => {
       setPostImages([]);
       dispatch(getLikeAllPost({ messageApi }));
+      dispatch(getMyProfileData({ payload: user_data?.id, messageApi }));
       if (response?.data) {
         messageApi.success("Post created successfully");
       } else {
@@ -154,6 +156,7 @@ const Home = ({ messageApi }) => {
     };
     const callback = (response) => {
       dispatch(getLikeAllPost({ messageApi }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
     };
     dispatch(likeUserPost({ payload: raw, callback, messageApi }));
   };
@@ -169,6 +172,7 @@ const Home = ({ messageApi }) => {
       dispatch(getLikeAllPost({ messageApi }));
       setSelectedPostId(value);
       dispatch(getAllPostCommentss({ payload: value, messageApi }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
     };
     const regex = /^(?!\s*$).+$/;
     if (regex.test(addComment)) {
@@ -190,14 +194,17 @@ const Home = ({ messageApi }) => {
   };
 
   const handleDeleteUserPost = (val, id) => {
+    console.log("hello")
     if (val == "current_user") {
       const callback = (response) => {
+        console.log({ response })
+        dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
         if (response?.message) {
           messageApi.success(response?.message);
         } else {
           messageApi.error(response?.message);
         };
-        dispatch(getAllPost({ messageApi }));
       };
       dispatch(deleteUserPost({ payload: id?.id, callback, messageApi }));
     } else if (val == "not_connected") {
@@ -207,7 +214,8 @@ const Home = ({ messageApi }) => {
         } else {
           messageApi?.error(response?.message);
         };
-        dispatch(getAllPost({ messageApi }));
+        dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
       };
       const raw = {
         data: {
@@ -226,7 +234,8 @@ const Home = ({ messageApi }) => {
         } else {
           messageApi?.error(response?.message);
         };
-        dispatch(getAllPost({ messageApi }));
+        dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
       };
       dispatch(disconnectUserConnection({ payload: id?.attributes?.user?.id, callback, messageApi }))
     };
@@ -234,12 +243,13 @@ const Home = ({ messageApi }) => {
 
   const handleBlockUser = (value) => {
     const callback = (response) => {
+      dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+      dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
       if (response?.message) {
         messageApi?.success(response?.message);
       } else {
         messageApi?.error(response?.message);
       };
-      dispatch(getAllPost({ messageApi }));
     };
     let formData = new FormData();
     formData.append("user_id", value?.user?.id);
@@ -439,7 +449,7 @@ const Home = ({ messageApi }) => {
                                           onBlur={handleBlur}
                                           onChange={handleChange}
                                           className="form-control ct_border_radius_10 pe-5 ct_input border-0 h-auto" rows={2}
-                                          placeholder="What is happning?"
+                                          placeholder="What is happening?"
                                         />
                                         {isShowForm &&
                                           <i className="fa-solid fa-xmark ct_show_eye" onClick={() => {
@@ -872,14 +882,16 @@ const Home = ({ messageApi }) => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section >
       {isCreatePoll && (
         <CreatePollModal
           messageApi={messageApi}
-          onClose={() => setIsCreatePoll(false)}
+          onClose={() => {
+            setIsCreatePoll(false)
+            dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+          }}
         />
       )}
       {showShareModal && shareCode?.id &&
@@ -896,7 +908,7 @@ const Home = ({ messageApi }) => {
           onClose={() => setIsEditPost(false)}
           handleClose={() => {
             setIsEditPost(false);
-            dispatch(getAllPost({ messageApi }));
+            dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
           }}
         />
       }

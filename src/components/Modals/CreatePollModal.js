@@ -34,7 +34,6 @@ const CreatePollModal = ({ messageApi, onClose }) => {
             }
             setOptions([]);
             setCheckBox(false);
-            dispatch(getPollTypeData({ messageApi }));
             onClose();
         };
         let data12 = [

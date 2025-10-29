@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { pipGetAccessToken, pipViewDate, pipViewDate2, pipViewDate3 } from '../../auth/Pip';
-import { getPostTopics } from '../../redux/actions/authActions';
+import { getMyProfileDatass, getPostTopics } from '../../redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { createRoomData, getRoomTypeData } from '../../redux/actions/createRoom';
@@ -14,6 +14,7 @@ import * as Yup from 'yup';
 const CreateRoom = ({ messageApi }) => {
     const { isLoading, postTopic } = useSelector((state) => state.authReducer);
     const { isCreateLoading, RoomType } = useSelector((state) => state.createRoomReducer);
+    const user_data = pipGetAccessToken("user_data");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
@@ -330,6 +331,7 @@ const CreateRoom = ({ messageApi }) => {
                 messageApi.success(response?.meta?.message);
                 navigate(pageRoutes.myRoom);
             };
+            dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
             setFieldValues({
                 anonymouslyName: "",
                 selectedTopic: "",
@@ -370,7 +372,6 @@ const CreateRoom = ({ messageApi }) => {
         formData.append("room[is_anonymously]", joinAnonymously);
         formData.append("room[anonymously_name]", fieldValues.anonymouslyName);
         formData.append("TZone", timeZone);
-
         if (resources?.length != 0) {
             resources?.map((item) => (
                 formData.append('room[room_resources_attributes][][url]', item?.values)

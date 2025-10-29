@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { acceptRejectFriendRequest, getAllFriendRequests } from '../../redux/actions/authActions';
+import { acceptRejectFriendRequest, getAllFriendRequests, getMyProfileDatass } from '../../redux/actions/authActions';
 import Loader from '../../components/Loader';
+import { pipGetAccessToken } from '../../auth/Pip';
 
 const FriendRequest = ({ messageApi }) => {
     const { isLoader, getFriendRequestList } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
+    const user_data = pipGetAccessToken("user_data");
 
     useEffect(() => {
         dispatch(getAllFriendRequests({ messageApi }));
@@ -14,6 +16,7 @@ const FriendRequest = ({ messageApi }) => {
 
     const handleAcceptRejectFriendRequest = (value, data) => {
         const callback = (response) => {
+            dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
             dispatch(getAllFriendRequests({ messageApi }));
         };
         var raw = {

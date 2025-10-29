@@ -74,10 +74,10 @@ export const getPollTypeData = createAsyncThunk('get-poll-data', async (props) =
 });
 
 export const getPollTypeDatass = createAsyncThunk('get-poll-datass', async (props) => {
-    const { messageApi } = props;
+    const { messageApi, typeDropDown, connectionStatus } = props;
     try {
         const response = await API_REQUEST({
-            url: getPollDataAPI,
+            url: getPollDataAPI + `?sortby=${typeDropDown.toLowerCase()}&connection_comments=${connectionStatus}`,
             method: "GET",
             messageApi
         });

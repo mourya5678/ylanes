@@ -92,9 +92,9 @@ const RoomDetails = ({ messageApi }) => {
                     </button>
                   </li>
                 </ul>
-                <button className="ct_yellow_btn py-2 px-4 ct_w_100_575">
+                {/* <button className="ct_yellow_btn py-2 px-4 ct_w_100_575">
                   Register
-                </button>
+                </button> */}
               </div>
               <div className="tab-content">
                 <div className={`tab-pane fade ${tabManage == "1" ? "active show" : ""}`} role="tabpanel">
