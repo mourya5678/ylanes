@@ -76,12 +76,21 @@ const Dashboard = ({ messageApi }) => {
                     <h2 className="text-center fw-bold mb-5">What's the Buzz?</h2>
                     <div className="row g-4">
                         {buzzList?.length != 0 &&
-                            buzzList?.map((item) => (
+                            buzzList?.map((item, i) => (
                                 <div className="col-lg-4 col-md-6">
-                                    <div className="ct_wbuzz_card p-4 pe-0 h-100" style={{ background: "#c6a3f7" }}>
+                                    <div
+                                        className="ct_wbuzz_card p-4 pe-0 h-100"
+                                        style={{
+                                            background: `${i == 0 ? "#c6a3f7" : i == 1 ? "#ffad61" : i == 2 ? "#e66ab4" : i == 3 ? "#ffeb77" : i == 4 ? "#8dd0f7" : i == 5 ? "#a8d97f" : i == 6 ? "#ffb16d" : "#d48de2"}`
+                                        }}
+                                    >
                                         <h5 className="fw-bold pe-4">{item?.attributes?.name ?? ""}</h5>
                                         <p className='ct_para_scroll pe-4 ct_custom_scroll pe-0'>{item?.attributes?.description ?? ""}</p>
-                                        <img src="assets/img/icon_1.png" alt="Business" className="img-fluid mt-3" />
+                                        <img
+                                            src={i == 0 ? "assets/img/icon_1.png" : i == 1 ? "assets/img/icon_2.png" : i == 2 ? "assets/img/icon_3.png" : i == 3 ? "assets/img/icon_4.png" : i == 4 ? "assets/img/icon_5.png" : i == 5 ? "assets/img/icon_6.png" : i == 6 ? "assets/img/icon_7.png" : "assets/img/icon_8.png"}
+                                            alt="Business"
+                                            className="img-fluid mt-3"
+                                        />
                                     </div>
                                 </div>
                             ))
