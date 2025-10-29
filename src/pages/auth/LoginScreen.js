@@ -28,6 +28,7 @@ const LoginScreen = ({ messageApi }) => {
         requestOtp({
             mobileNumber: values?.phone_number,
             isAgreed: values?.isAgreed,
+            route: pageRoutes.otpVerify,
             navigate,
             loaderValueChange: () => setIsLoader(false),
             messageApi

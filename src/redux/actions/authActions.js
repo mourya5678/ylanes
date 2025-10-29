@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deleteNotificationAPI, getAllblockedUserAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllFriendRequestListAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, reportParticipantUserAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, unblockUserAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deactivateAccountAPI, deleteAccountDataAPI, deleteNotificationAPI, getAllblockedUserAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllFriendRequestListAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, reportParticipantUserAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, unblockUserAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -641,5 +641,45 @@ export const acceptRejectFriendRequest = createAsyncThunk('accept-reject-friend-
     } catch (error) {
         callback(null, error);
         messageApi?.error(error?.data?.errors[0]?.message)
+    };
+});
+
+// deactivatedUserAccount
+export const deactivatedUserAccount = createAsyncThunk('deactivate-account', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: deactivateAccountAPI,
+            method: "PUT",
+            data: payload,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        // messageApi?.error(error?.data?.errors[0]?.message)
+    };
+});
+
+// deleteAccountData
+export const deleteAccountData = createAsyncThunk('delete-account-data', async (props) => {
+    const { payload, callback, messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: deleteAccountDataAPI,
+            method: "DELETE",
+            data: payload,
+            messageApi,
+            isSuccessToast: false,
+            isErrorToast: false
+        });
+        callback(response);
+        return response;
+    } catch (error) {
+        callback(null, error);
+        // messageApi?.error(error?.data?.errors[0]?.message)
     };
 });

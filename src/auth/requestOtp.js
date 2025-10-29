@@ -1,7 +1,7 @@
 import { pageRoutes } from "../routes/PageRoutes";
 import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "./Firebase";
 
-export const requestOtp = async ({ mobileNumber, navigate, messageApi, loaderValueChange }) => {
+export const requestOtp = async ({ mobileNumber, route, navigate, metaData = {}, messageApi, loaderValueChange }) => {
     try {
         const fullPhoneNumber = mobileNumber.startsWith("+")
             ? mobileNumber
@@ -29,10 +29,11 @@ export const requestOtp = async ({ mobileNumber, navigate, messageApi, loaderVal
         );
         window.confirmationResult = confirmationResult;
         loaderValueChange();
-        navigate(pageRoutes.otpVerify, {
+        navigate(route, {
             state: {
                 verificationId: confirmationResult.verificationId,
                 mobileNumber: fullPhoneNumber,
+                metaData: metaData
             },
         });
     } catch (error) {

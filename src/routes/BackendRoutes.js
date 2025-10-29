@@ -128,3 +128,6 @@ export const getAllblockedUserAPI = "account_block/accounts/get_blocked_users"
 
 export const getAllFriendRequestListAPI = "bx_block_request_management/requests";
 export const unblockUserAPI = "account_block/accounts/unblock_user";
+
+export const deactivateAccountAPI = "account_block/accounts/deactivate_account";
+export const deleteAccountDataAPI = "account_block/accounts/sms_otp_confirmation";

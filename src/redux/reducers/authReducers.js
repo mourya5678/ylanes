@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { acceptRejectFriendRequest, blockUserData, createUserPost, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllFriendRequests, getAllPost, getAllPostComment, getAllPostCommentss, getBlockedUsers, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getMyProfileDatass, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, reportParticipants, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, unBlockUserData, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { acceptRejectFriendRequest, blockUserData, createUserPost, deactivatedUserAccount, deleteAccountData, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllFriendRequests, getAllPost, getAllPostComment, getAllPostCommentss, getBlockedUsers, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getMyProfileDatass, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, reportParticipants, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, unBlockUserData, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -519,6 +519,28 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(acceptRejectFriendRequest.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // deactivatedUserAccount
+        builder.addCase(deactivatedUserAccount.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deactivatedUserAccount.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deactivatedUserAccount.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // deleteAccountData
+        builder.addCase(deleteAccountData.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deleteAccountData.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deleteAccountData.rejected, (state, action) => {
             state.isLoading = false;
         });
 

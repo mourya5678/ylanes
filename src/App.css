@@ -7,6 +7,14 @@
     padding: 0px 16px;
 }
 
+.ct_send_btn_postion {
+    position: absolute !important;
+    right: 4px;
+    height: 40px;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
 .ct_comment_area_main input {
     padding-right: 84px;
 }
@@ -635,9 +643,8 @@ body {
 }
 
 
-.ct_action_btn{
-    
-}
+.ct_action_btn {}
+
 @media screen and (min-width:1200px) {
     .ct_side_bar_scrool_left {
         height: auto;

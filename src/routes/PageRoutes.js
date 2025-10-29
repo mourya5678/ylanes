@@ -4,6 +4,7 @@ import TermsOfUse from "../pages/policies/TermsOfUse";
 import LandingPrivacyPolicy from "../pages/policies/LandingPrivacyPolicy";
 import BlockedUsers from "../pages/settings/BlockedUsers";
 import FriendRequest from "../pages/settings/FriendRequest";
+import VerifyDeactiveAccountOtp from "../pages/settings/verifyDeactiveAccountOtp";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -86,10 +87,17 @@ export const pageRoutes = {
     landingTermOfUse: "/term-and-condition",
     landingPrivacyPolicy: "/privayc_policy",
     blockUser: "/block-users",
-    friendRequests: '/friend-request'
+    friendRequests: '/friend-request',
+    verifyDeactiveAccountOtp: "/account-verification"
 };
 
 export const AllRoutes = [
+    {
+        name: "Verify Deactive Account Otp",
+        path: pageRoutes?.verifyDeactiveAccountOtp,
+        element: <VerifyDeactiveAccountOtp />,
+        isPrivate: true
+    },
     {
         name: "Home",
         path: pageRoutes?.dashboard,

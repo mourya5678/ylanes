@@ -718,7 +718,7 @@ const Home = ({ messageApi }) => {
                                     placeholder="Write comment..."
                                   />
                                   <button
-                                    className="ct_send_msg_btn ct_yellow_btn"
+                                    className="ct_send_msg_btn ct_yellow_btn ct_send_btn_postion"
                                     onClick={() =>
                                       handleCommentUserPost(
                                         item?.attributes?.id,
