@@ -91,7 +91,7 @@ const AboutUs = ({ messageApi }) => {
                   bars, no unread group chats-just a platform where your
                   quirky, witty. funny ideas find a worthy space.
                 </p>
-                <p>-Deepti Punjabi & Rajesh voturi</p>
+                <p>-Deepti Punjabi & Rajesh Ivaturi</p>
               </div>
             </div>
           </div>

@@ -19,6 +19,8 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         return `${hours}:${formattedMinutes}`;
     });
 
+    const [selectedMonth, setSelectedMonth] = useState("");
+
     const [selectAmPm, setSelectAmPm] = useState(() => {
         const now = new Date();
         return now.getHours() >= 12 ? "PM" : "AM";
@@ -65,7 +67,18 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         let [hours, minutes] = roomTime.split(":").map(Number);
         if (selectAmPm === "PM" && hours < 12) hours += 12;
         if (selectAmPm === "AM" && hours == 12) hours = 0;
-        const finalDateTime = new Date(Date.UTC(year, month - 1, Number(selectedDate), hours, minutes, 0));
+        console.log({ selectedMonth })
+        // const finalDateTime = new Date(Date.UTC(selectedMonth, hours, minutes, 0));
+        const dateObj = new Date(selectedMonth);
+        const finalDateTime = new Date(Date.UTC(
+            dateObj.getFullYear(),
+            dateObj.getMonth(),
+            dateObj.getDate(),
+            hours,
+            minutes,
+            0
+        ));
+        console.log({ finalDateTime: finalDateTime })
         if (finalDateTime <= now) {
             messageApi.error("Selected date and time must be in the future.");
         } else {
@@ -95,7 +108,10 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
                                         {currentWeekDays?.map((item) => (
                                             <div className={`ct_day ${item?.date == selectedDate && "active"}`} >
                                                 <p className='mb-0 text-center'>{item?.day ?? ""}</p>
-                                                <span className='ct_cursor' onClick={() => dateChange(item?.date)}>{item?.date ?? ""}</span>
+                                                <span className='ct_cursor' onClick={() => {
+                                                    dateChange(item?.date)
+                                                    setSelectedMonth(item?.fullDateObj)
+                                                }}>{item?.date ?? ""}</span>
                                             </div>
                                         ))}
                                     </div>

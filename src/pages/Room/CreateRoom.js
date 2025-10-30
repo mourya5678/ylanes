@@ -51,24 +51,25 @@ const CreateRoom = ({ messageApi }) => {
     }, []);
 
     const getDateAndTimeData = () => {
-        const date = new Date()
+        const date = new Date();
         const month = date.toLocaleString("default", { month: "long" });
         const year = date.getFullYear();
-        setCurrentMonthYear(`${month} , ${year}`);
-        var currentDate = moment();
-        var weekStart = currentDate;
-        var days = [];
-        for (var i = 0; i <= 6; i++) {
-            let dateobj = moment(weekStart).add(i, 'days').format("MMMM-DD-ddd").split('-');
-            let obj = {
-                month: dateobj[0],
-                date: dateobj[1],
-                day: dateobj[2],
-                fullDateObj: moment(weekStart).add(i, 'days').format("YYYY-MM-DD")
-            };
-            days.push(obj);
+        setCurrentMonthYear(`${month}, ${year}`);
+        const currentDate = moment();
+        const days = [];
+        for (let i = 0; i < 7; i++) {
+            const newDate = currentDate.clone().add(i, "days");
+            const monthName = newDate.format("MMMM");
+            const dayNum = newDate.format("DD");
+            const dayName = newDate.format("ddd");
+            days.push({
+                month: monthName,
+                date: dayNum,
+                day: dayName,
+                fullDateObj: newDate.format("YYYY-MM-DD"),
+            });
         };
-        let todayDay = moment().format("DD");
+        const todayDay = moment().format("DD");
         setSelectedDate(todayDay);
         setCurrentWeekDays(days);
     };
