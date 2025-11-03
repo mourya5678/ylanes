@@ -18,6 +18,7 @@ import { disconnectUserConnection, getMyConnectionsData, getMyRoomData, getPollT
 import CreatePollModal from '../../components/Modals/CreatePollModal';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import EditPostModal from '../../components/Modals/EditPostModal';
+import ReferCode from '../../components/Modals/ReferCode';
 
 const Home = ({ messageApi }) => {
   const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
@@ -46,6 +47,8 @@ const Home = ({ messageApi }) => {
 
   const [isLatest, setIsLatest] = useState(true);
   const [isConnectionComments, setIsConnectionsComments] = useState(false);
+
+  // const [showShareModal2, setShowShareModal2] = useState(false);
   const user_data = pipGetAccessToken("user_data");
 
 
@@ -267,7 +270,7 @@ const Home = ({ messageApi }) => {
               <div className="ct_side_bar_scrool_left ct_custom_scroll">
                 <div className="ct_outline_bg d-flex align-items-center gap-2 justify-content-between p-3">
                   <p className="mb-0">Invite Friends,Earn YCoins</p>
-                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap">
+                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap" onClick={() => navigate(pageRoutes.refer)}>
                     Invite Friends
                   </button>
                 </div>
@@ -910,6 +913,12 @@ const Home = ({ messageApi }) => {
           }}
         />
       }
+      {/* {showShareModal2 &&
+        <ReferCode
+          messageApi={messageApi}
+          onClose={() => setShowShareModal2(false)}
+        />
+      } */}
     </div>
   );
 };

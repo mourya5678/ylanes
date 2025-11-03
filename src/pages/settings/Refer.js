@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import ReferCode from '../../components/Modals/ReferCode';
+import { useDispatch } from 'react-redux';
 
 const Refer = ({ messageApi }) => {
+    const dispatch = useDispatch();
     const [showShareModal, setShowShareModal] = useState(false);
-    const [shareCode, setShareCode] = useState({});
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <div>
@@ -31,7 +36,6 @@ const Refer = ({ messageApi }) => {
             {showShareModal &&
                 <ReferCode
                     messageApi={messageApi}
-                    shareCode={shareCode}
                     onClose={() => setShowShareModal(false)}
                 />
             }

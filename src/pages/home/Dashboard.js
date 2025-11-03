@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllSubscriptionPlan, getDashboardAllSubscriptionPlan, getDashboardReview, getDashboardTopicAndDetails, getDashboardWhyYlanes } from '../../redux/actions/subscriptions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
@@ -10,12 +10,14 @@ import "swiper/css/pagination";
 import "swiper/css";
 import LandingHeader from '../../components/LandingPageHeader';
 import LandingPageFooter from '../../components/LandingPageFooter';
+import ReferCode from '../../components/Modals/ReferCode';
 
 const Dashboard = ({ messageApi }) => {
     const { isSubscriptionLoader, allDashboardSubscription, whyYlanesData, buzzList, reviewList } = useSelector((state) => state.subscriptionReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     useEffect(() => {
         dispatch(getDashboardAllSubscriptionPlan({ messageApi }));

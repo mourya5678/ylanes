@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_REQUEST } from ".";
-import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deactivateAccountAPI, deleteAccountDataAPI, deleteNotificationAPI, getAllblockedUserAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllFriendRequestListAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, reportParticipantUserAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, unblockUserAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
+import { blockUserAPI, commentPostAPI, createPollAPI, CreatePostAPI, deactivateAccountAPI, deleteAccountDataAPI, deleteNotificationAPI, getAllblockedUserAPI, getAllBlogsDataAPI, getAllConnectionsAPI, getAllFriendRequestListAPI, getAllPostAPI, getFaqListAPI, getLandingFaqAPI, getLandingPolicyDataAPI, getLandingTermOfUseDataAPI, getNotificationAPI, getPostTopicsAPI, getPrivacyPolicyDataAPI, getReferCodeAPI, getReportReasonAPI, getRoomTypeAPI, getTermsConditionsDataAPI, getUserDataOfVideoCallAPI, getWalletTransactionHistoryAPI, likePostAPI, markAsReadToAllNotificationsAPI, reportParticipantUserAPI, sendFeedbackAPI, SMSConfirmationAPI, submitFeedBackAPI, submitRoomFeedBackAPI, unblockUserAPI, updateUserProfileAPI, userOnboardAPI, userProfileAPI } from "../../routes/BackendRoutes";
 
 export const smsConfirmation = createAsyncThunk("sms-confirmation", async (props) => {
     const { payload, callback, messageApi, myHeaders } = props;
@@ -680,5 +680,19 @@ export const deleteAccountData = createAsyncThunk('delete-account-data', async (
     } catch (error) {
         callback(null, error);
         // messageApi?.error(error?.data?.errors[0]?.message)
+    };
+});
+
+export const getAllYCoinsEarningData = createAsyncThunk('get-ycoin-data', async (props) => {
+    const { messageApi } = props;
+    try {
+        const response = await API_REQUEST({
+            url: getReferCodeAPI,
+            method: "GET",
+            messageApi
+        });
+        return response;
+    } catch (error) {
+        // console.log(error);
     };
 });

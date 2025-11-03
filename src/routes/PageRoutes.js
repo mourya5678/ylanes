@@ -1,10 +1,4 @@
 import { lazy } from "react";
-import UserProfile from "../pages/auth/UserProfile";
-import TermsOfUse from "../pages/policies/TermsOfUse";
-import LandingPrivacyPolicy from "../pages/policies/LandingPrivacyPolicy";
-import BlockedUsers from "../pages/settings/BlockedUsers";
-import FriendRequest from "../pages/settings/FriendRequest";
-import VerifyDeactiveAccountOtp from "../pages/settings/verifyDeactiveAccountOtp";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -51,6 +45,14 @@ const TopUpUserWallet = lazy(() => import("../pages/wallet/TopUpUserWallet"));
 const PostDetailsPage = lazy(() => import("../pages/home/PostDetailsPage"));
 const VideoCall = lazy(() => import("../components/AgoraVideoCall"));
 
+const UserProfile = lazy(() => import("../pages/auth/UserProfile"));
+const TermsOfUse = lazy(() => import("../pages/policies/TermsOfUse"));
+
+const LandingPrivacyPolicy = lazy(() => import("../pages/policies/LandingPrivacyPolicy"));
+const BlockedUsers = lazy(() => import("../pages/settings/BlockedUsers"));
+
+const FriendRequest = lazy(() => import("../pages/settings/FriendRequest"));
+const VerifyDeactiveAccountOtp = lazy(() => import("../pages/settings/verifyDeactiveAccountOtp"));
 
 export const pageRoutes = {
     dashboard: '/home',
