@@ -137,7 +137,6 @@ export const likeUserPost = createAsyncThunk('like-post', async (props) => {
         callback(response);
         return response;
     } catch (error) {
-        console.log({ error })
         messageApi.error(error?.data?.errors?.message);
         callback(null, error);
     };

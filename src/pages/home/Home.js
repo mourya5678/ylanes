@@ -194,10 +194,8 @@ const Home = ({ messageApi }) => {
   };
 
   const handleDeleteUserPost = (val, id) => {
-    console.log("hello")
     if (val == "current_user") {
       const callback = (response) => {
-        console.log({ response })
         dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
         dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
         if (response?.message) {

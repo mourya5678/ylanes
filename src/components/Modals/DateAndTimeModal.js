@@ -18,9 +18,8 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         const formattedMinutes = minutes.toString().padStart(2, "0");
         return `${hours}:${formattedMinutes}`;
     });
-
     const [selectedMonth, setSelectedMonth] = useState("");
-
+    
     const [selectAmPm, setSelectAmPm] = useState(() => {
         const now = new Date();
         return now.getHours() >= 12 ? "PM" : "AM";
@@ -67,8 +66,6 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         let [hours, minutes] = roomTime.split(":").map(Number);
         if (selectAmPm === "PM" && hours < 12) hours += 12;
         if (selectAmPm === "AM" && hours == 12) hours = 0;
-        console.log({ selectedMonth })
-        // const finalDateTime = new Date(Date.UTC(selectedMonth, hours, minutes, 0));
         const dateObj = new Date(selectedMonth);
         const finalDateTime = new Date(Date.UTC(
             dateObj.getFullYear(),
@@ -78,7 +75,6 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
             minutes,
             0
         ));
-        console.log({ finalDateTime: finalDateTime })
         if (finalDateTime <= now) {
             messageApi.error("Selected date and time must be in the future.");
         } else {

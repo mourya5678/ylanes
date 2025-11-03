@@ -28,7 +28,6 @@ const DeactivateAccount = ({ messageApi }) => {
 
     const handleDeactivateAccount = () => {
         const callback = (response) => {
-            console.log({ response });
             if (response?.success[0]?.message) {
                 messageApi.success(response?.success[0]?.message);
                 navigate(pageRoutes.login);
@@ -59,7 +58,6 @@ const DeactivateAccount = ({ messageApi }) => {
 
     const handleDeleteAllData = () => {
         const user_data = pipGetAccessToken("user_data");
-        console.log({ user_data })
         setIsLoader(true);
         if (selectResonList != "") {
             if (selectResonList == "Other (please specify)") {

@@ -19,13 +19,11 @@ const VerifyDeactiveAccountOtp = ({ messageApi }) => {
     const { verificationId, mobileNumber } = location.state || {};
 
     const user_data = pipGetAccessToken("ylanes-fcm");
-    console.log({ location: location?.state?.metaData })
 
 
     const handleOtpSubmit = async () => {
         setIsLoader(true);
         const callback = (response) => {
-            console.log({ response });
             if (response) {
                 messageApi.success("Account Deactivated SuccessFully.")
                 navigate(pageRoutes.login);
