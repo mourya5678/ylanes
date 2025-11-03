@@ -2,16 +2,34 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import ReferCode from '../../components/Modals/ReferCode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllYCoinsEarningData } from '../../redux/actions/authActions';
+import Loader from '../../components/Loader';
 
 const Refer = ({ messageApi }) => {
     const dispatch = useDispatch();
+    const { isLoading, getYCoinsData } = useSelector((state) => state?.authReducer);
     const [showShareModal, setShowShareModal] = useState(false);
+    const [referValue, setReferValue] = useState(0);
 
     useEffect(() => {
-
+        dispatch(getAllYCoinsEarningData({ messageApi }));
     }, []);
 
+    useEffect(() => {
+        if (getYCoinsData?.length != 0) {
+            getYCoinsData?.map((item) => (
+                item?.constant_key == "APP-REFERREE" &&
+                setReferValue(item?.constant_value)
+            ))
+        } else {
+            setReferValue(0);
+        };
+    }, [getYCoinsData]);
+
+    if (isLoading) {
+        return <Loader />;
+    };
     return (
         <div>
             <Header messageApi={messageApi} />
@@ -23,7 +41,7 @@ const Refer = ({ messageApi }) => {
                                 <img src="assets/img/welcome-concept-landing-page.png" alt="" />
                                 <div className="text-center">
                                     <h4 className="ct_fs_20 ct_fw_600">Refer your friends</h4>
-                                    <p>Refer your friends to YLanes and receive 100 YCoins per referral who signs up!</p>
+                                    <p>Refer your friends to YLanes and receive {referValue ?? 0} YCoins per referral who signs up!</p>
                                     <div className="text-center">
                                         <button className="ct_yellow_btn" onClick={() => setShowShareModal(true)}>Share With Friends</button>
                                     </div>

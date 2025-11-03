@@ -11,13 +11,25 @@ import "swiper/css";
 import LandingHeader from '../../components/LandingPageHeader';
 import LandingPageFooter from '../../components/LandingPageFooter';
 import ReferCode from '../../components/Modals/ReferCode';
+import { getAllYCoinsEarningData } from '../../redux/actions/authActions';
 
 const Dashboard = ({ messageApi }) => {
     const { isSubscriptionLoader, allDashboardSubscription, whyYlanesData, buzzList, reviewList } = useSelector((state) => state.subscriptionReducer);
+    const { isLoading, getYCoinsData } = useSelector((state) => state?.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [yCoinDetail, setYCoinDetail] = useState({
+        likePost: 0,
+        postComment: 0,
+        sendRequest: 0,
+        connectionRefund: 0,
+        acceptRequest: 0,
+        signUp: 0,
+        referAFriend: 0,
+        profileFill: 0
+    });
 
     useEffect(() => {
         dispatch(getDashboardAllSubscriptionPlan({ messageApi }));
@@ -26,7 +38,76 @@ const Dashboard = ({ messageApi }) => {
         dispatch(getDashboardReview({ messageApi }));
     }, []);
 
-    if (isSubscriptionLoader) {
+    useEffect(() => {
+        dispatch(getAllYCoinsEarningData({ messageApi }));
+    }, []);
+
+    useEffect(() => {
+        if (getYCoinsData?.length != 0) {
+            getYCoinsData?.map((item) => (
+                item?.constant_key == "LIKE_POST_COIN" ?
+                    setYCoinDetail((prev) => ({
+                        ...prev,
+                        likePost: item?.constant_value || 0,
+                    }))
+                    :
+                    item?.constant_key == "APP-REFERREE" ?
+                        setYCoinDetail((prev) => ({
+                            ...prev,
+                            referAFriend: item?.constant_value || 0,
+                        }))
+                        :
+                        item?.constant_key == "COMMENT_CREATE_COIN" ?
+                            setYCoinDetail((prev) => ({
+                                ...prev,
+                                postComment: item?.constant_value || 0,
+                            }))
+                            :
+                            item?.constant_key == "SEND_CONNECTION_REQUEST_COIN" ?
+                                setYCoinDetail((prev) => ({
+                                    ...prev,
+                                    sendRequest: item?.constant_value || 0,
+                                }))
+                                :
+                                item?.constant_key == "CONNECTION_REQUEST_ACCEPTED_COIN" ?
+                                    setYCoinDetail((prev) => ({
+                                        ...prev,
+                                        connectionRefund: item?.constant_value || 0,
+                                    }))
+                                    :
+                                    item?.constant_key == "ACCEPT_CONNECTION_REQUEST_COIN" ?
+                                        setYCoinDetail((prev) => ({
+                                            ...prev,
+                                            acceptRequest: item?.constant_value || 0,
+                                        }))
+                                        :
+                                        item?.constant_key == "ONBOARDING_COIN" ?
+                                            setYCoinDetail((prev) => ({
+                                                ...prev,
+                                                profileFill: item?.constant_value || 0,
+                                            }))
+                                            :
+                                            item?.constant_key == "ACCOUNT_CREATE_COIN" &&
+                                            setYCoinDetail((prev) => ({
+                                                ...prev,
+                                                profileFill: item?.constant_value || 0,
+                                            }))
+            ))
+        } else {
+            setYCoinDetail({
+                likePost: 0,
+                postComment: 10,
+                sendRequest: 10,
+                connectionRefund: 10,
+                acceptRequest: 10,
+                signUp: 100,
+                referAFriend: 100,
+                profileFill: 100
+            })
+        };
+    }, [getYCoinsData]);
+
+    if (isSubscriptionLoader || isLoading) {
         return <Loader />;
     };
     return (
@@ -206,10 +287,9 @@ const Dashboard = ({ messageApi }) => {
                                     <div
                                         className="ct_border_bg_1">
                                         <ul className="text-start">
-                                            <li> Sign-up<span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
-                                            <li> Referral fill <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
-                                            <li> Profile fill <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 100 YCoins</span></li>
-
+                                            <li> Sign-up<span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.signUp ?? 0} YCoins</span></li>
+                                            <li> Refer a friend <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.referAFriend ?? 0} YCoins</span></li>
+                                            <li> Profile fill <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.profileFill ?? 0} YCoins</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -229,15 +309,14 @@ const Dashboard = ({ messageApi }) => {
                                     <SwiperSlide>
                                         <div className="">
                                             <h5 className="text-center mb-2 ct_fs_20 mt-3 ">Feed participation pricing</h5>
-
                                             <div
                                                 className="ct_border_bg_1">
                                                 <ul className="text-start">
-                                                    <li> Like post/comment <span className='ct_white_nowrap ct_small_dot_4 ms-auto'>  0 YCoins</span></li>
-                                                    <li> Post/Comment <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
-                                                    <li> Send connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
-                                                    <li> Connection request refund <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
-                                                    <li> Accept connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> 10 YCoins</span></li>
+                                                    <li> Like post <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.likePost ?? 0} YCoins</span></li>
+                                                    <li> Post/Comment <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.postComment ?? 0} YCoins</span></li>
+                                                    <li> Send connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.sendRequest ?? 0} YCoins</span></li>
+                                                    <li> Connection request refund <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.connectionRefund ?? 0} YCoins</span></li>
+                                                    <li> Accept connection request <span className='ct_white_nowrap ct_small_dot_4 ms-auto'> {yCoinDetail?.acceptRequest ?? 0} YCoins</span></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -550,8 +550,8 @@ export const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(getAllYCoinsEarningData.fulfilled, (state, action) => {
-            console.log(action.payload);
-            // state.getYCoinsData
+            const { data } = action.payload ?? {};
+            state.getYCoinsData = data ?? [];
             state.isLoading = false;
         });
         builder.addCase(getAllYCoinsEarningData.rejected, (state, action) => {

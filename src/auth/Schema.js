@@ -67,3 +67,11 @@ export const onBoardingUserSchema = Yup.object().shape({
             "Please enter valid email"
         )
 });
+
+export const DeactivateAccountSchema = Yup.object().shape({
+    phone_number: Yup.string()
+        .required("Please enter phone number")
+        .test("is-valid-phone", "Please enter valid phone number", (value) =>
+            isValidPhoneNumber(value || "")
+        )
+});

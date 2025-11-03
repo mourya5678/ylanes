@@ -132,4 +132,4 @@ export const unblockUserAPI = "account_block/accounts/unblock_user";
 export const deactivateAccountAPI = "account_block/accounts/deactivate_account";
 export const deleteAccountDataAPI = "account_block/accounts/sms_otp_confirmation";
 
-export const getReferCodeAPI = "";
+export const getReferCodeAPI = "bx_block_targetedfeed/polls/public_app_constants";

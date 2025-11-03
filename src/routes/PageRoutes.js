@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import VerifyPhoneNumber from "../pages/deactivateAccount/VerifyPhoneNumber";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -54,6 +55,8 @@ const BlockedUsers = lazy(() => import("../pages/settings/BlockedUsers"));
 const FriendRequest = lazy(() => import("../pages/settings/FriendRequest"));
 const VerifyDeactiveAccountOtp = lazy(() => import("../pages/settings/verifyDeactiveAccountOtp"));
 
+const DeactivateUserAccount = lazy(() => import("../pages/deactivateAccount"));
+
 export const pageRoutes = {
     dashboard: '/home',
     landingPage: "/",
@@ -70,7 +73,7 @@ export const pageRoutes = {
     refer: '/refer',
     termAndCondition: '/terms-and-condition',
     feedback: '/feedback',
-    deactiveAccount: '/accrount-deactivated',
+    deactiveAccount: '/account-deactivated',
     myRoom: '/my-room',
     otpVerify: '/otp-verification',
     subsctiption: '/subscription',
@@ -90,7 +93,9 @@ export const pageRoutes = {
     landingPrivacyPolicy: "/privayc_policy",
     blockUser: "/block-users",
     friendRequests: '/friend-request',
-    verifyDeactiveAccountOtp: "/account-verification"
+    verifyDeactiveAccountOtp: "/account-verification",
+    deactiveUserAccount: '/deactivate_account',
+    verify_phoneNumber: '/verify-phone-number'
 };
 
 export const AllRoutes = [
@@ -101,10 +106,22 @@ export const AllRoutes = [
         isPrivate: true
     },
     {
+        name: "Deactive Account",
+        path: pageRoutes?.deactiveUserAccount,
+        element: <DeactivateUserAccount />,
+        isPrivate: false
+    },
+    {
         name: "Home",
         path: pageRoutes?.dashboard,
         element: <Home />,
         isPrivate: true
+    },
+    {
+        name: "Verify Phone Number",
+        path: pageRoutes?.verify_phoneNumber,
+        element: <VerifyPhoneNumber />,
+        isPrivate: false
     },
     {
         name: "Blocked Users",

@@ -11,6 +11,11 @@ export const pipSetAccessToken = (key, token) => {
     else localStorage.setItem(key, JSON.stringify(token));
 };
 
+export const pipSetFCMAccessToken = (key, token) => {
+    if (!token) return;
+    else localStorage.setItem(key, token);
+};
+
 export const pipSuccessMessage = (messageApi, messages) => {
     return messageApi.success(messages);
 };
