@@ -268,9 +268,9 @@ const Home = ({ messageApi }) => {
           <div className="row">
             <div className="col-xl-3 mt-0 mb-4 mb-xl-0">
               <div className="ct_side_bar_scrool_left ct_custom_scroll">
-                <div className="ct_outline_bg d-flex align-items-center gap-2 justify-content-between p-3">
-                  <p className="mb-0">Invite Friends,Earn YCoins</p>
-                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap" onClick={() => navigate(pageRoutes.refer)}>
+                <div className="ct_outline_bg d-flex align-items-center gap-1 justify-content-between p-3">
+                  <p className="mb-0 ct_fs_14">Invite Friends,Earn YCoins</p>
+                  <button className="ct_yellow_btn ct_small_yellow_btn ct_white_nowrap px-3" onClick={() => navigate(pageRoutes.refer)}>
                     Invite Friends
                   </button>
                 </div>

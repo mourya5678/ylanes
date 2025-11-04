@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import { Formik } from 'formik';
 import { onBoardingUserSchema } from '../../auth/Schema';
 import ErrorMessage from '../../layout/ErrorMessage';
-import { pipGetAccessToken } from '../../auth/Pip';
+import { pipGetAccessToken, pipSetAccessToken } from '../../auth/Pip';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { userOnboarding } from '../../redux/actions/authActions';
@@ -75,6 +75,9 @@ const OnBoardingScreen = ({ messageApi }) => {
             setStepForm('1');
             if (response?.data) {
                 messageApi?.success("Profile set-up successfully");
+                // data
+                console.log({ object: response?.data })
+                pipSetAccessToken('user_data', response?.data);
                 navigate(pageRoutes.dashboard);
             } else {
                 messageApi?.errors("");

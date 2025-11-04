@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { acceptRejectFriendRequest, blockUserData, createUserPost, deactivatedUserAccount, deleteAccountData, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllFriendRequests, getAllPost, getAllPostComment, getAllPostCommentss, getAllYCoinsEarningData, getBlockedUsers, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getMyProfileDatass, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, reportParticipants, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, unBlockUserData, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
+import { acceptRejectFriendRequest, blockUserData, createUserPost, deactivatedUserAccount, deleteAccountByOTP, deleteAccountData, deleteNotificationData, deleteUserPoll, deleteUserPost, getAllFriendRequests, getAllPost, getAllPostComment, getAllPostCommentss, getAllYCoinsEarningData, getBlockedUsers, getBlogsData, getFaqData, getLandingPageFaq, getLandingPolicyDetails, getLandingTermOfUseDetails, getLikeAllPost, getMyProfileData, getMyProfileDatass, getNotificationData, getPostDataByID, getPostTopics, getPrivacyPolicyData, getReportReason, getRoomTypeData, getTermsConditionData, getUserDetailsForVideoCall, getUserProfileData, getWalletTransaction, likeUserPost, markAsReadToAllNotificationsDate, provideFeedBackData, reportParticipants, smsConfirmation, submitRoomFeedBack, submitUserFeedBack, unBlockUserData, updatePostDetails, updateUserProfileData, userOnboarding } from "../actions/authActions";
 import { pipSetAccessToken } from "../../auth/Pip";
 import { getPollTypeData, getPollTypeDatass } from "../actions/createRoom";
 
@@ -555,6 +555,17 @@ export const authSlice = createSlice({
             state.isLoading = false;
         });
         builder.addCase(getAllYCoinsEarningData.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // deleteAccountByOTP
+        builder.addCase(deleteAccountByOTP.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(deleteAccountByOTP.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(deleteAccountByOTP.rejected, (state, action) => {
             state.isLoading = false;
         });
 

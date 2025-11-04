@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { useLocation, useNavigate } from 'react-router';
 import { requestOtp, resendOtp } from '../../auth/requestOtp';
-import { deleteAccountData } from '../../redux/actions/authActions';
+import { deleteAccountByOTP } from '../../redux/actions/authActions';
 import { auth, onMessageListener, requestForToken } from "../../auth/Firebase";
 import { signInWithCredential, PhoneAuthProvider } from "firebase/auth";
 import { useDispatch } from 'react-redux';
@@ -111,12 +111,11 @@ const VerifyPhoneNumber = ({ messageApi }) => {
             dateStyle: "full",
             timeStyle: "long",
         }).format(now);
-        let raw = JSON.stringify({
-            device_id: typeof userToken !== 'undefined' && userToken != null && userToken != '' ? userToken : '',
-            time_stamp: formatted,
-        });
+        let raw = {
+            firebase_token: userToken || '',
+        }
         setIsLoader(false);
-        dispatch(deleteAccountData({ payload: raw, messageApi, callback }));
+        dispatch(deleteAccountByOTP({ payload: raw, messageApi, callback }));
     };
 
     return (

@@ -29,6 +29,7 @@ const Subscription = ({ messageApi }) => {
   };
 
   const handleOpenRazorPayModal = async (val, plan) => {
+    console.log({ object: val, plan });
     var options = {
       description: "Refill wallet",
       name: "YLanes",

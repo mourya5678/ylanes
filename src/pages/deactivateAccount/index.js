@@ -43,7 +43,7 @@ const DeactivateUserAccount = ({ messageApi }) => {
                 <div className="row">
                     <div className="col-xl-6 col-lg-7 col-md-10 mx-auto">
                         <div className="ct_login_main">
-                            <h2 className="text-center ct_fw_600 mb-4 ct_fs_24">Deactivate Account</h2>
+                            <h2 className="text-center ct_fw_600 mb-4 ct_fs_24">Delete Account</h2>
                             <div className="text-center  mt-4">
                                 <img src="assets/img/login_vector.png" alt="" />
                             </div>
