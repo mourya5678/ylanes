@@ -30,46 +30,50 @@ const Subscription = ({ messageApi }) => {
 
   const handleOpenRazorPayModal = async (val, plan) => {
     console.log({ object: val, plan });
-    var options = {
-      description: "Refill wallet",
-      name: "YLanes",
-      key: razorPayTestKey,
-      currency: "INR",
-      order_id: val?.transaction?.order_id,
-      prefill: {},
-      theme: { color: "#528FF0" },
-      handler: function (response) {
-        const data = {
-          plan_id: plan?.external_id,
-          payload: { ...response }
-        };
-        const callback = (response) => {
-          if (response?.subscription) {
-            messageApi.success(response.message);
-            navigate(pageRoutes.userWallet);
-          } else {
-            messageApi.error(messageApi.message);
-            navigate(pageRoutes.userWallet);
+    if (val?.transaction?.order_id) {
+      var options = {
+        description: "Refill wallet",
+        name: "YLanes",
+        key: razorPayTestKey,
+        currency: "INR",
+        order_id: val?.transaction?.order_id,
+        prefill: {},
+        theme: { color: "#528FF0" },
+        handler: function (response) {
+          const data = {
+            plan_id: plan?.external_id,
+            payload: { ...response }
           };
-        };
-        dispatch(createSubscriptionPlan({ payload: data, callback, messageApi }))
-      },
-      method: {
-        netbanking: true,
-        card: true,
-        wallet: true,
-        upi: true,
-        paylater: false,
-        emi: false,
-      },
-      config: {
-        display: {
-          hide: [{ method: "paylater" }, { method: "emi" }],
+          const callback = (response) => {
+            if (response?.subscription) {
+              messageApi.success(response.message);
+              navigate(pageRoutes.userWallet);
+            } else {
+              messageApi.error(messageApi.message);
+              navigate(pageRoutes.userWallet);
+            };
+          };
+          dispatch(createSubscriptionPlan({ payload: data, callback, messageApi }))
         },
-      },
+        method: {
+          netbanking: true,
+          card: true,
+          wallet: true,
+          upi: true,
+          paylater: false,
+          emi: false,
+        },
+        config: {
+          display: {
+            hide: [{ method: "paylater" }, { method: "emi" }],
+          },
+        },
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } else {
+      messageApi.error("We are fetching some issue currently please try again after some time!");
     };
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
   };
 
   if (isSubscriptionLoader) {
