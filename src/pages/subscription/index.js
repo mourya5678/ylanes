@@ -29,14 +29,13 @@ const Subscription = ({ messageApi }) => {
   };
 
   const handleOpenRazorPayModal = async (val, plan) => {
-    console.log({ object: val, plan });
-    if (val?.transaction?.order_id) {
+    if (val?.transaction?.razorpay_order_id) {
       var options = {
         description: "Refill wallet",
         name: "YLanes",
         key: razorPayTestKey,
         currency: "INR",
-        order_id: val?.transaction?.order_id,
+        order_id: val?.transaction?.razorpay_order_id,
         prefill: {},
         theme: { color: "#528FF0" },
         handler: function (response) {
@@ -141,9 +140,11 @@ const Subscription = ({ messageApi }) => {
                               }`}
                             onClick={() => setSelectedPlan(item)}
                           >
-                            <span className="ct_pricing_badge">
-                              Most Popular
-                            </span>
+                            {i == 1 &&
+                              <span className="ct_pricing_badge">
+                                Most Popular
+                              </span>
+                            }
                             <div>
                               <p className="mb-0 ct_fs_20 text-center mb-3 ct_fw_600">
                                 {item?.name ?? ""}
