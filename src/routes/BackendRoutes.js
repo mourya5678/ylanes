@@ -72,7 +72,7 @@ export const getTaxDataAPI = "bx_block_admin/dynamic_text?constant_key=GST_SLAB"
 export const rupeeToYCoinConvertion = "bx_block_admin/dynamic_text?constant_key=RUPEE_TO_YCOIN";
 export const verifyPaymentTransactionAPI = "bx_block_payments/razorpays/update_v3";
 
-export const razorPayTestKey = "rzp_test_R82hVMaq49lFib";
+export const razorPayTestKey = "rzp_live_El2TobpMj8ttSm";
 
 // Rooms 
 export const getAllUpcommingRoomDataAPI = "bx_block_different_rooms/rooms/get_upcoming_rooms";

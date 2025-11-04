@@ -18,7 +18,6 @@ const DeactivateUserAccount = ({ messageApi }) => {
     const [isLoader, setIsLoader] = useState(false);
     const navigate = useNavigate();
 
-
     const initialeState = {
         phone_number: '+91'
     };

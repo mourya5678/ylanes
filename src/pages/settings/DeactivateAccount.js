@@ -10,6 +10,7 @@ import { pipGetAccessToken } from '../../auth/Pip';
 
 const DeactivateAccount = ({ messageApi }) => {
     const { isLoading } = useSelector((state) => state.authReducer);
+    const user_data = pipGetAccessToken("user_data");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -139,7 +140,7 @@ const DeactivateAccount = ({ messageApi }) => {
                             </div>
                             <div className="pt-4">
                                 <h4 className="ct_fs_20 ct_fw_600 mb-3">Delete All Data</h4>
-                                <p className="mb-0 ct_text_op_6">This will delete your entire account permanently including all of your data and history (e.g. connects, touchpoints, hearts, etc.). This cannot be undone. Your wallet has 6480 YCoins in it, which you will lose if you delete your account.</p>
+                                <p className="mb-0 ct_text_op_6">This will delete your entire account permanently including all of your data and history (e.g. connects, touchpoints, hearts, etc.). This cannot be undone. Your wallet has {user_data?.attributes?.ycoins ?? 0} YCoins in it, which you will lose if you delete your account.</p>
                             </div>
                             <div className="mt-5 d-flex align-items-center gap-3">
                                 <button className="ct_yellow_btn" type="button" onClick={handleDeactivateAccount}>Deactivate</button>

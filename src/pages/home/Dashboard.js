@@ -12,10 +12,12 @@ import LandingHeader from '../../components/LandingPageHeader';
 import LandingPageFooter from '../../components/LandingPageFooter';
 import ReferCode from '../../components/Modals/ReferCode';
 import { getAllYCoinsEarningData } from '../../redux/actions/authActions';
+import { pipGetAccessToken } from '../../auth/Pip';
 
 const Dashboard = ({ messageApi }) => {
     const { isSubscriptionLoader, allDashboardSubscription, whyYlanesData, buzzList, reviewList } = useSelector((state) => state.subscriptionReducer);
     const { isLoading, getYCoinsData } = useSelector((state) => state?.authReducer);
+    const user_data = pipGetAccessToken("user_data");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -107,6 +109,14 @@ const Dashboard = ({ messageApi }) => {
         };
     }, [getYCoinsData]);
 
+    const handleRedirectToYlanes = () => {
+        if (user_data?.id) {
+            navigate(pageRoutes.dashboard);
+        } else {
+            navigate(pageRoutes?.login);
+        };
+    };
+
     if (isSubscriptionLoader || isLoading) {
         return <Loader />;
     };
@@ -125,7 +135,7 @@ const Dashboard = ({ messageApi }) => {
                                 </p>
                                 <h6 className=" ct_fs_16">Join this exclusive club and let your ideas flow freely.</h6>
                                 <div className="mt-4">
-                                    <a className="ct_yellow_btn ct_border_radius_10" onClick={() => navigate(pageRoutes.login)}>Start Your Free Trial</a>
+                                    <a className="ct_yellow_btn ct_border_radius_10" onClick={handleRedirectToYlanes}>Start Your Free Trial</a>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +354,7 @@ const Dashboard = ({ messageApi }) => {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button className="ct_black_btn mt-auto ct_transparent_btn" onClick={() => navigate(pageRoutes.login)}>Subscribe</button>
+                                        <button className="ct_black_btn mt-auto ct_transparent_btn" onClick={handleRedirectToYlanes}>Subscribe</button>
                                     </div>
                                 </div>
                             ))}
@@ -363,7 +373,7 @@ const Dashboard = ({ messageApi }) => {
                             Explore topics that matter—business, wellness, sports, and more<br />
                             —with men as interesting as you.
                         </p>
-                        <button className="newsletter-btn" onClick={() => navigate(pageRoutes.login)}>Join Now And Start Your Free Trial</button>
+                        <button className="newsletter-btn" onClick={handleRedirectToYlanes}>Join Now And Start Your Free Trial</button>
                     </div>
                 </div>
             </section>

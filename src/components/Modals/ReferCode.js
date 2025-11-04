@@ -5,9 +5,9 @@ const ReferCode = ({ onClose, messageApi }) => {
     const userData = pipGetAccessToken("user_data");
 
     const handleCopy = () => {
-        const text = `${userData?.attributes?.full_name ?? ""} has invited you to join YLanes.use this Referral Code to earn extra welcome bonus.See you in the YLanes.
-        Click here to join: https://ylanes.com 
-        Referral Code: ${userData?.attributes?.referral_code ?? ""}`;
+        const text = `${userData?.attributes?.full_name ?? ""} has invited you to join YLanes an exclusive club for Wise, Witty & Curious MEN. use this Referral Code to earn extra welcome bonus.See you in the YLanes.
+Click here to join: https://ylanes.com 
+Referral Code: ${userData?.attributes?.referral_code ?? ""}`;
         if (text.trim() !== "") {
             navigator.clipboard.writeText(text);
             messageApi.success("Copied to clipboard!");

@@ -1,10 +1,20 @@
 import React from 'react'
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
+import { pipGetAccessToken } from '../../auth/Pip';
 
 const LandingHeader = () => {
     const navigate = useNavigate();
     const data = window?.location?.pathname;
+    const user_data = pipGetAccessToken("user_data");
+
+    const handleRedirectToYlanes = () => {
+        if (user_data?.id) {
+            navigate(pageRoutes.dashboard);
+        } else {
+            navigate(pageRoutes?.login);
+        };
+    };
 
     return (
         <header className="ct_header ct_header_px_50">
@@ -37,7 +47,7 @@ const LandingHeader = () => {
                                 </ul>
                             </div>
                             <div className="d-flex align-items-center gap-2">
-                                <a className="ct_yellow_btn" onClick={() => navigate(pageRoutes.login)}>Enter YLanes</a>
+                                <a className="ct_yellow_btn" onClick={handleRedirectToYlanes}>Enter YLanes</a>
                                 <div className="ct_menu_bar">
                                     <i className="fa-solid fa-bars-staggered"></i>
                                 </div>
