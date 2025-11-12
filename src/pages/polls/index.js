@@ -13,12 +13,10 @@ import { answerPollData, commentUserPoll, createPollData, disconnectUserConnecti
 import CommentTime from '../../components/CommentTime';
 import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 
-
 const Polls = ({ messageApi }) => {
   const { isLoading, postTopic, AllPollsData, profileData } = useSelector((state) => state.authReducer);
   const { pollComments } = useSelector((state) => state.createRoomReducer);
   const { isCreateLoading } = useSelector((state) => state.createRoomReducer);
-
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -757,7 +755,6 @@ const Polls = ({ messageApi }) => {
                                     Send
                                   </button>
                                 </div>
-
                                 <div className="ct_comment_area_scroll">
                                   <div className="d-flex justify-content-between gap-2 mt-3">
                                     <div>
@@ -810,7 +807,7 @@ const Polls = ({ messageApi }) => {
                                                                                 influencing the flow of thoughts and sensations in</span>
                                                                             </p>
                                                                             <div className="mt-2 ">
-                                                                                <a href="javascript:void(0)" className="text-dark ct_fw_600 ct_fs_14">Reply</a>
+                                                                                <a className="text-dark ct_fw_600 ct_fs_14">Reply</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>

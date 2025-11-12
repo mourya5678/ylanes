@@ -1,20 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { pipGetAccessToken } from '../../auth/Pip';
 
-const LandingHeader = () => {
+const LandingHeader = ({ handleRedirectToYlanes }) => {
     const navigate = useNavigate();
-    const data = window?.location?.pathname;
-    const user_data = pipGetAccessToken("user_data");
-
-    const handleRedirectToYlanes = () => {
-        if (user_data?.id) {
-            navigate(pageRoutes.dashboard);
-        } else {
-            navigate(pageRoutes?.login);
-        };
-    };
+    const data = window?.location?.hash != "" ? window?.location?.hash?.split('#')[1] : window?.location?.pathname;
+    const [handleSideBarShow, setHanldeSideBarShow] = useState(false);
 
     return (
         <header className="ct_header ct_header_px_50">
@@ -27,9 +19,9 @@ const LandingHeader = () => {
                                     <img src="assets/img/logo.png" alt="" />
                                 </a>
                             </div>
-                            <div className="ct_navbar">
+                            <div className={`ct_navbar ${handleSideBarShow && "ct_show"}`}>
                                 <ul>
-                                    <div className="ct_close_menu">
+                                    <div className="ct_close_menu" onClick={() => setHanldeSideBarShow(false)}>
                                         <i className="fa-solid fa-xmark"></i>
                                     </div>
                                     <li onClick={() => navigate(pageRoutes.landingPage)}>
@@ -48,7 +40,7 @@ const LandingHeader = () => {
                             </div>
                             <div className="d-flex align-items-center gap-2">
                                 <a className="ct_yellow_btn" onClick={handleRedirectToYlanes}>Enter YLanes</a>
-                                <div className="ct_menu_bar">
+                                <div className="ct_menu_bar" onClick={() => setHanldeSideBarShow(true)}>
                                     <i className="fa-solid fa-bars-staggered"></i>
                                 </div>
                             </div>

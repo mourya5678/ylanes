@@ -30,7 +30,7 @@ export const API_REQUEST = async (props) => {
                 if (error?.response?.data?.status == 401) {
                     pipDeleteTokenAuth();
                     messageApi.error(error?.response?.data?.message);
-                    window.location.href = pageRoutes?.login;
+                    window.location.href = `#${pageRoutes?.login}`;
                     return;
                 };
                 messageApi.error(error?.response?.data?.errors?.message);
@@ -44,11 +44,11 @@ export const API_REQUEST = async (props) => {
                 if (error?.response?.data?.status == 401) {
                     messageApi.error(error?.response?.data?.message);
                     pipDeleteTokenAuth(error?.response?.data?.message);
-                    window.location.href = pageRoutes?.login;
+                    window.location.href = `#${pageRoutes?.login}`;
                     return;
                 };
             };
-        }
+        };
         throw error.response;
     }
 };

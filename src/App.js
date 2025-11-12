@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { AllRoutes } from "./routes/PageRoutes";
 import PrivateRoutes from "./layout/PrivateRoutes";
 import { message } from "antd";
@@ -9,6 +9,16 @@ import NormalRoute from "./layout/NormalRoute";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
+
+  useEffect(() => {
+    const ua = navigator.userAgent || "";
+    const isInstagram = ua.includes("Instagram");
+    if (isInstagram) {
+      console.log("Inside Instagram browser");
+    } else {
+      console.log("Not !!")
+    }
+  }, []);
 
   return (
     <div>

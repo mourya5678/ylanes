@@ -13,6 +13,21 @@ import Loader from '../../components/Loader';
 import { requestOtp, resendOtp } from '../../auth/requestOtp';
 
 const VerifyOtp = ({ messageApi }) => {
+    let safeStorage;
+    try {
+        safeStorage = window.localStorage;
+        safeStorage.setItem("test", "ok");
+        window.safeStorage = safeStorage;
+    } catch {
+        safeStorage = {
+            getItem: () => null,
+            setItem: () => { },
+            removeItem: () => { },
+        };
+        window.safeStorage = safeStorage;
+        console.warn("localStorage is disabled or not accessible (using safe fallback)");
+    }
+
     const { isLoading } = useSelector((state) => state.authReducer);
     const { state } = useLocation();
 
@@ -118,7 +133,7 @@ const VerifyOtp = ({ messageApi }) => {
             dateStyle: "full",
             timeStyle: "long",
         }).format(now);
-        const fcmToken = localStorage.getItem("ylanes-fcm");
+        const fcmToken = window.safeStorage.getItem("ylanes-fcm");
         var myHeaders = new Headers();
         myHeaders.append("token", userToken);
         myHeaders.append("Content-Type", "application/json");

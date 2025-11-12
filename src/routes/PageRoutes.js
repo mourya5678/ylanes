@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import VerifyPhoneNumber from "../pages/deactivateAccount/VerifyPhoneNumber";
 
 const Dashboard = lazy(() => import("../pages/home/Dashboard"));
 const RoomDetails = lazy(() => import("../pages/Room/RoomDetails"));
@@ -56,6 +55,8 @@ const FriendRequest = lazy(() => import("../pages/settings/FriendRequest"));
 const VerifyDeactiveAccountOtp = lazy(() => import("../pages/settings/verifyDeactiveAccountOtp"));
 
 const DeactivateUserAccount = lazy(() => import("../pages/deactivateAccount"));
+const VerifyPhoneNumber = lazy(() => import("../pages/deactivateAccount/VerifyPhoneNumber"));
+
 
 export const pageRoutes = {
     dashboard: '/home',

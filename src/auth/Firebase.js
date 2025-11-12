@@ -17,6 +17,21 @@ const vapidkey = "BFbRvk8xkU8MvzH1ospaiqQS8BbaNSu0dhwbGEd2wW0OkSXcuveGJxv1pFkvyN
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
+let safeStorage;
+try {
+    safeStorage = window.localStorage;
+    safeStorage.setItem("test", "ok");
+    window.safeStorage = safeStorage;
+} catch {
+    safeStorage = {
+        getItem: () => null,
+        setItem: () => { },
+        removeItem: () => { },
+    };
+    window.safeStorage = safeStorage;
+    console.warn("localStorage is disabled or not accessible (using safe fallback)");
+}
+
 
 export const auth = getAuth(app);
 export { RecaptchaVerifier, signInWithPhoneNumber };
@@ -38,7 +53,7 @@ export const requestForToken = async () => {
         });
 
         if (currentToken) {
-            localStorage.setItem("ylanes-fcm", currentToken);
+            window.safeStorage.setItem("ylanes-fcm", currentToken);
             return currentToken
         } else {
             console.warn("No registration token available.");

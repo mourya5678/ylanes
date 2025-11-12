@@ -19,6 +19,8 @@ const Dashboard = ({ messageApi }) => {
     const { isLoading, getYCoinsData } = useSelector((state) => state?.authReducer);
     const user_data = pipGetAccessToken("user_data");
 
+    const [isInstaGram, setIsInstaGram] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -94,7 +96,7 @@ const Dashboard = ({ messageApi }) => {
                                                 ...prev,
                                                 profileFill: item?.constant_value || 0,
                                             }))
-            ))
+            ));
         } else {
             setYCoinDetail({
                 likePost: 0,
@@ -102,18 +104,48 @@ const Dashboard = ({ messageApi }) => {
                 sendRequest: 10,
                 connectionRefund: 10,
                 acceptRequest: 10,
-                signUp: 100,
+                signUp: 500,
                 referAFriend: 100,
                 profileFill: 100
-            })
+            });
         };
     }, [getYCoinsData]);
+
+    useEffect(() => {
+        const ua = navigator.userAgent || "";
+        const isInstagram = ua.includes("Instagram");
+        if (isInstagram) {
+            setIsInstaGram(true)
+            console.log("Inside Instagram browser");
+        } else {
+            setIsInstaGram(false)
+            console.log("Not !!")
+        }
+    }, []);
 
     const handleRedirectToYlanes = () => {
         if (user_data?.id) {
             navigate(pageRoutes.dashboard);
         } else {
-            navigate(pageRoutes?.login);
+            if (isInstaGram) {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                if (/android/i.test(ua)) navigate(pageRoutes.login);
+                if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) {
+                    const target = "https://ylanes.com/";
+                    const link = document.createElement("a");
+                    link.href = target;
+                    link.target = "_system";
+                    link.rel = "noopener noreferrer";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => {
+                        alert("⚠️ Tap the ••• menu → 'Open in Safari' to continue.");
+                    }, 800);
+                };
+            } else {
+                navigate(pageRoutes.login);
+            };
         };
     };
 
@@ -122,7 +154,7 @@ const Dashboard = ({ messageApi }) => {
     };
     return (
         <div>
-            <LandingHeader />
+            <LandingHeader handleRedirectToYlanes={handleRedirectToYlanes} />
             <section className="ct_section_banner">
                 <div className="container-fluid">
                     <div className="row align-items-center">

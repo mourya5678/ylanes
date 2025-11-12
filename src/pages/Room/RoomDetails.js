@@ -174,7 +174,6 @@ const RoomDetails = ({ messageApi }) => {
                             </p>
                           </div>
                           <a
-                            href="javascript:void(0)"
                             className="text-dark ct_fw_600 ct_text_op_6"
                           >
                             Report

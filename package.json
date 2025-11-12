@@ -55,7 +55,9 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "iOS >= 11",
+      "Safari >= 11"
     ],
     "development": [
       "last 1 chrome version",
