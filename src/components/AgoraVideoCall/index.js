@@ -675,7 +675,6 @@ export default function AgoraCall({ messageApi }) {
                 uid: user?.uid,
                 phone_number: user?.uid,
             };
-            // playRemoteVideo(user.uid,)
             dispatch(getUserDetailsForVideoCall({ callback, payload: data }));
             setRemoteUsers((prev) => {
                 const exists = prev.find((u) => u.uid === user.uid);
@@ -694,7 +693,6 @@ export default function AgoraCall({ messageApi }) {
                 console.error("Subscribe failed:", err);
                 return;
             }
-            // console.log({ object: user })
             if (mediaType === "video") playRemoteVideo(user.uid, user.videoTrack);
             if (mediaType === "audio") user.audioTrack?.play();
 
@@ -756,16 +754,11 @@ export default function AgoraCall({ messageApi }) {
         if (joined) return;
         const client = clientRef.current;
         try {
-            // join with null UID to avoid UID_CONFLICT
             const uid = await client.join(APP_ID, CHANNEL, TOKEN || null, USER_UID);
-            // console.log("Joined channel uid:", uid);
-            // create local player container ref if not present
             if (!localPlayerRef.current) {
                 const container = document.getElementById("local-player-container");
                 if (container) localPlayerRef.current = container;
             };
-            // If preview created tracks already, we reuse them.
-            // Try to create tracks if they don't exist (user may have no devices).
             try {
                 if (!localAudioTrackRef.current) {
                     localAudioTrackRef.current = await AgoraRTC.createMicrophoneAudioTrack();
@@ -782,7 +775,6 @@ export default function AgoraCall({ messageApi }) {
                 console.warn("No camera found / permission denied, joining without video.");
                 localVideoTrackRef.current = null;
             };
-            // play local video into local-player container if exists
             if (localVideoTrackRef.current && localPlayerRef.current) {
                 let localDiv = document.getElementById("local-player");
                 if (!localDiv) {
@@ -828,7 +820,6 @@ export default function AgoraCall({ messageApi }) {
         const client = clientRef.current;
         if (!client) return;
         try {
-            // unpublish if published
             try {
                 if (publishedRef.current.audio && localAudioTrackRef.current) {
                     await client.unpublish([localAudioTrackRef.current]);
@@ -837,9 +828,7 @@ export default function AgoraCall({ messageApi }) {
                     await client.unpublish([localVideoTrackRef.current]);
                 };
             } catch (e) {
-                // ignore unpublish errors
             };
-            // stop & close local tracks
             if (localAudioTrackRef.current) {
                 try { localAudioTrackRef.current.stop(); } catch (e) { }
                 try { localAudioTrackRef.current.close(); } catch (e) { }
@@ -850,14 +839,11 @@ export default function AgoraCall({ messageApi }) {
                 try { localVideoTrackRef.current.close(); } catch (e) { }
                 localVideoTrackRef.current = null;
             };
-            // remove local DOM player
             const localEl = document.getElementById("local-player");
             if (localEl && localEl.parentNode) localEl.parentNode.removeChild(localEl);
-            // remove remote DOM players
             if (document.getElementById("remote-player-container")) {
                 document.getElementById("remote-player-container").innerHTML = "";
             };
-            // detach handlers if stored
             if (clientRef.current && clientRef.current._cleanupHandlers) {
                 try { clientRef.current._cleanupHandlers(); } catch (e) { }
                 clientRef.current._cleanupHandlers = null;
@@ -1042,16 +1028,12 @@ export default function AgoraCall({ messageApi }) {
                                 </button>
                             )}
                         </div>
-                        {/* ct_video_call_grid_full */}
-                        {/* 2 -3 ct_grid_2_234 */}
                         <div className={`ct_video_call_grid ${userDataVideo?.length == 0 ? "ct_video_call_grid_full" : userDataVideo?.length == 1 ? "ct_grid_2_234" : userDataVideo?.length == 2 && "ct_grid_2_234"}`}>
-                            {/* {joined && ( */}
                             <div className="ct_signle_video_call">
                                 <h4>{userData?.attributes?.full_name ?? ""}</h4>
                                 {localVideoTrackRef.current ? (
                                     <div id="local-player" />
                                 ) : (
-                                    // <img src={userData?.attributes?.profile_image ? userData?.attributes?.profile_image : "assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
                                     <img src={"assets/img/dummy_user_img.png"} alt="No video" className="rounded-full mx-auto" />
                                 )}
                                 <div className="mt-1 d-flex align-items-center gap-3 ct_overlay_video_btn_455">
@@ -1084,15 +1066,6 @@ export default function AgoraCall({ messageApi }) {
                                 </div>
                             }
                         </div>
-                        {/* <div className="mt-3 ct_fs_20 text-center">Total users in call: {userDataVideo.length + (joined ? 1 : 0)}</div> */}
-                        {/* <div className="mt-4 d-flex gap-2 justify-content-center">
-                            <button onClick={toggleAudio} className={`ct_video_action_btn ${!isAudioAvailable && "ct_disable_call"}`}>
-                                {mutedAudio ? <i className="fa-solid fa-microphone"></i> : <i className="fa-solid fa-microphone-slash"></i>}
-                            </button>
-                            <button onClick={toggleVideo} className={`ct_video_action_btn ${!isVideoAvailable && "ct_disable_call"}`}>
-                                {mutedVideo ? <i className="fa-solid fa-video"></i> : <i className="fa-solid fa-video-slash"></i>}
-                            </button>
-                        </div> */}
                     </div>
                 </div >
             )

@@ -14,11 +14,12 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import CommentTime from '../../components/CommentTime';
 import { pipGetAccessToken, pipViewDate2 } from '../../auth/Pip';
-import { disconnectUserConnection, getMyConnectionsData, getMyRoomData, getPollTypeData, getUpcommingRoomData, sendInvitationToUser } from '../../redux/actions/createRoom';
+import { answerPollData, disconnectUserConnection, getMyConnectionsData, getMyRoomData, getPollTypeData, getPollTypeDatass, getUpcommingRoomData, sendInvitationToUser } from '../../redux/actions/createRoom';
 import CreatePollModal from '../../components/Modals/CreatePollModal';
 import SharePostModal from '../../components/Modals/SharePostModal';
 import EditPostModal from '../../components/Modals/EditPostModal';
 import ReferCode from '../../components/Modals/ReferCode';
+import CalculatePollEndTime from '../../components/CalculatePollEndTime';
 
 const Home = ({ messageApi }) => {
   const { isLoading, postTopic, allPosts, AllPollsData, allComments, profileData } =
@@ -47,6 +48,11 @@ const Home = ({ messageApi }) => {
 
   const [isLatest, setIsLatest] = useState(true);
   const [isConnectionComments, setIsConnectionsComments] = useState(false);
+
+  const [isEnd, setIsEnd] = useState(false);
+  const [time, setTime] = useState('Poll ends in ');
+
+
 
   // const [showShareModal2, setShowShareModal2] = useState(false);
   const user_data = pipGetAccessToken("user_data");
@@ -257,6 +263,86 @@ const Home = ({ messageApi }) => {
     dispatch(blockUserData({ payload: formData, callback, messageApi }));
   };
 
+  const checkEnable = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    if (hours <= 0 && minutes <= 0) return false;
+    return true;
+  };
+
+  const timeRemaining2 = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const label = 'Poll ends in '
+    if (hours <= 0 && minutes <= 0) {
+      return 'Poll Ended';
+    } else if (hours === 0) {
+      return `${label} ${minutes} minutes`;
+    } else if (minutes === 0) {
+      return `${label} ${hours} hours`;
+    } else {
+      return `${label} ${hours} hours ${minutes} minutes`;
+    };
+  };
+
+  const timeRemaining = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const label = 'Poll ends in '
+    if (hours <= 0 && minutes <= 0) {
+      setIsEnd(true)
+      return 'Poll Ended';
+    } else if (hours === 0) {
+      return `${label} ${minutes} minutes`;
+    } else if (minutes === 0) {
+      return `${label} ${hours} hours`;
+    } else {
+      return `${label} ${hours} hours ${minutes} minutes`;
+    };
+  };
+
+  const handleSubmitPoll = async (selectedAnswer, val) => {
+    const isfailed = false;
+    const isEnable = checkEnable(val?.attributes?.end_date_time);
+    if (isEnable) {
+      let body = selectedAnswer?.my_choice == false ? {
+        my_choice: {
+          id: selectedAnswer?.id,
+          body: selectedAnswer?.body,
+          my_choice: selectedAnswer?.my_choice,
+          vote_count: selectedAnswer?.vote_count
+        },
+        option_id: selectedAnswer?.id
+      }
+        : {
+          option_id: selectedAnswer?.id
+        };
+      const callback = (response) => {
+        dispatch(getMyProfileDatass({ payload: user_data?.id, messageApi }));
+        dispatch(getPollTypeDatass({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
+      };
+      if (val?.attributes?.multiple_choice) {
+        dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
+      } else {
+        val?.attributes?.options_attributes?.map((item) => console.log("item"));
+        dispatch(answerPollData({ payload: body, param: val?.id, messageApi, callback }));
+      };
+    } else {
+      messageApi.error("This poll is closed. You can’t submit your answer anymore.");
+    };
+    const data = timeRemaining(val?.attributes?.end_date_time);
+    setTime(data);
+  };
+
   if (isLoading || isCreateLoading) {
     return <Loader />;
   };
@@ -293,27 +379,42 @@ const Home = ({ messageApi }) => {
                         <h6 className="ct_fs_16">
                           {item?.attributes?.body ?? ""}
                         </h6>
-                        <ul>
-                          {item?.attributes?.options_attributes?.map((item) => (
-                            <li>
-                              <div className="form-check ct_custom_radio">
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  name="flexRadioDefault"
-                                  id="flexRadioDefault1"
-                                  disabled
-                                />
-                                <label
-                                  className="form-check-label ct_fs_14 ct_fw_500 ct_text_op_6"
-                                  for="flexRadioDefault1"
-                                >
-                                  {item?.body ?? ""}
-                                </label>
-                              </div>
-                            </li>
-                          ))}
+                        <ul className='ct_progress_list_new123'>
+                          {item?.attributes?.options_attributes?.map(
+                            (items) => (
+                              timeRemaining2(item?.attributes?.end_date_time) != "Poll Ended" ?
+                                <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
+                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <span>{items?.body ?? ""}
+                                      {items?.my_choice &&
+                                        <small className='ct_text_op_6'>(Your vote)</small>
+                                      }
+                                    </span>
+                                  </p>
+                                  <div className='ct_show_eye'>
+                                    {items?.my_choice &&
+                                      <span>{items?.vote_count ?? 0}</span>
+                                    }
+                                  </div>
+                                </li>
+                                :
+                                <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
+                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <span>{items?.body ?? ""}
+                                      {items?.my_choice &&
+                                        <small className='ct_text_op_6'>(Your vote)</small>
+                                      }
+                                    </span>
+                                  </p>
+                                  <div className='ct_show_eye'>
+                                    <span>{items?.vote_count ?? 0}</span>
+                                  </div>
+                                </li>
+                            ))}
                         </ul>
+                        <CalculatePollEndTime
+                          end_date_time={item?.attributes?.end_date_time}
+                        />
                       </div>
                     ))
                   ) : (

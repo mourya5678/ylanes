@@ -22,11 +22,13 @@ export const createPollData = createAsyncThunk('create-roll', async (props) => {
             url: createPollAPI,
             method: "POST",
             data: payload,
-            messageApi
+            messageApi,
+            isErrorToast: false
         });
         callback(response);
         return response;
     } catch (error) {
+        messageApi?.error(error?.data?.errors?.message);
         callback(null, error);
     };
 });
@@ -179,6 +181,7 @@ export const sendInvitationToUser = createAsyncThunk('send-invite', async (props
         callback(response);
         return response;
     } catch (error) {
+        messageApi?.error(error?.data?.errors?.message);
         callback(null, error);
     };
 });

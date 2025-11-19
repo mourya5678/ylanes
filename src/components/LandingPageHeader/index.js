@@ -1,12 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { pageRoutes } from '../../routes/PageRoutes';
 import { pipGetAccessToken } from '../../auth/Pip';
 
-const LandingHeader = ({ handleRedirectToYlanes }) => {
+const LandingHeader = () => {
     const navigate = useNavigate();
     const data = window?.location?.hash != "" ? window?.location?.hash?.split('#')[1] : window?.location?.pathname;
     const [handleSideBarShow, setHanldeSideBarShow] = useState(false);
+    const user_data = pipGetAccessToken("user_data");
+
+    const [isInstaGram, setIsInstaGram] = useState(false);
+
+    useEffect(() => {
+        const ua = navigator.userAgent || "";
+        const isInstagram = ua.includes("Instagram");
+        if (isInstagram) {
+            setIsInstaGram(true)
+            console.log("Inside Instagram browser");
+        } else {
+            setIsInstaGram(false)
+            console.log("Not !!")
+        }
+    }, []);
+
+    const handleRedirectToYlanes = () => {
+        if (user_data?.id) {
+            navigate(pageRoutes.dashboard);
+        } else {
+            console.log("object")
+            if (isInstaGram) {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                if (/android/i.test(ua)) navigate(pageRoutes.login);
+                if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) {
+                    const url = "https://ylanes.com/?fbclid=PAdGRleAOCZx9leHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafT7mRDyVMnqEw0aGYswOGQKN4hZwvy3MHWVNcej9e0ohsrDppjb1iO1zc23w_aem_WN2ZmEL4-hlGrr4XcHs6XA";
+                    window.open(url, "_blank");
+                };
+            } else {
+                navigate(pageRoutes.login);
+            };
+        };
+    };
 
     return (
         <header className="ct_header ct_header_px_50">

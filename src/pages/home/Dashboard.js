@@ -111,37 +111,29 @@ const Dashboard = ({ messageApi }) => {
         };
     }, [getYCoinsData]);
 
-    useEffect(() => {
-        const ua = navigator.userAgent || "";
-        const isInstagram = ua.includes("Instagram");
-        if (isInstagram) {
-            setIsInstaGram(true)
-            console.log("Inside Instagram browser");
-        } else {
-            setIsInstaGram(false)
-            console.log("Not !!")
-        }
-    }, []);
+        useEffect(() => {
+            const ua = navigator.userAgent || "";
+            const isInstagram = ua.includes("Instagram");
+            if (isInstagram) {
+                setIsInstaGram(true)
+                console.log("Inside Instagram browser");
+            } else {
+                setIsInstaGram(false)
+                console.log("Not !!")
+            }
+        }, []);
 
     const handleRedirectToYlanes = () => {
         if (user_data?.id) {
             navigate(pageRoutes.dashboard);
         } else {
+            console.log("object")
             if (isInstaGram) {
                 const ua = navigator.userAgent || navigator.vendor || window.opera;
                 if (/android/i.test(ua)) navigate(pageRoutes.login);
                 if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) {
-                    const target = "https://ylanes.com/";
-                    const link = document.createElement("a");
-                    link.href = target;
-                    link.target = "_system";
-                    link.rel = "noopener noreferrer";
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    setTimeout(() => {
-                        alert("⚠️ Tap the ••• menu → 'Open in Safari' to continue.");
-                    }, 800);
+                    const url = "https://ylanes.com/?fbclid=PAdGRleAOCZx9leHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafT7mRDyVMnqEw0aGYswOGQKN4hZwvy3MHWVNcej9e0ohsrDppjb1iO1zc23w_aem_WN2ZmEL4-hlGrr4XcHs6XA";
+                    window.open(url, "_blank");
                 };
             } else {
                 navigate(pageRoutes.login);
@@ -154,7 +146,7 @@ const Dashboard = ({ messageApi }) => {
     };
     return (
         <div>
-            <LandingHeader handleRedirectToYlanes={handleRedirectToYlanes} />
+            <LandingHeader />
             <section className="ct_section_banner">
                 <div className="container-fluid">
                     <div className="row align-items-center">
@@ -372,7 +364,7 @@ const Dashboard = ({ messageApi }) => {
                                     <div className="et_pricing_card text-center ct_border_bg_1 h-100 d-grid">
                                         <div className='mb-3'>
                                             <h5 className="text-center mb-4 ct_fs_24 mt-3 ">{item?.name ?? ""}</h5>
-                                            <div className="price w-100 py-3">RS {item?.amount ?? 0}</div>
+                                            <div className="price w-100 py-3">RS {parseInt(item?.amount ?? 0)}</div>
                                             <div className="ct_border_bg_1">
                                                 <ul className="text-start">
                                                     <li>

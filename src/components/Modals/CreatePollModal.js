@@ -29,8 +29,6 @@ const CreatePollModal = ({ messageApi, onClose }) => {
         const callback = (response) => {
             if (response?.data?.status == 200 || response?.data?.status == 201) {
                 messageApi.success("Poll Created SucessFully");
-            } else {
-                messageApi.error(response?.data?.errors?.message);
             }
             setOptions([]);
             setCheckBox(false);

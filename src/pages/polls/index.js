@@ -119,8 +119,6 @@ const Polls = ({ messageApi }) => {
     const callback = (response) => {
       if (response?.data?.status == 200 || response?.data?.status == 201) {
         messageApi.success("Poll Created SucessFully");
-      } else {
-        messageApi.error(response?.data?.errors?.message);
       }
       setOptions([]);
       setCheckBox(false);
@@ -223,6 +221,24 @@ const Polls = ({ messageApi }) => {
     const label = 'Poll ends in '
     if (hours <= 0 && minutes <= 0) {
       setIsEnd(true)
+      return 'Poll Ended';
+    } else if (hours === 0) {
+      return `${label} ${minutes} minutes`;
+    } else if (minutes === 0) {
+      return `${label} ${hours} hours`;
+    } else {
+      return `${label} ${hours} hours ${minutes} minutes`;
+    };
+  };
+
+  const timeRemaining2 = (end_date_time) => {
+    const endTime = new Date(end_date_time)
+    const now = new Date();
+    const diffMs = endTime - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const label = 'Poll ends in '
+    if (hours <= 0 && minutes <= 0) {
       return 'Poll Ended';
     } else if (hours === 0) {
       return `${label} ${minutes} minutes`;
@@ -683,20 +699,34 @@ const Polls = ({ messageApi }) => {
                             <ul>
                               {item?.attributes?.options_attributes?.map(
                                 (items) => (
-                                  <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
-                                    <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                      <span>{items?.body ?? ""}
+                                  timeRemaining2(item?.attributes?.end_date_time) != "Poll Ended" ?
+                                    <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
+                                      <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <span>{items?.body ?? ""}
+                                          {items?.my_choice &&
+                                            <small className='ct_text_op_6'>(Your vote)</small>
+                                          }
+                                        </span>
+                                      </p>
+                                      <div className='ct_show_eye'>
                                         {items?.my_choice &&
-                                          <small className='ct_text_op_6'>(Your vote)</small>
+                                          <span>{items?.vote_count ?? 0}</span>
                                         }
-                                      </span>
-                                    </p>
-                                    <div className='ct_show_eye'>
-                                      {items?.my_choice &&
+                                      </div>
+                                    </li>
+                                    :
+                                    <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
+                                      <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <span>{items?.body ?? ""}
+                                          {items?.my_choice &&
+                                            <small className='ct_text_op_6'>(Your vote)</small>
+                                          }
+                                        </span>
+                                      </p>
+                                      <div className='ct_show_eye'>
                                         <span>{items?.vote_count ?? 0}</span>
-                                      }
-                                    </div>
-                                  </li>
+                                      </div>
+                                    </li>
                                 ))}
                             </ul>
                             <CalculatePollEndTime

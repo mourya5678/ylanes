@@ -14,6 +14,8 @@ const Header = ({ messageApi }) => {
   const [isShow, setIsShow] = useState(false);
   const [userData, setUserData] = useState({});
 
+  const [isSideBarShow, setIsSideBarShow] = useState(false);
+
   useEffect(() => {
     const data = pipGetAccessToken("user_data");
     setUserData(data);
