@@ -198,7 +198,7 @@ const MyRoom = ({ messageApi }) => {
                                             className={`nav-link ${activeTab == 3 && 'active'}`}
                                             onClick={() => setActiveTab('3')}
                                         >
-                                            Upcomming Video Call Rooms
+                                            Upcoming Video Call Rooms
                                         </button>
                                     </li>
                                     <li className="nav-item" role="presentation">

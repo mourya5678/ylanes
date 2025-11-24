@@ -267,7 +267,7 @@ const Profile = ({ messageApi }) => {
                                                 </a> */}
                                             </div>
                                             <div className="text-center">
-                                                <button className="ct_yellow_btn mt-4">Descover More</button>
+                                                <button className="ct_yellow_btn mt-4">Discover More</button>
                                             </div>
                                         </div>
                                     </div>

@@ -27,7 +27,7 @@ const LandingFaq = ({ messageApi }) => {
                         <div className="col-md-12">
                             <div className="d-flex align-items-center justify-content-between  gap-3 mb-4">
                                 <h4 className="ct_fs_24 ct_fw_600 mb-0 ct_text_061F61">
-                                    FaQ
+                                    FAQ
                                 </h4>
                             </div>
                             <div className="ct_how_works_collapse">

@@ -37,7 +37,7 @@ const Home = ({ messageApi }) => {
 
   const [isCreatePoll, setIsCreatePoll] = useState(false);
 
-  const [filterBytopic, setFilterByTopic] = useState([]);
+  const [filterBytopic, setFilterByTopic] = useState(postTopic ?? []);
   const [isShowForm, setIsShowForm] = useState(false);
 
   const [showShareModal, setShowShareModal] = useState(false);
@@ -52,11 +52,8 @@ const Home = ({ messageApi }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [time, setTime] = useState('Poll ends in ');
 
-
-
   // const [showShareModal2, setShowShareModal2] = useState(false);
   const user_data = pipGetAccessToken("user_data");
-
 
   var localData = [];
   const initialState = {
@@ -118,7 +115,11 @@ const Home = ({ messageApi }) => {
   useEffect(() => {
     const data = pipGetAccessToken("user_data");
     setUserData(data);
-  }, [profileData]);
+    let localData = postTopic?.map((item) => {
+      return item?.attributes?.name
+    })
+    setFilterByTopic(localData);
+  }, [profileData, postTopic]);
 
   useEffect(() => {
     dispatch(getAllPost({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));
@@ -194,6 +195,7 @@ const Home = ({ messageApi }) => {
   };
 
   const handleGetCommentData = (id) => {
+    setAddComment('');
     setSelectedPostId(id);
     dispatch(getAllPostComment({ payload: id, messageApi }));
   };
@@ -343,6 +345,7 @@ const Home = ({ messageApi }) => {
     setTime(data);
   };
 
+
   if (isLoading || isCreateLoading) {
     return <Loader />;
   };
@@ -384,8 +387,8 @@ const Home = ({ messageApi }) => {
                             (items) => (
                               timeRemaining2(item?.attributes?.end_date_time) != "Poll Ended" ?
                                 <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
-                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                    <span>{items?.body ?? ""}
+                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar pe-0 ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <span className='ct_white_normal text-start ct_para_scroll ct_custom_scroll pe-2' style={{ maxHeight: "60px" }}>{items?.body ?? ""}
                                       {items?.my_choice &&
                                         <small className='ct_text_op_6'>(Your vote)</small>
                                       }
@@ -399,8 +402,8 @@ const Home = ({ messageApi }) => {
                                 </li>
                                 :
                                 <li onClick={() => handleSubmitPoll(items, item)} className='progress position-relative'>
-                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                    <span>{items?.body ?? ""}
+                                  <p style={{ width: "100%" }} className={`d-flex ct_cursor align-items-center justify-content-between ct_fill_active_bar gap-2 pe-0 mb-0 progress-bar ${items?.my_choice && "active"}`} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <span class='ct_white_normal text-start ct_para_scroll ct_custom_scroll pe-2' style={{ maxHeight: "60px" }}>{items?.body ?? ""}
                                       {items?.my_choice &&
                                         <small className='ct_text_op_6'>(Your vote)</small>
                                       }
@@ -454,7 +457,7 @@ const Home = ({ messageApi }) => {
                             {item?.attributes?.host?.data?.attributes
                               ?.full_name ?? ""}
                           </small>
-                          <p className="mb-0 ct_fs_14">
+                          <p className="mb-0 ct_fs_14 ct_para_scroll ct_custom_scroll">
                             {item?.attributes?.your_take ?? ""}
                           </p>
                         </div>
@@ -810,17 +813,17 @@ const Home = ({ messageApi }) => {
                             {selectedPostId == item?.attributes?.id && (
                               <div className="ct_comment_area_main mt-4  ">
                                 <div className="position-relative">
-                                  <input
+                                  <textarea
                                     type="text"
                                     value={addComment}
                                     onChange={(e) =>
                                       setAddComment(e.target.value)
                                     }
-                                    className="form-control ct_input ct_custom_input w-100"
+                                    className="form-control ct_input ct_custom_input w-100 h-auto" rows={2}
                                     placeholder="Write comment..."
                                   />
                                   <button
-                                    className="ct_send_msg_btn ct_yellow_btn ct_send_btn_postion"
+                                    className="ct_send_msg_btn py-0 ct_yellow_btn ct_send_btn_postion"
                                     onClick={() =>
                                       handleCommentUserPost(
                                         item?.attributes?.id,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selectedDate, dateChange, messageApi, setFieldValues }) => {
 
@@ -19,7 +19,7 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
         return `${hours}:${formattedMinutes}`;
     });
     const [selectedMonth, setSelectedMonth] = useState("");
-    
+
     const [selectAmPm, setSelectAmPm] = useState(() => {
         const now = new Date();
         return now.getHours() >= 12 ? "PM" : "AM";
@@ -82,6 +82,12 @@ const DateAndTimeModal = ({ onClick, currentMonthYear, currentWeekDays, selected
             onClick();
         };
     };
+
+    useEffect(() => {
+        currentWeekDays?.slice(0, 1)?.map((item) => (
+            setSelectedMonth(item?.fullDateObj)
+        ))
+    }, []);
 
     return (
         <div className="modal show d-block ct_congratulation_modal_fade" tabIndex="-1">

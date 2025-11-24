@@ -15,8 +15,9 @@
     top: 50%;
 }
 
-.ct_comment_area_main input {
-    padding-right: 84px;
+.ct_comment_area_main input,
+.ct_comment_area_main textarea {
+    padding-right: 112px;
 }
 
 .ct_post_img img {
@@ -50,6 +51,9 @@ body {
     width: 60px;
 }
 
+.ct_white_normal {
+    white-space: normal;
+}
 
 .pagination li.previous,
 .pagination li.next {
@@ -943,7 +947,7 @@ a {
 
 .ct_progress_list_new123 li {
     margin-top: 8px;
-    height: 30px;
+    height: auto;
 }
 
 .ct_progress_list_new123 li p.ct_fill_active_bar {

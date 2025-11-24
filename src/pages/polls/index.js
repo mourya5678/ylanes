@@ -86,7 +86,11 @@ const Polls = ({ messageApi }) => {
   useEffect(() => {
     const data = pipGetAccessToken("user_data");
     setUserData(data);
-  }, [profileData]);
+    let localData = postTopic?.map((item) => {
+      return item?.attributes?.name
+    })
+    setFilterByTopic(localData)
+  }, [profileData, postTopic]);
 
   useEffect(() => {
     dispatch(getPollTypeData({ messageApi, typeDropDown: isLatest ? "Lastest" : "Top", connectionStatus: isConnectionComments }));

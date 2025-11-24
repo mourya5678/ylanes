@@ -97,7 +97,7 @@ const DeactivateUserAccount = ({ messageApi }) => {
                                             />
                                         </div>
                                         <div className="text-center mt-5">
-                                            <button disabled={isLoader} onClick={handleSubmit} type="submit" className="ct_yellow_btn mx-auto">Get Otp</button>
+                                            <button disabled={isLoader} onClick={handleSubmit} type="submit" className="ct_yellow_btn mx-auto">Get OTP</button>
                                         </div>
                                     </form>
                                 )}
