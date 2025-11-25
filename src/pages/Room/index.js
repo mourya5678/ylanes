@@ -231,7 +231,7 @@ const MyRoom = ({ messageApi }) => {
                                                                     <img
                                                                         alt=""
                                                                         className="ct_img_40 ct_flex_shrink_0 me-2"
-                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image || "assets/img/dummy_user_img.png"}
                                                                     />
                                                                     <div>
                                                                         <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
@@ -251,7 +251,7 @@ const MyRoom = ({ messageApi }) => {
                                                                                     <img
                                                                                         alt=""
                                                                                         className="ct_img_20 ct_flex_shrink_0 me-2"
-                                                                                        src={items?.attributes?.participant?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                                        src={items?.attributes?.participant?.data?.attributes?.profile_image || "assets/img/dummy_user_img.png"}
                                                                                     />
                                                                                     <div className='d-flex align-items-center gap-1'>
                                                                                         <i className='fa-solid fa-heart ct_yellow_text'></i>
@@ -413,10 +413,9 @@ const MyRoom = ({ messageApi }) => {
                                                                     <img
                                                                         alt=""
                                                                         className="ct_img_40 ct_flex_shrink_0 me-2"
-                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"}
+                                                                        src={item?.attributes?.host?.data?.attributes?.profile_image || "assets/img/dummy_user_img.png"}
                                                                     />
                                                                     <small className='ct_fs_14 ct_fw_500'>{item?.attributes?.host?.data?.attributes?.full_name ?? ""}</small>
-
                                                                 </div>
                                                             </div>
                                                             <div className="ct_border_top_1 pt-3 mt-3 d-flex align-items-start gap-3 justify-content-between">

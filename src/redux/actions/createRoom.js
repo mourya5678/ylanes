@@ -138,7 +138,8 @@ export const createRoomData = createAsyncThunk('create-room', async (props) => {
         callback(response);
         return response;
     } catch (error) {
-        messageApi.error(error?.data?.errors?.message)
+        console.log({ error });
+        messageApi.error(error?.data?.errors?.message || error?.data?.errors?.length != 0 && error?.data?.errors[0]?.message);
         callback(null, error);
     };
 });

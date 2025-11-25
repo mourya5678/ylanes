@@ -359,7 +359,7 @@ const CreateRoom = ({ messageApi }) => {
         const headers = {
             'TZone': timeZone,
             "UTime": unixTime
-        }
+        };
         const formData = new FormData();
         formData.append("room[start_time]", startTime);
         formData.append("room[end_time]", endTime);

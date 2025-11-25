@@ -57,7 +57,7 @@ const FriendRequest = ({ messageApi }) => {
                                                     <td>{i + 1}</td>
                                                     <td>
                                                         <div className='d-flex align-items-center gap-2'>
-                                                            <img src={item?.attributes?.profile_image ?? "assets/img/dummy_user_img.png"} className='ct_img_40' />
+                                                            <img src={item?.attributes?.profile_image || "assets/img/dummy_user_img.png"} className='ct_img_40' />
                                                         </div>
                                                     </td>
                                                     <td>{item?.attributes?.full_name ?? ""}</td>
