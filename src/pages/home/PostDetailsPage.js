@@ -17,7 +17,7 @@ const PostDetailsPage = ({ messageApi }) => {
     const { isLoading, allComments, postDetails } = useSelector((state) => state.authReducer);
     const post_id = window.location?.hash?.split("#/post-details?");
 
-    console.log({ post_id })
+    console.log({ postDetails })
 
     const [selectedPostId, setSelectedPostId] = useState();
     const [addComment, setAddComment] = useState("");

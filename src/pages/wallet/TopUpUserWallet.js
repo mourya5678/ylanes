@@ -24,7 +24,7 @@ const TopUpUserWallet = ({ messageApi }) => {
     }, []);
 
     const handleUpgradeWalletYCoins = async () => {
-        if (userData?.attributes?.subscription_status == "Active") {
+        if (userData?.attributes?.subscription_status == "active") {
             const callback = (response) => {
                 openPaymentGateway(response?.transaction?.order_id,
                     response?.transaction?.id);

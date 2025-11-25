@@ -959,6 +959,17 @@ a {
     padding: 4px 10px;
 }
 
+#local-preview video {
+    object-fit: contain !important;
+}
+
+div#local-preview,
+#agora-video-player-track-cam-1c4fc466,
+#agora-video-player-track-cam-50168791 {
+    /* max-width: 370px !important; */
+    background-color: transparent !important;
+}
+
 @media screen and (max-width:991px) {
     .ct_pe_20 {
         padding-right: 0px;

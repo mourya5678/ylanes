@@ -50,7 +50,7 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
                     id: hostData?.id,
                     send_request_status: hostData?.attributes?.send_request_status,
                     age: hostData?.attributes?.age,
-                    profile_image: hostData?.attributes?.profile_image,
+                    profile_image: hostData?.attributes?.profile_image || "assets/img/dummy_user_img.png",
                     full_name: pastCallData?.attributes?.is_anonymously ? pastCallData?.attributes?.anonymously_name : hostData?.attributes?.full_name,
                     hearts: hostData?.attributes?.hearts,
                     isHost: true,
@@ -247,7 +247,7 @@ const SendFeedback = ({ onClose, pastCallData, messageApi, handleClose }) => {
                                             <div className='d-flex align-items-center gap-2 justify-content-between mb-3'>
                                                 <div>
                                                     <div className='d-flex align-items-center gap-2'>
-                                                        <img src={item?.profile_image ?? "assets/img/dummy_user_img.png"} className='ct_img_30' />
+                                                        <img src={item?.profile_image || "assets/img/dummy_user_img.png"} className='ct_img_30' />
                                                         <div>
                                                             <p className='mb-0 ct_fs_14'>{item?.full_name ?? ""}</p>
                                                             <div className='d-flex align-items-center gap-1'>
